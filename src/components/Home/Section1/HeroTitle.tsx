@@ -14,6 +14,7 @@ const HeroTitle = ({ line1 }: { line1: string }) => {
                         type: "spring"
                     },
                 }}
+                viewport={{once : true}}
                 className="flex items-center gap-x-3">
                 <span className="h-0.5 bg-primary w-10"></span>
                 <h4 className="font-figtree text-white font-medium text-xl">Find Your Dream Property Easily</h4>
@@ -85,6 +86,7 @@ const HeroTitle = ({ line1 }: { line1: string }) => {
                         delay: 0.3
                     },
                 }}
+                viewport={{once : true}}
                 className="flex items-center gap-x-3 font-figtree text-white text-lg max-w-2xl">
                 Skip the hassle and delays — easily buy, sell, or access essential services anytime from one reliable and secure platform.
             </motion.p>
