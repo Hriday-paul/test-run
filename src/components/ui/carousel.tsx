@@ -28,7 +28,7 @@ type CarouselContextProps = {
   scrollNext: () => void
   canScrollPrev: boolean
   canScrollNext: boolean
-   currentIndex: number
+  currentIndex: number
   scrollTo: (index: number) => void
 } & CarouselProps
 
@@ -246,12 +246,17 @@ function CarouselNext({
 }
 
 function CarouselDots({ className, ...props }: React.ComponentProps<"div">) {
-  const { api, currentIndex, scrollTo } = useCarousel()
+  const { api, currentIndex, scrollTo, opts } = useCarousel()
   const [slideCount, setSlideCount] = React.useState(0)
 
   React.useEffect(() => {
     if (!api) return
-    setSlideCount(api.scrollSnapList().length)
+    let count = api.slideNodes().length
+    const isLooping = opts?.loop
+    if (isLooping) {
+      count = Math.ceil(count / 2)
+    }
+    setSlideCount(count)
   }, [api])
 
   return (
@@ -280,4 +285,5 @@ export {
   CarouselItem,
   CarouselPrevious,
   CarouselNext,
+  CarouselDots
 }
