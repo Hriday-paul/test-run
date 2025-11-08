@@ -2,8 +2,9 @@ import logo from "../../../public/logo.png"
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaRegUser } from "react-icons/fa"
+import SmNavSheet from "./SmNavsheet"
 
-const navitems = [
+export const navitems = [
     {
         id: 1,
         rout: "/",
@@ -29,7 +30,8 @@ function Navbar() {
                     <Link href={"/"}>
                         <Image src={logo} alt='logo' className='h-12 w-auto object-cover' /></Link>
                     <div className="flex flex-row gap-x-5 items-center">
-                        <ul className='flex flex-row gap-x-5 lg:gap-x-8 xl:gap-x-10 items-center'>
+
+                        <ul className='flex-row gap-x-5 lg:gap-x-8 xl:gap-x-10 items-center hidden lg:flex'>
                             {navitems?.map(i => {
                                 return <li key={i?.id} className='font-popin text-lg text-gray-800 font-normal'>
                                     <Link href={i?.rout}>
@@ -38,6 +40,7 @@ function Navbar() {
                                 </li>
                             })}
                         </ul>
+
                         <button>
                             <FaRegUser className="text-xl text-gray-800" />
                         </button>
@@ -48,6 +51,11 @@ function Navbar() {
                                 <div className="relative h-full w-8 bg-white/20"></div>
                             </div>
                         </button>
+
+                        <section className='lg:hidden'>
+                            <SmNavSheet />
+                        </section>
+
                     </div>
                 </div>
             </div>
