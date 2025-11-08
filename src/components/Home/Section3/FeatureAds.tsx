@@ -1,5 +1,4 @@
 "use client"
-import React from 'react'
 import {
     Carousel,
     CarouselContent,
@@ -9,11 +8,9 @@ import {
 import Autoplay from "embla-carousel-autoplay"
 
 import Image from 'next/image'
-import { desc } from 'motion/react-client'
-import { ArrowRight, Wallet } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import { Button } from '@/components/ui/button'
-import { FaLocationDot } from 'react-icons/fa6'
 import { GiPriceTag } from 'react-icons/gi'
 import { MdOutlineLocationOn } from 'react-icons/md'
 
@@ -159,14 +156,17 @@ export default FeatureAds
 
 const FeatureAddCard = ({ add }: { add: addType }) => {
     return (
-      <div className="bg-white">
-        <Image
-          src="/feature-2.avif"
-          alt="feature add image"
-          className="w-full h-64 object-cover rounded rounded-b-none"
-          height={4000}
-          width={2000}
-        />
+      <div className="bg-white group">
+        <div className='overflow-hidden'>
+          <Image
+            src="/feature-2.avif"
+            alt="feature add image"
+            className="w-full h-64 object-cover rounded rounded-b-none group-hover:scale-105 
+            transition-transform duration-500"
+            height={4000}
+            width={2000}
+          />
+        </div>
         <div className="p-4 space-y-2 border border-t-0 border-black rounded rounded-t-none">
           <div>
             <h6 className="text-xl text-black font-figtree font-medium">
