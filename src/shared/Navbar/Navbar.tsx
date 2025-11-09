@@ -44,7 +44,7 @@ function Navbar() {
 
                         <button className="group relative inline-flex py-2 text-lg items-center justify-center overflow-hidden rounded-full bg-primary px-6 font-normal text-white transition hover:scale-105 cursor-pointer">
                             <span>+ Post Your Add</span>
-                            <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                            <div className="absolute inset-0 flex h-full w-full justify-center transform-[skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:transform-[skew(-12deg)_translateX(100%)]">
                                 <div className="relative h-full w-8 bg-white/20"></div>
                             </div>
                         </button>
