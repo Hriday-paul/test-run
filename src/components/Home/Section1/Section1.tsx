@@ -1,5 +1,3 @@
-import React from 'react'
-import heroImg from "../../../../public/hero.jpg"
 import HeroTitle from './HeroTitle'
 
 function Section1() {
