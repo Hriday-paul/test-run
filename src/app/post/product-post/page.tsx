@@ -73,7 +73,6 @@ export default function EditProduct({ product, onSubmit }: EditProductProps) {
   ]);
   const [removedImages, setRemovedImages] = useState<string[]>([]);
 
-  // Initialize form when product is loaded
   const {
     register,
     handleSubmit,
@@ -85,7 +84,7 @@ export default function EditProduct({ product, onSubmit }: EditProductProps) {
 
   useEffect(() => {
     if (product) {
-      reset(product); // pre-fill form
+      reset(product);
       if (product.existingImages) {
         setExistingImages(product.existingImages);
       }
@@ -139,15 +138,20 @@ export default function EditProduct({ product, onSubmit }: EditProductProps) {
                 <div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                      <label
+                        htmlFor="title"
+                        className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                      >
                         <FaFileAlt /> Title
                       </label>
                       <Input
+                        id="title"
+                        autoFocus
                         {...register("title", {
                           required: "Title is required",
                         })}
                         placeholder="Enter title"
-                        className="rounded h-12"
+                        className="rounded h-12 bg-white"
                       />
                       {errors.title && (
                         <p className="text-red-500 text-sm">
@@ -157,15 +161,19 @@ export default function EditProduct({ product, onSubmit }: EditProductProps) {
                     </div>
 
                     <div>
-                      <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                      <label
+                        htmlFor="price"
+                        className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                      >
                         <FaDollarSign /> Price
                       </label>
                       <Input
+                        id="price"
                         {...register("price", {
                           required: "Price is required",
                         })}
                         placeholder="Enter price"
-                        className="rounded h-12"
+                        className="rounded h-12 bg-white"
                       />
                       {errors.price && (
                         <p className="text-red-500 text-sm">
@@ -176,16 +184,20 @@ export default function EditProduct({ product, onSubmit }: EditProductProps) {
                   </div>
 
                   <div className="mt-6">
-                    <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                    <label
+                      htmlFor="description"
+                      className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                    >
                       <FaFileAlt /> Description
                     </label>
                     <Textarea
+                      id="description"
                       {...register("description", {
                         required: "Description is required",
                       })}
                       rows={6}
                       placeholder="Enter product description"
-                      className="rounded"
+                      className="rounded bg-white"
                     />
                     {errors.description && (
                       <p className="text-red-500 text-sm">
@@ -314,15 +326,19 @@ export default function EditProduct({ product, onSubmit }: EditProductProps) {
                       },
                     ].map((field) => (
                       <div key={field.name}>
-                        <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                        <label
+                          htmlFor={field.name}
+                          className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                        >
                           {field.icon} {field.label}
                         </label>
                         <Input
+                          id={field.name}
                           {...register(field.name as keyof ProductFormValues, {
                             required: `${field.label} is required`,
                           })}
                           placeholder={`Enter ${field.label.toLowerCase()}`}
-                          className="rounded h-12"
+                          className="rounded h-12 bg-white"
                         />
                         {errors[field.name as keyof ProductFormValues] && (
                           <p className="text-red-500 text-sm">
@@ -353,15 +369,19 @@ export default function EditProduct({ product, onSubmit }: EditProductProps) {
                       { name: "email", icon: <FaEnvelope />, label: "Email" },
                     ].map((field) => (
                       <div key={field.name}>
-                        <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                        <label
+                          htmlFor={field.name}
+                          className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                        >
                           {field.icon} {field.label}
                         </label>
                         <Input
+                          id={field.name}
                           {...register(field.name as keyof ProductFormValues, {
                             required: `${field.label} is required`,
                           })}
                           placeholder={`Enter ${field.label.toLowerCase()}`}
-                          className="rounded h-12"
+                          className="rounded h-12 bg-white"
                         />
                         {errors[field.name as keyof ProductFormValues] && (
                           <p className="text-red-500 text-sm">

@@ -19,7 +19,7 @@ import {
 } from "react-icons/fa";
 import PostBanner from "@/components/Post/PostBanner";
 
-export type ServiceFormValues = {
+type ServiceFormValues = {
   title: string;
   description: string;
   location: string;
@@ -82,22 +82,32 @@ export default function UploadService() {
 
   return (
     <section>
-        <PostBanner title="Service Post" description="Search and find your best items for buy or rent" path="/service.png" />
-      <div className="py-16 px-4 md:px-10">
+      <PostBanner
+        title="Accessories Post"
+        description="Search and find your best items for buy or rent"
+        path="/accessories.png"
+      />
+      <section className="py-16 px-4 md:px-10">
         <div className="max-w-4xl mx-auto">
           <Card className="border rounded-2xl shadow-md">
             <CardContent className="p-8 space-y-10">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
-                {/* ======= Section 1: Service Info ======= */}
+                {/* Service Info */}
                 <div>
+                  {/* Title */}
                   <div>
-                    <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                    <label
+                      htmlFor="title"
+                      className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                    >
                       <FaFileAlt /> Title
                     </label>
                     <Input
+                      id="title"
+                      autoFocus
                       {...register("title", { required: "Title is required" })}
                       placeholder="Enter service title"
-                      className="rounded h-12"
+                      className="rounded h-12 bg-white"
                     />
                     {errors.title && (
                       <p className="text-red-500 text-sm">
@@ -106,17 +116,22 @@ export default function UploadService() {
                     )}
                   </div>
 
+                  {/* Description */}
                   <div className="mt-6">
-                    <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                    <label
+                      htmlFor="description"
+                      className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                    >
                       <FaFileAlt /> Description
                     </label>
                     <Textarea
+                      id="description"
                       {...register("description", {
                         required: "Description is required",
                       })}
                       placeholder="Enter description"
                       rows={4}
-                      className="rounded"
+                      className="rounded bg-white"
                     />
                     {errors.description && (
                       <p className="text-red-500 text-sm">
@@ -127,7 +142,10 @@ export default function UploadService() {
 
                   {/* Image Upload */}
                   <div className="mt-6">
-                    <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                    <label
+                      htmlFor="images"
+                      className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                    >
                       <FaUpload /> Upload Images
                     </label>
                     <div
@@ -136,6 +154,7 @@ export default function UploadService() {
                       className="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-primary transition relative"
                     >
                       <input
+                        id="images"
                         type="file"
                         multiple
                         accept="image/jpeg, image/jpg, image/png"
@@ -208,15 +227,19 @@ export default function UploadService() {
                       },
                     ].map((field) => (
                       <div key={field.name}>
-                        <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                        <label
+                          htmlFor={field.name}
+                          className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                        >
                           {field.icon} {field.label}
                         </label>
                         <Input
+                          id={field.name}
                           {...register(field.name as keyof ServiceFormValues, {
                             required: `${field.label} is required`,
                           })}
                           placeholder={`Enter ${field.label.toLowerCase()}`}
-                          className="rounded h-12"
+                          className="rounded h-12 bg-white"
                         />
                         {errors[field.name as keyof ServiceFormValues] && (
                           <p className="text-red-500 text-sm">
@@ -242,7 +265,7 @@ export default function UploadService() {
             </CardContent>
           </Card>
         </div>
-      </div>
+      </section>
     </section>
   );
 }

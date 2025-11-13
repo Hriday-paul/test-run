@@ -53,7 +53,6 @@ export default function ContactUs() {
         />
         <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center text-white">
           <h1 className="text-4xl md:text-5xl font-bold">Contact Us</h1>
-
           <div className="mt-4">
             <Breadcrumb>
               <BreadcrumbList className="justify-center">
@@ -95,25 +94,40 @@ export default function ContactUs() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* First Name */}
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <label
+                        htmlFor="firstName"
+                        className="block text-gray-700 mb-1 font-medium"
+                      >
+                        First Name
+                      </label>
+                      <User className="absolute left-3 top-10 text-gray-400 w-5 h-5" />
                       <Input
+                        id="firstName"
                         name="firstName"
                         placeholder="First Name"
                         value={formData.firstName}
                         onChange={handleChange}
-                        className="pl-10 rounded h-12"
+                        className="pl-10 rounded h-12 bg-white focus:ring-2 focus:ring-primary focus:border-primary"
                         required
                       />
                     </div>
+
                     {/* Last Name */}
                     <div className="relative">
-                      <User className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                      <label
+                        htmlFor="lastName"
+                        className="block text-gray-700 mb-1 font-medium"
+                      >
+                        Last Name
+                      </label>
+                      <User className="absolute left-3 top-10 text-gray-400 w-5 h-5" />
                       <Input
+                        id="lastName"
                         name="lastName"
                         placeholder="Last Name"
                         value={formData.lastName}
                         onChange={handleChange}
-                        className="pl-10 rounded h-12"
+                        className="pl-10 rounded h-12 bg-white focus:ring-2 focus:ring-primary focus:border-primary"
                         required
                       />
                     </div>
@@ -121,39 +135,60 @@ export default function ContactUs() {
 
                   {/* Email */}
                   <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <label
+                      htmlFor="email"
+                      className="block text-gray-700 mb-1 font-medium"
+                    >
+                      Email Address
+                    </label>
+                    <Mail className="absolute left-3 top-10 text-gray-400 w-5 h-5" />
                     <Input
+                      id="email"
                       name="email"
                       type="email"
                       placeholder="Email Address"
                       value={formData.email}
                       onChange={handleChange}
-                      className="pl-10 rounded h-12"
+                      className="pl-10 rounded h-12 bg-white focus:ring-2 focus:ring-primary focus:border-primary"
                       required
                     />
                   </div>
 
                   {/* Phone */}
                   <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <label
+                      htmlFor="phone"
+                      className="block text-gray-700 mb-1 font-medium"
+                    >
+                      Phone Number
+                    </label>
+                    <Phone className="absolute left-3 top-10 text-gray-400 w-5 h-5" />
                     <Input
+                      id="phone"
                       name="phone"
                       placeholder="Phone Number"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="pl-10 rounded h-12"
+                      className="pl-10 rounded h-12 bg-white focus:ring-2 focus:ring-primary focus:border-primary"
                     />
                   </div>
 
                   {/* Message */}
                   <div className="relative">
+                    <label
+                      htmlFor="message"
+                      className="block text-gray-700 mb-1 font-medium"
+                    >
+                      Message
+                    </label>
                     <Textarea
+                      id="message"
                       name="message"
                       placeholder="Leave us a message..."
                       value={formData.message}
                       onChange={handleChange}
                       rows={8}
-                      className="rounded h-40 resize-none"
+                      className="rounded h-40 resize-none bg-white focus:ring-2 focus:ring-primary focus:border-primary"
                       required
                     />
                   </div>
@@ -163,12 +198,13 @@ export default function ContactUs() {
                     <input
                       type="checkbox"
                       name="agree"
+                      id="agree"
                       checked={formData.agree}
                       onChange={handleChange}
                       className="mt-1 w-4 h-4 rounded border-gray-300"
                       required
                     />
-                    <label className="text-sm text-gray-700">
+                    <label htmlFor="agree" className="text-sm text-gray-700">
                       Agree to our{" "}
                       <span className="text-primary font-medium">
                         Terms of service

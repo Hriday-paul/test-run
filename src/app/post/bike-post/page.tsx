@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, DragEvent } from "react";
+import { useState, useEffect, DragEvent } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -54,51 +54,49 @@ type ProductFormValues = {
   road: string;
   phone: string;
   email: string;
+  existingImages?: string[];
 };
 
-export default function PostProduct() {
+interface EditProductProps {
+  product?: ProductFormValues;
+  onSubmit: (
+    data: ProductFormValues,
+    newImages: File[],
+    removedImages: string[]
+  ) => void;
+}
+
+export default function EditProduct({ product, onSubmit }: EditProductProps) {
   const [images, setImages] = useState<File[]>([]);
+  const [existingImages, setExistingImages] = useState<string[]>([
+    "https://images.unsplash.com/photo-1526779259212-939e64788e3c?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000",
+  ]);
+  const [removedImages, setRemovedImages] = useState<string[]>([]);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset,
+    formState: { errors },
   } = useForm<ProductFormValues>({
-    defaultValues: {
-      title: "",
-      price: "",
-      description: "",
-      engine: "N/A",
-      mileage: "N/A",
-      color: "N/A",
-      fuelType: "N/A",
-      driveType: "N/A",
-      carType: "N/A",
-      brand: "N/A",
-      model: "N/A",
-      gearBox: "N/A",
-      year: "N/A",
-      bodyType: "N/A",
-      airCon: "N/A",
-      seat: "N/A",
-      condition: "N/A",
-      location: "N/A",
-      house: "N/A",
-      road: "N/A",
-      phone: "N/A",
-      email: "N/A",
-    },
+    defaultValues: product,
   });
 
-  // Handle image upload (multiple)
+  useEffect(() => {
+    if (product) {
+      reset(product);
+      if (product.existingImages) {
+        setExistingImages(product.existingImages);
+      }
+    }
+  }, [product, reset]);
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setImages((prev) => [...prev, ...Array.from(e.target.files!)]);
+      setImages((prev) => [...prev, ...Array.from(e.target.files || [])]);
     }
   };
 
-  // Handle drag & drop
   const handleDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     if (e.dataTransfer.files) {
@@ -108,45 +106,52 @@ export default function PostProduct() {
 
   const handleDragOver = (e: DragEvent<HTMLDivElement>) => e.preventDefault();
 
-  // Remove selected image
-  const removeImage = (index: number) => {
+  const removeNewImage = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // Handle submit
-  const onSubmit: SubmitHandler<ProductFormValues> = (data) => {
-    console.log("Form Data:", data);
-    console.log("Uploaded Images:", images);
-    reset();
-    setImages([]);
+  const removeExistingImage = (url: string) => {
+    setExistingImages((prev) => prev.filter((img) => img !== url));
+    setRemovedImages((prev) => [...prev, url]);
+  };
+
+  const onFormSubmit: SubmitHandler<ProductFormValues> = (data) => {
+    onSubmit(data, images, removedImages);
   };
 
   return (
     <section>
       <PostBanner
-        title="Post Your Product"
-        path="/post-product.png"
+        title="Update Product Details"
+        path="/update-product.png"
         description="Search and find your best items for buy or rent"
       />
       <div className="py-16 px-4 md:px-10">
         <div className="max-w-5xl mx-auto">
           <Card className="border rounded-2xl shadow-md">
             <CardContent className="p-8 space-y-10">
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
-                {/* ========== SECTION 1: Basic Info ========== */}
+              <form
+                onSubmit={handleSubmit(onFormSubmit)}
+                className="space-y-12"
+              >
+                {/* ========== Basic Info ========== */}
                 <div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Title */}
                     <div>
-                      <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                      <label
+                        htmlFor="title"
+                        className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                      >
                         <FaFileAlt /> Title
                       </label>
                       <Input
+                        id="title"
+                        autoFocus
                         {...register("title", {
                           required: "Title is required",
                         })}
                         placeholder="Enter title"
-                        className="rounded h-12"
+                        className="rounded h-12 bg-white"
                       />
                       {errors.title && (
                         <p className="text-red-500 text-sm">
@@ -155,17 +160,20 @@ export default function PostProduct() {
                       )}
                     </div>
 
-                    {/* Price */}
                     <div>
-                      <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                      <label
+                        htmlFor="price"
+                        className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                      >
                         <FaDollarSign /> Price
                       </label>
                       <Input
+                        id="price"
                         {...register("price", {
                           required: "Price is required",
                         })}
                         placeholder="Enter price"
-                        className="rounded h-12"
+                        className="rounded h-12 bg-white"
                       />
                       {errors.price && (
                         <p className="text-red-500 text-sm">
@@ -175,18 +183,21 @@ export default function PostProduct() {
                     </div>
                   </div>
 
-                  {/* Description */}
                   <div className="mt-6">
-                    <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                    <label
+                      htmlFor="description"
+                      className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                    >
                       <FaFileAlt /> Description
                     </label>
                     <Textarea
+                      id="description"
                       {...register("description", {
                         required: "Description is required",
                       })}
                       rows={6}
                       placeholder="Enter product description"
-                      className="rounded"
+                      className="rounded bg-white"
                     />
                     {errors.description && (
                       <p className="text-red-500 text-sm">
@@ -200,7 +211,6 @@ export default function PostProduct() {
                     <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
                       <FaUpload /> Upload Images
                     </label>
-
                     <div
                       onDrop={handleDrop}
                       onDragOver={handleDragOver}
@@ -212,16 +222,12 @@ export default function PostProduct() {
                         accept="image/jpeg, image/jpg, image/png"
                         onChange={handleImageUpload}
                         className="absolute inset-0 opacity-0 cursor-pointer"
-                        id="imageUpload"
                       />
                       <p className="text-gray-600">
                         Drag image here, or{" "}
-                        <label
-                          htmlFor="imageUpload"
-                          className="text-primary font-semibold cursor-pointer"
-                        >
+                        <span className="text-primary font-semibold cursor-pointer">
                           Browse
-                        </label>
+                        </span>
                       </p>
                       <p className="text-xs text-gray-400 mt-1">
                         Note: Only JPG, JPEG and PNG. Suggested size 600×450px
@@ -229,7 +235,32 @@ export default function PostProduct() {
                       </p>
                     </div>
 
-                    {/* ✅ Image Preview with Delete Option */}
+                    {/* Existing Images */}
+                    {existingImages.length > 0 && (
+                      <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                        {existingImages.map((url, idx) => (
+                          <div
+                            key={idx}
+                            className="relative group rounded-lg overflow-hidden"
+                          >
+                            <img
+                              src={url}
+                              alt={`existing-${idx}`}
+                              className="w-full h-32 object-cover rounded-md border shadow-sm"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeExistingImage(url)}
+                              className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
+                            >
+                              <FaTimes size={12} />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* New Images */}
                     {images.length > 0 && (
                       <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                         {images.map((file, index) => (
@@ -244,7 +275,7 @@ export default function PostProduct() {
                             />
                             <button
                               type="button"
-                              onClick={() => removeImage(index)}
+                              onClick={() => removeNewImage(index)}
                               className="absolute top-1 right-1 bg-black/60 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition"
                             >
                               <FaTimes size={12} />
@@ -256,12 +287,11 @@ export default function PostProduct() {
                   </div>
                 </div>
 
-                {/* ========== SECTION 2: Car Features ========== */}
+                {/* ========== Car Features ========== */}
                 <div>
                   <h2 className="text-2xl font-bold text-[#1D3557] mb-6 flex items-center gap-2">
                     <FaCogs /> Car Features
                   </h2>
-
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {[
                       { name: "engine", icon: <FaCogs />, label: "Engine" },
@@ -288,11 +318,7 @@ export default function PostProduct() {
                       { name: "year", icon: <FaCalendarAlt />, label: "Year" },
                       { name: "bodyType", icon: <FaCar />, label: "Body Type" },
                       { name: "airCon", icon: <FaWind />, label: "Air Con" },
-                      {
-                        name: "seat",
-                        icon: <FaChair />,
-                        label: "Car Seat",
-                      },
+                      { name: "seat", icon: <FaChair />, label: "Seat" },
                       {
                         name: "condition",
                         icon: <FaMagnifyingGlass />,
@@ -300,15 +326,19 @@ export default function PostProduct() {
                       },
                     ].map((field) => (
                       <div key={field.name}>
-                        <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                        <label
+                          htmlFor={field.name}
+                          className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                        >
                           {field.icon} {field.label}
                         </label>
                         <Input
+                          id={field.name}
                           {...register(field.name as keyof ProductFormValues, {
                             required: `${field.label} is required`,
                           })}
                           placeholder={`Enter ${field.label.toLowerCase()}`}
-                          className="rounded h-12"
+                          className="rounded h-12 bg-white"
                         />
                         {errors[field.name as keyof ProductFormValues] && (
                           <p className="text-red-500 text-sm">
@@ -321,12 +351,11 @@ export default function PostProduct() {
                   </div>
                 </div>
 
-                {/* ========== SECTION 3: Contact Info ========== */}
+                {/* ========== Contact Info ========== */}
                 <div>
                   <h2 className="text-2xl font-bold text-[#1D3557] mb-6 flex items-center gap-2">
                     Information
                   </h2>
-
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {[
                       {
@@ -340,15 +369,19 @@ export default function PostProduct() {
                       { name: "email", icon: <FaEnvelope />, label: "Email" },
                     ].map((field) => (
                       <div key={field.name}>
-                        <label className="flex items-center gap-2 text-gray-700 mb-2 font-medium">
+                        <label
+                          htmlFor={field.name}
+                          className="flex items-center gap-2 text-gray-700 mb-2 font-medium"
+                        >
                           {field.icon} {field.label}
                         </label>
                         <Input
+                          id={field.name}
                           {...register(field.name as keyof ProductFormValues, {
                             required: `${field.label} is required`,
                           })}
                           placeholder={`Enter ${field.label.toLowerCase()}`}
-                          className="rounded h-12"
+                          className="rounded h-12 bg-white"
                         />
                         {errors[field.name as keyof ProductFormValues] && (
                           <p className="text-red-500 text-sm">
@@ -361,13 +394,12 @@ export default function PostProduct() {
                   </div>
                 </div>
 
-                {/* Submit Button */}
                 <div className="pt-6">
                   <Button
                     type="submit"
-                    className="w-full bg-primary hover:bg-primary/90 text-white rounded cursor-pointer h-12"
+                    className="w-full bg-primary hover:bg-primary/90 text-white rounded h-12"
                   >
-                    Submit Product
+                    Update Product
                   </Button>
                 </div>
               </form>
