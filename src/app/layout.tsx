@@ -6,7 +6,7 @@ import Footer from "@/shared/Footer/Footer";
 
 const poppins = Poppins({
   variable: "--font-poppin",
-  weight : ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
 });
 
@@ -27,12 +27,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.variable} ${figtree.variable} antialiased`}
-      >
-        <Navbar />
+      <body className={`${poppins.variable} ${figtree.variable} antialiased`}>
+        <Navbar/>
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );
