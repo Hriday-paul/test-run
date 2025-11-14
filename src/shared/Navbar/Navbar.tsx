@@ -2,8 +2,9 @@ import logo from "../../../public/logo.png"
 import Image from 'next/image'
 import Link from 'next/link'
 import { FaRegUser } from "react-icons/fa"
+import SmNavSheet from "./SmNavsheet"
 
-const navitems = [
+export const navitems = [
     {
         id: 1,
         rout: "/",
@@ -38,6 +39,7 @@ function Navbar() {
                                 </li>
                             })}
                         </ul>
+
                         <button>
                             <FaRegUser className="text-xl text-gray-800" />
                         </button>
@@ -48,6 +50,11 @@ function Navbar() {
                                 <div className="relative h-full w-8 bg-white/20"></div>
                             </div>
                         </button>
+
+                        <section className='lg:hidden'>
+                            <SmNavSheet />
+                        </section>
+
                     </div>
                 </div>
             </div>
