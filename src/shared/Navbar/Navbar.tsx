@@ -29,7 +29,7 @@ function Navbar() {
                     <Link href={"/"}>
                         <Image src={logo} alt='logo' className='h-12 w-auto object-cover' /></Link>
                     <div className="flex flex-row gap-x-5 items-center">
-                        <ul className='flex flex-row gap-x-5 lg:gap-x-8 xl:gap-x-10 items-center'>
+                        <ul className='md:flex flex-row gap-x-5 lg:gap-x-8 xl:gap-x-10 items-center hidden'>
                             {navitems?.map(i => {
                                 return <li key={i?.id} className='font-popin text-lg text-gray-800 font-normal'>
                                     <Link href={i?.rout}>
