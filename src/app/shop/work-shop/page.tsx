@@ -28,6 +28,12 @@ import {
   PaginationNext,
 } from "@/components/ui/pagination";
 import { Slider } from "@/components/ui/slider";
+import { Sidebar, SidebarContent } from "@/components/ui/sidebar";
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "@/components/ui/collapsible";
 import Link from "next/link";
 import ShopBanner from "@/components/Shop/ShopBanner";
 
@@ -40,15 +46,11 @@ interface FilterSection {
   unit?: string;
 }
 
-interface Vehicle {
+interface WorkShop {
   id: number;
   title: string;
   location: string;
-  km: number;
-  seats: number;
-  year: number;
-  brand: string;
-  price: number;
+  desc: string;
   image: string;
 }
 
@@ -66,35 +68,25 @@ export default function CarListingSection() {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const filterSections: FilterSection[] = [
-    { name: "condition", label: "Condition", items: ["New", "Used"] },
     {
       name: "vehicleType",
       label: "Vehicle Type",
-      items: ["Car", "Bike", "Truck"],
-    },
-    {
-      name: "km",
-      label: "Kilometers Run",
-      range: kmRange,
-      onChange: setKmRange,
-      unit: " km",
-    },
-    {
-      name: "price",
-      label: "Price (Tk)",
-      range: priceRange,
-      onChange: setPriceRange,
-      unit: "k",
-    },
-    {
-      name: "brand",
-      label: "Brand",
-      items: ["Mercedes", "BMW", "Hyundai", "Honda", "Toyota"],
+      items: [
+        "All",
+        "Accessories",
+        "Car Rent",
+        "Hyundai",
+        "Bike Buy",
+        "Car Buy",
+        "Work Shop",
+        "Bike Rent",
+      ],
     },
     {
       name: "location",
       label: "Location",
       items: [
+        "All",
         "Dhaka",
         "Chittagong",
         "Barishal",
@@ -115,26 +107,22 @@ export default function CarListingSection() {
     setOpenSections((prev) => ({ ...prev, [name]: !prev[name] }));
   };
 
-  const vehicles: Vehicle[] = Array.from({ length: totalItems }).map(
+  const workshops: WorkShop[] = Array.from({ length: totalItems }).map(
     (_, i) => ({
       id: i + 1,
-      title: "Mercedes - Benz C220d",
+      title: "Toyota Motors And Car Servicing Center",
       location: "Dhaka, Bangladesh",
-      km: 100,
-      seats: 4,
-      year: 2023,
-      brand: "Suzuki",
-      price: 144400,
-      image: "/car-image.png",
+      desc: "Toyota Motors And Car Servicing Center-1 is our 1st car washing and servicing center on New Lake Road in Badda near Hatirjhil.",
+      image: "/service-menu.png",
     })
   );
 
   return (
     <section className="bg-white py-10 w-full">
       <ShopBanner
-        path="/profile-banner.jpg"
-        title="Find Your Perfect Items"
+        title="Work Shops"
         desc="Search and find your best items for buy or rent"
+        path="/Image Service.png"
       />
 
       {/* Mobile filter button */}
@@ -206,7 +194,6 @@ export default function CarListingSection() {
                           {section.range && section.onChange && (
                             <div className="px-2">
                               <Slider
-                                className="py-2"
                                 value={section.range}
                                 onValueChange={section.onChange}
                                 max={section.name === "price" ? 500 : 50000}
@@ -237,7 +224,7 @@ export default function CarListingSection() {
           )}
         </AnimatePresence>
 
-        {/* Vehicle Cards */}
+        {/* Work Shop Cards */}
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Top Bar */}
           <div className="sticky top-0 bg-white z-10 flex flex-col sm:flex-row justify-between items-center gap-3 mb-4 col-span-full px-2 py-2 border-b border-gray-200">
@@ -246,53 +233,35 @@ export default function CarListingSection() {
             </div>
           </div>
 
-          {vehicles
+          {workshops
             .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-            .map((v) => (
+            .map((w) => (
               <Card
-                key={v.id}
+                key={w.id}
                 className="border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0"
               >
                 <img
-                  src={v.image}
-                  alt={v.title}
+                  src={w.image}
+                  alt={w.title}
                   className="w-full h-48 object-cover"
                 />
-                <CardContent className="p-4 pt-0 space-y-2">
-                  <h3 className="font-semibold text-gray-900 text-lg">
-                    {v.title}
+                <CardContent className="space-y-2 p-4 pt-0">
+                  <h3 className="font-semibold text-gray-900 text-lg pt-0">
+                    {w.title}
                   </h3>
                   <div className="flex items-center text-sm text-gray-600 gap-1">
-                    <MapPin size={14} /> {v.location}
+                    <MapPin size={14} /> {w.location}
                   </div>
                   <Separator className="my-2" />
-                  <div className="flex items-center justify-between text-gray-700 text-sm">
-                    <div className="flex flex-col justify-between items-start gap-5">
-                      <span className="flex items-center gap-1">
-                        <Gauge size={14} /> {v.km} km
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Users size={14} /> {v.seats} Seats
-                      </span>
-                    </div>
-                    <div className="flex flex-col justify-between items-start gap-5">
-                      <span className="flex items-center gap-1">
-                        <Calendar size={14} /> {v.year}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Bike size={14} /> {v.brand}
-                      </span>
-                    </div>
+                  <div>
+                    <p className="text-[#606060]">{w.desc}</p>
                   </div>
-                  <div className="flex items-center justify-between pt-2">
-                    <p className="font-semibold text-gray-900 flex items-center gap-1">
-                      <DollarSign size={14} /> {v.price}
-                    </p>
-                    <Link href={"/shop/car-shop/car-details"}>
+                  <div className="w-full pt-2">
+                    <Link href={"/shop/work-shop/work-details"}>
                       <Button
-                        className="bg-[#0C8CE9] hover:bg-[#3ba9f8] text-white transition-all duration-300 cursor-pointer rounded-md text-sm hover:text-[#0868ac]"
                         variant="outline"
                         size="sm"
+                        className="w-full bg-[#0C8CE9]  hover:bg-[#0095ff] hover:text-white  text-white duration-200 cursor-pointer"
                       >
                         View Details
                       </Button>

@@ -3,6 +3,7 @@ import { Poppins, Figtree } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/shared/Navbar/Navbar";
 import Footer from "@/shared/Footer/Footer";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const poppins = Poppins({
   variable: "--font-poppin",
@@ -28,8 +29,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${figtree.variable} antialiased`}>
-        <Navbar/>
-        {children}
+        <Navbar />
+        <SidebarProvider>{children}</SidebarProvider>
         <Footer />
       </body>
     </html>

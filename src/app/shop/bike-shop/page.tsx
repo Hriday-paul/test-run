@@ -28,8 +28,8 @@ import {
   PaginationNext,
 } from "@/components/ui/pagination";
 import { Slider } from "@/components/ui/slider";
-import Link from "next/link";
 import ShopBanner from "@/components/Shop/ShopBanner";
+import Link from "next/link";
 
 interface FilterSection {
   name: string;
@@ -125,16 +125,16 @@ export default function CarListingSection() {
       year: 2023,
       brand: "Suzuki",
       price: 144400,
-      image: "/car-image.png",
+      image: "/bike.png",
     })
   );
 
   return (
     <section className="bg-white py-10 w-full">
       <ShopBanner
-        path="/profile-banner.jpg"
         title="Find Your Perfect Items"
         desc="Search and find your best items for buy or rent"
+        path="/bike-banner.png"
       />
 
       {/* Mobile filter button */}
@@ -146,7 +146,6 @@ export default function CarListingSection() {
           <Filter size={18} />
         </Button>
       )}
-
       <div className="container mx-auto flex flex-col md:flex-row gap-6 mt-6 px-4">
         {/* Sidebar */}
         <AnimatePresence>
@@ -206,7 +205,6 @@ export default function CarListingSection() {
                           {section.range && section.onChange && (
                             <div className="px-2">
                               <Slider
-                                className="py-2"
                                 value={section.range}
                                 onValueChange={section.onChange}
                                 max={section.name === "price" ? 500 : 50000}
@@ -258,7 +256,7 @@ export default function CarListingSection() {
                   alt={v.title}
                   className="w-full h-48 object-cover"
                 />
-                <CardContent className="p-4 pt-0 space-y-2">
+                <CardContent className="p-4 space-y-2">
                   <h3 className="font-semibold text-gray-900 text-lg">
                     {v.title}
                   </h3>
@@ -267,32 +265,28 @@ export default function CarListingSection() {
                   </div>
                   <Separator className="my-2" />
                   <div className="flex items-center justify-between text-gray-700 text-sm">
-                    <div className="flex flex-col justify-between items-start gap-5">
-                      <span className="flex items-center gap-1">
-                        <Gauge size={14} /> {v.km} km
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Users size={14} /> {v.seats} Seats
-                      </span>
-                    </div>
-                    <div className="flex flex-col justify-between items-start gap-5">
-                      <span className="flex items-center gap-1">
-                        <Calendar size={14} /> {v.year}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Bike size={14} /> {v.brand}
-                      </span>
-                    </div>
+                    <span className="flex items-center gap-1">
+                      <Gauge size={14} /> {v.km} km
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Users size={14} /> {v.seats} Seats
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Calendar size={14} /> {v.year}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <Bike size={14} /> {v.brand}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between pt-2">
                     <p className="font-semibold text-gray-900 flex items-center gap-1">
                       <DollarSign size={14} /> {v.price}
                     </p>
-                    <Link href={"/shop/car-shop/car-details"}>
+                    <Link href={"/shop/bike-shop/bike-details"}>
                       <Button
-                        className="bg-[#0C8CE9] hover:bg-[#3ba9f8] text-white transition-all duration-300 cursor-pointer rounded-md text-sm hover:text-[#0868ac]"
                         variant="outline"
                         size="sm"
+                        className="text-[#0C8CE9] hover:text-white bg-[#0C8CE9]/30 hover:bg-[#0C8CE9] duration-300 cursor-pointer"
                       >
                         View Details
                       </Button>
