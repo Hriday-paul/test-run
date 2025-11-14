@@ -5,18 +5,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Separator } from "@/components/ui/separator";
+
+import { PiStudentDuotone } from "react-icons/pi";
 import {
   ChevronDown,
   ChevronUp,
   Filter,
   List,
   MapPin,
-  Gauge,
   Calendar,
-  Users,
-  Bike,
-  DollarSign,
+
 } from "lucide-react";
 import {
   Pagination,
@@ -30,12 +28,11 @@ import { Slider } from "@/components/ui/slider";
 import Link from "next/link";
 import ShopBanner from "@/components/Shop/ShopBanner";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  FaAward,
+  FaBangladeshiTakaSign,
+  FaBriefcase,
+} from "react-icons/fa6";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface FilterSection {
   name: string;
@@ -46,15 +43,10 @@ interface FilterSection {
   unit?: string;
 }
 
-interface Vehicle {
+interface WorkShop {
   id: number;
   title: string;
   location: string;
-  km: number;
-  seats: number;
-  year: number;
-  brand: string;
-  price: number;
   image: string;
 }
 
@@ -63,45 +55,29 @@ export default function CarListingSection() {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [isMdUp, setIsMdUp] = useState(false);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
-  const [filter, setFilter] = useState("");
-
-  const [kmRange, setKmRange] = useState<[number, number]>([0, 50000]);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
+const [filter, setFilter] = useState("");
 
   const itemsPerPage = 6;
   const totalItems = 24;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   const filterSections: FilterSection[] = [
-    { name: "condition", label: "Condition", items: ["New", "Used"] },
     {
-      name: "vehicleType",
-      label: "Vehicle Type",
-      items: ["Car", "Bike", "Truck"],
-    },
-    {
-      name: "km",
-      label: "Kilometers Run",
-      range: kmRange,
-      onChange: setKmRange,
-      unit: " km",
-    },
-    {
-      name: "price",
-      label: "Price (Tk)",
-      range: priceRange,
-      onChange: setPriceRange,
-      unit: "k",
-    },
-    {
-      name: "brand",
-      label: "Brand",
-      items: ["Mercedes", "BMW", "Hyundai", "Honda", "Toyota"],
+      name: "jobType",
+      label: "Job Type",
+      items: [
+        "All",
+        "Driver",
+        "Workshop Helper",
+        "Sr Marketing",
+        "Data Collection Officer",
+      ],
     },
     {
       name: "location",
       label: "Location",
       items: [
+        "All",
         "Dhaka",
         "Chittagong",
         "Barishal",
@@ -122,26 +98,21 @@ export default function CarListingSection() {
     setOpenSections((prev) => ({ ...prev, [name]: !prev[name] }));
   };
 
-  const vehicles: Vehicle[] = Array.from({ length: totalItems }).map(
+  const workshops: WorkShop[] = Array.from({ length: totalItems }).map(
     (_, i) => ({
       id: i + 1,
-      title: "Mercedes - Benz C220d",
+      title: "Suzuki 4-Stroke 20w40",
       location: "Dhaka, Bangladesh",
-      km: 100,
-      seats: 4,
-      year: 2023,
-      brand: "Suzuki",
-      price: 144400,
-      image: "/car-image.png",
+      image: "/user.png",
     })
   );
 
   return (
     <section className="bg-white py-10 w-full">
       <ShopBanner
-        path="/profile-banner.jpg"
-        title="Find Your Perfect Items"
+        title="Job Service"
         desc="Search and find your best items for buy or rent"
+        path="/job-service.png"
       />
 
       {/* Mobile filter button */}
@@ -213,7 +184,6 @@ export default function CarListingSection() {
                           {section.range && section.onChange && (
                             <div className="px-2">
                               <Slider
-                                className="py-2"
                                 value={section.range}
                                 onValueChange={section.onChange}
                                 max={section.name === "price" ? 500 : 50000}
@@ -244,8 +214,8 @@ export default function CarListingSection() {
           )}
         </AnimatePresence>
 
-        {/* Vehicle Cards */}
-        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Work Shop Cards */}
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Top Bar */}
           <div className="sticky top-0 bg-white z-10 flex flex-col sm:flex-row justify-between items-center gap-3 mb-4 col-span-full px-2 py-2 border-b border-gray-200">
             {/* Total Vehicles */}
@@ -272,53 +242,57 @@ export default function CarListingSection() {
             </div>
           </div>
 
-          {vehicles
+          {workshops
             .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-            .map((v) => (
+            .map((w) => (
               <Card
-                key={v.id}
-                className="border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0"
+                key={w.id}
+                className="border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-4"
               >
-                <img
-                  src={v.image}
-                  alt={v.title}
-                  className="w-full h-48 object-cover"
-                />
-                <CardContent className="p-4 pt-0 space-y-2">
-                  <h3 className="font-semibold text-gray-900 text-lg">
-                    {v.title}
-                  </h3>
-                  <div className="flex items-center text-sm text-gray-600 gap-1">
-                    <MapPin size={14} /> {v.location}
+                <div className="flex gap-3 items-center">
+                  <div>
+                    <img
+                      src={w.image}
+                      alt={w.title}
+                      className="w-20 h-[60px] object-cover rounded-xl"
+                    />
                   </div>
-                  <Separator className="my-2" />
-                  <div className="flex items-center justify-between text-gray-700 text-sm">
-                    <div className="flex flex-col justify-between items-start gap-5">
-                      <span className="flex items-center gap-1">
-                        <Gauge size={14} /> {v.km} km
+                  <div>
+                    <h3 className="text-xl font-figtree">Private Car Driver</h3>
+                    <p className="text-[18px]">Shahid Hasan</p>
+                  </div>
+                </div>
+                <CardContent className="space-y-2 p-0">
+                  <div className="flex justify-between">
+                    <div className="text-start space-y-4">
+                      <div className="flex items-center gap-2 text-gray-600">
+                        <MapPin size={22} /> {w.location}
+                      </div>
+                      <span className="flex items-center gap-2 text-gray-600 ">
+                        <PiStudentDuotone size={22} /> BD Bike Shop
                       </span>
-                      <span className="flex items-center gap-1">
-                        <Users size={14} /> {v.seats} Seats
+                      <span className="flex items-center gap-2 text-gray-600">
+                        <FaBangladeshiTakaSign size={22} /> 15K-20K BDT
                       </span>
                     </div>
-                    <div className="flex flex-col justify-between items-start gap-5">
-                      <span className="flex items-center gap-1">
-                        <Calendar size={14} /> {v.year}
+                    <div className="text-start space-y-4">
+                      <span className="flex items-center gap-2 text-gray-600">
+                        <FaBriefcase size={22} /> Full Time
                       </span>
-                      <span className="flex items-center gap-1">
-                        <Bike size={14} /> {v.brand}
+                      <span className="flex items-center gap-2 text-gray-600 ">
+                        <FaAward size={22} /> 2 Years
+                      </span>
+                      <span className="flex items-center gap-2 text-gray-600">
+                        <Calendar size={22} /> 25/12/2025
                       </span>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between pt-2">
-                    <p className="font-semibold text-gray-900 flex items-center gap-1">
-                      <DollarSign size={14} /> {v.price}
-                    </p>
-                    <Link href={"/shop/car-shop/car-details"}>
+                  <div className="w-full pt-2">
+                    <Link href={"/shop/job-shop/job-details"}>
                       <Button
                         variant="outline"
                         size="sm"
-                        className="text-[#0C8CE9] hover:text-white bg-[#0C8CE9]/30 hover:bg-[#0C8CE9] transition-all duration-300 cursor-pointer py-5 px-6"
+                        className="w-full bg-[#0C8CE9]/30  hover:bg-[#0C8CE9] hover:text-white  text-[#0C8CE9] duration-400 cursor-pointer transition-all py-5"
                       >
                         View Details
                       </Button>

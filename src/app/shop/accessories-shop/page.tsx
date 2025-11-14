@@ -1,24 +1,12 @@
 "use client";
-
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
-import {
-  ChevronDown,
-  ChevronUp,
-  Filter,
-  List,
-  MapPin,
-  Gauge,
-  Calendar,
-  Users,
-  Bike,
-  DollarSign,
-} from "lucide-react";
-import ProfileBanner from "@/components/Profile/ProfileBanner";
+import { ChevronDown, ChevronUp, Filter, List, MapPin } from "lucide-react";
+
 import {
   Pagination,
   PaginationContent,
@@ -28,15 +16,16 @@ import {
   PaginationNext,
 } from "@/components/ui/pagination";
 import { Slider } from "@/components/ui/slider";
-import { Sidebar, SidebarContent } from "@/components/ui/sidebar";
-import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsibleContent,
-} from "@/components/ui/collapsible";
 import Link from "next/link";
 import ShopBanner from "@/components/Shop/ShopBanner";
 import { FaBangladeshiTakaSign, FaShop } from "react-icons/fa6";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface FilterSection {
   name: string;
@@ -59,6 +48,7 @@ export default function CarListingSection() {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [isMdUp, setIsMdUp] = useState(false);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+  const [filter, setFilter] = useState("");
 
   const itemsPerPage = 6;
   const totalItems = 24;
@@ -224,8 +214,27 @@ export default function CarListingSection() {
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Top Bar */}
           <div className="sticky top-0 bg-white z-10 flex flex-col sm:flex-row justify-between items-center gap-3 mb-4 col-span-full px-2 py-2 border-b border-gray-200">
+            {/* Total Vehicles */}
             <div className="flex items-center gap-2 text-gray-700 font-medium text-sm">
               <List size={16} /> {totalItems} Vehicles Found
+            </div>
+
+            {/* Filter Dropdown */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-600 font-medium">
+                Filter By:
+              </span>
+
+              <Select onValueChange={(v) => setFilter(v)}>
+                <SelectTrigger className="w-[130px] h-9 text-sm">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+
+                <SelectContent>
+                  <SelectItem value="new">New</SelectItem>
+                  <SelectItem value="old">Old</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
@@ -261,7 +270,7 @@ export default function CarListingSection() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="w-full bg-[#0C8CE9]  hover:bg-[#0095ff] hover:text-white  text-white duration-200 cursor-pointer"
+                        className="text-[#0C8CE9] hover:text-white bg-[#0C8CE9]/30 hover:bg-[#0C8CE9] transition-all duration-300 cursor-pointer py-5 px-6 w-full"
                       >
                         View Details
                       </Button>

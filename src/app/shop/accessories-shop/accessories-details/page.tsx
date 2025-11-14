@@ -117,13 +117,6 @@ export default function CarDetails() {
               </p>
             </div>
 
-            <Separator />
-
-            {/* CAR FEATURES */}
-            <div>
-              <h2 className="text-lg font-semibold mb-4">Service List</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 space-y-4 md:space-y-0"></div>
-            </div>
           </div>
 
           {/* RIGHT SIDE */}

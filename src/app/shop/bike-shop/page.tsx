@@ -18,7 +18,6 @@ import {
   Bike,
   DollarSign,
 } from "lucide-react";
-import ProfileBanner from "@/components/Profile/ProfileBanner";
 import {
   Pagination,
   PaginationContent,
@@ -30,6 +29,13 @@ import {
 import { Slider } from "@/components/ui/slider";
 import ShopBanner from "@/components/Shop/ShopBanner";
 import Link from "next/link";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface FilterSection {
   name: string;
@@ -57,6 +63,7 @@ export default function CarListingSection() {
   const [drawerOpen, setDrawerOpen] = useState(true);
   const [isMdUp, setIsMdUp] = useState(false);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+  const [filter, setFilter] = useState("");
 
   const [kmRange, setKmRange] = useState<[number, number]>([0, 50000]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 500]);
@@ -239,8 +246,27 @@ export default function CarListingSection() {
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Top Bar */}
           <div className="sticky top-0 bg-white z-10 flex flex-col sm:flex-row justify-between items-center gap-3 mb-4 col-span-full px-2 py-2 border-b border-gray-200">
+            {/* Total Vehicles */}
             <div className="flex items-center gap-2 text-gray-700 font-medium text-sm">
               <List size={16} /> {totalItems} Vehicles Found
+            </div>
+
+            {/* Filter Dropdown */}
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-gray-600 font-medium">
+                Filter By:
+              </span>
+
+              <Select onValueChange={(v) => setFilter(v)}>
+                <SelectTrigger className="w-[130px] h-9 text-sm">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+
+                <SelectContent>
+                  <SelectItem value="new">New</SelectItem>
+                  <SelectItem value="old">Old</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
@@ -256,7 +282,7 @@ export default function CarListingSection() {
                   alt={v.title}
                   className="w-full h-48 object-cover"
                 />
-                <CardContent className="p-4 space-y-2">
+                <CardContent className="p-4 pt-0 space-y-2">
                   <h3 className="font-semibold text-gray-900 text-lg">
                     {v.title}
                   </h3>
@@ -265,18 +291,22 @@ export default function CarListingSection() {
                   </div>
                   <Separator className="my-2" />
                   <div className="flex items-center justify-between text-gray-700 text-sm">
-                    <span className="flex items-center gap-1">
-                      <Gauge size={14} /> {v.km} km
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Users size={14} /> {v.seats} Seats
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Calendar size={14} /> {v.year}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Bike size={14} /> {v.brand}
-                    </span>
+                    <div className="text-start space-y-3">
+                      <span className="flex items-center gap-1">
+                        <Gauge size={14} /> {v.km} km
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Users size={14} /> {v.seats} Seats
+                      </span>
+                    </div>
+                    <div className="text-start space-y-3">
+                      <span className="flex items-center gap-1">
+                        <Calendar size={14} /> {v.year}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Bike size={14} /> {v.brand}
+                      </span>
+                    </div>
                   </div>
                   <div className="flex items-center justify-between pt-2">
                     <p className="font-semibold text-gray-900 flex items-center gap-1">
@@ -286,7 +316,7 @@ export default function CarListingSection() {
                       <Button
                         variant="outline"
                         size="sm"
-                        className="text-[#0C8CE9] hover:text-white bg-[#0C8CE9]/30 hover:bg-[#0C8CE9] duration-300 cursor-pointer"
+                        className="text-[#0C8CE9] hover:text-white bg-[#0C8CE9]/30 hover:bg-[#0C8CE9] transition-all duration-300 cursor-pointer py-5 px-6"
                       >
                         View Details
                       </Button>
