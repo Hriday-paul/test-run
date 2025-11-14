@@ -12,9 +12,9 @@ type planType = {
 
 const plans: planType[] = [
   {
-    level: "Silver",
-    duration: "3 Month",
-    price: "$300",
+    level: "Free",
+    duration: "1 Month",
+    price: "0 ৳",
     features: [
       "3 Regular Ads",
       "1 Featured Ads",
@@ -24,9 +24,9 @@ const plans: planType[] = [
     ],
   },
   {
-    level: "Gold",
-    duration: "6 Month",
-    price: "$500",
+    level: "Standard",
+    duration: "3 Month",
+    price: "1000 ৳",
     features: [
       "5 Regular Ads",
       "2 Featured Ads",
@@ -36,9 +36,9 @@ const plans: planType[] = [
     ],
   },
   {
-    level: "Platinum",
-    duration: "12 Month",
-    price: "$900",
+    level: "Premium",
+    duration: "6 Month",
+    price: "3000 ৳",
     features: [
       "10 Regular Ads",
       "5 Featured Ads",
@@ -51,19 +51,12 @@ const plans: planType[] = [
 
 export default function Section4() {
   return (
-    <section className="py-16 bg-[#F5F7FA]">
+    <section className="bg-[#F5F7FA] pt-12 md:pt-16 lg:pt-20">
       <div className="container">
-        
+
         <Title />
 
-        <div className="flex flex-col items-center space-y-3">
-          <Button className="bg-transparent border rounded-full border-black hover:border-primary px-6 hover:bg-transparent text-black transition-all duration-200">
-            Pricing
-          </Button>
-          <p className="font-semibold text-[#060517]">Flexible Pricing Plan</p>
-        </div>
-
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 my-15">
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 my-15 font-figtree">
           {plans.map((plan, index) => {
             const isMiddle = index === 1;
             return (
@@ -71,10 +64,9 @@ export default function Section4() {
                 key={plan.level}
                 className={`
                   relative flex flex-col p-8 overflow-hidden rounded-2xl shadow-sm border border-gray-200 transition-all duration-1000
-                  ${
-                    isMiddle
-                      ? "lg:scale-y-110 bg-primary text-white"
-                      : "group text-black bg-white"
+                  ${isMiddle
+                    ? "lg:scale-y-110 bg-primary text-white"
+                    : "group text-black bg-white"
                   }
                 `}
               >
@@ -84,33 +76,30 @@ export default function Section4() {
                 )}
 
                 <div
-                  className={`flex justify-between items-center relative z-10 ${
-                    !isMiddle ? "group-hover:text-white" : ""
-                  }`}
+                  className={`flex justify-between items-center relative z-10 ${!isMiddle ? "group-hover:text-white" : ""
+                    }`}
                 >
-                  <h5>{plan.level}</h5>
+                  <h5 className="text-3xl font-semibold font-popin">{plan.level}</h5>
                   <p>{plan.duration}</p>
                 </div>
 
                 <div
-                  className={`relative z-10 text-nowrap ${
-                    !isMiddle ? "group-hover:text-white" : ""
-                  }`}
+                  className={`relative z-10 text-nowrap ${!isMiddle ? "group-hover:text-white" : ""
+                    }`}
                 >
                   <div className="flex flex-col items-start">
                     <p className=" mb-6">
-                      <span className="text-4xl font-bold group-hover:text-white">
+                      <span className="text-lg font-bold group-hover:text-white">
                         {plan.price}
                       </span>
                     </p>
 
                     <ul
-                      className={`mb-8 space-y-2 ${
-                        !isMiddle ? "group-hover:text-white" : ""
-                      }`}
+                      className={`mb-8 space-y-2 ${!isMiddle ? "group-hover:text-white" : ""
+                        }`}
                     >
                       {plan.features.map((feature, idx) => (
-                        <li key={idx} className="flex items-center gap-2">
+                        <li key={idx} className="flex items-center gap-2 font-popin">
                           <IoMdCheckmarkCircleOutline />
                           {feature}
                         </li>
@@ -121,18 +110,16 @@ export default function Section4() {
                 <Button
                   className={`
                     relative z-20 mt-auto px-6 rounded-full font-medium  transition-all duration-1000 ease-out transform flex justify-between border border-primary py-6 bg-white text-primary hover:scale-x-105 cursor-pointer 
-                    ${
-                      isMiddle
-                        ? "bg-transparent border-white text-white"
-                        : "hover:bg-white"
+                    ${isMiddle
+                      ? "bg-transparent border-white text-white"
+                      : "hover:bg-white"
                     }
                   `}
                 >
                   <span>Choose {plan.level}</span>
                   <span
-                    className={`p-2 border rounded-full ${
-                      isMiddle ? "border-white" : "border-primary "
-                    }`}
+                    className={`p-2 border rounded-full ${isMiddle ? "border-white" : "border-primary "
+                      }`}
                   >
                     <GoArrowUpRight />
                   </span>
