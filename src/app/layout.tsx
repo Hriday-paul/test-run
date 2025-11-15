@@ -3,10 +3,12 @@ import { Poppins, Figtree } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/shared/Navbar/Navbar";
 import Footer from "@/shared/Footer/Footer";
+import ReduxProvider from "@/shared/ReduxProvider";
+import { Toaster } from 'sonner';
 
 const poppins = Poppins({
   variable: "--font-poppin",
-  weight : ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
 });
 
@@ -30,9 +32,12 @@ export default function RootLayout({
       <body
         className={`${poppins.variable} ${figtree.variable} antialiased`}
       >
-        <Navbar />
-        {children}
-        <Footer />
+        <ReduxProvider>
+          <Toaster richColors position="top-right"/>
+          <Navbar />
+          {children}
+          <Footer />
+        </ReduxProvider>
       </body>
     </html>
   );

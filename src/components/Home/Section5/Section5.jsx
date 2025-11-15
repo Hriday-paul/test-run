@@ -39,19 +39,19 @@ export default function Section5() {
                 <div className="mt-16 flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
                     <div className="bg-black p-6 rounded-lg text-center flex-1">
                         <h3 className="text-3xl font-bold font-figtree text-primary">
-                            <CountUp end={5000} duration={2} />+
+                            <CountUp end={5000} duration={2} enableScrollSpy={true} scrollSpyOnce />+
                         </h3>
                         <p className="text-white/90 mt-2 font-figtree">Published Ads</p>
                     </div>
                     <div className="bg-black p-6 rounded-lg text-center flex-1">
                         <h3 className="text-3xl font-bold font-figtree text-primary">
-                            <CountUp end={3265} duration={2} />+
+                            <CountUp end={3265} duration={2} enableScrollSpy={true} scrollSpyOnce />+
                         </h3>
                         <p className="text-white/90 mt-2 font-figtree">Registered Users</p>
                     </div>
                     <div className="bg-black p-6 rounded-lg text-center flex-1">
                         <h3 className="text-3xl font-bold text-primary font-figtree">
-                            <CountUp end={2000} duration={2} />+
+                            <CountUp end={2000} duration={2} enableScrollSpy={true} scrollSpyOnce />+
                         </h3>
                         <p className="text-white/90 mt-2 font-figtree">Verified Users</p>
                     </div>

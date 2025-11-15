@@ -28,7 +28,8 @@ function Navbar() {
             <div className='container'>
                 <div className=' flex flex-row justify-between items-center gap-x-5 py-4'>
                     <Link href={"/"}>
-                        <Image src={logo} alt='logo' className='h-12 w-auto object-cover' />
+                        {/* <Image src={logo} alt='logo' className='h-12 w-auto object-cover' /> */}
+                        Logo
                         </Link>
                     <div className="flex flex-row gap-x-5 items-center">
                         <ul className='md:flex flex-row gap-x-5 lg:gap-x-8 xl:gap-x-10 items-center hidden'>

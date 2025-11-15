@@ -37,7 +37,8 @@ const SmNavSheet = () => {
 
                             <SheetTrigger>
                                 <Link href={"/"}>
-                                    <Image src={logo} alt='logo' className='h-12 w-auto object-cover' />
+                                    {/* <Image src={logo} alt='logo' className='h-12 w-auto object-cover' /> */}
+                                    Logo
                                 </Link>
                             </SheetTrigger>
 
