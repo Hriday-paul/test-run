@@ -20,7 +20,7 @@ type signUpType = {
     confirmPassword: string,
     role: string,
     phone: string,
-     terms: boolean,
+    terms: boolean,
 }
 
 const SignUpForm = () => {
@@ -248,6 +248,10 @@ const SignUpForm = () => {
                         {isLoading && <ImSpinner2 className="text-lg text-white animate-spin" />}
                         <span>{isLoading ? 'Loading...' : watch("role") == "Vendor" ? "Sign Up" : "Sign Up for Free"}</span>
                     </button>
+
+                    <div>
+                        <h5 className='text-gray-900 font-popin text-sm md:text-base text-center mt-3'>Already have a account ?<Link className='text-primary' href='/auth/login'> Login Now</Link></h5>
+                    </div>
 
                 </form>
 

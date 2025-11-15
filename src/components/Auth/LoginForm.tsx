@@ -139,7 +139,7 @@ const LoginForm = () => {
 
                 </div>
 
-                <Link href={'/forgot-password'} className='underline underline-offset-2 font-medium font-figtree'>{"Forgot Password"}</Link>
+                <Link href={'/auth/forgot-password'} className='underline underline-offset-2 font-medium font-figtree'>{"Forgot Password"}</Link>
 
                 <button type='submit' disabled={isLoading} className='bg-primary py-3 font-figtree rounded-lg w-full mt-5 hover:bg-opacity-90 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
                     {isLoading && <ImSpinner2 className="text-lg text-white animate-spin" />}
