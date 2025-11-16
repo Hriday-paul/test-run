@@ -98,7 +98,7 @@ export default function Pagination({
   }
 
   return (
-    <nav className="flex items-center justify-end space-x-1 font-figtree" aria-label="Pagination">
+    <nav className="flex items-center justify-center space-x-1 font-figtree" aria-label="Pagination">
       <button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}

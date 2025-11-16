@@ -40,14 +40,14 @@ function SortBar({ limit, sort = "createdAt" }: { limit: string, sort ?: string 
                 <span className="text-sm truncate font-popin">Sort by:</span>
                 <Select
                     defaultValue={sort}
-                    onValueChange={(value) => updateSearchParam("sortBy", value)}
+                    onValueChange={(value) => updateSearchParam("sort", value)}
                 >
                     <SelectTrigger className="h-8 border-none shadow-none focus-visible:ring-0 px-2 font-popin cursor-pointer">
                         <SelectValue placeholder={sort?.toString()}/>
                     </SelectTrigger>
                     <SelectContent className="font-popin">
-                        <SelectItem value="createdAt">New post</SelectItem>
-                        <SelectItem value="-createdAt">Old post</SelectItem>
+                        <SelectItem value="-createdAt">New post</SelectItem>
+                        <SelectItem value="createdAt">Old post</SelectItem>
                         <SelectItem value="price">Price: Low to High</SelectItem>
                         <SelectItem value="-price">Price: High to Low</SelectItem>
                     </SelectContent>

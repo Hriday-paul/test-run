@@ -27,7 +27,7 @@ function CarCard({ car }: { car: Add }) {
                             {car?.title}
                         </h3>
                         <div className="flex items-center text-sm text-gray-600 gap-1">
-                            <SlLocationPin size={16} /> {car?.district || "N/A"}
+                            <SlLocationPin size={16} /> {car?.division || "N/A"}
                         </div>
                     </div>
 

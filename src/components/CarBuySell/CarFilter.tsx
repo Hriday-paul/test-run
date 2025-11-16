@@ -7,7 +7,6 @@ import {
 } from "@/components/ui/accordion"
 
 import { Checkbox } from "@/components/ui/checkbox"
-import { UseUpdateSearchParams } from "@/hooks/UseUpdateSearchPrams";
 import { useAllDivisionsQuery } from "@/redux/api/locations.api";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
@@ -48,11 +47,11 @@ const brands = [
 function CarFilter() {
     const { isLoading, data } = useAllDivisionsQuery();
     const { isLoading: countLoading, data: countdata } = useMaxcarsCountQuery();
-    const updateSearchParam = UseUpdateSearchParams();
     const searchParams = useSearchParams();
     const router = useRouter();
     const selectedConditions = searchParams.get("condition")?.split(",") || [];
     const selectedbrands = searchParams.get("brand")?.split(",") || [];
+    const selecteddivisions = searchParams.get("division")?.split(",") || [];
 
     const updateQueryParam = useCallback(
         (key: string, value: string) => {
@@ -146,7 +145,7 @@ function CarFilter() {
                     <AccordionContent className="border-t border-stroke pt-4 space-y-3">
                         {
                             data?.data?.divisions?.map(i => {
-                                const isChecked = selectedbrands.includes(i?.name);
+                                const isChecked = selecteddivisions.includes(i?.name);
                                 return <div key={i?.id} className="flex items-center gap-3">
                                     <Checkbox id={i?.id.toString()} className="size-5 cursor-pointer" checked={isChecked} onCheckedChange={() => updateQueryParam("division", i?.name)} />
                                     <label htmlFor={i?.id.toString()} className="font-popin text-base cursor-pointer">{i?.name}</label>

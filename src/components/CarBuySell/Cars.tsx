@@ -8,21 +8,70 @@ import SortBar from "./SortBar";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Pagination from "../ui/Pagination";
+import { LoadingCard } from "@/shared/LoadingCard";
 
 
 function Cars() {
 
-    const limit = useSearchParams()?.get("limit");
-    const sort = useSearchParams()?.get("sort");
+    const searchParams = useSearchParams();
+
+    const limit = searchParams?.get("limit");
+    const sort = searchParams?.get("sort");
     // const page = useSearchParams()?.get("page");
-    const price = useSearchParams()?.get("price");
-    const division = useSearchParams()?.get("division");
-    const condition = useSearchParams()?.get("condition");
-    const brand = useSearchParams()?.get("brand");
+    const minPrice = searchParams?.get("minPrice");
+    const maxPrice = searchParams?.get("maxPrice");
+    const minMileage = searchParams?.get("minMileage");
+    const maxMileage = searchParams?.get("maxMileage");
+    const division = searchParams?.get("division");
+    const condition = searchParams?.get("condition");
+    const brand = searchParams?.get("brand");
+
+    let sortBy = "createdAt";
+    let orderBy = "desc"
+
+    if (sort == "-createdAt") {
+        orderBy = "asc"
+    } else if (sort == "price") {
+        sortBy = "price";
+        orderBy = "asc"
+    }
+    else if (sort == "-price") {
+        sortBy = "price";
+        orderBy = "desc"
+    }
 
     const [page, setPage] = useState<number>(1);
 
-    const { isLoading, isError, isSuccess, data } = useAllcarsQuery({});
+    const query: any = { page, sortBy, sortOrder : orderBy }
+
+    if (minPrice) {
+        query.minPrice = minPrice
+    }
+    if (maxPrice) {
+        query.maxPrice = maxPrice
+    }
+    if (minMileage) {
+        query.minMileage = minMileage
+    }
+    if (maxMileage) {
+        query.maxMileage = maxMileage
+    }
+    if (division) {
+        query.division = division
+    }
+    if (condition) {
+        query.condition = condition
+    }
+    if (brand) {
+        query.brand = brand
+    }
+    if (limit) {
+        query.limit = limit
+    }
+
+
+
+    const { isLoading, isError, isSuccess, data } = useAllcarsQuery(query);
 
     if (isError) {
         return <ErrorComponent />
@@ -41,13 +90,22 @@ function Cars() {
                 {isSuccess && data?.data?.data?.map(car => {
                     return <CarCard key={car?.id} car={car} />
                 })}
+                {isLoading && <>
+                    <LoadingCard />
+                    <LoadingCard />
+                    <LoadingCard />
+                    <LoadingCard />
+                    <LoadingCard />
+                </>}
             </div>
-            <Pagination
-                totalPages={data?.data?.meta?.totalPage || 1}
-                initialPage={1}
-                onPageChange={(n) => setPage(n)}
-                maxDisplayedPages={5}
-            />
+            <div className="mt-3">
+                <Pagination
+                    totalPages={data?.data?.meta?.totalPage || 1}
+                    initialPage={1}
+                    onPageChange={(n) => setPage(n)}
+                    maxDisplayedPages={5}
+                />
+            </div>
         </div>
     )
 }
