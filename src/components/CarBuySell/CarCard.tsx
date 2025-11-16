@@ -1,57 +1,70 @@
+import { Add } from "@/redux/types";
+import { Bike, Calendar, Component, Gauge, Users } from "lucide-react";
+import Link from "next/link";
 import { SlLocationPin } from "react-icons/sl";
+import { Button } from "../ui/button";
+import Image from "next/image";
+import { placeHolderBlurImg } from "@/utils/config";
+import { MdAirlineSeatReclineNormal } from "react-icons/md";
 
-function CarCard() {
+function CarCard({ car }: { car: Add }) {
     return (
         <div
-            key={v.id}
-            className="border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0"
-        >
-            <img
-                src={v.image}
-                alt={v.title}
-                className="w-full h-48 object-cover"
+            className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree max-w-lg">
+            <Image
+                src={car?.images[0]?.url}
+                alt={"runbd car ad image"}
+                className="w-full h-56 object-cover z-0"
+                height={500}
+                width={1000}
+                placeholder="blur"
+                blurDataURL={placeHolderBlurImg}
             />
-            <div className="p-4 pt-0 space-y-2">
-                <h3 className="font-semibold text-gray-900 text-lg">
-                    {v.title}
-                </h3>
-                <div className="flex items-center text-sm text-gray-600 gap-1">
-                    <SlLocationPin size={14} /> {v.location}
-                </div>
-                <div className="my-2" />
-                <div className="flex items-center justify-between text-gray-700 text-sm">
-                    <div className="flex flex-col justify-between items-start gap-5">
-                        <span className="flex items-center gap-1">
-                            <Gauge size={14} /> {v.km} km
-                        </span>
-                        <span className="flex items-center gap-1">
-                            <Users size={14} /> {v.seats} Seats
-                        </span>
+            <Link href={`/carbuysell/${car?.id}`}>
+                <div className="p-5 space-y-2 bg-white rounded-t-2xl border-t border-stroke -mt-3 relative z-40">
+                    <div className="border-b border-stroke pb-2">
+                        <h3 className="font-bold text-gray-900 text-lg">
+                            {car?.title}
+                        </h3>
+                        <div className="flex items-center text-sm text-gray-600 gap-1">
+                            <SlLocationPin size={16} /> {car?.district || "N/A"}
+                        </div>
                     </div>
-                    <div className="flex flex-col justify-between items-start gap-5">
-                        <span className="flex items-center gap-1">
-                            <Calendar size={14} /> {v.year}
-                        </span>
-                        <span className="flex items-center gap-1">
-                            <Bike size={14} /> {v.brand}
-                        </span>
+
+                    <div className="flex items-center justify-between text-gray-700 text-sm py-2">
+                        <div className="flex flex-col justify-between items-start gap-3">
+                            <span className="flex items-center gap-1 text-base">
+                                <Gauge size={22} /> {car?.car?.mileage || "N/A"} km
+                            </span>
+                            <span className="flex items-center text-base gap-1">
+                                <MdAirlineSeatReclineNormal size={25} /> {car?.car?.seat || "N/A"} Seats
+                            </span>
+                        </div>
+                        <div className="flex flex-col justify-between items-start gap-3">
+                            <span className="flex items-center gap-1 text-base">
+                                <Calendar size={20} /> {car?.car?.year || "N/A"}
+                            </span>
+                            <span className="flex items-center gap-1 text-base">
+                                <Component size={20} /> {car?.car?.brand || "N/A"}
+                            </span>
+                        </div>
+                    </div>
+                    <div className="flex items-center justify-between pt-2">
+                        <p className="font-semibold text-gray-900 flex items-center gap-1 text-base">
+                            Tk {car?.price}
+                        </p>
+                        <Link href={`/carbuysell/${car?.id}`}>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                className="text-primary hover:text-white bg-primary/10 hover:bg-primary transition-all duration-300 cursor-pointer py-5 px-6 font-popin"
+                            >
+                                View Details
+                            </Button>
+                        </Link>
                     </div>
                 </div>
-                <div className="flex items-center justify-between pt-2">
-                    <p className="font-semibold text-gray-900 flex items-center gap-1">
-                        <DollarSign size={14} /> {v.price}
-                    </p>
-                    <Link href={"/shop/car-shop/car-details"}>
-                        <Button
-                            variant="outline"
-                            size="sm"
-                            className="text-[#0C8CE9] hover:text-white bg-[#0C8CE9]/30 hover:bg-[#0C8CE9] transition-all duration-300 cursor-pointer py-5 px-6"
-                        >
-                            View Details
-                        </Button>
-                    </Link>
-                </div>
-            </div>
+            </Link>
         </div>
     )
 }

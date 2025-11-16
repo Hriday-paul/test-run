@@ -3,6 +3,8 @@ import React from 'react'
 import bannerimg from "../../../public/post-top-bg.jpg"
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
+import Cars from '@/components/CarBuySell/Cars'
+import CarFilter from '@/components/CarBuySell/CarFilter'
 
 function CarBuySell() {
   return (
@@ -14,14 +16,18 @@ function CarBuySell() {
       >
         <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Car Buy/Sell
       </ShopBanner>
-      <div className='grid grid-cols-4 gap-5 bg-[#F2F4F8]'>
-        <div className='col-span-1'>
 
-        </div>
-        <div className='col-span-3'>
-
+      <div className='bg-[#F2F4F8] py-8'>
+        <div className='grid grid-cols-4 gap-5 container'>
+          <div className='col-span-1 hidden md:block'>
+              <CarFilter />
+          </div>
+          <div className='col-span-3'>
+            <Cars />
+          </div>
         </div>
       </div>
+
     </div>
   )
 }
