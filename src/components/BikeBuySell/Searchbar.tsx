@@ -25,7 +25,7 @@ function Searchbar() {
   const updateMultipleSearchParam = UseUpdateMultipleSearchParams();
 
   return (
-    <div className='w-full bg-white p-2 border border-stroke grid grid-cols-2 gap-5'>
+    <div className='w-full bg-white px-2 md:p-2 border border-stroke grid grid-cols-1 md:grid-cols-2 gap-x-5'>
 
       <LocationModal updateSearchParam={updateMultipleSearchParam} />
 
@@ -49,7 +49,7 @@ const Search = ({ updateMultipleSearchParam }: { updateMultipleSearchParam: any 
   };
 
   return (
-    <form onSubmit={handleSubmit} className='flex flex-row gap-x-1 items-center justify-between'>
+    <form onSubmit={handleSubmit} className='flex flex-row gap-x-1 items-center justify-between py-2 md:py-0'>
       <div className='flex flex-row gap-x-1 items-center'>
         <IoSearchOutline className='text-xl' />
         <input
@@ -71,7 +71,7 @@ const LocationModal = ({ updateSearchParam }: { updateSearchParam: any }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className={`flex flex-row gap-x-1 items-center border-r border-stroke cursor-pointer ml-2 w-full ${district ? "text-black" : "text-gray-400"}`}>
+        <button className={` py-3.5 md:py-0 flex flex-row gap-x-1 items-center border-b md:border-b-0 md:border-r border-stroke cursor-pointer ml-2 w-full ${district ? "text-black" : "text-gray-400"}`}>
           <MdLocationOn className='text-xl' />
           <p className='text-base font-figtree'>{district ?? "Location"}</p>
         </button>
@@ -101,7 +101,7 @@ const DivisionSlide = ({ updateSearchParam }: { updateSearchParam: any }) => {
   }
 
   return (
-    <div>
+    <div className='max-h-[80vh] overflow-y-auto overflow-x-hidden'>
       {!selectedDivision &&
         <>
           <h4 className='text-lg font-figtree font-medium text-black mb-3'>Select Devesion</h4>

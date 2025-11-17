@@ -47,8 +47,16 @@ const AddApi = baseApi.injectEndpoints({
             }),
             providesTags: ['ads', "accessories"]
         }),
+        
+        allJobs: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
+            query: (query) => ({
+                url: '/ads/jobs',
+                params: query
+            }),
+            providesTags: ['ads', "jobs"]
+        }),
 
     })
 })
 
-export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery } = AddApi
+export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery } = AddApi

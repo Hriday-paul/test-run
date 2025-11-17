@@ -111,6 +111,7 @@ export interface IJob {
 
     company_name: string;
     job_type: string;
+    employment_type : string
 }
 
 export interface IExchange {
