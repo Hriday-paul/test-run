@@ -16,3 +16,36 @@ export const config = {
 };
 
 export const placeHolderBlurImg = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASwAAACoCAMAAABt9SM9AAAAA1BMVEWnpaaXiDhOAAAAR0lEQVR4nO3BAQEAAACCIP+vbkhAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAO8GxYgAAb0jQ/cAAAAASUVORK5CYII='
+
+export const bikeBrands = [
+    "Yamaha",
+    "Honda",
+    "Suzuki",
+    "Hero",
+    "TVS",
+    "Bajaj",
+    "Lifan",
+    "Runner",
+    "KTM",
+    "Aprilia",
+    "kawasaki",
+    "Benelli",
+    "keeway",
+    "Taro GP",
+    "roadmaster",
+    "vespa",
+    "Gpx Demon - 165R",
+    "Taro GP V3",
+    "Gpx Demon - 165RR",
+    "Generic Cafe Racer",
+    "AUGE",
+    "DAYUNG",
+    "Zara",
+    "Haojue",
+    "Benelli",
+    "walton Fusion",
+    "Vespa lx 125",
+    "EMMA",
+    "Royel Enfild",
+    "Hammer"
+];

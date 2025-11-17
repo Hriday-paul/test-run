@@ -11,14 +11,44 @@ const AddApi = baseApi.injectEndpoints({
             providesTags: ['ads', "cars"]
         }),
 
-        maxcarsCount: builder.query<{ message: string, data: { maxPrice: {_max : {price : number}}, maxMileage: {_max : {mileage : number}} } }, void>({
+        maxcarsCount: builder.query<{ message: string, data: { maxPrice: { _max: { price: number } }, maxMileage: { _max: { mileage: number } } } }, void>({
             query: () => ({
                 url: '/ads/cars/max-counts',
             }),
             providesTags: ['ads', "cars"]
         }),
 
+        allBikes: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
+            query: (query) => ({
+                url: '/ads/bikes',
+                params: query
+            }),
+            providesTags: ['ads', "bikes"]
+        }),
+
+        maxBikesCount: builder.query<{ message: string, data: { maxPrice: { _max: { price: number } }, maxMileage: { _max: { mileage: number } } } }, void>({
+            query: () => ({
+                url: '/ads/bikes/max-counts',
+            }),
+            providesTags: ['ads', "bikes"]
+        }),
+
+        allWorkshops: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
+            query: (query) => ({
+                url: '/ads/work-shops',
+                params: query
+            }),
+            providesTags: ['ads', "workshops"]
+        }),
+        allAccessories: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
+            query: (query) => ({
+                url: '/ads/accessories',
+                params: query
+            }),
+            providesTags: ['ads', "accessories"]
+        }),
+
     })
 })
 
-export const { useAllcarsQuery, useMaxcarsCountQuery } = AddApi
+export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery } = AddApi

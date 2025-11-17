@@ -94,6 +94,8 @@ export interface IBike {
     color?: string | null;
     fuel_type?: string | null;
     edition?: string | null;
+    brand: string | null;
+    bike_type: string | null
 }
 
 export interface IJob {
@@ -173,6 +175,15 @@ export interface IMeta {
 
 export interface IDivision {
     "id": number,
+    "name": string,
+    "bn_name": string,
+    "lat": number,
+    "long": number
+}
+
+export interface IDistrict {
+    "id": number,
+    "division_id": number,
     "name": string,
     "bn_name": string,
     "lat": number,

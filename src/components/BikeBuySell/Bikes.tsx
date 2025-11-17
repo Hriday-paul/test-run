@@ -1,18 +1,19 @@
 "use client"
 
-import { useAllcarsQuery } from "@/redux/api/ads.api"
+import { useAllBikesQuery } from "@/redux/api/ads.api"
 import ErrorComponent from "@/shared/ErrorComponent";
-import CarCard from "./CarCard";
 import { PiSlidersHorizontalDuotone } from "react-icons/pi";
-import SortBar from "./SortBar";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import Pagination from "../ui/Pagination";
 import { LoadingCard } from "@/shared/LoadingCard";
 import Image from "next/image";
+import SortBar from "../CarBuySell/SortBar";
+import BikeCard from "./BikeCard";
+import Searchbar from "./Searchbar";
 
 
-function Cars() {
+function Bikes() {
 
     const searchParams = useSearchParams();
 
@@ -24,8 +25,11 @@ function Cars() {
     const minMileage = searchParams?.get("minMileage");
     const maxMileage = searchParams?.get("maxMileage");
     const division = searchParams?.get("division");
+    const district = searchParams?.get("district");
+    const bike_type = searchParams?.get("bike_type");
     const condition = searchParams?.get("condition");
     const brand = searchParams?.get("brand");
+    const searchTerm = searchParams?.get("searchTerm");
 
     let sortBy = "createdAt";
     let orderBy = "desc"
@@ -60,17 +64,26 @@ function Cars() {
     if (division) {
         query.division = division
     }
+    if (district) {
+        query.district = district
+    }
     if (condition) {
         query.condition = condition
     }
     if (brand) {
         query.brand = brand
     }
+    if (bike_type) {
+        query.bike_type = bike_type
+    }
+    if (searchTerm) {
+        query.searchTerm = searchTerm
+    }
     if (limit) {
         query.limit = limit
     }
 
-    const { isLoading, isError, isSuccess, data } = useAllcarsQuery(query);
+    const { isLoading, isError, isSuccess, data } = useAllBikesQuery(query);
 
     if (isError) {
         return <ErrorComponent />
@@ -78,7 +91,10 @@ function Cars() {
 
     return (
         <div>
-            <div className="flex flex-row justify-between items-center py-4">
+
+            <Searchbar />
+            
+            <div className="flex flex-row justify-between items-center py-2.5">
                 <p className="text-gray-500 text-sm font-popin font-medium flex flex-row gap-x-1.5 items-center">
                     <PiSlidersHorizontalDuotone className="text-xl" />
                     {isSuccess && data?.data?.meta?.total} items found
@@ -86,8 +102,8 @@ function Cars() {
                 <SortBar limit={limit || "10"} sort={sort || "-createdAt"} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {isSuccess && data?.data?.data?.map(car => {
-                    return <CarCard key={car?.id} car={car} />
+                {isSuccess && data?.data?.data?.map(bike => {
+                    return <BikeCard key={bike?.id} bike={bike} />
                 })}
                 {isLoading && <>
                     <LoadingCard />
@@ -117,4 +133,4 @@ function Cars() {
     )
 }
 
-export default Cars
+export default Bikes
