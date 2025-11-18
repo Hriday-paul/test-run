@@ -142,6 +142,7 @@ export enum ExchangeCategory {
 }
 
 export interface Lawyer {
+    phone : string | null
     gender?: string | null;
     license_number?: string | null;
     bar_council?: string | null;

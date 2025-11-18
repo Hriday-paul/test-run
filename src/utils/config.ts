@@ -49,3 +49,55 @@ export const bikeBrands = [
     "Royel Enfild",
     "Hammer"
 ];
+
+export const lawyerSpecializations = [
+    "Corporate",
+    "Criminal Defense",
+    "Family",
+    "Personal Injury",
+    "Intellectual Property",
+    "Real Estate",
+    "Immigration",
+    "Employment",
+    "Bankruptcy",
+    "Tax",
+    "Environmental",
+    "Estate Planning",
+    "Civil Rights",
+    "Constitutional",
+    "International",
+    "Entertainment",
+    "Healthcare",
+    "Sports",
+    "Maritime",
+    "Cyber",
+    "Patent",
+    "Trademark",
+    "Copyright",
+    "Securities",
+    "Mergers & Acquisitions",
+    "White Collar Crime",
+    "Divorce",
+    "Child Custody",
+    "Medical Malpractice",
+    "Workers' Compensation",
+    "Social Security",
+    "Military",
+    "Education",
+    "Elder",
+    "Animal"
+];
+
+export const ExchangeCategory =  [
+  "Car",
+  "Bike",
+  "Phone",
+  "Gadget",
+  "Truck",
+  "Bicycle",
+  "Van",
+  "Scooter",
+  "Laptop",
+  "Property",
+  "Other"
+]

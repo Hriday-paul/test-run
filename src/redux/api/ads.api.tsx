@@ -56,7 +56,22 @@ const AddApi = baseApi.injectEndpoints({
             providesTags: ['ads', "jobs"]
         }),
 
+        allLawyers: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
+            query: (query) => ({
+                url: '/ads/lawyers',
+                params: query
+            }),
+            providesTags: ['ads', "lawyers"]
+        }),
+        allExchanges: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
+            query: (query) => ({
+                url: '/ads/exchanges',
+                params: query
+            }),
+            providesTags: ['ads', "exchanges"]
+        }),
+
     })
 })
 
-export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery } = AddApi
+export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery } = AddApi;
