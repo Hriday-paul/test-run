@@ -101,3 +101,15 @@ export const ExchangeCategory =  [
   "Property",
   "Other"
 ]
+
+export const carType = [
+  "Ambulance",
+  "Private Car",
+  "Bus",
+  "Micro Bus",
+  "Mini Bus",
+  "Truck",
+  "Pickup",
+  "Cargo Van",
+  "Covered Van"
+]

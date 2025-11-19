@@ -70,8 +70,15 @@ const AddApi = baseApi.injectEndpoints({
             }),
             providesTags: ['ads', "exchanges"]
         }),
+        allRentcar: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
+            query: (query) => ({
+                url: '/ads/rent-cars',
+                params: query
+            }),
+            providesTags: ['ads', "rentCars"]
+        }),
 
     })
 })
 
-export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery } = AddApi;
+export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery, useAllRentcarQuery } = AddApi;

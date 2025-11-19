@@ -41,6 +41,7 @@ export type Add = {
     job: IJob
     exchange: IExchange
     lawyer: Lawyer
+    carRent : IRentCar
 
     createdAt: Date
     updatedAt: Date
@@ -165,6 +166,13 @@ export interface IWorkshop {
     open_time?: string
     close_time?: string
     open_days: string[]
+}
+
+export interface IRentCar {
+    id: number,
+    car_type : string
+    location : string,
+    phone : string
 }
 
 export interface IMeta {
