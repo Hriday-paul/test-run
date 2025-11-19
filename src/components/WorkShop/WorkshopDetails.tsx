@@ -5,7 +5,7 @@ import DetailsSkeleton from '@/shared/DetailsSkeleton';
 import ErrorComponent from '@/shared/ErrorComponent';
 import ShopBanner from '@/shared/ShopBanner';
 import Link from 'next/link';
-import bannerimg from "../../../public/post-top-bg.jpg"
+import bannerimg from "../../../public/workshop-banner.png"
 import { IoIosArrowForward } from 'react-icons/io';
 import Image from 'next/image';
 import { Calendar, MapPin, Phone, Timer } from 'lucide-react';
@@ -13,7 +13,7 @@ import { MdEmail } from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
 import moment from "moment";
 
-function CarDetails({ id }: { id: string }) {
+function WorkshopDetails({ id }: { id: string }) {
     const { isLoading, isError, isSuccess, data } = useAddDetailsQuery({ id });
 
     if (isError) {
@@ -25,10 +25,10 @@ function CarDetails({ id }: { id: string }) {
 
             <ShopBanner
                 image={bannerimg}
-                title="Car Details"
-                desc="View car full details"
+                title="Workshop Details"
+                desc="View Workshop full details"
             >
-                <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Car Details
+                <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Workshop
             </ShopBanner>
 
             {
@@ -36,7 +36,7 @@ function CarDetails({ id }: { id: string }) {
             }
 
 
-            {(data && isSuccess) ? data?.data?.category !== "Car" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
+            {(data && isSuccess) ? data?.data?.category !== "Workshop" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
                 <div className='container'>
                     <div className='grid grid-cols-5 gap-8'>
 
@@ -46,68 +46,6 @@ function CarDetails({ id }: { id: string }) {
                             <div className='bg-white p-5 rounded-lg'>
                                 <h3 className='text-2xl font-popin font-semibold mb-3'>{data?.data?.title}</h3>
                                 <p className='text-sm font-medium font-figtree'>{data?.data?.description}</p>
-                            </div>
-
-                            <div className='bg-white p-5 rounded-lg'>
-                                <h3 className='text-2xl font-popin font-semibold mb-3'>Car Features : </h3>
-                                <div className='grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-10'>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Engine</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.engine || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Model</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.model || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Mileage</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.mileage || "N/A"} Km </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Gearbox</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.gear_box || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Color</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.color || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Year</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.year || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Fuel Type</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.fuel_type || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Body Type</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.body_type || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Drive Type</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.drive_type || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Air con</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.air_condition || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Car Type</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.car_type || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Car Seat</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.seat || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Brand</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.brand || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Condition</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.condition || "N/A"} </p>
-                                    </div>
-                                </div>
                             </div>
 
                         </div>
@@ -196,4 +134,4 @@ function CarDetails({ id }: { id: string }) {
     )
 }
 
-export default CarDetails
+export default WorkshopDetails;

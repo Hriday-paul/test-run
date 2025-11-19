@@ -2,7 +2,6 @@ import ShopBanner from '@/shared/ShopBanner'
 import bannerimg from "../../../public/workshop-banner.png"
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
-import Bikes from '@/components/BikeBuySell/Bikes'
 import WorkShopFilter from '@/components/WorkShop/WorkShopFilter'
 import WorkShops from '@/components/WorkShop/WorkShops'
 
