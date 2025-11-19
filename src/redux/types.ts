@@ -49,6 +49,8 @@ export type Add = {
     division: string
     district: string
 
+    owner : IUser
+
 }
 
 export enum Category {

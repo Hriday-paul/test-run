@@ -1,5 +1,4 @@
 import ShopBanner from '@/shared/ShopBanner'
-import React from 'react'
 import bannerimg from "../../../public/post-top-bg.jpg"
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'

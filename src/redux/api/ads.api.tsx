@@ -3,6 +3,13 @@ import baseApi from "./baseApi";
 
 const AddApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
+
+        addDetails: builder.query<{ message: string, data: Add }, {id : string}>({
+            query: ({id}) => ({
+                url: `/ads/details/${id}`
+            }),
+        }),
+
         allcars: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
             query: (query) => ({
                 url: '/ads/cars',
@@ -81,4 +88,4 @@ const AddApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery, useAllRentcarQuery } = AddApi;
+export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery, useAllRentcarQuery, useAddDetailsQuery } = AddApi;
