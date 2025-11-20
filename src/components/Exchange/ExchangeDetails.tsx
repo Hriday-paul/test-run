@@ -99,17 +99,24 @@ function ExchangeDetails({ id }: { id: string }) {
 
                             <div className='bg-white p-5 rounded-lg'>
                                 <div className='pb-4 border-b border-stroke'>
-                                    <h3 className='text-xl font-popin font-medium'>Rent Price</h3>
+                                    <h3 className='text-xl font-popin font-medium'>Information</h3>
                                 </div>
                                 <div className='pt-4 space-y-4'>
                                     <div className='flex flex-row gap-x-1 justify-between items-center'>
                                         <div className='flex flex-row gap-x-1 items-center'>
-                                            <Tag size={20} />
                                             <p className='font-popin text-sm font-medium'>
-                                                Price
+                                                Condition
                                             </p>
                                         </div>
-                                        <p className='font-popin text-base'>{data?.data?.price > 0 ? (data?.data?.price + "Tk") : "N/A"}</p>
+                                        <p className='font-popin text-base'>{data?.data?.exchange?.condition || "N/A"}</p>
+                                    </div>
+                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
+                                        <div className='flex flex-row gap-x-1 items-center'>
+                                            <p className='font-popin text-sm font-medium'>
+                                                Location
+                                            </p>
+                                        </div>
+                                        <p className='font-popin text-base'>{data?.data?.exchange?.location || "N/A"}</p>
                                     </div>
                                 </div>
                             </div>
