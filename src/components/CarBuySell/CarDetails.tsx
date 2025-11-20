@@ -52,60 +52,60 @@ function CarDetails({ id }: { id: string }) {
                                 <h3 className='text-2xl font-popin font-semibold mb-3'>Car Features : </h3>
                                 <div className='grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-10'>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Engine</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.engine || "N/A"} </p>
+                                        <p className='text-base font-figtree'>Engine</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.engine || "N/A"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Model</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.model || "N/A"} </p>
+                                        <p className='text-base font-figtree'>Model</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.model || "N/A"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Mileage</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.mileage || "N/A"} Km </p>
+                                        <p className='text-base font-figtree'>Mileage</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.mileage || "N/A"} Km </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Gearbox</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.gear_box || "N/A"} </p>
+                                        <p className='text-base font-figtree'>Gearbox</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.gear_box || "N/A"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Color</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.color || "N/A"} </p>
+                                        <p className='text-base font-figtree'>Color</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.color || "N/A"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Year</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.year || "N/A"} </p>
+                                        <p className='text-base font-figtree'>Year</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.year || "N/A"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Fuel Type</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.fuel_type || "N/A"} </p>
+                                        <p className='text-base font-figtree'>Fuel Type</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.fuel_type || "N/A"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Body Type</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.body_type || "N/A"} </p>
+                                        <p className='text-base font-figtree'>Body Type</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.body_type || "N/A"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Drive Type</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.drive_type || "N/A"} </p>
+                                        <p className='text-base font-figtree'>Drive Type</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.drive_type || "N/A"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Air con</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.air_condition || "N/A"} </p>
+                                        <p className='text-base font-figtree'>Air con</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.air_condition || "N/A"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Car Type</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.car_type || "N/A"} </p>
+                                        <p className='text-base font-figtree'>Car Type</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.car_type || "N/A"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Car Seat</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.seat || "N/A"} </p>
+                                        <p className='text-base font-figtree'>Car Seat</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.seat || "N/A"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Brand</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.brand || "N/A"} </p>
+                                        <p className='text-base font-figtree'>Brand</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.brand || "N/A"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-lg font-figtree'>Condition</p>
-                                        <p className='text-lg font-figtree font-semibold'>{data?.data?.car?.condition || "N/A"} </p>
+                                        <p className='text-base font-figtree'>Condition</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.condition || "N/A"} </p>
                                     </div>
                                 </div>
                             </div>

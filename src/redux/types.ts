@@ -58,10 +58,10 @@ export enum Category {
     Car = "Car",
     Workshop = "Workshop",
     Accessories = "Accessories",
-    CarRent = "CarRent",
     Job = "Job",
     Exchange = "Exchange",
     Lawyer = "Lawyer",
+    CarRent = "CarRent"
 }
 
 

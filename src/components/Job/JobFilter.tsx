@@ -11,9 +11,6 @@ import { useAllDivisionsQuery } from "@/redux/api/locations.api";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import { Skeleton } from "../ui/skeleton";
-import RangeFilter from "@/shared/RangeFilter";
-import { useMaxBikesCountQuery } from "@/redux/api/ads.api";
-import { bikeBrands } from "@/utils/config";
 
 
 function JobFilter() {

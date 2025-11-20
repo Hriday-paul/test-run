@@ -7,6 +7,7 @@ import {
 import "keen-slider/keen-slider.min.css";
 import { MutableRefObject, useState } from "react";
 import Image from "next/image";
+import { placeHolderBlurImg } from "@/utils/config";
 
 function ThumbnailPlugin(
     mainRef: MutableRefObject<KeenSliderInstance | null>,
@@ -74,8 +75,10 @@ function DetailsCarousel({ images }: { images: { key: string, url: string }[] })
                                 key={idx}
                                 src={image?.url}
                                 alt="product_image"
-                                width={2000}
-                                height={2000}
+                                placeholder="blur"
+                                blurDataURL={placeHolderBlurImg}
+                                width={4000}
+                                height={4000}
                                 className="keen-slider__slide h-[150px] w-[200px] pl-0 md:h-96 md:w-[250px] object-cover"
                             ></Image>
                         ))}
@@ -93,8 +96,10 @@ function DetailsCarousel({ images }: { images: { key: string, url: string }[] })
                             <Image
                                 src={image?.url}
                                 alt="product_image"
-                                width={950}
-                                height={700}
+                                width={4000}
+                                height={4000}
+                                 placeholder="blur"
+                                blurDataURL={placeHolderBlurImg}
                                 className={`keen-slider__slide slider-image translate-0 ml-2 h-[80px] rounded border border-black/50 object-cover cursor-pointer`}
                             ></Image>
                         </div>
