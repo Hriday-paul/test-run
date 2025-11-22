@@ -12,10 +12,10 @@ import {
     TableRow,
 } from "@/components/ui/table"
 import moment from 'moment';
-import Link from 'next/link';
 import Image from 'next/image';
 import Pagination from '@/components/ui/Pagination';
 import ErrorComponent from '@/shared/ErrorComponent';
+import { Payment } from '@/redux/types';
 
 const Payments = () => {
 
@@ -23,21 +23,22 @@ const Payments = () => {
     const { isLoading, isSuccess, data, isError } = useMyPaymentsQuery({ page });
 
     return (
-        <div>
+        <div className='mt-5 md:mt-6 lg:mt-8'>
+            <h3 className='text-base lg:text-lg font-popin text-black py-3'>Payments</h3>
             {
                 isLoading ?
                     <div>
                         <div className='min-h-40 flex items-center justify-center'>
-                            <ImSpinner8 className="text-4xl text-primary_red animate-spin" />
+                            <ImSpinner8 className="text-4xl text-primary animate-spin" />
                         </div>
                     </div>
                     :
                     isSuccess ?
                         <div className='max-w-5xl mx-auto'>
-                            <PaymentTable payments={data?.data} />
+                            <PaymentTable payments={data?.data?.data} />
                             <div className="mt-3">
                                 <Pagination
-                                    totalPages={data?.meta?.totalPage || 1}
+                                    totalPages={data?.data?.meta?.totalPage || 1}
                                     initialPage={1}
                                     onPageChange={(n) => setPage(n)}
                                     maxDisplayedPages={5}
@@ -49,12 +50,12 @@ const Payments = () => {
     );
 };
 
-export const PaymentTable = ({ payments }: { payments: {}[] }) => {
+export const PaymentTable = ({ payments }: { payments: Payment[] }) => {
     return <div className="pb-8">
-        <Table className="-z-10 font-figtree">
-            <TableHeader className="!bg-primary_red !text-white font-figtree !rounded-t-lg">
-                <TableRow className="!rounded-t-lg">
-                    <TableHead className="p-5 !rounded-tl-lg font-medium font-figtree">Tran. Id</TableHead>
+        <Table className="font-figtree">
+            <TableHeader className="!bg-primary/10 font-figtree ">
+                <TableRow className="">
+                    <TableHead className="p-5 font-medium font-figtree">Tran. Id</TableHead>
                     <TableHead className="font-medium font-figtree">Package/Service</TableHead>
                     <TableHead className="font-medium font-figtree">Amount</TableHead>
                     <TableHead className="font-medium font-figtree">Date</TableHead>
@@ -67,7 +68,7 @@ export const PaymentTable = ({ payments }: { payments: {}[] }) => {
 
                         <TableCell>{payment?.transactionId}</TableCell>
 
-                        <TableCell>{job?.package}</TableCell>
+                        <TableCell>{payment?.subscription ? payment?.subscription?.package?.name : "Service"}</TableCell>
 
                         <TableCell>{payment?.amount}</TableCell>
 

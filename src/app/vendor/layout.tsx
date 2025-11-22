@@ -33,7 +33,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             rout: '/vendor/settings'
         }]
     return (
-        <div className='bg-[#F8FAFC]'>
+        <div className='bg-[#F8FAFC] min-h-[80vh]'>
             <div className="container py-4 md:py-8">
                 <div className='grid grid-cols-1 lg:grid-cols-8 gap-x-5'>
                     <div className='hidden lg:block lg:col-span-2'>

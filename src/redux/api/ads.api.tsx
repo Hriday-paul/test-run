@@ -10,6 +10,36 @@ const AddApi = baseApi.injectEndpoints({
             }),
         }),
 
+        allAds: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
+            query: (query) => ({
+                url: `/ads/by-user`,
+                params : query
+            }),
+             providesTags: ['ads']
+        }),
+
+        featureAdd: builder.mutation<{ message: string, data: { data: Add[], meta: IMeta } }, {addId : number}>({
+            query: ({addId}) => ({
+                url: `/ads/feature/${addId}`,
+                method : "POST"
+            }),
+             invalidatesTags: ['ads']
+        }),
+        bumpAdd: builder.mutation<{ message: string, data: { data: Add[], meta: IMeta } }, {addId : number}>({
+            query: ({addId}) => ({
+                url: `/ads/bump/${addId}`,
+                method : "POST"
+            }),
+             invalidatesTags: ['ads']
+        }),
+        dltAdd: builder.mutation<{ message: string, data: { data: Add[], meta: IMeta } }, {addId : number}>({
+            query: ({addId}) => ({
+                url: `/ads/${addId}`,
+                method : "DELETE"
+            }),
+             invalidatesTags: ['ads']
+        }),
+
         allcars: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
             query: (query) => ({
                 url: '/ads/cars',
@@ -88,4 +118,4 @@ const AddApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery, useAllRentcarQuery, useAddDetailsQuery } = AddApi;
+export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery, useAllRentcarQuery, useAddDetailsQuery, useAllAdsQuery, useFeatureAddMutation, useBumpAddMutation, useDltAddMutation } = AddApi;

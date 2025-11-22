@@ -41,7 +41,7 @@ export type Add = {
     job: IJob
     exchange: IExchange
     lawyer: Lawyer
-    carRent : IRentCar
+    carRent: IRentCar
 
     createdAt: Date
     updatedAt: Date
@@ -49,7 +49,9 @@ export type Add = {
     division: string
     district: string
 
-    owner : IUser
+    owner: IUser
+
+    status : boolean
 
 }
 
@@ -114,7 +116,7 @@ export interface IJob {
 
     company_name: string;
     job_type: string;
-    employment_type : string
+    employment_type: string
 }
 
 export interface IExchange {
@@ -145,7 +147,7 @@ export enum ExchangeCategory {
 }
 
 export interface Lawyer {
-    phone : string | null
+    phone: string | null
     gender?: string | null;
     license_number?: string | null;
     bar_council?: string | null;
@@ -172,9 +174,9 @@ export interface IWorkshop {
 
 export interface IRentCar {
     id: number,
-    car_type : string
-    location : string,
-    phone : string
+    car_type: string
+    location: string,
+    phone: string
 }
 
 export interface IMeta {
@@ -200,4 +202,33 @@ export interface IDistrict {
     "bn_name": string,
     "lat": number,
     "long": number
+}
+
+export interface Package {
+    "id": number,
+    "name": string,
+    "description": string | null,
+    "duration": number,
+    "price": number,
+    "discount": string | null,
+    "top_add_count": number,
+    "bumpup_count": number,
+    "feature_count": number,
+    "add_count": number,
+    "createdAt": Date,
+    "updatedAt": Date,
+    "isDeleted": Boolean
+
+}
+
+export interface Payment {
+    id : number
+    "subscription": {
+        "package": Package | null
+    },
+    "order": null,
+    "amount": number,
+    "transactionId": string,
+    "isPaid": boolean,
+    "createdAt": Date
 }

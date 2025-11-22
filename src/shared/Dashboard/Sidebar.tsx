@@ -19,7 +19,7 @@ const Sidebar = ({ routs, title, logoutTxt }: { routs: { id: number, name: strin
     }, [dispatch, activeRout, navig])
 
     return (
-        <div className='w-full bg-white border-stroke shadow-2'>
+        <div className='w-full bg-white border border-stroke shadow-2'>
             <p className='text-lg font-popin font-medium text-primary px-4 py-3'>{title}</p>
             <ul className='border-t border-t-stroke pb-2 space-y-1'>
                 {
