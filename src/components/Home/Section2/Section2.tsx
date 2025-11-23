@@ -1,48 +1,48 @@
 import Title from "./Title"
-import car from "../../../../public/categories/car.png"
-import bike from "../../../../public/categories/bike_buy_sell.png"
-import workshop from "../../../../public/categories/workshop.png"
-import accessories from "../../../../public/categories/accessories.png"
-import document from "../../../../public/categories/document.png"
-import job from "../../../../public/categories/job.png"
-import exchange from "../../../../public/categories/exchange.png"
-import vehicle from "../../../../public/categories/vehicle.png"
-import lawyer from "../../../../public/categories/lawyer.png"
-import other from "../../../../public/categories/other.png"
+import car from "../../../../public/categories/car buy sell.svg"
+import carRent from "../../../../public/categories/car rent.svg"
+import bike from "../../../../public/categories/bike buy sell.svg"
+import workshop from "../../../../public/categories/workshop.svg"
+import accessories from "../../../../public/categories/eccessories.svg"
+import document from "../../../../public/categories/document.svg"
+import job from "../../../../public/categories/job.svg"
+import exchange from "../../../../public/categories/exchange.svg"
+import vehicle from "../../../../public/categories/vehicle.svg"
+import lawyer from "../../../../public/categories/lawyer.svg"
+import other from "../../../../public/categories/other.svg"
 import Image from "next/image"
 import Link from "next/link"
-
 
 const categories = [
     {
         id : 1,
         name : "Car Buy/Sell",
-        rout : "#",
+        rout : "/carbuysell",
         icon : car
     },
     {
         id : 2,
         name : "Bike Buy/Sell",
-        rout : "#",
+        rout : "/bikebuysell",
         icon : bike
     },
     {
         id : 3,
         name : "Workshoops",
-        rout : "#",
+        rout : "/workshop",
         icon : workshop
     },
     {
         id : 4,
         name : "Accessories",
-        rout : "#",
+        rout : "/accessories",
         icon : accessories
     },
     {
         id : 5,
         name : "Car Rent",
-        rout : "#",
-        icon : car
+        rout : "/car-rent",
+        icon : carRent
     },
     {
         id : 11,
@@ -53,13 +53,13 @@ const categories = [
     {
         id : 6,
         name : "Job Service",
-        rout : "#",
+        rout : "/jobs",
         icon : job
     },
     {
         id : 7,
         name : "Exchange",
-        rout : "#",
+        rout : "/exchange",
         icon : exchange
     },
     {
@@ -71,7 +71,7 @@ const categories = [
     {
         id : 9,
         name : "Lawyer",
-        rout : "#",
+        rout : "/lawyers",
         icon : lawyer
     },
     {
@@ -89,12 +89,12 @@ function Section2() {
                 <Title />
 
                 {/* service categories */}
-                <div className="flex flex-row gap-5 flex-wrap justify-center">
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                     {
                         categories.map(category=>{
-                            return <Link href={category?.rout} key={category?.id} className="bg-[#F2F2F2] h-36 p-8 rounded-lg border border-zinc-400">
+                            return <Link href={category?.rout} key={category?.id} className="bg-slate-50 p-8 rounded-lg border border-stroke hover:border-primary duration-200">
                                 <Image src={category?.icon} alt="runbd category icon" className="h-16 w-auto mx-auto" />
-                                <h6 className="text-lg font-figtree font-semibold text-center pt-1">{category?.name}</h6>
+                                <h6 className="text-lg font-popin font-medium text-center pt-3">{category?.name}</h6>
                             </Link>
                         })
                     }

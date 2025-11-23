@@ -13,35 +13,9 @@ import { useCallback } from "react";
 import { Skeleton } from "../ui/skeleton";
 import RangeFilter from "@/shared/RangeFilter";
 import { useMaxcarsCountQuery } from "@/redux/api/ads.api";
+import { Carbrands } from "@/utils/config";
 
-const brands = [
-    "BMW",
-    "Mercedes-Benz",
-    "Hyundai",
-    "Honda",
-    "Bajaj",
-    "Toyota",
-    "Ford",
-    "Chevrolet",
-    "Nissan",
-    "Volkswagen",
-    "Audi",
-    "Kia",
-    "Jeep",
-    "Land Rover",
-    "Volvo",
-    "Tesla",
-    "Jaguar",
-    "Peugeot",
-    "Renault",
-    "Fiat",
-    "Mitsubishi",
-    "Subaru",
-    "Suzuki",
-    "Dodge",
-    "Ram",
-    "Chrysler"
-]
+
 
 
 function CarFilter() {
@@ -125,7 +99,7 @@ function CarFilter() {
                     <AccordionTrigger className="text-lg font-popin font-medium hover:no-underline cursor-pointer">Brand</AccordionTrigger>
                     <AccordionContent className="border-t border-stroke pt-4 space-y-3">
                         {
-                            brands.map(i => {
+                            Carbrands.map(i => {
                                 const isChecked = selectedbrands.includes(i);
                                 return <div key={i} className="flex items-center gap-3">
                                     <Checkbox id={i} className="size-5 cursor-pointer" checked={isChecked} onCheckedChange={() => updateQueryParam("brand", i)} />

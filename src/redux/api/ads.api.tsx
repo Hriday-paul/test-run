@@ -4,8 +4,8 @@ import baseApi from "./baseApi";
 const AddApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
 
-        addDetails: builder.query<{ message: string, data: Add }, {id : string}>({
-            query: ({id}) => ({
+        addDetails: builder.query<{ message: string, data: Add }, { id: string }>({
+            query: ({ id }) => ({
                 url: `/ads/details/${id}`
             }),
         }),
@@ -13,31 +13,31 @@ const AddApi = baseApi.injectEndpoints({
         allAds: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
             query: (query) => ({
                 url: `/ads/by-user`,
-                params : query
+                params: query
             }),
-             providesTags: ['ads']
+            providesTags: ['ads']
         }),
 
-        featureAdd: builder.mutation<{ message: string, data: { data: Add[], meta: IMeta } }, {addId : number}>({
-            query: ({addId}) => ({
+        featureAdd: builder.mutation<{ message: string, data: { data: Add[], meta: IMeta } }, { addId: number }>({
+            query: ({ addId }) => ({
                 url: `/ads/feature/${addId}`,
-                method : "POST"
+                method: "POST"
             }),
-             invalidatesTags: ['ads']
+            invalidatesTags: ['ads']
         }),
-        bumpAdd: builder.mutation<{ message: string, data: { data: Add[], meta: IMeta } }, {addId : number}>({
-            query: ({addId}) => ({
+        bumpAdd: builder.mutation<{ message: string, data: { data: Add[], meta: IMeta } }, { addId: number }>({
+            query: ({ addId }) => ({
                 url: `/ads/bump/${addId}`,
-                method : "POST"
+                method: "POST"
             }),
-             invalidatesTags: ['ads']
+            invalidatesTags: ['ads']
         }),
-        dltAdd: builder.mutation<{ message: string, data: { data: Add[], meta: IMeta } }, {addId : number}>({
-            query: ({addId}) => ({
+        dltAdd: builder.mutation<{ message: string, data: { data: Add[], meta: IMeta } }, { addId: number }>({
+            query: ({ addId }) => ({
                 url: `/ads/${addId}`,
-                method : "DELETE"
+                method: "DELETE"
             }),
-             invalidatesTags: ['ads']
+            invalidatesTags: ['ads']
         }),
 
         allcars: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
@@ -46,6 +46,14 @@ const AddApi = baseApi.injectEndpoints({
                 params: query
             }),
             providesTags: ['ads', "cars"]
+        }),
+        addcar: builder.mutation<{ message: string }, any>({
+            query: (body) => ({
+                url: '/ads/cars',
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ['ads', "cars"]
         }),
 
         maxcarsCount: builder.query<{ message: string, data: { maxPrice: { _max: { price: number } }, maxMileage: { _max: { mileage: number } } } }, void>({
@@ -62,6 +70,14 @@ const AddApi = baseApi.injectEndpoints({
             }),
             providesTags: ['ads', "bikes"]
         }),
+        addBike: builder.mutation<{ message: string }, any>({
+            query: (body) => ({
+                url: '/ads/bikes',
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ['ads', "bikes"]
+        }),
 
         maxBikesCount: builder.query<{ message: string, data: { maxPrice: { _max: { price: number } }, maxMileage: { _max: { mileage: number } } } }, void>({
             query: () => ({
@@ -77,6 +93,14 @@ const AddApi = baseApi.injectEndpoints({
             }),
             providesTags: ['ads', "workshops"]
         }),
+        addWorkshop: builder.mutation<{ message: string }, any>({
+            query: (body) => ({
+                url: '/ads/work-shops',
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ['ads', "workshops"]
+        }),
         allAccessories: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
             query: (query) => ({
                 url: '/ads/accessories',
@@ -84,13 +108,30 @@ const AddApi = baseApi.injectEndpoints({
             }),
             providesTags: ['ads', "accessories"]
         }),
-        
+
+        addAccessories: builder.mutation<{ message: string }, any>({
+            query: (body) => ({
+                url: '/ads/accessories',
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ['ads', "accessories"]
+        }),
+
         allJobs: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
             query: (query) => ({
                 url: '/ads/jobs',
                 params: query
             }),
             providesTags: ['ads', "jobs"]
+        }),
+        addJob: builder.mutation<{ message: string }, any>({
+            query: (body) => ({
+                url: '/ads/jobs',
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ['ads', "jobs"]
         }),
 
         allLawyers: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
@@ -100,12 +141,29 @@ const AddApi = baseApi.injectEndpoints({
             }),
             providesTags: ['ads', "lawyers"]
         }),
+        addLawyer: builder.mutation<{ message: string }, any>({
+            query: (body) => ({
+                url: '/ads/lawyers',
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ['ads', "lawyers"]
+        }),
+
         allExchanges: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
             query: (query) => ({
                 url: '/ads/exchanges',
                 params: query
             }),
             providesTags: ['ads', "exchanges"]
+        }),
+        addExchange: builder.mutation<{ message: string }, any>({
+            query: (body) => ({
+                url: '/ads/exchanges',
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ['ads', "exchanges"]
         }),
         allRentcar: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
             query: (query) => ({
@@ -114,8 +172,16 @@ const AddApi = baseApi.injectEndpoints({
             }),
             providesTags: ['ads', "rentCars"]
         }),
+        addRentCar: builder.mutation<{ message: string }, any>({
+            query: (body) => ({
+                url: '/ads/rent-cars',
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ['ads', "rentCars"]
+        }),
 
     })
 })
 
-export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery, useAllRentcarQuery, useAddDetailsQuery, useAllAdsQuery, useFeatureAddMutation, useBumpAddMutation, useDltAddMutation } = AddApi;
+export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery, useAllRentcarQuery, useAddDetailsQuery, useAllAdsQuery, useFeatureAddMutation, useBumpAddMutation, useDltAddMutation, useAddcarMutation, useAddBikeMutation, useAddWorkshopMutation, useAddAccessoriesMutation, useAddRentCarMutation, useAddJobMutation, useAddExchangeMutation, useAddLawyerMutation } = AddApi;

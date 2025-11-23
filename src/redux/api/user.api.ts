@@ -1,8 +1,16 @@
-import { IMeta, Payment } from "../types";
+import { IMeta, IUser, Payment } from "../types";
 import baseApi from "./baseApi";
 
 const UserApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
+
+        myProfile: builder.query<{ message: string, data: IUser }, void>({
+            query: () => ({
+                url: '/users/my-profile',
+            }),
+            providesTags: ['user']
+        }),
+
         myPayments: builder.query<{ message: string, data: { data: Payment[], meta: IMeta } }, {}>({
             query: (query) => ({
                 url: '/payments/my-payment',
@@ -31,4 +39,4 @@ const UserApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useMyPaymentsQuery, useAddstatsQuery } = UserApi;
+export const { useMyProfileQuery, useMyPaymentsQuery, useAddstatsQuery } = UserApi;

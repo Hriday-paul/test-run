@@ -46,8 +46,8 @@ export type Add = {
     createdAt: Date
     updatedAt: Date
 
-    division: string
-    district: string
+    division ?: string
+    district ?: string
 
     owner: IUser
 

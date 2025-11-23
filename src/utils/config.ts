@@ -113,3 +113,32 @@ export const carType = [
   "Cargo Van",
   "Covered Van"
 ]
+
+export const Carbrands = [
+    "BMW",
+    "Mercedes-Benz",
+    "Hyundai",
+    "Honda",
+    "Bajaj",
+    "Toyota",
+    "Ford",
+    "Chevrolet",
+    "Nissan",
+    "Volkswagen",
+    "Audi",
+    "Kia",
+    "Jeep",
+    "Land Rover",
+    "Volvo",
+    "Tesla",
+    "Jaguar",
+    "Peugeot",
+    "Renault",
+    "Fiat",
+    "Mitsubishi",
+    "Subaru",
+    "Suzuki",
+    "Dodge",
+    "Ram",
+    "Chrysler"
+]

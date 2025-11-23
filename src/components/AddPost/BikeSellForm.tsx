@@ -4,15 +4,15 @@ import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { GoPlus } from 'react-icons/go';
-import { MdDeleteOutline } from 'react-icons/md';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { Carbrands } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
 import { toast } from 'sonner';
-import { useAddcarMutation } from '@/redux/api/ads.api';
+import { useAddBikeMutation, useAddcarMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
+import { number } from 'motion/react';
 
 type FieldType = {
     title: string,
@@ -20,31 +20,27 @@ type FieldType = {
     "description": string,
     "division": string,
     "district": string,
-    "car_type": string,
-    "condition": string,
-    "brand": string,
-    "model": string,
-    "body_type": string,
-    "mileage": number,
-    "year": number,
-    "engine": string,
-    "color": string,
-    "fuel_type": string,
-    "transmission": string,
-    "gear_box": string,
-    "drive_type": string,
-    "air_condition": boolean,
-    "seat": number
+    condition: string
+    brand: string
+    model: string
+    year: number
+    engine: string
+    mileage: number
+    kilometer: number
+    color: string
+    fuel_type: string
+    edition: string
+    bike_type: string
 }
 
-function CarSellForm() {
+function BikeSellForm() {
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
 
     const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
     const [division, setDivision] = useState<any>(null);
     const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : 1 });
 
-    const [postCar, { isLoading }] = useAddcarMutation();
+    const [postAd, { isLoading }] = useAddBikeMutation();
 
     const [images, setImages] = useState<File[]>([]);
 
@@ -70,11 +66,11 @@ function CarSellForm() {
                 form.append('images', image);
             });
 
-            const res = await postCar(form).unwrap();
+            const res = await postAd(form).unwrap();
 
             Swal.fire({
-                title: "Car Ad posted successfully!",
-                text: "Your car add posted successfully",
+                title: "Bike Ad posted successfully!",
+                text: "Your bike add posted successfully",
                 customClass: {
                     title: "text-2xl text-black font-figtree",
                     container: "text-sm font-medium font-figtree text-zinc-900",
@@ -95,21 +91,17 @@ function CarSellForm() {
                 "description": "",
                 "division": data?.division,
                 "district": data?.district,
-                "car_type": "",
+                "bike_type": "",
                 "condition": "",
                 "brand": "",
                 "model": "",
-                "body_type": "",
                 "mileage": 0,
                 "year": 0,
                 "engine": "",
                 "color": "",
                 "fuel_type": "",
-                "transmission": "",
-                "gear_box": "",
-                "drive_type": "",
-                "air_condition": true,
-                "seat": 0
+                edition: "",
+                kilometer: 0
             });
             setImages([]);
 
@@ -228,24 +220,24 @@ function CarSellForm() {
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
                     <div className="w-full mx-auto mb-4">
-                        <label htmlFor='cartype' className="mb-1.5 block text-black dark:text-white font-popin text-base">
-                            Car Type
+                        <label htmlFor='bike_type' className="mb-1.5 block text-black dark:text-white font-popin text-base">
+                            Bike Type
                             <span className="text-red-500 text-base ml-1">*</span>
                         </label>
 
                         <SelectWithSearch
-                            name='car_type'
-                            items={["Bus", "Truck", "Mini Bus", "Other"].map(type => {
+                            name='bike_type'
+                            items={["Motorcycle", "Scooter", "E-bike", "Other"].map(type => {
                                 return { label: type, value: type }
                             })}
                             control={control}
                             errors={errors}
-                            placeholder='Select Car type'
+                            placeholder='Select Bike type'
                             validationRules={{
-                                required: "Select a car type",
+                                required: "Select bike type",
                             }}
                         />
-                        {errors?.car_type && <p className="text-red-500 text-sm col-span-2 font-popin">{errors?.car_type?.message}</p>}
+                        {errors?.bike_type && <p className="text-red-500 text-sm col-span-2 font-popin">{errors?.bike_type?.message}</p>}
                     </div>
                     <div className="w-full mx-auto mb-4">
                         <label htmlFor='condition' className="mb-1.5 block text-black dark:text-white font-popin text-base">
@@ -310,22 +302,6 @@ function CarSellForm() {
                 </div>
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
-                    <div className="w-full mx-auto mb-3">
-                        <label htmlFor='bodytype' className="mb-1.5 block text-black dark:text-white font-popin">
-                            Body Type
-                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
-                        </label>
-                        <input
-                            type="text"
-                            id='bodytype'
-                            {...register("model",
-                                // { required: true }
-                            )}
-                            placeholder="eg : Crossover"
-                            className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.body_type ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
-                        />
-                        {errors?.body_type && <p className="text-red-500 text-sm col-span-2">{errors?.body_type?.message}</p>}
-                    </div>
 
                     <div className="w-full mx-auto mb-3">
                         <label htmlFor='engine' className="mb-1.5 block text-black dark:text-white font-popin">
@@ -343,6 +319,24 @@ function CarSellForm() {
                         />
                         {errors?.engine && <p className="text-red-500 text-sm col-span-2">{errors?.engine?.message}</p>}
                     </div>
+
+                    <div className="w-full mx-auto mb-3">
+                        <label htmlFor='edition' className="mb-1.5 block text-black dark:text-white font-popin">
+                            Edition
+                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
+                        </label>
+                        <input
+                            type="text"
+                            id='edition'
+                            {...register("edition",
+                                // { required: true }
+                            )}
+                            placeholder="write edition"
+                            className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.edition ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
+                        />
+                        {errors?.edition && <p className="text-red-500 text-sm col-span-2">{errors?.edition?.message}</p>}
+                    </div>
+
                 </div>
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
@@ -390,6 +384,26 @@ function CarSellForm() {
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
                     <div className="w-full mx-auto mb-3">
+                        <label htmlFor='Kilometer' className="mb-1.5 block text-black dark:text-white font-popin">
+                            Kilometer
+                            <span className="text-red-500 text-base ml-1">*</span>
+                        </label>
+                        <input
+                            type="number" step="0.01"
+                            id='Kilometer'
+                            {...register("kilometer", {
+                                required: true,
+                                pattern: {
+                                    value: /^[0-9]+$/,
+                                    message: "Invalid Kilometer format",
+                                },
+                            })}
+                            placeholder="eg : 2025"
+                            className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.kilometer ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
+                        />
+                        {errors?.kilometer && <p className="text-red-500 text-sm col-span-2">{errors?.kilometer?.message}</p>}
+                    </div>
+                    <div className="w-full mx-auto mb-3">
                         <label htmlFor='color' className="mb-1.5 block text-black dark:text-white font-popin">
                             Color
                             {/* <span className="text-red-500 text-base ml-1">*</span> */}
@@ -405,6 +419,10 @@ function CarSellForm() {
                         />
                         {errors?.color && <p className="text-red-500 text-sm col-span-2">{errors?.color?.message}</p>}
                     </div>
+
+                </div>
+
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
                     <div className="w-full mx-auto mb-3">
                         <label htmlFor='fuelType' className="mb-1.5 block text-black dark:text-white font-popin">
                             Fule Type
@@ -420,111 +438,6 @@ function CarSellForm() {
                             className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.fuel_type ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
                         />
                         {errors?.fuel_type && <p className="text-red-500 text-sm col-span-2">{errors?.fuel_type?.message}</p>}
-                    </div>
-                </div>
-
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
-                    <div className="w-full mx-auto mb-3">
-                        <label htmlFor='transmission' className="mb-1.5 block text-black dark:text-white font-popin">
-                            Transmission
-                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
-                        </label>
-                        <input
-                            type="text"
-                            id='transmission'
-                            {...register("transmission",
-                                // { required: true }
-                            )}
-                            placeholder="write transmission"
-                            className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.transmission ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
-                        />
-                        {errors?.transmission && <p className="text-red-500 text-sm col-span-2">{errors?.transmission?.message}</p>}
-                    </div>
-                    <div className="w-full mx-auto mb-3">
-                        <label htmlFor='gear_box' className="mb-1.5 block text-black dark:text-white font-popin">
-                            Gear Box
-                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
-                        </label>
-                        <input
-                            type="text"
-                            id='gear_box'
-                            {...register("gear_box",
-                                // { required: true }
-                            )}
-                            placeholder="write gear box info"
-                            className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.gear_box ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
-                        />
-                        {errors?.gear_box && <p className="text-red-500 text-sm col-span-2">{errors?.gear_box?.message}</p>}
-                    </div>
-                </div>
-
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
-                    <div className="w-full mx-auto mb-3">
-                        <label htmlFor='drive_type' className="mb-1.5 block text-black dark:text-white font-popin">
-                            Drive Type
-                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
-                        </label>
-                        <input
-                            type="text"
-                            id='drive_type'
-                            {...register("drive_type",
-                                // { required: true }
-                            )}
-                            placeholder="Drive type"
-                            className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.drive_type ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
-                        />
-                        {errors?.drive_type && <p className="text-red-500 text-sm col-span-2">{errors?.drive_type?.message}</p>}
-                    </div>
-
-                    <div className="w-full mx-auto mb-3">
-                        <label htmlFor='mileage' className="mb-1.5 block text-black dark:text-white font-popin">
-                            Seat
-                            <span className="text-red-500 text-base ml-1">*</span>
-                        </label>
-                        <input
-                            type="number" step="0.01"
-                            id='seat'
-                            {...register("seat", {
-                                required: true,
-                                pattern: {
-                                    value: /^[0-9]+$/,
-                                    message: "Invalid seat format",
-                                },
-                            })}
-                            placeholder="eg : 4"
-                            className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.seat ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
-                        />
-                        {errors?.seat && <p className="text-red-500 text-sm col-span-2">{errors?.seat?.message}</p>}
-                    </div>
-
-                </div>
-
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
-                    <div className="w-full mx-auto mb-3">
-                        <p className="mb-1.5 block text-black dark:text-white font-popin">
-                            Air Condition
-                            <span className="text-red-500 text-base ml-1">*</span>
-                        </p>
-                        <div className="flex gap-5 mt-3">
-                            {["true", "false"].map((value) => (
-                                <div key={value} className="inline-flex items-center">
-                                    <label className="relative flex items-center cursor-pointer">
-                                        <input
-                                            {...register("air_condition", { required: true })}
-                                            type="radio"
-                                            value={value}
-                                            id={value}
-                                            className="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all"
-                                        />
-                                        <span className="absolute bg-slate-800 w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></span>
-                                    </label>
-                                    <label htmlFor={value} className="ml-2 text-black cursor-pointer text-base font-poppin">
-                                        {value === "true" ? "Yes" : "No"}
-                                    </label>
-                                </div>
-                            ))}
-                        </div>
-                        {errors.air_condition && <p className="text-red-500">This field is required</p>}
                     </div>
                 </div>
 
@@ -588,4 +501,4 @@ function CarSellForm() {
     )
 }
 
-export default CarSellForm
+export default BikeSellForm
