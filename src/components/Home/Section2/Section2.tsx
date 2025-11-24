@@ -47,7 +47,7 @@ const categories = [
     {
         id : 11,
         name : "Documents",
-        rout : "#",
+        rout : "/document-process",
         icon : document
     },
     {

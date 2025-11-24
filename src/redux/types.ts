@@ -46,12 +46,12 @@ export type Add = {
     createdAt: Date
     updatedAt: Date
 
-    division ?: string
-    district ?: string
+    division?: string
+    district?: string
 
     owner: IUser
 
-    status : boolean
+    status: boolean
 
 }
 
@@ -222,7 +222,7 @@ export interface Package {
 }
 
 export interface Payment {
-    id : number
+    id: number
     "subscription": {
         "package": Package | null
     },
@@ -231,4 +231,25 @@ export interface Payment {
     "transactionId": string,
     "isPaid": boolean,
     "createdAt": Date
+}
+
+export interface IService {
+    "id": number,
+    "name": string,
+    "bnName": string,
+    "price": number,
+    "description": string | null,
+    "icon": string | null,
+    "category": string,
+    requirements : IRequirement[]
+}
+
+export interface IRequirement {
+    "id": number,
+    "serviceId": number,
+    "name": string,
+    "bnName": string,
+    "fieldType": "File" | "Text",
+    "required": boolean,
+    "field_name": string
 }
