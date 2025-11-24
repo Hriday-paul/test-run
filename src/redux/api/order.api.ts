@@ -1,4 +1,4 @@
-import { IService } from "../types";
+import { IOrder, IService } from "../types";
 import baseApi from "./baseApi";
 
 const OrderApi = baseApi.injectEndpoints({
@@ -10,10 +10,20 @@ const OrderApi = baseApi.injectEndpoints({
                 method: "POST",
                 body
             }),
-            // providesTags: ['user']
+            invalidatesTags: ['orders']
         }),
+
+
+        allOrders: builder.query<{ message: string, data : IOrder[] }, void>({
+            query: () => ({
+                url: '/orders/my-orders',
+            }),
+            providesTags: ['orders']
+        }),
+
+
     })
 
 })
 
-export const { useAddNewOrderMutation } = OrderApi;
+export const { useAddNewOrderMutation, useAllOrdersQuery } = OrderApi;

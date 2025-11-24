@@ -84,7 +84,7 @@ const categories = [
 
 function Section2() {
     return (
-        <div className="bg-white">
+        <div className="bg-white" id="services">
             <div className="container pt-12 md:pt-16 lg:pt-20 ">
                 <Title />
 

@@ -145,11 +145,13 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
                     layout="vertical">
 
                     {requirements?.map(requirement => {
+
                         return <>
                             {requirement?.fieldType == "File" ?
 
                                 <Form.Item
                                     name={requirement?.field_name}
+                                    key={requirement?.id}
                                     label={requirement?.name}
                                     valuePropName="fileList"
                                     getValueFromEvent={(e) => {
@@ -188,6 +190,7 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
                                 :
 
                                 <Form.Item
+                                    key={requirement?.id}
                                     name={requirement?.field_name}
                                     label={requirement?.name}
                                     rules={[{ required: requirement?.required, message: "Field is required" }]}>

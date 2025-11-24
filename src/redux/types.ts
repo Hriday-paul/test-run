@@ -241,7 +241,7 @@ export interface IService {
     "description": string | null,
     "icon": string | null,
     "category": string,
-    requirements : IRequirement[]
+    requirements: IRequirement[]
 }
 
 export interface IRequirement {
@@ -252,4 +252,19 @@ export interface IRequirement {
     "fieldType": "File" | "Text",
     "required": boolean,
     "field_name": string
+}
+
+export interface IOrder {
+    "id": number,
+    "userId": number,
+    "status": string,
+    "isPaid": boolean,
+    "serviceId": number,
+    "paymentId": number,
+    "fields": [],
+    "otherFiles": [],
+    "service": IService,
+
+    createdAt : Date,
+    updatedAt : Date
 }
