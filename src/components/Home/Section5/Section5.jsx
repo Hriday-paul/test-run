@@ -4,7 +4,7 @@ import CountUp from "react-countup";
 
 export default function Section5() {
     return (
-        <section className="relative w-full mt-16 md:mt-20 lg:mt-28">
+        <section className="relative w-full">
             {/* Background Image */}
             <div className="absolute inset-0">
                 <Image src="/car-parking.jpg" alt="Cars Background" fill className="object-cover" />

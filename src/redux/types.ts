@@ -15,6 +15,7 @@ export type IUser = {
     auth: {
         role: "User" | "Vendor"
     },
+    address: string | null,
 
     division: string | null,
     district: string | null,
@@ -265,6 +266,21 @@ export interface IOrder {
     "otherFiles": [],
     "service": IService,
 
-    createdAt : Date,
-    updatedAt : Date
+    createdAt: Date,
+    updatedAt: Date
+}
+
+export interface IPackage {
+    "id": number,
+    "name": string,
+    "description": string | null,
+    "duration": number,
+    "price": number,
+    "discount": number | null,
+    "top_add_count": number,
+    "bumpup_count": number,
+    "feature_count": number,
+    "add_count": number,
+    "createdAt": Date,
+    "updatedAt": Date,
 }

@@ -18,12 +18,19 @@ const AddApi = baseApi.injectEndpoints({
             providesTags: ['ads']
         }),
 
+        allFeatureAds: builder.query<{ message: string, data: {ad : Add, id : number}[] }, void>({
+            query: () => ({
+                url: `/feature-ads`,
+            }),
+            providesTags: ['feature_ads']
+        }),
+
         featureAdd: builder.mutation<{ message: string, data: { data: Add[], meta: IMeta } }, { addId: number }>({
             query: ({ addId }) => ({
                 url: `/ads/feature/${addId}`,
                 method: "POST"
             }),
-            invalidatesTags: ['ads']
+            invalidatesTags: ["feature_ads"]
         }),
         bumpAdd: builder.mutation<{ message: string, data: { data: Add[], meta: IMeta } }, { addId: number }>({
             query: ({ addId }) => ({
@@ -184,4 +191,4 @@ const AddApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery, useAllRentcarQuery, useAddDetailsQuery, useAllAdsQuery, useFeatureAddMutation, useBumpAddMutation, useDltAddMutation, useAddcarMutation, useAddBikeMutation, useAddWorkshopMutation, useAddAccessoriesMutation, useAddRentCarMutation, useAddJobMutation, useAddExchangeMutation, useAddLawyerMutation } = AddApi;
+export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery, useAllRentcarQuery, useAddDetailsQuery, useAllAdsQuery, useFeatureAddMutation, useBumpAddMutation, useDltAddMutation, useAddcarMutation, useAddBikeMutation, useAddWorkshopMutation, useAddAccessoriesMutation, useAddRentCarMutation, useAddJobMutation, useAddExchangeMutation, useAddLawyerMutation, useAllFeatureAdsQuery } = AddApi;

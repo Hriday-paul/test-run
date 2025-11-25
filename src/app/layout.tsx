@@ -5,6 +5,7 @@ import Navbar from "@/shared/Navbar/Navbar";
 import Footer from "@/shared/Footer/Footer";
 import ReduxProvider from "@/shared/ReduxProvider";
 import { Toaster } from 'sonner';
+import NextJsTopLoader from "@/shared/NextJsTopLoader";
 
 const poppins = Poppins({
   variable: "--font-poppin",
@@ -34,6 +35,7 @@ export default function RootLayout({
       >
         <ReduxProvider>
           <Toaster richColors position="top-right" />
+          <NextJsTopLoader />
           <Navbar />
           <div className="">
             {children}

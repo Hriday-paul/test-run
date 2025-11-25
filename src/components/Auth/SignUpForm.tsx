@@ -30,13 +30,12 @@ const SignUpForm = () => {
     const {
         register,
         handleSubmit,
-        control,
         watch,
         reset,
         formState: { errors },
     } = useForm<signUpType>({
         defaultValues: {
-            role: "User"
+            role: "Vendor"
         }
     });
 
@@ -66,7 +65,7 @@ const SignUpForm = () => {
                 secure: config.hasSSL,
             });
 
-            const next = data?.role == "Vendor" ? "/pricing" : "/auth/login"
+            const next = data?.role == "Vendor" ? "/#pricing" : "/auth/login"
 
             reset()
 

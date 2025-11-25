@@ -1,10 +1,8 @@
 "use client"
-import { useResendOtpMutation, useVerifyOtpMutation } from '@/redux/api/authApi';
-import { config } from '@/utils/config';
+import { useVerifyOtpMutation } from '@/redux/api/authApi';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useCallback, useState } from 'react';
-import { useCookies } from 'react-cookie';
+import { useState } from 'react';
 import { ImSpinner2 } from 'react-icons/im';
 import OTPInput from "react-otp-input";
 import { toast } from 'sonner';

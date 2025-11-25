@@ -14,8 +14,6 @@ import { RiMenu3Fill } from 'react-icons/ri';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { motion } from "motion/react"
 import { navitems } from './Navbar';
-import logo from "../../../public/logo.png"
-import Image from 'next/image';
 
 
 const SmNavSheet = () => {
@@ -25,8 +23,8 @@ const SmNavSheet = () => {
     return (
         <div>
             <Sheet>
-                <SheetTrigger className='border border-zinc-200 p-1.5 rounded cursor-pointer hover:bg-zinc-100 duration-150'>
-                    <RiMenu3Fill className="text-2xl text-black" />
+                <SheetTrigger className='border border-zinc-200 p-1 md:p-1.5 rounded cursor-pointer hover:bg-zinc-100 duration-150'>
+                    <RiMenu3Fill className="text-xl md:text-2xl text-black" />
                 </SheetTrigger>
                 <SheetContent side={'left'}>
                     <SheetHeader>

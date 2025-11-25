@@ -3,8 +3,7 @@ import Link from "next/link";
 import { ImSpinner2 } from "react-icons/im";
 import { MdErrorOutline } from "react-icons/md";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import PasswordInput from "./PasswordInput";
 import { useLoginUserMutation } from "@/redux/api/authApi";
 import { useCookies } from "react-cookie";
@@ -25,6 +24,7 @@ const LoginForm = () => {
     const [_, setCookie] = useCookies(['accessToken', 'refreshToken']);
     const dispatch = useDispatch();
     const router = useRouter()
+    const nextRout = useSearchParams().get('next')
     const {
         register,
         handleSubmit,
@@ -65,7 +65,7 @@ const LoginForm = () => {
             toast.success(res?.message || 'Signin successfully');
             reset();
 
-            router.push(data?.role == 'User' ? "/user" : '/vendor')
+            router.push("/profile")
             router.refresh();
 
         } catch (err: any) {
@@ -80,7 +80,7 @@ const LoginForm = () => {
             <form onSubmit={handleSubmit(handleFormSubmit)} className="px-5 md:px-7 lg:px-10 mt-5 md:mt-8 lg:mt-10">
 
                 {/* -------------------check box---------------------- */}
-                <div className="flex gap-10 justify-center my-6">
+                {/* <div className="flex gap-10 justify-center my-6">
                     <div className="inline-flex items-center">
                         <label className="relative flex items-center cursor-pointer" htmlFor="user">
                             <input {...register("role", { required: true })} value='User' type="radio" className="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all" id="user" />
@@ -98,7 +98,7 @@ const LoginForm = () => {
                         </label>
                         <label className="ml-2 text-black cursor-pointer text-base font-poppin" htmlFor="dealer">Vendor</label>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="my-5">
                     <label htmlFor={"phone"} className={`mb-1.5 font-popin block text-black text-lg`}>

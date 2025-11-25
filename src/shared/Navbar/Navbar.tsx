@@ -1,5 +1,3 @@
-import logo from "../../../public/logo.png"
-import Image from 'next/image'
 import Link from 'next/link'
 import { FaRegUser } from "react-icons/fa"
 import SmNavSheet from "./SmNavsheet"
@@ -16,6 +14,11 @@ export const navitems = [
         label: "Services"
     },
     {
+        id: 2,
+        rout: "/#pricing",
+        label: "Pricing"
+    },
+    {
         id: 3,
         rout: "/about",
         label: "About Us"
@@ -30,9 +33,9 @@ function Navbar() {
                     <Link href={"/"}>
                         {/* <Image src={logo} alt='logo' className='h-12 w-auto object-cover' /> */}
                         Logo
-                        </Link>
-                    <div className="flex flex-row gap-x-5 items-center">
-                        <ul className='md:flex flex-row gap-x-5 lg:gap-x-8 xl:gap-x-10 items-center hidden'>
+                    </Link>
+                    <div className="flex flex-row gap-x-3 md:gap-x-4 lg:gap-x-5 items-center">
+                        <ul className='lg:flex flex-row gap-x-5 lg:gap-x-8 xl:gap-x-10 items-center hidden'>
                             {navitems?.map(i => {
                                 return <li key={i?.id} className='font-popin text-lg text-gray-800 font-normal'>
                                     <Link href={i?.rout}>
@@ -42,16 +45,18 @@ function Navbar() {
                             })}
                         </ul>
 
-                        <button>
-                            <FaRegUser className="text-xl text-gray-800" />
-                        </button>
+                        <Link href={"/vendor/post-ad"}>
+                            <button className="group relative inline-flex py-2 text-sm md:text-base lg:text-lg items-center justify-center overflow-hidden rounded-full bg-primary px-3 px-5 lg:px-6 font-normal text-white transition hover:scale-105 cursor-pointer font-popin">
+                                <span>+ Post Your Add</span>
+                                <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                                    <div className="relative h-full w-8 bg-white/20"></div>
+                                </div>
+                            </button>
+                        </Link>
 
-                        <button className="group relative inline-flex py-2 text-lg items-center justify-center overflow-hidden rounded-full bg-primary px-6 font-normal text-white transition hover:scale-105 cursor-pointer">
-                            <span>+ Post Your Add</span>
-                            <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
-                                <div className="relative h-full w-8 bg-white/20"></div>
-                            </div>
-                        </button>
+                        <Link href={"/profile"}>
+                            <FaRegUser className="text-xl md:text-2xl text-gray-800" />
+                        </Link>
 
                         <section className='lg:hidden'>
                             <SmNavSheet />

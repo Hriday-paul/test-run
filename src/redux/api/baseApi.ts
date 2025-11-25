@@ -18,6 +18,8 @@ const baseQuery = fetchBaseQuery({
 
         const token = cookies.get("token");
 
+        console.log(token)
+
         if (token) {
             headers.set("token", token);
         }
@@ -90,7 +92,7 @@ const baseQueryWithReauth: typeof baseQuery = async (
 
 const baseApi = createApi({
     reducerPath: 'api',
-    tagTypes: ['user', "users", "privacy", "terms", "about", "notification", "cars", "ads", "bikes", "workshops", "accessories", "jobs", "lawyers", "exchanges","rentCars", "payments", "orders"],
+    tagTypes: ['user', "users", "privacy", "terms", "about", "notification", "cars", "ads", "bikes", "workshops", "accessories", "jobs", "lawyers", "exchanges","rentCars", "payments", "orders", "feature_ads"],
     baseQuery: baseQueryWithReauth,
     endpoints: (builder) => ({
 
