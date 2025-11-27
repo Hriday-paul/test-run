@@ -65,7 +65,7 @@ const categories = [
     {
         id: 11,
         name: "Documents",
-        rout: "#",
+        rout: "/documents",
         icon: document
     },
     {
