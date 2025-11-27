@@ -11,7 +11,7 @@ function DocumentProcess() {
             <ShopBanner
                 image={bannerimg}
                 title="Vehicle Process"
-                desc="Process your documents with us without any problem"
+                desc="Process your documents with us without any hassle"
             >
                 <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Vehicle Process
             </ShopBanner>

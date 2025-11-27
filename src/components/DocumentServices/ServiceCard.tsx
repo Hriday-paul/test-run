@@ -19,7 +19,7 @@ function ServiceCard({ service }: { service: IService }) {
                 <span className="text-base font-medium font-popin text-foreground">Processing Price: {service?.price} TK</span>
             </div>
 
-            <Link href={`/document-process/${service?.id}`}>
+            <Link href={`/vehicle-process/${service?.id}`} scroll={true}>
                 <button className="w-full bg-primary hover:bg-primary/80 duration-150 text-white font-medium py-2 cursor-pointer text-center font-popin rounded-lg">Process Now</button>
             </Link>
         </div>
