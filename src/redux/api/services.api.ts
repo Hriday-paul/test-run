@@ -4,9 +4,10 @@ import baseApi from "./baseApi";
 const ServiceApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
 
-        allServices: builder.query<{ message: string, data: IService[] }, void>({
-            query: () => ({
+        allServices: builder.query<{ message: string, data: IService[] }, {}>({
+            query: (query) => ({
                 url: '/document-services',
+                params : query
             }),
             // providesTags: ['user']
         }),

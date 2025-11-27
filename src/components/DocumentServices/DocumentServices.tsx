@@ -7,7 +7,7 @@ import ServiceCard from './ServiceCard';
 
 function DocumentServices() {
     const [searchText, setSearchText] = useState("");
-    const { isLoading, isError, isSuccess, data } = useAllServicesQuery();
+    const { isLoading, isError, isSuccess, data } = useAllServicesQuery({searchTerm : searchText});
 
     if (isError) {
         return <ErrorComponent />

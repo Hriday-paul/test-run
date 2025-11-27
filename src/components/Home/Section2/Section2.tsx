@@ -46,7 +46,7 @@ const categories = [
     },
     {
         id: 8,
-        name: "Vehicle",
+        name: "Vehicle Process",
         rout: "/vehicle-process",
         icon: vehicle
     },
