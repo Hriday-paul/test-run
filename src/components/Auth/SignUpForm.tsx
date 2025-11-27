@@ -167,7 +167,7 @@ const SignUpForm = () => {
                             <span className="text-red-500 text-base ml-1">*</span>
                         </label>
                         <input
-                            type="text"
+                            type="email"
                             id='email'
                             {...register("email", {
                                 required: true,
