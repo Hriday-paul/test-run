@@ -9,7 +9,7 @@ async function ProcessDetails({ params }: { params: Promise<{ id: string }> }) {
         <div>
             <Pagetop title='Apply Vehicle Process'>
                 <h3 className="text-xs md:text-sm font-figtree text-gray-500 flex flex-row gap-x-1.5 justify-center items-center">
-                    <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='text-primary' /> <Link href='/document-process'>Vehicle Process</Link> <IoIosArrowForward className='text-primary' /> Apply Process
+                    <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='text-primary' /> <Link href='/vehicle-process'>Vehicle Process</Link> <IoIosArrowForward className='text-primary' /> Apply Process
                 </h3>
             </Pagetop>
             <div className='bg-[#F2F4F8]'>
