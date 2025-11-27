@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { FaRegUser } from "react-icons/fa"
 import SmNavSheet from "./SmNavsheet"
+import logo from "../../../public/logo.png"
+import Image from 'next/image'
 
 export const navitems = [
     {
@@ -31,8 +33,7 @@ function Navbar() {
             <div className='container'>
                 <div className=' flex flex-row justify-between items-center gap-x-5 py-4'>
                     <Link href={"/"}>
-                        {/* <Image src={logo} alt='logo' className='h-12 w-auto object-cover' /> */}
-                        Logo
+                        <Image src={logo} alt='logo' className='h-12 w-auto object-cover' />
                     </Link>
                     <div className="flex flex-row gap-x-3 md:gap-x-4 lg:gap-x-5 items-center">
                         <ul className='lg:flex flex-row gap-x-5 lg:gap-x-8 xl:gap-x-10 items-center hidden'>

@@ -17,8 +17,7 @@ export default function Footer() {
                 {/* Logo & About */}
                 <div className="space-y-4 sm:col-span-2 lg:col-span-1">
                     <Link href={"/"}>
-                        {/* <Image src={logo} alt='logo' className='h-12 w-auto object-cover mb-10' /> */}
-                        Logo
+                        <Image src={logo} alt='logo' className='h-12 w-auto object-cover mb-10' />
                     </Link>
                     <p className="text-gray-300 text-sm font-figtree">
                         Skip the hassle and delays — easily buy, sell, or access essential services anytime from one reliable and secure platform.
