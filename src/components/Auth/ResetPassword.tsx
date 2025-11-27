@@ -72,6 +72,10 @@ const ResetPassword = () => {
                             }}
                         />
 
+                        {errors?.new_password && (
+                            <p className="text-orange-500 text-sm col-span-2 font-figtree">{errors?.new_password?.message as string}</p>
+                        )}
+
                     </div>
 
                     {/* -----------------Password Input-------------- */}
@@ -86,11 +90,6 @@ const ResetPassword = () => {
                             errors={errors}
                             validationRules={{
                                 required: "Confirm Password is required",
-                                pattern: {
-                                    value: /^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-                                    message:
-                                        "Password must include 1 uppercase, 1 number, 1 special character, and 8+ characters.",
-                                },
                             }}
                         />
 

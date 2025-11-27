@@ -21,6 +21,9 @@ const PasswordInput = <T extends Record<string, any>>({
     isLarge = false,
     validationRules,
 }: PasswordInputProps<T>) => {
+
+    const { ref, ...rest } = register(name, validationRules);
+
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -28,8 +31,10 @@ const PasswordInput = <T extends Record<string, any>>({
         setIsVisible((prev) => !prev);
     }, []);
 
+    console.log(errors)
+
     return (
-        <div className="w-full mx-auto">
+        <>
             <label htmlFor={name} className={`mb-1.5 font-popin block text-black ${!isLarge ? "text-sm" : ""}`}>
                 {label}
                 <span className="text-red-500 text-base ml-1">*</span>
@@ -39,10 +44,10 @@ const PasswordInput = <T extends Record<string, any>>({
                     type={isVisible ? "text" : "password"}
                     id={name}
                     placeholder={placeholder}
-                    {...register(name, validationRules)}
+                    {...rest}
                     ref={(e) => {
-                        register(name).ref(e);
-                        inputRef.current = e;
+                        ref(e); // connect RHF ref
+                        inputRef.current = e; // also store local ref
                     }}
                     className={`pr-10 w-full ${!isLarge ? "rounded-sm" : "rounded-md"} border bg-white py-2.5 px-4 text-black outline-none transition disabled:cursor-default disabled:bg-whiter dark:bg-form-input font-figtree placeholder:font-poppins ${errors?.[name]
                         ? "border-danger"
@@ -57,10 +62,8 @@ const PasswordInput = <T extends Record<string, any>>({
                     )}
                 </div>
             </div>
-            {errors?.[name] && (
-                <p className="text-orange-500 text-sm col-span-2 font-figtree">{errors?.[name]?.message as string}</p>
-            )}
-        </div>
+            
+        </>
     );
 };
 

@@ -81,6 +81,9 @@ function PassswordChangeForm() {
                         required: "Current Password is required",
                     }}
                 />
+                {errors?.oldPassword && (
+                    <p className="text-orange-500 text-sm col-span-2 font-figtree">{errors?.oldPassword?.message as string}</p>
+                )}
             </div>
 
             <div className="w-full mx-auto my-5">
@@ -93,8 +96,16 @@ function PassswordChangeForm() {
                     errors={errors}
                     validationRules={{
                         required: "New Password is required",
+                        pattern: {
+                            value: /^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+                            message:
+                                "Password must include 1 uppercase, 1 number, 1 special character, and 8+ characters.",
+                        },
                     }}
                 />
+                {errors?.newPassword && (
+                    <p className="text-orange-500 text-sm col-span-2 font-figtree">{errors?.newPassword?.message as string}</p>
+                )}
             </div>
 
             <div className="w-full mx-auto my-5">
