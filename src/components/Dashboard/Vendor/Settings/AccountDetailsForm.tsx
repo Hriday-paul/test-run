@@ -194,12 +194,11 @@ const UpdateProfileForm = ({ profileData, image }: { profileData: IUser, image: 
             resetField("areaId", {
                 defaultValue: null
             })
-            setDistrict({id : undefined})
         }
     }, [division])
 
     useEffect(() => {
-        if (district && district?.id) {
+        if (district && district?.name) {
             resetField("areaId", {
                 defaultValue: null
             })

@@ -86,7 +86,7 @@ export interface ICar {
     gear_box?: string | null;
     drive_type?: string | null;
     air_condition?: boolean | null;
-    seat?: number | null;
+    seat?: string | null;
 }
 
 export interface IBike {

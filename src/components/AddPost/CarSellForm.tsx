@@ -16,7 +16,7 @@ import { useMyProfileQuery } from '@/redux/api/user.api';
 
 type FieldType = {
     title: string,
-    "price": number,
+    "price": number | null,
     "description": string,
 
     "divisionId": string | null,
@@ -28,8 +28,8 @@ type FieldType = {
     "brand": string,
     "model": string,
     "body_type": string,
-    "mileage": number,
-    "year": number,
+    "mileage": number | null,
+    "year": number | null,
     "engine": string,
     "color": string,
     "fuel_type": string,
@@ -37,7 +37,7 @@ type FieldType = {
     "gear_box": string,
     "drive_type": string,
     "air_condition": boolean,
-    "seat": number
+    "seat": string
 }
 
 function CarSellForm() {
@@ -55,7 +55,6 @@ function CarSellForm() {
         query.division = division?.id
     }
     if (district) {
-        console.log(district)
         query.district = district?.id
     }
 
@@ -72,9 +71,10 @@ function CarSellForm() {
         reset,
         resetField,
         formState: { errors },
-    } = useForm<FieldType>({ defaultValues: { price: 0 } });
+    } = useForm<FieldType>({ defaultValues: {} });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
+        console.log(data)
         try {
             if (images?.length <= 0) {
                 toast.error('Please, select minimum 1 image', { position: "top-center" });
@@ -109,26 +109,26 @@ function CarSellForm() {
 
             reset({
                 title: "",
-                "price": 0,
-                "description": "",
+                "price": undefined,
+                "description": undefined,
                 "divisionId": data?.divisionId,
                 "districtId": data?.districtId,
                 "areaId": data?.areaId,
-                "car_type": "",
-                "condition": "",
-                "brand": "",
-                "model": "",
-                "body_type": "",
-                "mileage": 0,
-                "year": 0,
-                "engine": "",
-                "color": "",
-                "fuel_type": "",
-                "transmission": "",
-                "gear_box": "",
-                "drive_type": "",
+                "car_type": undefined,
+                "condition": undefined,
+                "brand": undefined,
+                "model": undefined,
+                "body_type": undefined,
+                "mileage": undefined,
+                "year": undefined,
+                "engine": undefined,
+                "color": undefined,
+                "fuel_type": undefined,
+                "transmission": undefined,
+                "gear_box": undefined,
+                "drive_type": undefined,
                 "air_condition": true,
-                "seat": 0
+                "seat": undefined
             });
             setImages([]);
 
@@ -153,31 +153,31 @@ function CarSellForm() {
     }, [images]);
 
     useEffect(() => {
-            if (profileSuccess && isSuccess) {
-                reset({
-                    divisionId: profile?.data?.division?.id.toString(),
-                    districtId: profile?.data?.district?.id.toString(),
-                })
-                
-                setDivision({id : profile?.data?.division?.id})
-                setDistrict({id : profile?.data?.district?.id})
-            }
-        }, [profile, profileSuccess, data, isSuccess])
+        if (profileSuccess && isSuccess) {
+            reset({
+                divisionId: profile?.data?.division?.id.toString(),
+                districtId: profile?.data?.district?.id.toString(),
+                areaId: profile?.data?.area?.id.toString(),
+            })
+
+            setDivision({ id: profile?.data?.division?.id })
+            setDistrict({ id: profile?.data?.district?.id })
+        }
+    }, [profile, profileSuccess, data, isSuccess])
 
     useEffect(() => {
-        if (division) {
+        if (division && division?.name) {
             resetField("districtId", {
                 defaultValue: null
             })
             resetField("areaId", {
                 defaultValue: null
             })
-            setDistrict({ id: undefined })
         }
     }, [division])
 
     useEffect(() => {
-        if (district && district?.id) {
+        if (district && district?.name) {
             resetField("areaId", {
                 defaultValue: null
             })
@@ -233,17 +233,18 @@ function CarSellForm() {
                 <div className="w-full mx-auto mb-3">
                     <label htmlFor='price' className="mb-1.5 block text-black dark:text-white font-popin">
                         Price
-                        <span className="text-red-500 text-base ml-1">*</span>
+                        {/* <span className="text-red-500 text-base ml-1">*</span> */}
                     </label>
                     <input
                         type="number"
                         id='price'
                         {...register("price", {
-                            required: true,
+                            // required: true,
                             pattern: {
                                 value: /^[0-9]+$/,
                                 message: "Invalid price format",
                             },
+                            valueAsNumber : false
                         })}
                         placeholder="Write price"
                         className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.price ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
@@ -390,13 +391,13 @@ function CarSellForm() {
                     <div className="w-full mx-auto mb-3">
                         <label htmlFor='mileage' className="mb-1.5 block text-black dark:text-white font-popin">
                             Mileage
-                            <span className="text-red-500 text-base ml-1">*</span>
+                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
                         </label>
                         <input
                             type="number" step="0.01"
                             id='mileage'
                             {...register("mileage", {
-                                required: true,
+                                // required: true,
                                 pattern: {
                                     value: /^\d+(\.\d{1,2})?$/,
                                     message: "Invalid mileage format",
@@ -410,13 +411,13 @@ function CarSellForm() {
                     <div className="w-full mx-auto mb-3">
                         <label htmlFor='year' className="mb-1.5 block text-black dark:text-white font-popin">
                             Year
-                            <span className="text-red-500 text-base ml-1">*</span>
+                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
                         </label>
                         <input
-                            type="number" step="0.01"
+                            type="number"
                             id='year'
                             {...register("year", {
-                                required: true,
+                                // required: true,
                                 pattern: {
                                     value: /^[0-9]+$/,
                                     message: "Invalid year format",
@@ -505,14 +506,17 @@ function CarSellForm() {
                             Drive Type
                             {/* <span className="text-red-500 text-base ml-1">*</span> */}
                         </label>
-                        <input
-                            type="text"
-                            id='drive_type'
-                            {...register("drive_type",
-                                // { required: true }
-                            )}
-                            placeholder="Drive type"
-                            className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.drive_type ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
+                        <SelectWithSearch
+                            name='drive_type'
+                            items={["Left", "Right"].map(type => {
+                                return { label: type, value: type }
+                            })}
+                            control={control}
+                            errors={errors}
+                            placeholder='Select drive type'
+                            validationRules={{
+                                // required: "Select a brand",
+                            }}
                         />
                         {errors?.drive_type && <p className="text-red-500 text-sm col-span-2">{errors?.drive_type?.message}</p>}
                     </div>
@@ -520,17 +524,17 @@ function CarSellForm() {
                     <div className="w-full mx-auto mb-3">
                         <label htmlFor='mileage' className="mb-1.5 block text-black dark:text-white font-popin">
                             Seat
-                            <span className="text-red-500 text-base ml-1">*</span>
+                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
                         </label>
                         <input
-                            type="number" step="0.01"
+                            type="text"
                             id='seat'
                             {...register("seat", {
-                                required: true,
-                                pattern: {
-                                    value: /^[0-9]+$/,
-                                    message: "Invalid seat format",
-                                },
+                                // required: true,
+                                // pattern: {
+                                //     value: /^[0-9]+$/,
+                                //     message: "Invalid seat format",
+                                // },
                             })}
                             placeholder="eg : 4"
                             className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.seat ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
