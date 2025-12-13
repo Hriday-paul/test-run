@@ -2,8 +2,8 @@
 import { SelectWithSearch } from '@/components/ui/SelectWithSearch';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGetUserProfileQuery, useUpdateProfileMutation } from '@/redux/api/authApi';
-import { useAllDivisionsQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
-import { IUser } from '@/redux/types';
+import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
+import { IArea, IDistrict, IDivision, IUser } from '@/redux/types';
 import ErrorComponent from '@/shared/ErrorComponent';
 import Image from 'next/image'
 import { useEffect, useState } from 'react';
@@ -20,9 +20,9 @@ type FieldType = {
     whatsapp: string | null
     picture: { url: string, key: string } | null
 
-    division: string | null,
-    district: string | null,
-    upzilla: string | null,
+    divisionId: string | null,
+    districtId: string | null,
+    areaId: string | null,
 
     facebook: string | null
     twitter: string | null,
@@ -95,27 +95,50 @@ function AccountDetailsForm() {
 export default AccountDetailsForm;
 
 const UpdateProfileForm = ({ profileData, image }: { profileData: IUser, image: File | null }) => {
-
     const [postUpdate, { isLoading }] = useUpdateProfileMutation();
 
     const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
     const [division, setDivision] = useState<any>(null);
-    const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : 1 });
+
+    const [district, setDistrict] = useState<any>(null);
+
+    const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : profileData?.division ? profileData?.division?.id : 1 });
+
+    const query: { division?: number, district?: number } = {}
+
+    if (division) {
+        query.division = division?.id
+    }
+    if(profileData?.district?.id){
+        query.district = profileData?.district?.id
+    }
+    if (district) {
+        query.district = district?.id
+    }
+
+    const { isLoading: areatLoad, isFetching: areaFetch, data: areas, isSuccess: areaSuccess } = useAreasByDivDistrictQuery(query);
 
     const {
         register,
         handleSubmit,
         control,
         reset,
+        resetField,
         formState: { errors },
     } = useForm<FieldType>({
         defaultValues: {
-            ...profileData
+            ...profileData,
+            divisionId: profileData?.division?.id.toString() || undefined,
+            districtId: profileData?.district?.id.toString() || undefined,
+            areaId: profileData?.area?.id.toString() || undefined,
         }
     });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
         try {
+
+            console.log(data)
+
             const form = new FormData();
 
             form.append('data', JSON.stringify(data))
@@ -123,8 +146,6 @@ const UpdateProfileForm = ({ profileData, image }: { profileData: IUser, image: 
             if (image) {
                 form.append('picture', image);
             }
-
-            console.log(form.entries());
 
             const res = await postUpdate({ data: form }).unwrap()
 
@@ -166,13 +187,24 @@ const UpdateProfileForm = ({ profileData, image }: { profileData: IUser, image: 
     }
 
     useEffect(() => {
-        if (profileData && isSuccess && data) {
-            const userDivision = data?.data?.divisions?.find(
-                (i: any) => i?.name === profileData?.division
-            );
-            setDivision(userDivision);
+        if (division) {
+            resetField("districtId", {
+                defaultValue: null
+            })
+            resetField("areaId", {
+                defaultValue: null
+            })
+            setDistrict({id : undefined})
         }
-    }, [profileData, data, isSuccess]);
+    }, [division])
+
+    useEffect(() => {
+        if (district && district?.id) {
+            resetField("areaId", {
+                defaultValue: null
+            })
+        }
+    }, [district])
 
     return (
         <div className='pt-5'>
@@ -247,12 +279,12 @@ const UpdateProfileForm = ({ profileData, image }: { profileData: IUser, image: 
                     <div className="w-full mx-auto mb-3">
                         <label htmlFor='division' className="mb-1.5 block text-black dark:text-white font-popin">
                             Division
-                            <span className="text-red-500 text-base ml-1">*</span>
+                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
                         </label>
                         <SelectWithSearch
-                            name='division'
+                            name='divisionId'
                             items={isSuccess ? data?.data?.divisions?.map(i => {
-                                return { label: i?.name, value: i?.name, id: i?.id }
+                                return { label: i?.name, value: i?.id, id: i?.id }
                             }) : []}
                             setState={setDivision}
                             control={control}
@@ -260,34 +292,56 @@ const UpdateProfileForm = ({ profileData, image }: { profileData: IUser, image: 
                             errors={errors}
                             placeholder='Select Division'
                             validationRules={{
-                                required: "Select a division",
+                                // required: "Select a division",
                             }}
                         />
-                        {errors?.division && <p className="text-red-500 text-sm col-span-2">{errors?.division?.message}</p>}
+                        {errors?.divisionId && <p className="text-red-500 text-sm col-span-2">{errors?.divisionId?.message}</p>}
                     </div>
                     <div className="w-full mx-auto mb-3">
                         <label htmlFor='district' className="mb-1.5 block text-black dark:text-white font-popin">
                             District
-                            <span className="text-red-500 text-base ml-1">*</span>
+                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
                         </label>
                         <SelectWithSearch
-                            name='district'
+                            name='districtId'
                             items={districtSuccess ? districts?.data?.map(i => {
-                                return { label: i?.name, value: i?.name }
+                                return { label: i?.name, value: i?.id, id : i?.id }
                             }) : []}
                             control={control}
                             isLoading={districtLoad || districtFetch}
-                            disabled={!division}
+                            setState={setDistrict}
                             errors={errors}
                             placeholder='Select District'
                             validationRules={{
-                                required: "Select a district",
+                                // required: "Select a district",
                             }}
                         />
-                        {errors?.district && <p className="text-red-500 text-sm col-span-2">{errors?.district?.message}</p>}
+                        {errors?.districtId && <p className="text-red-500 text-sm col-span-2">{errors?.districtId?.message}</p>}
                     </div>
                 </div>
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+
+                    <div className="w-full mx-auto mb-3">
+                        <label htmlFor='Area' className="mb-1.5 block text-black dark:text-white font-popin">
+                            Area
+                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
+                        </label>
+                        <SelectWithSearch
+                            name='areaId'
+                            items={areaSuccess ? areas?.data?.map(i => {
+                                return { label: i?.name, value: i?.id }
+                            }) : []}
+                            control={control}
+                            isLoading={areatLoad || areaFetch}
+                            errors={errors}
+                            placeholder='Select Area'
+                            validationRules={{
+                                // required: "Select a division",
+                            }}
+                        />
+                        {errors?.areaId && <p className="text-red-500 text-sm col-span-2">{errors?.areaId?.message}</p>}
+                    </div>
+
                     <div className="w-full mx-auto mb-3">
                         <label htmlFor='address' className="mb-1.5 block text-black dark:text-white font-popin">
                             Address
@@ -304,6 +358,10 @@ const UpdateProfileForm = ({ profileData, image }: { profileData: IUser, image: 
                         />
                         {errors?.address && <p className="text-red-500 text-sm col-span-2">{errors?.address?.message}</p>}
                     </div>
+
+                </div>
+
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
                     <div className="w-full mx-auto mb-3">
                         <label htmlFor='Website' className="mb-1.5 block text-black dark:text-white font-popin">
                             Website
@@ -320,9 +378,6 @@ const UpdateProfileForm = ({ profileData, image }: { profileData: IUser, image: 
                         />
                         {errors?.website && <p className="text-red-500 text-sm col-span-2">{errors?.website?.message}</p>}
                     </div>
-                </div>
-
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
                     <div className="w-full mx-auto mb-3">
                         <label htmlFor='Facebook' className="mb-1.5 block text-black dark:text-white font-popin">
                             Facebook
@@ -340,22 +395,7 @@ const UpdateProfileForm = ({ profileData, image }: { profileData: IUser, image: 
                         {errors?.facebook && <p className="text-red-500 text-sm col-span-2">{errors?.facebook?.message}</p>}
                     </div>
 
-                    <div className="w-full mx-auto mb-3">
-                        <label htmlFor='twitter' className="mb-1.5 block text-black dark:text-white font-popin">
-                            Twitter
-                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
-                        </label>
-                        <input
-                            type="text"
-                            id='twitter'
-                            {...register("twitter",
-                                // { required: true }
-                            )}
-                            placeholder="Gulsan-02, Dhaka"
-                            className={`w-full rounded bg-white border py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.twitter ? 'border-primary' : ' border-stroke focus:border-black active:border-black'}`}
-                        />
-                        {errors?.twitter && <p className="text-red-500 text-sm col-span-2">{errors?.twitter?.message}</p>}
-                    </div>
+
                 </div>
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
@@ -391,6 +431,25 @@ const UpdateProfileForm = ({ profileData, image }: { profileData: IUser, image: 
                             className={`w-full rounded bg-white border py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.youtube ? 'border-primary' : ' border-stroke focus:border-black active:border-black'}`}
                         />
                         {errors?.youtube && <p className="text-red-500 text-sm col-span-2">{errors?.youtube?.message}</p>}
+                    </div>
+                </div>
+
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+                    <div className="w-full mx-auto mb-3">
+                        <label htmlFor='twitter' className="mb-1.5 block text-black dark:text-white font-popin">
+                            Twitter
+                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
+                        </label>
+                        <input
+                            type="text"
+                            id='twitter'
+                            {...register("twitter",
+                                // { required: true }
+                            )}
+                            placeholder="Gulsan-02, Dhaka"
+                            className={`w-full rounded bg-white border py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.twitter ? 'border-primary' : ' border-stroke focus:border-black active:border-black'}`}
+                        />
+                        {errors?.twitter && <p className="text-red-500 text-sm col-span-2">{errors?.twitter?.message}</p>}
                     </div>
                 </div>
 

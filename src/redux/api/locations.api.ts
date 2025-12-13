@@ -1,5 +1,5 @@
 
-import { IDistrict, IDivision } from "../types";
+import { IArea, IDistrict, IDivision } from "../types";
 import baseApi from "./baseApi";
 
 const LocationApi = baseApi.injectEndpoints({
@@ -12,7 +12,15 @@ const LocationApi = baseApi.injectEndpoints({
         }),
         districtsByDivision: builder.query<{ message: string, data: IDistrict[] }, { divisionId: number }>({
             query: ({ divisionId }) => ({
-                url: `/locations/districts/${divisionId}`,
+                url: `/locations/districts`,
+                params : {division : divisionId}
+            }),
+            // providesTags: ['quote']
+        }),
+        areasByDivDistrict: builder.query<{ message: string, data: IArea[] }, {}>({
+            query: (query) => ({
+                url: `/locations/areas`,
+                params : query
             }),
             // providesTags: ['quote']
         }),
@@ -20,4 +28,4 @@ const LocationApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useAllDivisionsQuery, useDistrictsByDivisionQuery } = LocationApi
+export const { useAllDivisionsQuery, useDistrictsByDivisionQuery, useAreasByDivDistrictQuery } = LocationApi

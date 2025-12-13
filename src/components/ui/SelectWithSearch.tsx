@@ -22,7 +22,7 @@ interface SelectWithSearchProps<T extends FieldValues> {
   errors: FieldErrors<T>
   validationRules: RegisterOptions<T, Path<T>>
   defaultSelected?: { value: string; label: string }
-  items: { value: string; label: string, id ?: string | number }[]
+  items: { value: string | number; label: string, id ?: string | number }[]
   isLoading?: boolean,
   setState ?: React.Dispatch<React.SetStateAction<any>>,
   disabled ?: boolean
@@ -65,7 +65,8 @@ export function SelectWithSearch<T extends FieldValues>({
                   {isLoading ? (
                     <span className="loader"></span>
                   ) : field.value ? (
-                    items.find((item) => item.value === field.value)?.label
+                    
+                    items.find((item) => item.value.toString() === field.value)?.label
                   ) : (
                     placeholder
                   )}
@@ -81,7 +82,7 @@ export function SelectWithSearch<T extends FieldValues>({
                       {items.map((item) => (
                         <CommandItem
                           key={item.value}
-                          value={item.value}
+                          value={item.value.toString()}
                           className="hover:bg-slate-100 cursor-pointer"
                           onSelect={(currentValue) => {
                             const newValue = currentValue === field.value ? "" : currentValue;
@@ -91,7 +92,7 @@ export function SelectWithSearch<T extends FieldValues>({
                           }}
                         >
                           {item.label}
-                          <Check className={cn("ml-auto", field.value === item.value ? "opacity-100" : "opacity-0")} />
+                          <Check className={cn("ml-auto", field.value === item.value.toString() ? "opacity-100" : "opacity-0")} />
                         </CommandItem>
                       ))}
                     </CommandGroup>

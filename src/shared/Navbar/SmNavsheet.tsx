@@ -1,5 +1,4 @@
 "use client"
-import React from 'react';
 import {
     Sheet,
     SheetContent,
@@ -14,6 +13,8 @@ import { RiMenu3Fill } from 'react-icons/ri';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { motion } from "motion/react"
 import { navitems } from './Navbar';
+import Image from 'next/image';
+import logo from "../../../public/logo.png"
 
 
 const SmNavSheet = () => {
@@ -35,8 +36,7 @@ const SmNavSheet = () => {
 
                             <SheetTrigger>
                                 <Link href={"/"}>
-                                    {/* <Image src={logo} alt='logo' className='h-12 w-auto object-cover' /> */}
-                                    Logo
+                                    <Image src={logo} alt='logo' className='h-12 w-auto object-cover' />
                                 </Link>
                             </SheetTrigger>
 

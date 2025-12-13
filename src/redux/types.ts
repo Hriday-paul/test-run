@@ -17,9 +17,9 @@ export type IUser = {
     },
     address: string | null,
 
-    division: string | null,
-    district: string | null,
-    upzilla: string | null,
+    division: IDivision | null,
+    district: IDistrict | null,
+    area : IArea | null
 
     facebook: string | null
     twitter: string | null,
@@ -47,8 +47,9 @@ export type Add = {
     createdAt: Date
     updatedAt: Date
 
-    division?: string
-    district?: string
+    division?: IDivision
+    district?: IDistrict
+    area?: IArea
 
     owner: IUser
 
@@ -189,20 +190,22 @@ export interface IMeta {
 
 
 export interface IDivision {
-    "id": number,
-    "name": string,
-    "bn_name": string,
-    "lat": number,
-    "long": number
+    id: number,
+    name: string
+    bName: string | null
 }
 
+
+
 export interface IDistrict {
-    "id": number,
-    "division_id": number,
-    "name": string,
-    "bn_name": string,
-    "lat": number,
-    "long": number
+    id: number,
+    name: string
+    bName: string | null
+}
+export interface IArea {
+    id: number,
+    name: string
+    bName: string | null
 }
 
 export interface Package {

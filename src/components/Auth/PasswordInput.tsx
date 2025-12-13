@@ -31,8 +31,6 @@ const PasswordInput = <T extends Record<string, any>>({
         setIsVisible((prev) => !prev);
     }, []);
 
-    console.log(errors)
-
     return (
         <>
             <label htmlFor={name} className={`mb-1.5 font-popin block text-black ${!isLarge ? "text-sm" : ""}`}>
