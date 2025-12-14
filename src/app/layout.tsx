@@ -20,7 +20,7 @@ const figtree = Figtree({
 
 export const metadata: Metadata = {
   title: "Runbd",
-  description: "Buy, Sell & Services — All in One Click",
+  description: "Buy, Sell & Services — All in One Click. Skip the hassle and delays — easily buy, sell, or access essential services anytime from one reliable and secure platform.",
 };
 
 export default function RootLayout({

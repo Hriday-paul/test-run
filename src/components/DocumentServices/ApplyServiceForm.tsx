@@ -12,6 +12,9 @@ import { ImSpinner2, ImSpinner3 } from 'react-icons/im';
 import { useAddNewOrderMutation } from '@/redux/api/order.api';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
+import SignUpPopup from '@/shared/SignUpPopup';
 
 function ApplyServiceForm({ id }: { id: string }) {
     const { isLoading, isError, isSuccess, data } = useServiceDetailsQuery({ id });
@@ -60,6 +63,9 @@ type FieldType = {
 
 
 const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequirement[], serviceId: string }) => {
+
+    const [open, setOpen] = useState<boolean>(false);
+    const [cookie, _] = useCookies(['accessToken']);
 
     const [OrderService, { isLoading }] = useAddNewOrderMutation();
 
@@ -113,6 +119,13 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
             })
         }
     }
+
+    useEffect(() => {
+        if (!cookie?.accessToken) {
+            setOpen(true);
+            return;
+        }
+    }, [])
 
     const customTheme = {
         token: {
@@ -208,7 +221,7 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
                     </div>
 
 
-                    <Button htmlType="submit" className='mt-4' type="primary" size="large" block disabled={isLoading} icon={isLoading ? <ImSpinner2 className="animate-spin size-5 text-primary" /> : <></>} iconPosition="end">
+                    <Button htmlType="submit" className='mt-4' type="primary" size="large" block disabled={isLoading} icon={isLoading ? <ImSpinner2 className="animate-spin size-5 text-primary" /> : <></>} iconPlacement="end">
                         Submit
                     </Button>
 
@@ -216,6 +229,8 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
                 </Form>
 
             </ConfigProvider>
+
+             <SignUpPopup open={open} setOpen={setOpen} isSpecifyRole={false} />
 
         </div>
     )

@@ -27,7 +27,7 @@ function BikeCard({ bike }: { bike: Add }) {
                             {bike?.title}
                         </h3>
                         <div className="flex items-center text-sm text-gray-600 gap-1">
-                            <SlLocationPin size={16} /> {bike?.division || "N/A"}
+                            <SlLocationPin size={16} /> {bike?.division?.name || "N/A"}
                         </div>
                     </div>
 
@@ -51,7 +51,7 @@ function BikeCard({ bike }: { bike: Add }) {
                     </div>
                     <div className="flex items-center justify-between pt-2">
                         <p className="font-semibold text-gray-900 flex items-center gap-1 text-base">
-                            Tk {bike?.price}
+                            {bike?.price ? `Tk ${bike?.price}` : "N/A"}
                         </p>
                         <Link href={`/bikebuysell/${bike?.id}`}>
                             <Button

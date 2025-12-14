@@ -25,13 +25,13 @@ function AccessoriesCard({ accessories }: { accessories: Add }) {
                             {accessories?.title}
                         </h3>
                         <div className="flex items-center text-sm text-gray-600 gap-1">
-                            <SlLocationPin size={16} /> {accessories?.division || "N/A"}
+                            <SlLocationPin size={16} /> {accessories?.division?.name || "N/A"}
                         </div>
                     </div>
 
                     <div className="flex items-center justify-between pt-2">
                         <p className="font-semibold text-gray-900 flex items-center gap-1 text-base">
-                            Tk {accessories?.price}
+                            {accessories?.price ? `Tk ${accessories?.price}` : "N/A"}
                         </p>
                         <Link href={`/accessories/${accessories?.id}`}>
                             <Button

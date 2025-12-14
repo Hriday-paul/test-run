@@ -65,7 +65,11 @@ function RentCarDetails({ id }: { id: string }) {
                                                 Location
                                             </p>
                                         </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.district || "N/A"}</p>
+                                        <p className='font-popin text-base'>
+                                            {data?.data?.owner
+                                                ? `${data.data.owner.division?.name || ''}${data.data.owner.division ? ', ' : ''}${data.data.owner.district?.name || ''}${data.data.owner.district ? ', ' : ''}${data.data.owner.area?.name || ''}`.trim() || 'N/A'
+                                                : 'N/A'}
+                                        </p>
                                     </div>
                                     <div className='flex flex-row gap-x-1 justify-between items-center'>
                                         <div className='flex flex-row gap-x-1 items-center'>
@@ -109,7 +113,7 @@ function RentCarDetails({ id }: { id: string }) {
                                                 Price
                                             </p>
                                         </div>
-                                        <p className='font-popin text-base'>{data?.data?.price > 0 ? (data?.data?.price + "Tk") : "N/A"}</p>
+                                        <p className='font-popin text-base'>{(data?.data?.price && data?.data?.price > 0) ? `Tk ${data?.data?.price}` : "N/A"}</p>
                                     </div>
                                 </div>
                             </div>

@@ -1,11 +1,9 @@
 import { Add } from "@/redux/types";
-import { Bike, Calendar, Component, Gauge, Users } from "lucide-react";
 import Link from "next/link";
 import { SlLocationPin } from "react-icons/sl";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { placeHolderBlurImg } from "@/utils/config";
-import { AiOutlineWoman } from "react-icons/ai";
 
 function WorkShopCard({ workShop }: { workShop: Add }) {
     return (
@@ -29,7 +27,7 @@ function WorkShopCard({ workShop }: { workShop: Add }) {
                                 {workShop?.title}
                             </h3>
                             <div className="flex items-center text-sm text-gray-600 gap-1">
-                                <SlLocationPin size={16} /> {workShop?.division || "N/A"}
+                                <SlLocationPin size={16} /> {workShop?.division?.name || "N/A"}
                             </div>
                         </div>
                     </div>

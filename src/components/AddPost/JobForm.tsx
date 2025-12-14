@@ -6,20 +6,24 @@ import { ImSpinner2 } from 'react-icons/im';
 import { toast } from 'sonner';
 import { useAddcarMutation, useAddJobMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
-import { useAllDivisionsQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
+import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
 
 type FieldType = {
     title: string,
     // "price": number,
+
     "description": string,
-    "division": string,
-    "district": string,
+
+    "divisionId": string | null,
+    "districtId": string | null,
+    "areaId": string | null,
+
     dedline: string
-    vacancy: number | null
+    vacancy: string | null
     salary: string
     age: string
-    experience: number | null
+    experience: string | null
     job_location: string
     about_company: string
     company_name: string
@@ -32,7 +36,20 @@ function JobForm() {
 
     const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
     const [division, setDivision] = useState<any>(null);
+    const [district, setDistrict] = useState<any>(null);
+
     const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : 1 });
+
+    const query: { division?: number, district?: number } = {}
+
+    if (division) {
+        query.division = division?.id
+    }
+    if (district) {
+        query.district = district?.id
+    }
+
+    const { isLoading: areatLoad, isFetching: areaFetch, data: areas, isSuccess: areaSuccess } = useAreasByDivDistrictQuery(query);
 
     const [postJob, { isLoading }] = useAddJobMutation();
 
@@ -41,21 +58,14 @@ function JobForm() {
         handleSubmit,
         control,
         reset,
+        resetField,
         formState: { errors },
     } = useForm<FieldType>({ defaultValues: {} });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
         try {
 
-            const cleanedData = Object.fromEntries(
-                Object.entries(data).filter(([_, v]) => v !== "" && v !== null && v !== undefined)
-            );
-
-            const form = new FormData();
-
-            form.append('data', JSON.stringify(cleanedData))
-
-            await postJob(form).unwrap();
+            await postJob(data).unwrap();
 
             Swal.fire({
                 title: "Job Ad posted successfully!",
@@ -78,18 +88,19 @@ function JobForm() {
                 title: "",
                 // "price": undefined,
                 "description": "",
-                "division": data?.division,
-                "district": data?.district,
+                "divisionId": data?.divisionId,
+                "districtId": data?.districtId,
+                "areaId": data?.areaId,
                 about_company: "",
                 age: "",
                 company_name: "",
                 dedline: "",
                 employment_type: "",
-                experience: null,
+                experience: "",
                 job_location: "",
-                job_type: undefined,
-                salary: undefined,
-                vacancy: null
+                job_type: "",
+                salary: "",
+                vacancy: ""
             });
 
         } catch (err: any) {
@@ -98,15 +109,36 @@ function JobForm() {
     }
 
     useEffect(() => {
-        if (profileSuccess && isSuccess) {
+        if (profileSuccess) {
             reset({
-                division: profileSuccess ? (profile?.data?.division || "") : "",
-                district: profileSuccess ? (profile?.data?.district || "") : "",
+                divisionId: profile?.data?.division?.id.toString(),
+                districtId: profile?.data?.district?.id.toString(),
+                areaId: profile?.data?.area?.id.toString(),
             })
-            const division = data?.data?.divisions?.find(i => i?.name == profile?.data?.division);
-            setDivision(division)
+
+            setDivision({ id: profile?.data?.division?.id })
+            setDistrict({ id: profile?.data?.district?.id })
         }
-    }, [profile, profileSuccess, data, isSuccess])
+    }, [profile, profileSuccess])
+
+    useEffect(() => {
+        if (division && division?.label) {
+            resetField("districtId", {
+                defaultValue: null
+            })
+            resetField("areaId", {
+                defaultValue: null
+            })
+        }
+    }, [division])
+
+    useEffect(() => {
+        if (district && district?.label) {
+            resetField("areaId", {
+                defaultValue: null
+            })
+        }
+    }, [district])
 
     return (
         <div>
@@ -126,27 +158,7 @@ function JobForm() {
                     />
                     {errors?.title && <p className="text-red-500 text-sm col-span-2">{errors?.title?.message}</p>}
                 </div>
-                {/* <div className="w-full mx-auto mb-3">
-                    <label htmlFor='price' className="mb-1.5 block text-black dark:text-white font-popin">
-                        Price
-                        <span className="text-red-500 text-base ml-1">*</span>
-                    </label>
-                    <input
-                        type="number"
-                        id='price'
-                        {...register("price", {
-                            required: true,
-                            pattern: {
-                                value: /^[0-9]+$/,
-                                message: "Invalid price format",
-                            },
-                        })}
-                        placeholder="Write price"
-                        className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.price ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
-                    />
-                    {errors?.price && <p className="text-red-500 text-sm col-span-2">{errors?.price?.message}</p>}
-                </div> */}
-                
+
 
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
                     <div className="w-full mx-auto mb-4">
@@ -256,6 +268,7 @@ function JobForm() {
                             id='vacancy'
                             {...register("vacancy", {
                                 // required: true,
+                                setValueAs: (v) => v === "" ? null : Number(v),
                                 pattern: {
                                     value: /^[0-9]+$/,
                                     message: "Invalid vacancy format",

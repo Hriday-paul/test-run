@@ -16,7 +16,7 @@ import { useMyProfileQuery } from '@/redux/api/user.api';
 
 type FieldType = {
     title: string,
-    "price": number | null,
+    "price": string | null,
     "description": string,
 
     "divisionId": string | null,
@@ -28,8 +28,8 @@ type FieldType = {
     "brand": string,
     "model": string,
     "body_type": string,
-    "mileage": number | null,
-    "year": number | null,
+    "mileage": string | null,
+    "year": string | null,
     "engine": string,
     "color": string,
     "fuel_type": string,
@@ -74,7 +74,6 @@ function CarSellForm() {
     } = useForm<FieldType>({ defaultValues: {} });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
-        console.log(data)
         try {
             if (images?.length <= 0) {
                 toast.error('Please, select minimum 1 image', { position: "top-center" });
@@ -109,26 +108,26 @@ function CarSellForm() {
 
             reset({
                 title: "",
-                "price": undefined,
-                "description": undefined,
+                "price": "",
+                "description": "",
                 "divisionId": data?.divisionId,
                 "districtId": data?.districtId,
                 "areaId": data?.areaId,
-                "car_type": undefined,
-                "condition": undefined,
-                "brand": undefined,
-                "model": undefined,
-                "body_type": undefined,
-                "mileage": undefined,
-                "year": undefined,
-                "engine": undefined,
-                "color": undefined,
-                "fuel_type": undefined,
-                "transmission": undefined,
-                "gear_box": undefined,
-                "drive_type": undefined,
+                "car_type": "",
+                "condition": "",
+                "brand": "",
+                "model": "",
+                "body_type": "",
+                "mileage": "",
+                "year": "",
+                "engine": "",
+                "color": "",
+                "fuel_type": "",
+                "transmission": "",
+                "gear_box": "",
+                "drive_type": "",
                 "air_condition": true,
-                "seat": undefined
+                "seat": ""
             });
             setImages([]);
 
@@ -153,7 +152,7 @@ function CarSellForm() {
     }, [images]);
 
     useEffect(() => {
-        if (profileSuccess && isSuccess) {
+        if (profileSuccess) {
             reset({
                 divisionId: profile?.data?.division?.id.toString(),
                 districtId: profile?.data?.district?.id.toString(),
@@ -163,10 +162,10 @@ function CarSellForm() {
             setDivision({ id: profile?.data?.division?.id })
             setDistrict({ id: profile?.data?.district?.id })
         }
-    }, [profile, profileSuccess, data, isSuccess])
+    }, [profile, profileSuccess])
 
     useEffect(() => {
-        if (division && division?.name) {
+        if (division && division?.label) {
             resetField("districtId", {
                 defaultValue: null
             })
@@ -177,7 +176,7 @@ function CarSellForm() {
     }, [division])
 
     useEffect(() => {
-        if (district && district?.name) {
+        if (district && district?.label) {
             resetField("areaId", {
                 defaultValue: null
             })
@@ -240,11 +239,12 @@ function CarSellForm() {
                         id='price'
                         {...register("price", {
                             // required: true,
+                            setValueAs: (v) => v === "" ? null : Number(v),
                             pattern: {
                                 value: /^[0-9]+$/,
                                 message: "Invalid price format",
                             },
-                            valueAsNumber : false
+                            
                         })}
                         placeholder="Write price"
                         className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.price ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
@@ -398,6 +398,7 @@ function CarSellForm() {
                             id='mileage'
                             {...register("mileage", {
                                 // required: true,
+                                setValueAs: (v) => v === "" ? null : Number(v),
                                 pattern: {
                                     value: /^\d+(\.\d{1,2})?$/,
                                     message: "Invalid mileage format",
@@ -418,6 +419,7 @@ function CarSellForm() {
                             id='year'
                             {...register("year", {
                                 // required: true,
+                                setValueAs: (v) => v === "" ? null : Number(v),
                                 pattern: {
                                     value: /^[0-9]+$/,
                                     message: "Invalid year format",

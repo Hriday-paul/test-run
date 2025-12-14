@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog"
 import Link from 'next/link';
 
-const SignUpPopup = ({ open, setOpen }: { open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>> }) => {
+const SignUpPopup = ({ open, setOpen, isSpecifyRole = true }: { open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>>, isSpecifyRole?: boolean }) => {
 
     return (
         <div>
@@ -26,7 +26,7 @@ const SignUpPopup = ({ open, setOpen }: { open: boolean, setOpen: React.Dispatch
                                     </div>
                                     <div className="space-y-1.5">
                                         <h5 className="text-xl text-zinc-900 font-figtree font-popin">Sign In Required</h5>
-                                        <p className='text-zinc-800 text-base font-popin'>You need to <Link className="underline" href="/signin">signin</Link> your vendor account to continue.
+                                        <p className='text-zinc-800 text-base font-popin'>You need to <Link className="underline underline-offset-2" href="/auth/login">signin</Link> your {isSpecifyRole ? "vendor" : ""} account to continue.
                                         </p>
                                     </div>
                                 </div>

@@ -31,7 +31,7 @@ function Title() {
                         },
                     }}
                     viewport={{ once: true }}
-                    className="text-3xl md:text-4xl lg:text-5xl font-semibold font-figtree max-w-xs mx-auto md:max-w-full">Our pricing plan made simple</motion.h2>
+                    className="text-3xl md:text-4xl lg:text-5xl font-semibold font-figtree max-w-xs mx-auto md:max-w-full">Our Pricing Plan Made Simple</motion.h2>
                 <motion.p 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{
@@ -44,7 +44,7 @@ function Title() {
                     
                 }}
                 viewport={{once : true}}
-                className="font-figtree text-sm text-zinc-600 max-w-md mx-auto">
+                className="font-figtree text-sm md:text-base text-zinc-600 max-w-md md:max-w-lg mx-auto">
                     All types of businesses need access to development resources, so we give you the option to decide how much you need to use.
                 </motion.p>
             </div>

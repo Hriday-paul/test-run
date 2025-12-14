@@ -17,7 +17,7 @@ const HeroTitle = ({ line1 }: { line1: string }) => {
                 viewport={{once : true}}
                 className="flex items-center gap-x-3">
                 <span className="h-0.5 bg-primary w-10"></span>
-                <h4 className="font-figtree text-white font-medium text-xl">Find Your Dream Property Easily</h4>
+                <h4 className="font-figtree text-white font-medium text-xl">Find Your Dream Items Easily</h4>
             </motion.div>
 
             <div>

@@ -28,7 +28,8 @@ const UserApi = baseApi.injectEndpoints({
                 featured: number,
 
                 bump_count: number,
-                bumped: number
+                bumped: number,
+                expiredAt : Date
             }
         }, void>({
             query: () => ({

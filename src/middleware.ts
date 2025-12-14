@@ -27,14 +27,16 @@ export default async function middleware(request: NextRequest) {
   }
 
   //check contructor
-  if (current_req.includes('/vendor')) {
-
+  if (current_req.includes('/vendor') || current_req.includes('/post')) {
     try {
       // Decode and validate the access token
       const { role } = jwtDecode<{ role: 'User' | 'Vendor' }>(accessToken);
 
       if (role !== 'Vendor') {
         return NextResponse.redirect(new URL(`/auth/login?next=${current_req}`, request.url));
+      }
+      else {
+        return NextResponse.next();
       }
     } catch (error) {
       return NextResponse.redirect(new URL(`/auth/login?next=${current_req}`, request.url));
@@ -55,20 +57,6 @@ export default async function middleware(request: NextRequest) {
       }
     } catch (error) {
       return NextResponse.redirect(new URL(`/auth/login`, request.url));
-    }
-  }
-
-  if (current_req.includes('/post')) {
-
-    try {
-      // Decode and validate the access token
-      const { role } = jwtDecode<{ role: 'User' | 'Vendor' }>(accessToken);
-
-      if (role !== 'Vendor') {
-        return NextResponse.redirect(new URL(`/auth/login?next=${current_req}`, request.url));
-      }
-    } catch (error) {
-      return NextResponse.redirect(new URL(`/auth/login?next=${current_req}`, request.url));
     }
   }
 

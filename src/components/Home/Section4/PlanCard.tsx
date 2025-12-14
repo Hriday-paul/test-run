@@ -17,9 +17,7 @@ function PlanCard({ plan, isMiddle }: { plan: IPackage, isMiddle: boolean }) {
 
     const [cookie, _] = useCookies(['accessToken']);
 
-
     const handlePurchase = async (id: number) => {
-        console.log(cookie?.accessToken)
         if (!cookie?.accessToken) {
             setOpen(true);
             return;
@@ -80,8 +78,10 @@ function PlanCard({ plan, isMiddle }: { plan: IPackage, isMiddle: boolean }) {
                 <div className="flex flex-col items-start">
                     <p className=" mb-6">
                         <span className="text-lg font-bold group-hover:text-white">
-                            {plan.price} TK
+                            {plan.price} TK 
                         </span>
+                        /
+                        <span> {plan.duration} days</span>
                     </p>
 
                     <ul

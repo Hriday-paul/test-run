@@ -5,28 +5,31 @@ import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { GoPlus } from 'react-icons/go';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
-import { Carbrands } from '@/utils/config';
+import { bikeBrands, Carbrands } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
 import { toast } from 'sonner';
 import { useAddBikeMutation, useAddcarMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
-import { useAllDivisionsQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
+import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
 import { number } from 'motion/react';
 
 type FieldType = {
     title: string,
-    "price": number,
+    "price": string | null,
+
     "description": string,
-    "division": string,
-    "district": string,
+     "divisionId": string | null,
+    "districtId": string | null,
+    "areaId": string | null,
+
     condition: string
     brand: string
     model: string
-    year: number
+    year: string | null
     engine: string
-    mileage: number
-    kilometer: number
+    mileage: string | null
+    kilometer: string | null
     color: string
     fuel_type: string
     edition: string
@@ -38,7 +41,20 @@ function BikeSellForm() {
 
     const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
     const [division, setDivision] = useState<any>(null);
+    const [district, setDistrict] = useState<any>(null);
+
     const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : 1 });
+
+    const query: { division?: number, district?: number } = {}
+
+    if (division) {
+        query.division = division?.id
+    }
+    if (district) {
+        query.district = district?.id
+    }
+
+    const { isLoading: areatLoad, isFetching: areaFetch, data: areas, isSuccess: areaSuccess } = useAreasByDivDistrictQuery(query);
 
     const [postAd, { isLoading }] = useAddBikeMutation();
 
@@ -49,8 +65,9 @@ function BikeSellForm() {
         handleSubmit,
         control,
         reset,
+        resetField,
         formState: { errors },
-    } = useForm<FieldType>({ defaultValues: { price: 0 } });
+    } = useForm<FieldType>({ defaultValues: { } });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
         try {
@@ -87,21 +104,22 @@ function BikeSellForm() {
 
             reset({
                 title: "",
-                "price": 0,
+                "price": "",
                 "description": "",
-                "division": data?.division,
-                "district": data?.district,
+                "divisionId": data?.divisionId,
+                "districtId": data?.districtId,
+                "areaId": data?.areaId,
                 "bike_type": "",
                 "condition": "",
                 "brand": "",
                 "model": "",
-                "mileage": 0,
-                "year": 0,
+                "mileage": "",
+                "year": "",
                 "engine": "",
                 "color": "",
                 "fuel_type": "",
                 edition: "",
-                kilometer: 0
+                kilometer: ""
             });
             setImages([]);
 
@@ -126,15 +144,36 @@ function BikeSellForm() {
     }, [images]);
 
     useEffect(() => {
-        if (profileSuccess && isSuccess) {
+        if (profileSuccess) {
             reset({
-                division: profileSuccess ? (profile?.data?.division || "") : "",
-                district: profileSuccess ? (profile?.data?.district || "") : "",
+                divisionId: profile?.data?.division?.id.toString(),
+                districtId: profile?.data?.district?.id.toString(),
+                areaId: profile?.data?.area?.id.toString(),
             })
-            const division = data?.data?.divisions?.find(i => i?.name == profile?.data?.division);
-            setDivision(division)
+
+            setDivision({ id: profile?.data?.division?.id })
+            setDistrict({ id: profile?.data?.district?.id })
         }
-    }, [profile, profileSuccess, data, isSuccess])
+    }, [profile, profileSuccess])
+
+    useEffect(() => {
+        if (division && division?.label) {
+            resetField("districtId", {
+                defaultValue: null
+            })
+            resetField("areaId", {
+                defaultValue: null
+            })
+        }
+    }, [division])
+
+    useEffect(() => {
+        if (district && district?.label) {
+            resetField("areaId", {
+                defaultValue: null
+            })
+        }
+    }, [district])
 
     return (
         <div>
@@ -184,13 +223,14 @@ function BikeSellForm() {
                 <div className="w-full mx-auto mb-3">
                     <label htmlFor='price' className="mb-1.5 block text-black dark:text-white font-popin">
                         Price
-                        <span className="text-red-500 text-base ml-1">*</span>
+                        {/* <span className="text-red-500 text-base ml-1">*</span> */}
                     </label>
                     <input
                         type="number"
                         id='price'
                         {...register("price", {
-                            required: true,
+                            // required: true,
+                            setValueAs: (v) => v === "" ? null : Number(v),
                             pattern: {
                                 value: /^[0-9]+$/,
                                 message: "Invalid price format",
@@ -270,7 +310,7 @@ function BikeSellForm() {
 
                         <SelectWithSearch
                             name='brand'
-                            items={[...Carbrands.map(type => {
+                            items={[...bikeBrands.map(type => {
                                 return { label: type, value: type }
                             }), { label: "Other", value: "Other" }]}
                             control={control}
@@ -343,13 +383,14 @@ function BikeSellForm() {
                     <div className="w-full mx-auto mb-3">
                         <label htmlFor='mileage' className="mb-1.5 block text-black dark:text-white font-popin">
                             Mileage
-                            <span className="text-red-500 text-base ml-1">*</span>
+                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
                         </label>
                         <input
                             type="number" step="0.01"
                             id='mileage'
                             {...register("mileage", {
-                                required: true,
+                                // required: true,
+                                setValueAs: (v) => v === "" ? null : Number(v),
                                 pattern: {
                                     value: /^\d+(\.\d{1,2})?$/,
                                     message: "Invalid mileage format",
@@ -363,13 +404,14 @@ function BikeSellForm() {
                     <div className="w-full mx-auto mb-3">
                         <label htmlFor='year' className="mb-1.5 block text-black dark:text-white font-popin">
                             Year
-                            <span className="text-red-500 text-base ml-1">*</span>
+                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
                         </label>
                         <input
-                            type="number" step="0.01"
+                            type="number"
                             id='year'
                             {...register("year", {
-                                required: true,
+                                // required: true,
+                                setValueAs: (v) => v === "" ? null : Number(v),
                                 pattern: {
                                     value: /^[0-9]+$/,
                                     message: "Invalid year format",
@@ -386,13 +428,14 @@ function BikeSellForm() {
                     <div className="w-full mx-auto mb-3">
                         <label htmlFor='Kilometer' className="mb-1.5 block text-black dark:text-white font-popin">
                             Kilometer
-                            <span className="text-red-500 text-base ml-1">*</span>
+                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
                         </label>
                         <input
                             type="number" step="0.01"
                             id='Kilometer'
                             {...register("kilometer", {
-                                required: true,
+                                // required: true,
+                                setValueAs: (v) => v === "" ? null : Number(v),
                                 pattern: {
                                     value: /^[0-9]+$/,
                                     message: "Invalid Kilometer format",
@@ -448,12 +491,12 @@ function BikeSellForm() {
                         <div className="w-full mx-auto mb-3">
                             <label htmlFor='division' className="mb-1.5 block text-black dark:text-white font-popin">
                                 Division
-                                <span className="text-red-500 text-base ml-1">*</span>
+                                {/* <span className="text-red-500 text-base ml-1">*</span> */}
                             </label>
                             <SelectWithSearch
-                                name='division'
+                                name='divisionId'
                                 items={isSuccess ? data?.data?.divisions?.map(i => {
-                                    return { label: i?.name, value: i?.name, id: i?.id }
+                                    return { label: i?.name, value: i?.id, id: i?.id }
                                 }) : []}
                                 setState={setDivision}
                                 control={control}
@@ -461,31 +504,56 @@ function BikeSellForm() {
                                 errors={errors}
                                 placeholder='Select Division'
                                 validationRules={{
-                                    required: "Select a division",
+                                    // required: "Select a division",
                                 }}
                             />
-                            {errors?.division && <p className="text-red-500 text-sm col-span-2">{errors?.division?.message}</p>}
+                            {errors?.divisionId && <p className="text-red-500 text-sm col-span-2">{errors?.divisionId?.message}</p>}
                         </div>
                         <div className="w-full mx-auto mb-3">
                             <label htmlFor='district' className="mb-1.5 block text-black dark:text-white font-popin">
                                 District
-                                <span className="text-red-500 text-base ml-1">*</span>
+                                {/* <span className="text-red-500 text-base ml-1">*</span> */}
                             </label>
                             <SelectWithSearch
-                                name='district'
+                                name='districtId'
                                 items={districtSuccess ? districts?.data?.map(i => {
-                                    return { label: i?.name, value: i?.name }
+                                    return { label: i?.name, value: i?.id, id: i?.id }
                                 }) : []}
                                 control={control}
                                 isLoading={districtLoad || districtFetch || profileLoading}
                                 disabled={!division}
+                                setState={setDistrict}
                                 errors={errors}
                                 placeholder='Select District'
                                 validationRules={{
-                                    required: "Select a district",
+                                    // required: "Select a district",
                                 }}
                             />
-                            {errors?.district && <p className="text-red-500 text-sm col-span-2">{errors?.district?.message}</p>}
+                            {errors?.districtId && <p className="text-red-500 text-sm col-span-2">{errors?.districtId?.message}</p>}
+                        </div>
+                    </div>
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+                        <div className="w-full mx-auto mb-3">
+
+                            <label htmlFor='area' className="mb-1.5 block text-black dark:text-white font-popin">
+                                Area
+                                {/* <span className="text-red-500 text-base ml-1">*</span> */}
+                            </label>
+
+                            <SelectWithSearch
+                                name='areaId'
+                                items={areaSuccess ? areas?.data?.map(i => {
+                                    return { label: i?.name, value: i?.id, id: i?.id }
+                                }) : []}
+                                control={control}
+                                isLoading={areatLoad || profileLoading || areaFetch}
+                                errors={errors}
+                                placeholder='Select Area'
+                                validationRules={{
+                                    // required: "Select a area",
+                                }}
+                            />
+                            {errors?.areaId && <p className="text-red-500 text-sm col-span-2">{errors?.areaId?.message}</p>}
                         </div>
                     </div>
                 </div>

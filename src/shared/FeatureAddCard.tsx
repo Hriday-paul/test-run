@@ -38,7 +38,7 @@ function FeatureAddCard({ add }: { add: Add }) {
                             {add?.title}
                         </h3>
                         <div className="flex items-center text-sm text-gray-600 gap-1">
-                            <SlLocationPin size={16} /> {add?.division || "N/A"}
+                            <SlLocationPin size={16} /> {add?.division?.name || "N/A"}
                         </div>
                     </div>
 
@@ -47,7 +47,7 @@ function FeatureAddCard({ add }: { add: Add }) {
                     </div>
                     <div className="flex items-center justify-between pt-2">
                         <p className="font-semibold text-gray-900 flex items-center gap-1 text-base">
-                            Tk {add?.price}
+                            {add?.price ? `Tk ${add?.price}` : "N/A"}
                         </p>
                         <Link href={`/${categoryRouteMap[add?.category]}/${add?.id}`}>
                             <Button

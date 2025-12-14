@@ -9,14 +9,16 @@ import { ImSpinner2 } from 'react-icons/im';
 import { toast } from 'sonner';
 import { useAddBikeMutation, useAddWorkshopMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
-import { useAllDivisionsQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
+import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
 
 type FieldType = {
     title: string,
-    "description": string,
-    "division": string,
-    "district": string,
+    description: string,
+
+    "divisionId": string | null,
+    "districtId": string | null,
+    "areaId": string | null,
 
     address: string
     open_time: string
@@ -28,9 +30,22 @@ type FieldType = {
 function WorkshopForm() {
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
 
-    const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
+        const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
     const [division, setDivision] = useState<any>(null);
+    const [district, setDistrict] = useState<any>(null);
+
     const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : 1 });
+
+    const query: { division?: number, district?: number } = {}
+
+    if (division) {
+        query.division = division?.id
+    }
+    if (district) {
+        query.district = district?.id
+    }
+
+    const { isLoading: areatLoad, isFetching: areaFetch, data: areas, isSuccess: areaSuccess } = useAreasByDivDistrictQuery(query);
 
     const [postAd, { isLoading }] = useAddWorkshopMutation();
 
@@ -41,6 +56,7 @@ function WorkshopForm() {
         handleSubmit,
         control,
         reset,
+        resetField,
         formState: { errors },
     } = useForm<FieldType>({ defaultValues: { } });
 
@@ -80,8 +96,9 @@ function WorkshopForm() {
             reset({
                 title: "",
                 "description": "",
-                "division": data?.division,
-                "district": data?.district,
+                "divisionId": data?.divisionId,
+                "districtId": data?.districtId,
+                "areaId": data?.areaId,
                 address : "",
                 open_time : "",
                 close_time : '',
@@ -109,16 +126,37 @@ function WorkshopForm() {
         setImages(finalImgs)
     }, [images]);
 
-    useEffect(() => {
-        if (profileSuccess && isSuccess) {
+        useEffect(() => {
+        if (profileSuccess) {
             reset({
-                division: profileSuccess ? (profile?.data?.division || "") : "",
-                district: profileSuccess ? (profile?.data?.district || "") : "",
+                divisionId: profile?.data?.division?.id.toString(),
+                districtId: profile?.data?.district?.id.toString(),
+                areaId: profile?.data?.area?.id.toString(),
             })
-            const division = data?.data?.divisions?.find(i => i?.name == profile?.data?.division);
-            setDivision(division)
+
+            setDivision({ id: profile?.data?.division?.id })
+            setDistrict({ id: profile?.data?.district?.id })
         }
-    }, [profile, profileSuccess, data, isSuccess])
+    }, [profile, profileSuccess])
+
+    useEffect(() => {
+        if (division && division?.label) {
+            resetField("districtId", {
+                defaultValue: null
+            })
+            resetField("areaId", {
+                defaultValue: null
+            })
+        }
+    }, [division])
+
+    useEffect(() => {
+        if (district && district?.label) {
+            resetField("areaId", {
+                defaultValue: null
+            })
+        }
+    }, [district])
 
     return (
         <div>
@@ -165,26 +203,7 @@ function WorkshopForm() {
                     />
                     {errors?.title && <p className="text-red-500 text-sm col-span-2">{errors?.title?.message}</p>}
                 </div>
-                {/* <div className="w-full mx-auto mb-3">
-                    <label htmlFor='price' className="mb-1.5 block text-black dark:text-white font-popin">
-                        Price
-                        <span className="text-red-500 text-base ml-1">*</span>
-                    </label>
-                    <input
-                        type="number"
-                        id='price'
-                        {...register("price", {
-                            required: true,
-                            pattern: {
-                                value: /^[0-9]+$/,
-                                message: "Invalid price format",
-                            },
-                        })}
-                        placeholder="Write price"
-                        className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.price ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
-                    />
-                    {errors?.price && <p className="text-red-500 text-sm col-span-2">{errors?.price?.message}</p>}
-                </div> */}
+                
                 <div className="w-full mx-auto mb-3">
                     <label htmlFor='description' className="mb-1.5 block text-black font-popin">
                         Description
@@ -285,12 +304,12 @@ function WorkshopForm() {
                         <div className="w-full mx-auto mb-3">
                             <label htmlFor='division' className="mb-1.5 block text-black dark:text-white font-popin">
                                 Division
-                                <span className="text-red-500 text-base ml-1">*</span>
+                                {/* <span className="text-red-500 text-base ml-1">*</span> */}
                             </label>
                             <SelectWithSearch
-                                name='division'
+                                name='divisionId'
                                 items={isSuccess ? data?.data?.divisions?.map(i => {
-                                    return { label: i?.name, value: i?.name, id: i?.id }
+                                    return { label: i?.name, value: i?.id, id: i?.id }
                                 }) : []}
                                 setState={setDivision}
                                 control={control}
@@ -298,31 +317,56 @@ function WorkshopForm() {
                                 errors={errors}
                                 placeholder='Select Division'
                                 validationRules={{
-                                    required: "Select a division",
+                                    // required: "Select a division",
                                 }}
                             />
-                            {errors?.division && <p className="text-red-500 text-sm col-span-2">{errors?.division?.message}</p>}
+                            {errors?.divisionId && <p className="text-red-500 text-sm col-span-2">{errors?.divisionId?.message}</p>}
                         </div>
                         <div className="w-full mx-auto mb-3">
                             <label htmlFor='district' className="mb-1.5 block text-black dark:text-white font-popin">
                                 District
-                                <span className="text-red-500 text-base ml-1">*</span>
+                                {/* <span className="text-red-500 text-base ml-1">*</span> */}
                             </label>
                             <SelectWithSearch
-                                name='district'
+                                name='districtId'
                                 items={districtSuccess ? districts?.data?.map(i => {
-                                    return { label: i?.name, value: i?.name }
+                                    return { label: i?.name, value: i?.id, id: i?.id }
                                 }) : []}
                                 control={control}
                                 isLoading={districtLoad || districtFetch || profileLoading}
                                 disabled={!division}
+                                setState={setDistrict}
                                 errors={errors}
                                 placeholder='Select District'
                                 validationRules={{
-                                    required: "Select a district",
+                                    // required: "Select a district",
                                 }}
                             />
-                            {errors?.district && <p className="text-red-500 text-sm col-span-2">{errors?.district?.message}</p>}
+                            {errors?.districtId && <p className="text-red-500 text-sm col-span-2">{errors?.districtId?.message}</p>}
+                        </div>
+                    </div>
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-5'>
+                        <div className="w-full mx-auto mb-3">
+
+                            <label htmlFor='area' className="mb-1.5 block text-black dark:text-white font-popin">
+                                Area
+                                {/* <span className="text-red-500 text-base ml-1">*</span> */}
+                            </label>
+
+                            <SelectWithSearch
+                                name='areaId'
+                                items={areaSuccess ? areas?.data?.map(i => {
+                                    return { label: i?.name, value: i?.id, id: i?.id }
+                                }) : []}
+                                control={control}
+                                isLoading={areatLoad || profileLoading || areaFetch}
+                                errors={errors}
+                                placeholder='Select Area'
+                                validationRules={{
+                                    // required: "Select a area",
+                                }}
+                            />
+                            {errors?.areaId && <p className="text-red-500 text-sm col-span-2">{errors?.areaId?.message}</p>}
                         </div>
                     </div>
                 </div>

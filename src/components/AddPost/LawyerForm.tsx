@@ -1,48 +1,40 @@
 "use client"
 import { Trash2 } from 'lucide-react';
 import Image from 'next/image';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { GoPlus } from 'react-icons/go';
-import { MdDeleteOutline } from 'react-icons/md';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
-import { Carbrands, ExchangeCategory, lawyerSpecializations } from '@/utils/config';
+import { lawyerSpecializations } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
 import { toast } from 'sonner';
-import { useAddcarMutation, useAddExchangeMutation, useAddLawyerMutation } from '@/redux/api/ads.api';
+import { useAddLawyerMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
-import { useAllDivisionsQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
-import { useMyProfileQuery } from '@/redux/api/user.api';
 import MultipleSelect from '../ui/MultiSelect';
 
 type FieldType = {
     title: string,
+
     "description": string,
-    "division": string,
-    "district": string,
+
     phone: string | null
     gender: string | null
     license_number: string | null
     bar_council: string | null
 
     specialization: string[] // e.g. ["criminal", "corporate", "family"]
-    experience_years: number | null // years of experience
+    experience_years: string | null // years of experience
     language: string[]
     chamber_location: string | null
 
-    consultation_fee: number | null // fee per consultation
-    hourly_rate: number | null
+    consultation_fee: string | null // fee per consultation
+    hourly_rate: string | null
 
     available_from: string | null
     available_to: string | null
 }
 
 function LawyerForm() {
-    const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
-
-    const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
-    const [division, setDivision] = useState<any>(null);
-    const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : 1 });
 
     const [postAdd, { isLoading }] = useAddLawyerMutation();
 
@@ -91,19 +83,17 @@ function LawyerForm() {
             reset({
                 title: "",
                 "description": "",
-                "division": data?.division,
-                "district": data?.district,
-                available_from: null,
-                available_to: null,
-                bar_council: null,
-                chamber_location: null,
-                consultation_fee: null,
-                experience_years: null,
-                gender: null,
-                hourly_rate: null,
+                available_from: "",
+                available_to: "",
+                bar_council: "",
+                chamber_location: "",
+                consultation_fee: "",
+                experience_years: "",
+                gender: "",
+                hourly_rate: "",
                 language: [],
-                license_number: null,
-                phone: null,
+                license_number: "",
+                phone: "",
                 specialization: []
             });
             setImage(null);
@@ -124,17 +114,6 @@ function LawyerForm() {
     const removeImg = useCallback(() => {
         setImage(null)
     }, [image]);
-
-    useEffect(() => {
-        if (profileSuccess && isSuccess) {
-            reset({
-                division: profileSuccess ? (profile?.data?.division || "") : "",
-                district: profileSuccess ? (profile?.data?.district || "") : "",
-            })
-            const division = data?.data?.divisions?.find(i => i?.name == profile?.data?.division);
-            setDivision(division)
-        }
-    }, [profile, profileSuccess, data, isSuccess])
 
     return (
         <div>
@@ -249,7 +228,9 @@ function LawyerForm() {
                             id='Experience'
                             {...register("experience_years",
                                 // { required: true }
+                                
                                 {
+                                    setValueAs: (v) => v === "" ? null : Number(v),
                                     pattern: {
                                         value: /^[0-9]+$/,
                                         message: "Invalid Experience format",
@@ -394,6 +375,7 @@ function LawyerForm() {
                             {...register("consultation_fee",
                                 // { required: true }
                                 {
+                                    setValueAs: (v) => v === "" ? null : Number(v),
                                     pattern: {
                                         value: /^[0-9]+$/,
                                         message: "Invalid consultation fee format",
@@ -416,6 +398,7 @@ function LawyerForm() {
                             {...register("hourly_rate",
                                 // { required: true }
                                 {
+                                    setValueAs: (v) => v === "" ? null : Number(v),
                                     pattern: {
                                         value: /^[0-9]+$/,
                                         message: "Invalid hourly rate format",

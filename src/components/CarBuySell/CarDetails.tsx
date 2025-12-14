@@ -89,7 +89,7 @@ function CarDetails({ id }: { id: string }) {
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
                                         <p className='text-base font-figtree'>Air con</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.air_condition || "N/A"} </p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.air_condition ? "Yes" : "No"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
                                         <p className='text-base font-figtree'>Car Type</p>
@@ -128,7 +128,11 @@ function CarDetails({ id }: { id: string }) {
                                                 Location
                                             </p>
                                         </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.district || "N/A"}</p>
+                                        <p className='font-popin text-base'>
+                                            {data?.data?.owner
+                                                ? `${data.data.owner.division?.name || ''}${data.data.owner.division ? ', ' : ''}${data.data.owner.district?.name || ''}${data.data.owner.district ? ', ' : ''}${data.data.owner.area?.name || ''}`.trim() || 'N/A'
+                                                : 'N/A'}
+                                        </p>
                                     </div>
                                     <div className='flex flex-row gap-x-1 justify-between items-center'>
                                         <div className='flex flex-row gap-x-1 items-center'>

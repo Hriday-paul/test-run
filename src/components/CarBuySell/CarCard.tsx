@@ -27,7 +27,7 @@ function CarCard({ car }: { car: Add }) {
                             {car?.title}
                         </h3>
                         <div className="flex items-center text-sm text-gray-600 gap-1">
-                            <SlLocationPin size={16} /> {car?.division || "N/A"}
+                            <SlLocationPin size={16} /> {car?.division?.name || "N/A"}
                         </div>
                     </div>
 
@@ -51,7 +51,7 @@ function CarCard({ car }: { car: Add }) {
                     </div>
                     <div className="flex items-center justify-between pt-2">
                         <p className="font-semibold text-gray-900 flex items-center gap-1 text-base">
-                            Tk {car?.price}
+                            {car?.price ? `Tk ${car?.price}` : "N/A"}
                         </p>
                         <Link href={`/carbuysell/${car?.id}`}>
                             <Button
