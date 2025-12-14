@@ -10,7 +10,7 @@ function ServiceCard({ service }: { service: IService }) {
                 <Image src={pdfIcon} alt='pdf icon' height={100} width={1000} className='h-20 w-auto' />
             </div>
 
-            <h3 className="text-xl font-popin font-medium text-foreground">{service?.name}</h3>
+            <h3 className="text-xl font-popin font-medium text-foreground">{service?.bnName}</h3>
 
             <p className="text-sm text-zinc-800 font-popin leading-relaxed">{service?.description || "N/A"}</p>
 

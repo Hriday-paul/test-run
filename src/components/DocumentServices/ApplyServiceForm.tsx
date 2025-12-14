@@ -165,7 +165,7 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
                                 <Form.Item
                                     name={requirement?.field_name}
                                     key={requirement?.id}
-                                    label={requirement?.name}
+                                    label={requirement?.bnName}
                                     valuePropName="fileList"
                                     getValueFromEvent={(e) => {
                                         if (Array.isArray(e)) {
@@ -205,7 +205,7 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
                                 <Form.Item
                                     key={requirement?.id}
                                     name={requirement?.field_name}
-                                    label={requirement?.name}
+                                    label={requirement?.bnName}
                                     rules={[{ required: requirement?.required, message: "Field is required" }]}>
                                     <Input size="large" placeholder={"Write " + requirement?.name} />
                                 </Form.Item>
