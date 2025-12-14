@@ -41,7 +41,7 @@ function AddStats() {
 
                     <div className="flex flex-col px-6 py-2 bg-white shadow-2 rounded overflow-hidden border border-stroke">
                         <div className="flex flex-col items-center space-y-2 py-3">
-                            <div className="text-2xl md:text-4xl font-semibold tracking-tight leading-none text-primary font-popin">{data?.data?.feature_count} / {data?.data?.feature_count}</div>
+                            <div className="text-2xl md:text-4xl font-semibold tracking-tight leading-none text-primary font-popin">{data?.data?.feature_count} / {data?.data?.featured}</div>
                             <div className="text-lg font-medium text-primary font-popin">Feature Ad</div>
                         </div>
                     </div>
