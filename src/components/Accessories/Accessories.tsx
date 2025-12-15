@@ -23,6 +23,7 @@ function Accessories() {
 
     const division = searchParams?.get("division");
     const district = searchParams?.get("district");
+    const area = searchParams?.get("area");
     const searchTerm = searchParams?.get("searchTerm");
 
     let sortBy = "createdAt";
@@ -49,6 +50,9 @@ function Accessories() {
     if (district) {
         query.district = district
     }
+    if (area) {
+        query.area = area
+    }
     if (searchTerm) {
         query.searchTerm = searchTerm
     }
@@ -74,7 +78,7 @@ function Accessories() {
                 </p>
                 <SortBar limit={limit || "10"} sort={sort || "-createdAt"} />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                 {isSuccess && data?.data?.data?.map(WorkShop => {
                     return <AccessoriesCard key={WorkShop?.id} accessories={WorkShop} />
                 })}

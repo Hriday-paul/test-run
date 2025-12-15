@@ -22,6 +22,7 @@ function Jobs() {
     // const page = useSearchParams()?.get("page");
     const division = searchParams?.get("division");
     const district = searchParams?.get("district");
+    const area = searchParams?.get("area");
     const jobType = searchParams?.get("jobType");
     const employmentType = searchParams?.get("employmentType");
     const searchTerm = searchParams?.get("searchTerm");
@@ -50,6 +51,9 @@ function Jobs() {
     }
     if (district) {
         query.district = district
+    }
+    if (area) {
+        query.area = area
     }
     
     if (jobType) {
@@ -83,7 +87,7 @@ function Jobs() {
                 </p>
                 <SortBar limit={limit || "10"} sort={sort || "-createdAt"} />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                 {isSuccess && data?.data?.data?.map(job => {
                     return <JobCard key={job?.id} job={job} />
                 })}

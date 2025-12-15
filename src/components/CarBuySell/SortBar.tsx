@@ -5,12 +5,12 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { UseUpdateSearchParams } from "@/hooks/UseUpdateSearchPrams";
+import { UseUpdateMultipleSearchParams } from "@/hooks/UseUpdateSearchPrams";
 
 
 function SortBar({ limit, sort = "createdAt" }: { limit: string, sort ?: string }) {
 
-    const updateSearchParam = UseUpdateSearchParams();
+    const updateMultipleSearchParam = UseUpdateMultipleSearchParams();
 
     return (
 
@@ -21,7 +21,7 @@ function SortBar({ limit, sort = "createdAt" }: { limit: string, sort ?: string 
                 <Select
                     // value={limit?.toString()}
                     defaultValue="10"
-                    onValueChange={(value) => updateSearchParam("limit", value)}
+                    onValueChange={(value) => updateMultipleSearchParam({"limit" : value})}
                 >
                     <SelectTrigger className="h-8 border-none shadow-none focus-visible:ring-0 px-2 truncate font-popin cursor-pointer">
                         <SelectValue placeholder={limit?.toString()} />
@@ -40,7 +40,7 @@ function SortBar({ limit, sort = "createdAt" }: { limit: string, sort ?: string 
                 <span className="text-sm truncate font-popin">Sort by:</span>
                 <Select
                     defaultValue={sort}
-                    onValueChange={(value) => updateSearchParam("sort", value)}
+                    onValueChange={(value) => updateMultipleSearchParam({"sort": value})}
                 >
                     <SelectTrigger className="h-8 border-none shadow-none focus-visible:ring-0 px-2 font-popin cursor-pointer">
                         <SelectValue placeholder={sort?.toString()}/>

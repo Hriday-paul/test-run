@@ -26,6 +26,7 @@ function Bikes() {
     const maxMileage = searchParams?.get("maxMileage");
     const division = searchParams?.get("division");
     const district = searchParams?.get("district");
+    const area = searchParams?.get("area");
     const bike_type = searchParams?.get("bike_type");
     const condition = searchParams?.get("condition");
     const brand = searchParams?.get("brand");
@@ -67,6 +68,9 @@ function Bikes() {
     if (district) {
         query.district = district
     }
+    if (area) {
+        query.area = area
+    }
     if (condition) {
         query.condition = condition
     }
@@ -101,7 +105,7 @@ function Bikes() {
                 </p>
                 <SortBar limit={limit || "10"} sort={sort || "-createdAt"} />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                 {isSuccess && data?.data?.data?.map(bike => {
                     return <BikeCard key={bike?.id} bike={bike} />
                 })}

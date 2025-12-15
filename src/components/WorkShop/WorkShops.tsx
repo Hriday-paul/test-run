@@ -23,6 +23,7 @@ function WorkShops() {
 
     const division = searchParams?.get("division");
     const district = searchParams?.get("district");
+    const area = searchParams?.get("area");
     const workshop_type = searchParams?.get("workshop_type");
     const searchTerm = searchParams?.get("searchTerm");
 
@@ -49,6 +50,9 @@ function WorkShops() {
     }
     if (district) {
         query.district = district
+    }
+    if (area) {
+        query.area = area
     }
     if (workshop_type) {
         query.workshop_type = workshop_type
@@ -78,7 +82,7 @@ function WorkShops() {
                 </p>
                 <SortBar limit={limit || "10"} sort={sort || "-createdAt"} />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                 {isSuccess && data?.data?.data?.map(WorkShop => {
                     return <WorkShopCard key={WorkShop?.id} workShop={WorkShop} />
                 })}

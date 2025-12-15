@@ -8,7 +8,7 @@ import {
 
 import { Checkbox } from "@/components/ui/checkbox"
 import { useAllDivisionsQuery } from "@/redux/api/locations.api";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import { Skeleton } from "../ui/skeleton";
 import { lawyerSpecializations } from "@/utils/config";
@@ -18,13 +18,14 @@ function LawyerFilter() {
     const { isLoading, data } = useAllDivisionsQuery();
     const searchParams = useSearchParams();
     const router = useRouter();
+    const pathname = usePathname();
 
     const selectedgenders = searchParams.get("gender")?.split(",") || [];
     const selectspecialization = searchParams.get("specialization")?.split(",") || [];
     const selecteddivisions = searchParams.get("division")?.split(",") || [];
 
     const updateQueryParam = useCallback(
-        (key: string, value: string) => {
+        (key: string, value: string, targetId?: string) => {
             const currentValues = searchParams.get(key)?.split(",") || [];
 
             let newValues: string[];
@@ -41,8 +42,14 @@ function LawyerFilter() {
                 params.delete(key);
             }
 
-            // Use shallow routing to prevent scroll to top
-            router.replace(`?${params.toString()}`);
+            router.push(`${pathname}?${params.toString()}`, { scroll: false });
+
+            // optional scroll to element
+            setTimeout(() => {
+                if (targetId) {
+                    document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
+                }
+            }, 50);
         },
         [searchParams, router]
     );

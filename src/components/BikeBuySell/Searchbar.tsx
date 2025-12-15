@@ -12,11 +12,11 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 
-import { useAllDivisionsQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
+import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import Loader from '@/shared/Loader';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useState } from 'react';
-import { IDivision } from '@/redux/types';
+import { IDistrict, IDivision } from '@/redux/types';
 import { UseUpdateMultipleSearchParams, UseUpdateSearchParams } from '@/hooks/UseUpdateSearchPrams'
 import { useSearchParams } from 'next/navigation'
 
@@ -67,13 +67,15 @@ const Search = ({ updateMultipleSearchParam }: { updateMultipleSearchParam: any 
 const LocationModal = ({ updateSearchParam }: { updateSearchParam: any }) => {
 
   const district = useSearchParams().get("district");
+  const division = useSearchParams().get("division");
+  const area = useSearchParams().get("area");
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className={` py-3.5 md:py-0 flex flex-row gap-x-1 items-center border-b md:border-b-0 md:border-r border-stroke cursor-pointer ml-2 w-full ${district ? "text-black" : "text-gray-400"}`}>
+        <button className={` py-3.5 md:py-0 flex flex-row gap-x-1 items-center border-b md:border-b-0 md:border-r border-stroke cursor-pointer ml-2 w-full ${district || division || area ? "text-black" : "text-gray-400"}`}>
           <MdLocationOn className='text-xl' />
-          <p className='text-base font-figtree'>{district ?? "Location"}</p>
+          <p className='text-base font-figtree'>{area ? area : district ? district : division ? division : "Location"}</p>
         </button>
       </DialogTrigger>
       <DialogContent>
@@ -106,6 +108,17 @@ const DivisionSlide = ({ updateSearchParam }: { updateSearchParam: any }) => {
         <>
           <h4 className='text-lg font-figtree font-medium text-black mb-3'>Select Devesion</h4>
           <ul>
+
+            <li className='w-full'>
+              <DialogTrigger asChild>
+                <button className='flex flex-row gap-x-5 justify-between items-center border-b border-stroke p-3 cursor-pointer hover:bg-gray-50 duration-200 w-full' onClick={() => {
+                  updateSearchParam({ division: null, district: null, area: null })
+                }}>
+                  <p className='text-base font-figtree'>All</p>
+                </button>
+              </DialogTrigger>
+            </li>
+
             {isSuccess && data?.data?.divisions?.map(division => {
               return <li key={division?.id + division?.name} className='w-full'>
                 <button className='flex flex-row gap-x-5 justify-between items-center border-b border-stroke p-3 cursor-pointer hover:bg-gray-50 duration-200 w-full' onClick={() => setSelectedDivision(division)}>
@@ -127,7 +140,7 @@ const DistrictSlide = ({ division, updateSearchParam }: { division: IDivision, u
 
   const { isLoading, data, isSuccess } = useDistrictsByDivisionQuery({ divisionId: division?.id });
 
-
+  const [selectedDistrict, setSelectedDistrict] = useState<IDistrict | null>(null);
 
   if (isLoading) {
     return <Loader />
@@ -145,24 +158,78 @@ const DistrictSlide = ({ division, updateSearchParam }: { division: IDivision, u
         },
       }}
     >
-      <h4 className='text-lg font-figtree font-medium text-black mb-3'>Select Devesion</h4>
+
+      {!selectedDistrict &&
+        <>
+          <h4 className='text-lg font-figtree font-medium text-black mb-3'>Select Devesion</h4>
+          <ul>
+            <li className='w-full'>
+              <DialogTrigger asChild>
+                <button className='flex flex-row gap-x-5 justify-between items-center border-b border-stroke p-3 cursor-pointer hover:bg-gray-50 duration-200 w-full' onClick={() => {
+                  updateSearchParam({ division: division?.name, district: null, area: null })
+                }}>
+                  <p className='text-base font-figtree'>All</p>
+                </button>
+              </DialogTrigger>
+            </li>
+            <ul>
+              {isSuccess && data?.data?.map(district => {
+                return <li key={district?.id + district?.name} className='w-full'>
+                  <button className='flex flex-row gap-x-5 justify-between items-center border-b border-stroke p-3 cursor-pointer hover:bg-gray-50 duration-200 w-full' onClick={() => setSelectedDistrict(district)}>
+                    <p className='text-base font-figtree'>{district?.name}</p>
+                    <IoIosArrowBack className='rotate-180' />
+                  </button>
+                </li>
+              })}
+            </ul>
+          </ul>
+        </>
+      }
+
+      {selectedDistrict && <AreaSlide division={division} district={selectedDistrict} updateSearchParam={updateSearchParam} />}
+
+    </motion.div>
+  )
+}
+
+const AreaSlide = ({ division, district, updateSearchParam }: { division: IDivision, district: IDistrict, updateSearchParam: any }) => {
+
+  const { isLoading, data, isSuccess } = useAreasByDivDistrictQuery({ division: division?.id, district: district?.id });
+
+  if (isLoading) {
+    return <Loader />
+  }
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: 40 }}
+      whileInView={{
+        opacity: 1,
+        x: 0,
+        transition: {
+          duration: 0.8,
+          type: "spring"
+        },
+      }}
+    >
+      <h4 className='text-lg font-figtree font-medium text-black mb-3'>Select Area</h4>
       <ul>
         <li className='w-full'>
           <DialogTrigger asChild>
             <button className='flex flex-row gap-x-5 justify-between items-center border-b border-stroke p-3 cursor-pointer hover:bg-gray-50 duration-200 w-full' onClick={() => {
-              updateSearchParam({ division: division?.name, district: null })
+              updateSearchParam({ division: division?.name, district: district?.name, area: null })
             }}>
               <p className='text-base font-figtree'>All</p>
             </button>
           </DialogTrigger>
         </li>
-        {isSuccess && data?.data?.map(district => {
-          return <li key={`${district?.id}-${district?.name}`} className='w-full'>
+        {isSuccess && data?.data?.map(area => {
+          return <li key={`${area?.id}-${area?.name}`} className='w-full'>
             <DialogTrigger asChild>
               <button className='flex flex-row gap-x-5 justify-between items-center border-b border-stroke p-3 cursor-pointer hover:bg-gray-50 duration-200 w-full' onClick={() => {
-                updateSearchParam({ division: division?.name, district: district?.name })
+                updateSearchParam({ division: division?.name, district: district?.name, area: area?.name })
               }}>
-                <p className='text-base font-figtree'>{district?.name}</p>
+                <p className='text-base font-figtree'>{area?.name}</p>
               </button>
             </DialogTrigger>
           </li>

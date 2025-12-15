@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import Cars from '@/components/CarBuySell/Cars'
 import CarFilter from '@/components/CarBuySell/CarFilter'
+import CarSearchBar from '@/components/CarBuySell/CarSearchBar'
 
 function CarBuySell() {
   return (
@@ -16,13 +17,16 @@ function CarBuySell() {
         <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Car Buy/Sell
       </ShopBanner>
 
-      <div className='bg-[#F2F4F8] py-8'>
-        <div className='grid grid-cols-4 gap-5 container'>
-          <div className='col-span-1 hidden md:block'>
+      <div className=' bg-[#F2F4F8]'>
+        <div className='container pt-8'>
+          <CarSearchBar />
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 xl:grid-cols-4 gap-5 container py-5'>
+            <div className='lg:col-span-2 xl:col-span-1 hidden lg:block'>
               <CarFilter />
-          </div>
-          <div className='col-span-3'>
-            <Cars />
+            </div>
+            <div className='col-span-1 md:col-span-2 lg:col-span-6 xl:col-span-3'>
+              <Cars />
+            </div>
           </div>
         </div>
       </div>

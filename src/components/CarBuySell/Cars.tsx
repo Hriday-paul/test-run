@@ -26,6 +26,9 @@ function Cars() {
     const division = searchParams?.get("division");
     const condition = searchParams?.get("condition");
     const brand = searchParams?.get("brand");
+    const car_type = searchParams?.get("car_type");
+    const searchTerm = searchParams?.get("searchTerm");
+    
 
     let sortBy = "createdAt";
     let orderBy = "desc"
@@ -69,6 +72,12 @@ function Cars() {
     if (limit) {
         query.limit = limit
     }
+    if (car_type) {
+        query.car_type = car_type
+    }
+    if (searchTerm) {
+        query.searchTerm = searchTerm
+    }
 
     const { isLoading, isError, isSuccess, data } = useAllcarsQuery(query);
 
@@ -85,7 +94,7 @@ function Cars() {
                 </p>
                 <SortBar limit={limit || "10"} sort={sort || "-createdAt"} />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                 {isSuccess && data?.data?.data?.map(car => {
                     return <CarCard key={car?.id} car={car} />
                 })}

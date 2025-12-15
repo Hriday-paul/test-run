@@ -12,7 +12,7 @@ function RentCarCard({ rent }: { rent: Add }) {
             <Image
                 src={rent?.images[0]?.url}
                 alt={"runbd car ad image"}
-                className="w-full h-56 object-cover z-0"
+                className="w-full h-52 object-cover z-0"
                 height={500}
                 width={1000}
                 placeholder="blur"

@@ -164,13 +164,13 @@ const SignUpForm = () => {
                     <div className="w-full mx-auto mb-4">
                         <label htmlFor='email' className="mb-1.5 block text-black font-popin">
                             Email Address
-                            <span className="text-red-500 text-base ml-1">*</span>
+                            {/* <span className="text-red-500 text-base ml-1">*</span> */}
                         </label>
                         <input
                             type="email"
                             id='email'
                             {...register("email", {
-                                required: true,
+                                // required: true,
                                 pattern: {
                                     value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, message: 'email invalid'
                                 }

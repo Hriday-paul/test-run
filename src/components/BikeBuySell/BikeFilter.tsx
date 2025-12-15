@@ -8,7 +8,7 @@ import {
 
 import { Checkbox } from "@/components/ui/checkbox"
 import { useAllDivisionsQuery } from "@/redux/api/locations.api";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
 import { Skeleton } from "../ui/skeleton";
 import RangeFilter from "@/shared/RangeFilter";
@@ -21,13 +21,14 @@ function BikeFilter() {
     const { isLoading: countLoading, data: countdata } = useMaxBikesCountQuery();
     const searchParams = useSearchParams();
     const router = useRouter();
+    const pathname = usePathname();
     const selectedConditions = searchParams.get("condition")?.split(",") || [];
     const selectedbrands = searchParams.get("brand")?.split(",") || [];
     const selecteddivisions = searchParams.get("division")?.split(",") || [];
     const selectedBikeTypes = searchParams.get("bike_type")?.split(",") || [];
 
     const updateQueryParam = useCallback(
-        (key: string, value: string) => {
+        (key: string, value: string, targetId?: string) => {
             const currentValues = searchParams.get(key)?.split(",") || [];
 
             let newValues: string[];
@@ -44,8 +45,14 @@ function BikeFilter() {
                 params.delete(key);
             }
 
-            // Use shallow routing to prevent scroll to top
-            router.replace(`?${params.toString()}`);
+            router.push(`${pathname}?${params.toString()}`, { scroll: false });
+
+            // optional scroll to element
+            setTimeout(() => {
+                if (targetId) {
+                    document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
+                }
+            }, 50);
         },
         [searchParams, router]
     );
@@ -114,7 +121,7 @@ function BikeFilter() {
             <Accordion type="single" collapsible className="bg-white px-4 rounded-lg border border-stroke" defaultValue="brand">
                 <AccordionItem value="brand">
                     <AccordionTrigger className="text-lg font-popin font-medium hover:no-underline cursor-pointer">Brand</AccordionTrigger>
-                    <AccordionContent className="border-t border-stroke pt-4 space-y-3">
+                    <AccordionContent className="border-t border-stroke pt-4 space-y-3 max-h-72 overflow-y-auto">
                         {
                             bikeBrands.map(i => {
                                 const isChecked = selectedbrands.includes(i);

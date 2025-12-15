@@ -195,8 +195,6 @@ export interface IDivision {
     bName: string | null
 }
 
-
-
 export interface IDistrict {
     id: number,
     name: string
