@@ -24,6 +24,8 @@ function Cars() {
     const minMileage = searchParams?.get("minMileage");
     const maxMileage = searchParams?.get("maxMileage");
     const division = searchParams?.get("division");
+    const district = searchParams?.get("district");
+    const area = searchParams?.get("area");
     const condition = searchParams?.get("condition");
     const brand = searchParams?.get("brand");
     const car_type = searchParams?.get("car_type");
@@ -62,6 +64,12 @@ function Cars() {
     }
     if (division) {
         query.division = division
+    }
+    if (district) {
+        query.district = district
+    }
+    if (area) {
+        query.area = area
     }
     if (condition) {
         query.condition = condition
@@ -116,7 +124,7 @@ function Cars() {
 
             {isSuccess && data?.data?.meta?.total > 0 && <div className="mt-3">
                 <Pagination
-                    totalPages={data?.data?.meta?.totalPage || 1}
+                    totalPages={data?.data?.meta?.total || 1}
                     initialPage={1}
                     onPageChange={(n) => setPage(n)}
                     maxDisplayedPages={5}

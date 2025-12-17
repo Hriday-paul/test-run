@@ -53,7 +53,7 @@ function AdsTable() {
                                 <AdTable ads={data?.data?.data} />
                                 <div className="mt-3">
                                     <Pagination
-                                        totalPages={data?.data?.meta?.totalPage || 1}
+                                        totalPages={data?.data?.meta?.total || 1}
                                         initialPage={1}
                                         onPageChange={(n) => setPage(n)}
                                         maxDisplayedPages={5}

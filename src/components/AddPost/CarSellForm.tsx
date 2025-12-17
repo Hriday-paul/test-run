@@ -40,6 +40,29 @@ type FieldType = {
     "seat": string
 }
 
+const carTypes = [
+    {
+        id: 1,
+        name: "Truck",
+        value: "Truck"
+    },
+    {
+        id: 2,
+        name: "Bus",
+        value: "Bus"
+    },
+    {
+        id: 3,
+        name: "Mini Bus",
+        value: "Mini Bus"
+    },
+    {
+        id: 3,
+        name: "Car/Hiace",
+        value: "Hiace"
+    },
+]
+
 function CarSellForm() {
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
 
@@ -277,8 +300,8 @@ function CarSellForm() {
 
                         <SelectWithSearch
                             name='car_type'
-                            items={["Bus", "Truck", "Mini Bus", "Other"].map(type => {
-                                return { label: type, value: type }
+                            items={carTypes.map(type => {
+                                return { label: type?.name, value: type?.value }
                             })}
                             control={control}
                             errors={errors}

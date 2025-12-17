@@ -16,14 +16,14 @@ function SortBar({ limit, sort = "createdAt" }: { limit: string, sort ?: string 
 
         <div className="flex items-center gap-2">
 
-            <div className="flex items-center  border md:px-4 px-1 rounded-md">
+            <div className="flex items-center border border-stroke md:px-2.5 px-1 rounded-md">
                 <span className="text-sm font-popin">Show:</span>
                 <Select
                     // value={limit?.toString()}
                     defaultValue="10"
                     onValueChange={(value) => updateMultipleSearchParam({"limit" : value})}
                 >
-                    <SelectTrigger className="h-8 border-none shadow-none focus-visible:ring-0 px-2 truncate font-popin cursor-pointer">
+                    <SelectTrigger className="border-none shadow-none focus-visible:ring-0 px-2 truncate font-popin cursor-pointer">
                         <SelectValue placeholder={limit?.toString()} />
                     </SelectTrigger>
                     <SelectContent className="font-popin">
@@ -36,7 +36,7 @@ function SortBar({ limit, sort = "createdAt" }: { limit: string, sort ?: string 
                 </Select>
             </div>
 
-            <div className="md:flex items-center  border md:px-4 px-1 rounded-md hidden">
+            <div className="md:flex items-center  border border-stroke md:px-2.5 px-1 rounded-md hidden">
                 <span className="text-sm truncate font-popin">Sort by:</span>
                 <Select
                     defaultValue={sort}

@@ -25,7 +25,7 @@ function Searchbar() {
   const updateMultipleSearchParam = UseUpdateMultipleSearchParams();
 
   return (
-    <div className='w-full bg-white px-2 md:p-2 border border-stroke grid grid-cols-1 md:grid-cols-2 gap-x-5'>
+    <div className='w-auto bg-white px-2 md:p-2 border border-stroke grid grid-cols-1 md:grid-cols-2 gap-x-5 '>
 
       <LocationModal updateSearchParam={updateMultipleSearchParam} />
 
