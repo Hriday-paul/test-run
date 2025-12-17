@@ -20,10 +20,9 @@ function CarBuySell() {
 
       <div className=' bg-[#F2F4F8]'>
         <div className='container pt-8'>
-          <div className='flex flex-col md:flex-row flex-wrap gap-5 justify-center'>
+         
             <CarSearchBar />
-            <Searchbar />
-          </div>
+         
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 xl:grid-cols-4 gap-5 container py-5'>
             <div className='lg:col-span-2 xl:col-span-1 hidden lg:block'>
               <CarFilter />

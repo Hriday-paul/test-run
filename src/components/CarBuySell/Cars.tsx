@@ -10,6 +10,7 @@ import { useState } from "react";
 import Pagination from "../ui/Pagination";
 import { LoadingCard } from "@/shared/LoadingCard";
 import Image from "next/image";
+import Searchbar from "../BikeBuySell/Searchbar";
 
 
 function Cars() {
@@ -95,6 +96,7 @@ function Cars() {
 
     return (
         <div>
+             <Searchbar />
             <div className="flex flex-row justify-between items-center py-4">
                 <p className="text-gray-500 text-sm font-popin font-medium flex flex-row gap-x-1.5 items-center">
                     <PiSlidersHorizontalDuotone className="text-xl" />
