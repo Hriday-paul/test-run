@@ -46,7 +46,7 @@ function CarSearchBar() {
     const car_type = useSearchParams().get("car_type");
 
     return (
-        <div className='flex flex-col lg:flex-row justify-between items-center gap-5 w-auto'>
+        <div className='flex flex-col lg:flex-row justify-between items-center gap-5'>
             <div className='flex flex-row flex-wrap items-center gap-2'>
                 {
                     carTypes?.map(i => {

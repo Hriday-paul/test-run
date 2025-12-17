@@ -20,7 +20,7 @@ function CarBuySell() {
 
       <div className=' bg-[#F2F4F8]'>
         <div className='container pt-8'>
-          <div className='flex flex-col lg:flex-row flex-wrap gap-5 justify-between'>
+          <div className='flex flex-col md:flex-row flex-wrap gap-5 justify-center'>
             <CarSearchBar />
             <Searchbar />
           </div>
