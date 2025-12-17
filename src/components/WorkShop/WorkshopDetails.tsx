@@ -45,7 +45,7 @@ function WorkshopDetails({ id }: { id: string }) {
 
                             <div className='bg-white p-5 rounded-lg'>
                                 <h3 className='text-2xl font-popin font-semibold mb-3'>{data?.data?.title}</h3>
-                                <p className='text-sm font-medium font-figtree'>{data?.data?.description}</p>
+                                <pre className='text-sm font-medium font-figtree'>{data?.data?.description}</pre>
                             </div>
 
                         </div>

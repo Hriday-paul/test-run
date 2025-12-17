@@ -80,7 +80,7 @@ function JobDetails({ id }: { id: string }) {
 
                     <div className='p-5 lg:p-8 bg-white space-y-2 rounded-lg'>
                         <h3 className='text-lg font-popin font-semibold flex flex-row gap-x-1 items-center mb-5'> Overview </h3>
-                        <p className='text-sm font-popin'>{data?.data?.description}</p>
+                        <pre className='text-sm font-popin'>{data?.data?.description}</pre>
                     </div>
 
                 </div>
