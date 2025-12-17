@@ -55,6 +55,8 @@ export type Add = {
 
     status: boolean
 
+    view_count : number
+
 }
 
 export enum Category {

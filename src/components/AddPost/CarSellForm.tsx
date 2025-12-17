@@ -383,7 +383,7 @@ function CarSellForm() {
                         <input
                             type="text"
                             id='bodytype'
-                            {...register("model",
+                            {...register("body_type",
                                 // { required: true }
                             )}
                             placeholder="eg : Crossover"

@@ -8,7 +8,7 @@ import Link from 'next/link';
 import bannerimg from "../../../public/post-top-bg.jpg"
 import { IoIosArrowForward } from 'react-icons/io';
 import Image from 'next/image';
-import { MapPin, Phone, Tag } from 'lucide-react';
+import { Eye, MapPin, Phone, Tag } from 'lucide-react';
 import { MdEmail } from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
 
@@ -66,8 +66,8 @@ function RentCarDetails({ id }: { id: string }) {
                                             </p>
                                         </div>
                                         <p className='font-popin text-base'>
-                                            {data?.data?.owner
-                                                ? `${data.data.owner.division?.name || ''}${data.data.owner.division ? ', ' : ''}${data.data.owner.district?.name || ''}${data.data.owner.district ? ', ' : ''}${data.data.owner.area?.name || ''}`.trim() || 'N/A'
+                                            {data?.data
+                                                ? `${data?.data.division?.name || ''}${data.data.division ? ', ' : ''}${data?.data?.district?.name || ''}${data.data?.district ? ', ' : ''}${data.data?.area?.name || ''}`.trim() || 'N/A'
                                                 : 'N/A'}
                                         </p>
                                     </div>
@@ -115,6 +115,15 @@ function RentCarDetails({ id }: { id: string }) {
                                         </div>
                                         <p className='font-popin text-base'>{(data?.data?.price && data?.data?.price > 0) ? `Tk ${data?.data?.price}` : "N/A"}</p>
                                     </div>
+                                </div>
+                                <div className='flex flex-row gap-x-1 justify-between items-center'>
+                                    <div className='flex flex-row gap-x-1 items-center'>
+                                        <Eye size={20} />
+                                        <p className='font-popin text-sm font-medium'>
+                                            View
+                                        </p>
+                                    </div>
+                                    <p className='font-popin text-base'>{data?.data?.view_count}</p>
                                 </div>
                             </div>
 

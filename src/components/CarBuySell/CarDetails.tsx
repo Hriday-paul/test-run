@@ -8,7 +8,7 @@ import Link from 'next/link';
 import bannerimg from "../../../public/post-top-bg.jpg"
 import { IoIosArrowForward } from 'react-icons/io';
 import Image from 'next/image';
-import { Calendar, MapPin, Phone, Timer } from 'lucide-react';
+import { Calendar, Eye, MapPin, Phone, Timer } from 'lucide-react';
 import { MdEmail } from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
 import moment from "moment";
@@ -118,7 +118,7 @@ function CarDetails({ id }: { id: string }) {
                                 </div>
                                 <div className='flex flex-row gap-x-2.5 items-center pt-4'>
                                     <Image src={data?.data?.owner?.picture?.url || "/empty-user.png"} height={1000} width={1000} className='h-8 w-8 bg-cover rounded-full' alt='user image' />
-                                    <h6 className='text-base font-popin font-medium'>{data?.data?.owner?.first_name + " " + data?.data?.owner?.last_name}</h6>
+                                    <h6 className='text-base font-popin font-medium'>{data?.data?.owner?.first_name + " " + (data?.data?.owner?.last_name ?? "")}</h6>
                                 </div>
                                 <div className='pt-4 space-y-4'>
                                     <div className='flex flex-row gap-x-1 justify-between items-center'>
@@ -129,8 +129,8 @@ function CarDetails({ id }: { id: string }) {
                                             </p>
                                         </div>
                                         <p className='font-popin text-base'>
-                                            {data?.data?.owner
-                                                ? `${data.data.owner.division?.name || ''}${data.data.owner.division ? ', ' : ''}${data.data.owner.district?.name || ''}${data.data.owner.district ? ', ' : ''}${data.data.owner.area?.name || ''}`.trim() || 'N/A'
+                                            {data?.data
+                                                ? `${data?.data.division?.name || ''}${data.data.division ? ', ' : ''}${data?.data?.district?.name || ''}${data.data?.district ? ', ' : ''}${data.data?.area?.name || ''}`.trim() || 'N/A'
                                                 : 'N/A'}
                                         </p>
                                     </div>
@@ -186,6 +186,15 @@ function CarDetails({ id }: { id: string }) {
                                             </p>
                                         </div>
                                         <p className='font-popin text-base'>{moment(data?.data?.createdAt).format("h:mm a") || "N/A"}</p>
+                                    </div>
+                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
+                                        <div className='flex flex-row gap-x-1 items-center'>
+                                            <Eye size={20} />
+                                            <p className='font-popin text-sm font-medium'>
+                                                View
+                                            </p>
+                                        </div>
+                                        <p className='font-popin text-base'>{data?.data?.view_count}</p>
                                     </div>
                                 </div>
                             </div>

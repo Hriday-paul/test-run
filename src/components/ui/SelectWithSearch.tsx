@@ -82,9 +82,10 @@ export function SelectWithSearch<T extends FieldValues>({
                       {items.map((item) => (
                         <CommandItem
                           key={item.value}
-                          value={item.value.toString()}
+                          value={item.label.toString()}
                           className="hover:bg-slate-100 cursor-pointer"
-                          onSelect={(currentValue) => {
+                          onSelect={(currentLabel) => {
+                            const currentValue = items?.find(i=>i?.label == currentLabel)?.value.toString();
                             const newValue = currentValue === field.value ? "" : currentValue;
                             field.onChange(newValue)
                             setState(item)

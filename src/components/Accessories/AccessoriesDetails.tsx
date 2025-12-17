@@ -8,7 +8,7 @@ import Link from 'next/link';
 import bannerimg from "../../../public/Accessories Image.png"
 import { IoIosArrowForward } from 'react-icons/io';
 import Image from 'next/image';
-import { Calendar, MapPin, Phone, Tag, Timer } from 'lucide-react';
+import { Calendar, Eye, MapPin, Phone, Tag, Timer } from 'lucide-react';
 import { MdEmail } from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
 import moment from "moment";
@@ -67,8 +67,8 @@ function AccessoriesDetails({ id }: { id: string }) {
                                             </p>
                                         </div>
                                         <p className='font-popin text-base'>
-                                            {data?.data?.owner
-                                                ? `${data.data.owner.division?.name || ''}${data.data.owner.division ? ', ' : ''}${data.data.owner.district?.name || ''}${data.data.owner.district ? ', ' : ''}${data.data.owner.area?.name || ''}`.trim() || 'N/A'
+                                            {data?.data
+                                                ? `${data?.data.division?.name || ''}${data.data.division ? ', ' : ''}${data?.data?.district?.name || ''}${data.data?.district ? ', ' : ''}${data.data?.area?.name || ''}`.trim() || 'N/A'
                                                 : 'N/A'}
                                         </p>
                                     </div>
@@ -105,6 +105,15 @@ function AccessoriesDetails({ id }: { id: string }) {
                             <div className='bg-white p-5 rounded-lg'>
                                 <div className='pb-4 border-b border-stroke'>
                                     <h3 className='text-xl font-popin font-medium'>Product Details</h3>
+                                </div>
+                                <div className='flex flex-row gap-x-1 justify-between items-center pt-4'>
+                                    <div className='flex flex-row gap-x-1 items-center'>
+                                        <Eye size={20} />
+                                        <p className='font-popin text-sm font-medium'>
+                                            View
+                                        </p>
+                                    </div>
+                                    <p className='font-popin text-base'>{data?.data?.view_count}</p>
                                 </div>
                                 <div className='pt-4 space-y-4'>
                                     <div className='flex flex-row gap-x-1 justify-between items-center'>
