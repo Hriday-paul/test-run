@@ -8,7 +8,7 @@ import { placeHolderBlurImg } from "@/utils/config";
 function WorkShopCard({ workShop }: { workShop: Add }) {
     return (
         <div
-            className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree max-w-lg">
+            className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree bg-white">
             <Image
                 src={workShop?.images[0]?.url}
                 alt={"runbd car ad image"}
@@ -23,7 +23,7 @@ function WorkShopCard({ workShop }: { workShop: Add }) {
                 <Link href={`/workshop/${workShop?.id}`}>
                     <div className="">
                         <div className="border-b border-stroke pb-2">
-                            <h3 className="font-bold text-gray-900 text-lg">
+                            <h3 className="font-semibold text-gray-900 text-lg">
                                 {workShop?.title}
                             </h3>
                             <div className="flex items-center text-sm text-gray-600 gap-1">

@@ -9,7 +9,7 @@ import { placeHolderBlurImg } from "@/utils/config";
 function ExchangeCard({ exchange }: { exchange: Add }) {
     return (
         <div
-            className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree max-w-lg">
+            className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree bg-white">
             <Image
                 src={exchange?.images[0]?.url}
                 alt={"runbd car ad image"}
@@ -22,7 +22,7 @@ function ExchangeCard({ exchange }: { exchange: Add }) {
             <Link href={`/exchange/${exchange?.id}`}>
                 <div className="p-5 space-y-2 bg-white rounded-t-2xl border-t border-stroke -mt-3 relative z-40">
                     <div className="border-b border-stroke py-4 space-y-2.5">
-                        <h3 className="font-bold text-gray-900 text-lg">
+                        <h3 className="font-semibold text-gray-900 text-lg">
                             {exchange?.title}
                         </h3>
                         <p className="flex items-center text-sm font-popin font-medium gap-1">

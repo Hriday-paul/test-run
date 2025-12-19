@@ -44,9 +44,9 @@ function Navbar() {
             <div className='container'>
                 <div className=' flex flex-row justify-between items-center gap-x-5 py-4'>
                     <Link href={"/"}>
-                        <Image src={logo} alt='logo' className='h-12 w-auto object-cover' />
+                        <Image src={logo} alt='logo' className='h-7 md:h-10 xl:h-12 w-auto object-cover' />
                     </Link>
-                    <div className="flex flex-row gap-x-3 md:gap-x-4 lg:gap-x-5 items-center">
+                    <div className="flex flex-row gap-x-2.5 md:gap-x-4 lg:gap-x-5 items-center">
                         <ul className='lg:flex flex-row gap-x-5 lg:gap-x-8 xl:gap-x-10 items-center hidden'>
                             {navitems?.map(i => {
                                 return <li key={i?.id} className='font-popin text-lg text-gray-800 font-normal'>

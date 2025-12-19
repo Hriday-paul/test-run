@@ -496,15 +496,19 @@ function CarSellForm() {
                             Transmission
                             {/* <span className="text-red-500 text-base ml-1">*</span> */}
                         </label>
-                        <input
-                            type="text"
-                            id='transmission'
-                            {...register("transmission",
-                                // { required: true }
-                            )}
-                            placeholder="write transmission"
-                            className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.transmission ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
+                        <SelectWithSearch
+                            name='transmission'
+                            items={["Automatic", "Manual"].map(type => {
+                                return { label: type, value: type }
+                            })}
+                            control={control}
+                            errors={errors}
+                            placeholder='Select type'
+                            validationRules={{
+                                // required: "Select a type",
+                            }}
                         />
+                        
                         {errors?.transmission && <p className="text-red-500 text-sm col-span-2">{errors?.transmission?.message}</p>}
                     </div>
                     <div className="w-full mx-auto mb-3">
@@ -512,15 +516,19 @@ function CarSellForm() {
                             Gear Box
                             {/* <span className="text-red-500 text-base ml-1">*</span> */}
                         </label>
-                        <input
-                            type="text"
-                            id='gear_box'
-                            {...register("gear_box",
-                                // { required: true }
-                            )}
-                            placeholder="write gear box info"
-                            className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.gear_box ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
+                        <SelectWithSearch
+                            name='gear_box'
+                            items={["Automatic", "Manual"].map(type => {
+                                return { label: type, value: type }
+                            })}
+                            control={control}
+                            errors={errors}
+                            placeholder='Select type'
+                            validationRules={{
+                                // required: "Select a type",
+                            }}
                         />
+                        
                         {errors?.gear_box && <p className="text-red-500 text-sm col-span-2">{errors?.gear_box?.message}</p>}
                     </div>
                 </div>

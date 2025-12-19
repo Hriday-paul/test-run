@@ -9,6 +9,13 @@ import { MutableRefObject, useState } from "react";
 import Image from "next/image";
 import { placeHolderBlurImg } from "@/utils/config";
 
+import Lightbox from "yet-another-react-lightbox";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
+import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
+import "yet-another-react-lightbox/styles.css";
+
+import { BsArrowsFullscreen } from "react-icons/bs";
+
 function ThumbnailPlugin(
     mainRef: MutableRefObject<KeenSliderInstance | null>,
 ): KeenSliderPlugin {
@@ -46,6 +53,8 @@ function ThumbnailPlugin(
 
 
 function DetailsCarousel({ images }: { images: { key: string, url: string }[] }) {
+    const [open, setOpen] = useState(false);
+    
     const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
         initial: 0,
     });
@@ -53,8 +62,8 @@ function DetailsCarousel({ images }: { images: { key: string, url: string }[] })
         {
             initial: 0,
             slides: {
-                perView: 4,
-                spacing: 10,
+                perView: "auto",
+                spacing: 5,
             },
         },
         [ThumbnailPlugin(instanceRef)],
@@ -65,46 +74,65 @@ function DetailsCarousel({ images }: { images: { key: string, url: string }[] })
             <div className="flex-1">
                 {/* _________________________ Product Images Carousel __________________ */}
 
-                <div className="flex-1">
+                <div className="flex-1 w-full bg-white relative">
                     <div
                         ref={sliderRef}
-                        className="keen-slider mx-auto max-h-[600px] w-full rounded-lg"
+                        className="keen-slider mx-auto relative h-72 md:h-96 lg:h-[450px] w-full rounded-lg"
                     >
                         {images.map((image, idx) => (
-                            <Image
+                            <div
                                 key={idx}
-                                src={image?.url}
-                                alt="product_image"
-                                placeholder="blur"
-                                blurDataURL={placeHolderBlurImg}
-                                width={4000}
-                                height={4000}
-                                className="keen-slider__slide h-[150px] w-[200px] pl-0 md:h-96 md:w-[250px] object-cover"
-                            ></Image>
+                                className="keen-slider__slide relative "
+                            >
+                                <Image
+                                    src={image.url}
+                                    alt="product_image"
+                                    fill
+                                    placeholder="blur"
+                                    blurDataURL={placeHolderBlurImg}
+                                    className="object-contain h-auto w-auto"
+                                // sizes="(max-width: 768px) 100vw, 1000px"
+                                />
+                            </div>
                         ))}
                     </div>
+
+                    <button className="absolute top-0 right-0 text-white p-1.5 md:p-2 cursor-pointer bg-primary rounded-bl-md" onClick={()=>setOpen(true)}>
+                        <BsArrowsFullscreen className="text-md md:text-lg lg:text-xl"/>
+                    </button>
+
                 </div>
 
                 {/* thumbnail  images  */}
 
                 <div
                     ref={thumbnailRef}
-                    className="thumbnail thumbnail-image mx-auto mt-2 flex overflow-x-auto w-full"
+                    className="thumbnail thumbnail-image mx-auto mt-2 flex w-full flex-wrap"
                 >
-                    {images?.slice(0, 4)?.map((image, idx) => (
-                        <div key={idx} className="w-fit">
+                    {images?.map((image, idx) => (
+                        <div key={idx} className="h-14 md:h-16 lg:h-20 w-14 md:w-16 lg:w-20 relative keen-slider__slide slider-image m-0.5">
                             <Image
                                 src={image?.url}
                                 alt="product_image"
-                                width={4000}
-                                height={4000}
-                                 placeholder="blur"
+                                fill
+                                placeholder="blur"
                                 blurDataURL={placeHolderBlurImg}
-                                className={`keen-slider__slide slider-image translate-0 ml-2 h-[80px] rounded border border-black/50 object-cover cursor-pointer`}
+                                className={`rounded border border-gray-200 object-contain cursor-pointer p-0.5`}
                             ></Image>
                         </div>
                     ))}
+
                 </div>
+
+                <Lightbox
+                    open={open}
+                    close={() => setOpen(false)}
+                    slides={images?.map(i => ({src : i?.url}))}
+                    plugins={[Fullscreen, Zoom]}
+                    carousel={{ finite: true, }}
+                    
+                />
+
             </div>
         </div>
     )

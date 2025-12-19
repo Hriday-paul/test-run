@@ -147,6 +147,15 @@
 
 .slider-image {
   transform: translate3d(0, 0, 0) !important;
-  width: fit-content !important;
+  /* width: fit-content !important; */
+}
 
+.thumbnail .keen-slider__slide.active {
+  @apply border-2 border-primary rounded;
+}
+
+pre {
+  white-space: pre-wrap;       /* Wrap long lines */
+  word-wrap: break-word;       /* Older browsers */
+  overflow-wrap: break-word;   /* Modern browsers */
 }

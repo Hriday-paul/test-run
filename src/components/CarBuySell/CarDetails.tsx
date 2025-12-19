@@ -12,6 +12,7 @@ import { Calendar, Eye, MapPin, Phone, Timer } from 'lucide-react';
 import { MdEmail } from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
 import moment from "moment";
+import { IoPricetagOutline } from 'react-icons/io5';
 
 function CarDetails({ id }: { id: string }) {
     const { isLoading, isError, isSuccess, data } = useAddDetailsQuery({ id });
@@ -48,6 +49,13 @@ function CarDetails({ id }: { id: string }) {
                                 <pre className='text-sm font-medium font-figtree'>{data?.data?.description}</pre>
                             </div>
 
+                            {data?.data?.price && <div className='bg-white p-5 rounded-lg'>
+                                <h3 className='text-xl font-popin font-semibold mb-2 flex flex-row gap-x-1.5 items-center'>
+                                    <IoPricetagOutline />
+                                    Price</h3>
+                                <p className='text-lg font-semibold font-figtree'>{data?.data?.price}</p>
+                            </div>}
+
                             <div className='bg-white p-5 rounded-lg'>
                                 <h3 className='text-2xl font-popin font-semibold mb-3'>Car Features : </h3>
                                 <div className='grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-10'>
@@ -61,7 +69,11 @@ function CarDetails({ id }: { id: string }) {
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
                                         <p className='text-base font-figtree'>Mileage</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.mileage || "N/A"} Km </p>
+                                        <p className='text-base font-figtree font-medium'>{(data?.data?.car?.mileage ? data?.data?.car?.mileage + "Km" : "") || "N/A"} </p>
+                                    </div>
+                                    <div className='flex flex-row justify-between items-center'>
+                                        <p className='text-base font-figtree'>Transmission</p>
+                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.transmission || "N/A"} </p>
                                     </div>
                                     <div className='flex flex-row justify-between items-center'>
                                         <p className='text-base font-figtree'>Gearbox</p>
