@@ -30,10 +30,11 @@ function FeatureAds() {
 
                 <Carousel
                     plugins={[
-                        Autoplay({ delay: 2000 })
+                        Autoplay({ delay: 3500 })
                     ]}
                     opts={{
                         align: "start",
+                        // slidesToScroll: 4
                         // loop: true
                     }}
                     className="w-full"

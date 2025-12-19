@@ -36,7 +36,7 @@ function SortBar({ limit, sort = "createdAt" }: { limit: string, sort ?: string 
                 </Select>
             </div>
 
-            <div className="md:flex items-center  border border-stroke md:px-2.5 px-1 rounded-md hidden">
+            {/* <div className="md:flex items-center  border border-stroke md:px-2.5 px-1 rounded-md hidden">
                 <span className="text-sm truncate font-popin">Sort by:</span>
                 <Select
                     defaultValue={sort}
@@ -52,7 +52,7 @@ function SortBar({ limit, sort = "createdAt" }: { limit: string, sort ?: string 
                         <SelectItem value="-price">Price: High to Low</SelectItem>
                     </SelectContent>
                 </Select>
-            </div>
+            </div> */}
 
 
         </div>

@@ -21,7 +21,7 @@ function FeatureAddCard({ add }: { add: Add }) {
     
     return (
         <div
-            className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree max-w-lg">
+            className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree bg-white">
             <Image
                 src={add?.images[0]?.url}
                 alt={"runbd car ad image"}
@@ -33,8 +33,8 @@ function FeatureAddCard({ add }: { add: Add }) {
             />
             <Link href={`/${categoryRouteMap[add?.category]}/${add?.id}`}>
                 <div className="p-5 space-y-2 bg-white rounded-t-2xl border-t border-stroke -mt-3 relative z-40">
-                    <div className="border-b border-stroke pb-2">
-                        <h3 className="font-bold text-gray-900 text-lg">
+                    <div className="border-b border-stroke pb-2 space-y-0.5">
+                        <h3 className="font-semibold text-gray-900 text-lg">
                             {add?.title}
                         </h3>
                         <div className="flex items-center text-sm text-gray-600 gap-1">
@@ -45,7 +45,7 @@ function FeatureAddCard({ add }: { add: Add }) {
                     <div className="flex items-center justify-between text-gray-700 text-sm py-2">
                         <p className="line-clamp-2 text-xs font-popin">{add?.description}</p>
                     </div>
-                    <div className="flex items-center justify-between pt-2">
+                    <div className="flex items-center justify-between">
                         <p className="font-semibold text-gray-900 flex items-center gap-1 text-base">
                             {add?.price ? `Tk ${add?.price}` : "N/A"}
                         </p>

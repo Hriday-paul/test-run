@@ -56,7 +56,7 @@ function AccessoriesDetails({ id }: { id: string }) {
                                 </div>
                                 <div className='flex flex-row gap-x-2.5 items-center pt-4'>
                                     <Image src={data?.data?.owner?.picture?.url || "/empty-user.png"} height={1000} width={1000} className='h-8 w-8 bg-cover rounded-full' alt='user image' />
-                                    <h6 className='text-base font-popin font-medium'>{data?.data?.owner?.first_name + " " + data?.data?.owner?.last_name}</h6>
+                                    <h6 className='text-base font-popin font-medium'>{data?.data?.owner?.first_name + " " + (data?.data?.owner?.last_name || "")}</h6>
                                 </div>
                                 <div className='pt-4 space-y-4'>
                                     <div className='flex flex-row gap-x-1 justify-between items-center'>

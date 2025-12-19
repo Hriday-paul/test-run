@@ -159,3 +159,7 @@ pre {
   word-wrap: break-word;       /* Older browsers */
   overflow-wrap: break-word;   /* Modern browsers */
 }
+
+button{
+  @apply cursor-pointer
+}

@@ -111,7 +111,7 @@ export default function Pagination({
         <ChevronLeft className="h-4 w-4" />
       </button>
 
-      <div className="flex items-center">{renderPageNumbers()}</div>
+      <div className="flex items-center gap-1">{renderPageNumbers()}</div>
 
       <button
         onClick={() => handlePageChange(currentPage + 1)}

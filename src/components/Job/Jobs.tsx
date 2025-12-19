@@ -1,6 +1,6 @@
 "use client"
 
-import { useAllBikesQuery, useAllJobsQuery } from "@/redux/api/ads.api"
+import { useAllJobsQuery } from "@/redux/api/ads.api"
 import ErrorComponent from "@/shared/ErrorComponent";
 import { PiSlidersHorizontalDuotone } from "react-icons/pi";
 import { useSearchParams } from "next/navigation";
@@ -11,6 +11,9 @@ import Image from "next/image";
 import SortBar from "../CarBuySell/SortBar";
 import JobCard from "./JobCard";
 import Searchbar from "../BikeBuySell/Searchbar";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { AiOutlineFilter } from "react-icons/ai";
+import JobFilter from "./JobFilter";
 
 
 function Jobs() {
@@ -45,7 +48,7 @@ function Jobs() {
 
     const query: any = { page, sortBy, sortOrder: orderBy }
 
-    
+
     if (division) {
         query.division = division
     }
@@ -55,7 +58,7 @@ function Jobs() {
     if (area) {
         query.area = area
     }
-    
+
     if (jobType) {
         query.job_type = jobType
     }
@@ -79,8 +82,19 @@ function Jobs() {
         <div>
 
             <Searchbar />
-            
+
             <div className="flex flex-row justify-between items-center py-2.5">
+                <Popover >
+                    <PopoverTrigger asChild>
+                        <button className='bg-primary/10 rounded text-primary px-3 py-2 text-sm font-figtree font-medium cursor-default flex flex-row gap-x-3 items-center justify-between'>
+                            <p>Filter</p>
+                            <AiOutlineFilter className=' text-base' />
+                        </button>
+                    </PopoverTrigger>
+                    <PopoverContent side='bottom' align='start'>
+                        <JobFilter />
+                    </PopoverContent>
+                </Popover>
                 <p className="text-gray-500 text-sm font-popin font-medium flex flex-row gap-x-1.5 items-center">
                     <PiSlidersHorizontalDuotone className="text-xl" />
                     {isSuccess && data?.data?.meta?.total} items found

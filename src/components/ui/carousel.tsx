@@ -249,14 +249,19 @@ function CarouselDots({ className, ...props }: React.ComponentProps<"div">) {
   const { api, currentIndex, scrollTo, opts } = useCarousel()
   const [slideCount, setSlideCount] = React.useState(0)
 
+  // React.useEffect(() => {
+  //   if (!api) return
+  //   let count = api.slideNodes().length
+  //   const isLooping = opts?.loop
+  //   if (isLooping) {
+  //     count = Math.ceil(count / 2)
+  //   }
+  //   setSlideCount(count)
+  // }, [api])
+
   React.useEffect(() => {
     if (!api) return
-    let count = api.slideNodes().length
-    const isLooping = opts?.loop
-    if (isLooping) {
-      count = Math.ceil(count / 2)
-    }
-    setSlideCount(count)
+    setSlideCount(api.scrollSnapList().length)
   }, [api])
 
   return (
