@@ -58,7 +58,11 @@ type FieldType = {
     model_number?: string
     old_license?: UploadFile[]
     learner_card?: UploadFile[]
-    bluebook_copy?: UploadFile[]
+    bluebook_copy?: UploadFile[],
+
+    message: string,
+    otherFiles?: UploadFile[],
+
 };
 
 
@@ -92,6 +96,15 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
                     textData[field] = (values as any)[field];
                 }
             });
+
+            // message
+            textData.mesaage = values?.message;
+
+            // other files
+            for (let file of (values?.otherFiles || [])) {
+                formdata.append("otherFiles", file.originFileObj as File);
+            }
+
 
             formdata.append("data", JSON.stringify(textData));
 
@@ -177,11 +190,11 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
                                 >
                                     <Dragger
                                         name="files"
-                                        // maxCount={1}
+                                        maxCount={1}
                                         beforeUpload={() => false} // prevents automatic upload
                                         // accept="image/*"
                                         listType="picture"
-                                        // multiple
+                                        multiple={false}
                                         onPreview={() => { }}
                                         showUploadList={{
                                             showPreviewIcon: false,
@@ -211,8 +224,57 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
                                 </Form.Item>
 
                             }
+
+
                         </>
                     })}
+
+                    <Form.Item<FieldType>
+                        name={"otherFiles"}
+
+                        label={"অন্যান্য যেকোন ফাইল"}
+                        valuePropName="fileList"
+                        getValueFromEvent={(e) => {
+                            if (Array.isArray(e)) {
+                                return e;
+                            }
+                            return e?.fileList;
+                        }}
+                    // rules={[{ required: requirement?.required, message: "Field is required" }]}
+                    >
+                        <Dragger
+                            name="files"
+                            // maxCount={1}
+                            beforeUpload={() => false} // prevents automatic upload
+                            // accept="image/*"
+                            listType="picture"
+                            multiple
+                            // multiple
+                            onPreview={() => { }}
+                            showUploadList={{
+                                showPreviewIcon: false,
+                                showRemoveIcon: true,
+                            }}
+                        >
+                            <div className='flex flex-col justify-center'>
+                                <p className="ant-upload-drag-icon flex justify-center">
+                                    <CloudDownload size={30} />
+                                </p>
+                                <p className="ant-upload-text">Click or drag file to this area to upload</p>
+                                <p className="ant-upload-hint">
+                                    Upload Other documents
+                                </p>
+                            </div>
+                        </Dragger>
+                    </Form.Item>
+
+                    <Form.Item<FieldType>
+                        name={"message"}
+                        label={"Message"}
+                    // rules={[{ required: requirement?.required, message: "Field is required" }]}
+                    >
+                        <Input.TextArea rows={4} size="large" placeholder={"Write your message"} />
+                    </Form.Item>
 
                     <div className='space-y-2 my-5'>
                         <p className='text-sm font-popin font-medium'>[বিশেষ দৃষ্টব্য] :  লিস্টের বাহিরেও যেকোনো কাজের চার্জ আলোচনা সাপেক্ষে এবং উক্ত চার্জ সরকারি ফি ব্যতিত। প্রয়োজনে রানবিডি সরকারি অনলাইন চার্জ প্রদান করে।</p>
@@ -230,7 +292,7 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
 
             </ConfigProvider>
 
-             <SignUpPopup open={open} setOpen={setOpen} isSpecifyRole={false} />
+            <SignUpPopup open={open} setOpen={setOpen} isSpecifyRole={false} />
 
         </div>
     )
