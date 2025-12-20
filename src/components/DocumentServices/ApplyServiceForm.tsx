@@ -98,7 +98,7 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
             });
 
             // message
-            textData.mesaage = values?.message;
+            textData.message = values?.message;
 
             // other files
             for (let file of (values?.otherFiles || [])) {
