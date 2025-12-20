@@ -84,6 +84,7 @@ function RentCars() {
             <Searchbar />
 
             <div className="flex flex-row justify-between items-center py-2.5">
+                <div className='lg:hidden'>
                 <Popover >
                     <PopoverTrigger asChild>
                         <button className='bg-primary/10 rounded text-primary px-3 py-2 text-sm font-figtree font-medium cursor-default flex flex-row gap-x-3 items-center justify-between'>
@@ -95,6 +96,7 @@ function RentCars() {
                         <RentCarFilter />
                     </PopoverContent>
                 </Popover>
+                </div>
                 <p className="text-gray-500 text-sm font-popin font-medium flex flex-row gap-x-1.5 items-center">
                     <PiSlidersHorizontalDuotone className="text-xl" />
                     {isSuccess && data?.data?.meta?.total} items found
