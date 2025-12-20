@@ -85,7 +85,7 @@ function BikeFilter() {
                     <AccordionTrigger className="text-lg font-popin font-medium hover:no-underline cursor-pointer">Bike Type</AccordionTrigger>
                     <AccordionContent className="border-t border-stroke pt-4 space-y-3">
                         {
-                            ["Motorcycle", "Scooters", "E-bikes"].map(i => {
+                            ["Motorcycle", "Scooter", "E-bikes"].map(i => {
                                 const isChecked = selectedBikeTypes.includes(i);
                                 return <div key={i} className="flex items-center gap-3">
                                     <Checkbox id={i} className="size-5 cursor-pointer" checked={isChecked} onCheckedChange={() => updateQueryParam("bike_type", i)} />

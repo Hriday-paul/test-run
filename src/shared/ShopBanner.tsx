@@ -16,11 +16,11 @@ export default function ShopBanner({
   children : React.ReactNode
 }) {
   return (
-    <header className="relative w-full h-76 md:h-[430px]">
+    <header className="relative w-full h-44 md:h-60 lg:h-72 xl:h-80">
       <Image src={image} alt="Header Background" fill className="object-cover h-full w-full bg-black/50" />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center">
+      <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center">
         {/* Glass Effect Title */}
         <h1 className="md:px-18 px-10 font-figtree py-2 text-2xl sm:text-3xl md:text-4xl font-bold text-white text-center">
           {title}
