@@ -46,7 +46,7 @@ function WorkShops() {
 
     const [page, setPage] = useState<number>(1);
 
-    const query: any = { page, sortBy, sortOrder: orderBy }
+    const query: any = { page, sortBy, sortOrder: orderBy, limit:21 }
 
     if (division) {
         query.division = division
@@ -64,7 +64,7 @@ function WorkShops() {
         query.searchTerm = searchTerm
     }
     if (limit) {
-        query.limit = limit
+        query.limit = limit || 21
     }
 
     const { isLoading, isError, isSuccess, data } = useAllWorkshopsQuery(query);
@@ -96,7 +96,7 @@ function WorkShops() {
                     <PiSlidersHorizontalDuotone className="text-xl" />
                     {isSuccess && data?.data?.meta?.total} items found
                 </p>
-                <SortBar limit={limit || "10"} sort={sort || "-createdAt"} />
+                <SortBar limit={limit || "21"} sort={sort || "-createdAt"} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                 {isSuccess && data?.data?.data?.map(WorkShop => {

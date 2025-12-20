@@ -27,11 +27,12 @@ function SortBar({ limit, sort = "createdAt" }: { limit: string, sort ?: string 
                         <SelectValue placeholder={limit?.toString()} />
                     </SelectTrigger>
                     <SelectContent className="font-popin">
-                        <SelectItem value="10">10</SelectItem>
-                        <SelectItem value="20">20</SelectItem>
+                        <SelectItem value="21">21</SelectItem>
                         <SelectItem value="40">40</SelectItem>
                         <SelectItem value="50">50</SelectItem>
                         <SelectItem value="60">60</SelectItem>
+                        <SelectItem value="80">80</SelectItem>
+                        <SelectItem value="100">100</SelectItem>
                     </SelectContent>
                 </Select>
             </div>

@@ -46,7 +46,7 @@ function Jobs() {
 
     const [page, setPage] = useState<number>(1);
 
-    const query: any = { page, sortBy, sortOrder: orderBy }
+    const query: any = { page, sortBy, sortOrder: orderBy, limit : 21 }
 
 
     if (division) {
@@ -101,7 +101,7 @@ function Jobs() {
                     <PiSlidersHorizontalDuotone className="text-xl" />
                     {isSuccess && data?.data?.meta?.total} items found
                 </p>
-                <SortBar limit={limit || "10"} sort={sort || "-createdAt"} />
+                <SortBar limit={limit || "21"} sort={sort || "-createdAt"} />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
                 {isSuccess && data?.data?.data?.map(job => {
