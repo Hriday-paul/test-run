@@ -20,7 +20,7 @@ function SortBar({ limit, sort = "createdAt" }: { limit: string, sort ?: string 
                 <span className="text-sm font-popin">Show:</span>
                 <Select
                     // value={limit?.toString()}
-                    defaultValue="10"
+                    defaultValue="21"
                     onValueChange={(value) => updateMultipleSearchParam({"limit" : value})}
                 >
                     <SelectTrigger className="border-none shadow-none focus-visible:ring-0 px-2 truncate font-popin cursor-pointer">
