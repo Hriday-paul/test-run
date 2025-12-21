@@ -19,7 +19,7 @@ export type IUser = {
 
     division: IDivision | null,
     district: IDistrict | null,
-    area : IArea | null
+    area: IArea | null
 
     facebook: string | null
     twitter: string | null,
@@ -55,7 +55,7 @@ export type Add = {
 
     status: boolean
 
-    view_count : number
+    view_count: number
 
 }
 
@@ -268,6 +268,8 @@ export interface IOrder {
     "fields": [],
     "otherFiles": [],
     "service": IService,
+
+    response_list: { id : number, name: string, fieldType : string, File: { key: string, url: string } | null, data : string | null }[]
 
     createdAt: Date,
     updatedAt: Date

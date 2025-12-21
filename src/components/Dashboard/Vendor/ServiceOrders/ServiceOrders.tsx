@@ -14,9 +14,11 @@ import {
 } from "@/components/ui/table"
 import moment from 'moment';
 import Image from 'next/image';
+import OrderResultView from './OrderResultView';
+import { Badge } from '@/components/ui/badge';
 
 function ServiceOrders() {
-    const { isLoading, isSuccess, data, isError} = useAllOrdersQuery();
+    const { isLoading, isSuccess, data, isError } = useAllOrdersQuery();
     return (
         <div className=''>
             <h3 className='text-base lg:text-lg font-popin text-black py-3'>Document Service Orders</h3>
@@ -49,6 +51,7 @@ export const OrderTable = ({ orders }: { orders: IOrder[] }) => {
                     <TableHead className="font-medium font-figtree">Price</TableHead>
                     <TableHead className="font-medium font-figtree">Status</TableHead>
                     <TableHead className="font-medium font-figtree">Date</TableHead>
+                    <TableHead className="font-medium font-figtree">Action</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody className="border border-stroke">
@@ -60,9 +63,18 @@ export const OrderTable = ({ orders }: { orders: IOrder[] }) => {
 
                         <TableCell>{order?.service?.price}</TableCell>
 
-                        <TableCell>{order?.status}</TableCell>
+                        <TableCell>
+                            <Badge variant={order?.status == "PENDING" ? "outline" : "secondary"} className={order?.status == "COMPLETED" ? "bg-green-500/20" : ""}>
+                                {order?.status}
+                            </Badge>
+                        </TableCell>
+
 
                         <TableCell className="font-medium p-5">{moment(order?.createdAt).format("MMM Do YYYY, h:mm a")}</TableCell>
+
+                        <TableCell>
+                            {order?.status == "COMPLETED" && <OrderResultView order={order} />}
+                        </TableCell>
 
                     </TableRow>
                 ))}
