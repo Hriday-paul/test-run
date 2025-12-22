@@ -62,6 +62,14 @@ const AddApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['ads', "cars"]
         }),
+        updateCar: builder.mutation<{ message: string }, {id : number, body : any}>({
+            query: ({body, id}) => ({
+                url: `/ads/cars/${id}`,
+                method: "PATCH",
+                body
+            }),
+            invalidatesTags: ['ads', "cars"]
+        }),
 
         maxcarsCount: builder.query<{ message: string, data: { maxPrice: { _max: { price: number } }, maxMileage: { _max: { mileage: number } } } }, void>({
             query: () => ({
@@ -188,7 +196,19 @@ const AddApi = baseApi.injectEndpoints({
             invalidatesTags: ['ads', "rentCars"]
         }),
 
+        dltAdImage: builder.mutation<{ message: string }, {addId : number, id : number}>({
+            query: ({id, addId}) => ({
+                url: `/ads/image/${id}`,
+                method: "DELETE",
+                body : {addId}
+            }),
+            invalidatesTags: ['ads']
+        }),
+
     })
 })
 
-export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery, useAllRentcarQuery, useAddDetailsQuery, useAllAdsQuery, useFeatureAddMutation, useBumpAddMutation, useDltAddMutation, useAddcarMutation, useAddBikeMutation, useAddWorkshopMutation, useAddAccessoriesMutation, useAddRentCarMutation, useAddJobMutation, useAddExchangeMutation, useAddLawyerMutation, useAllFeatureAdsQuery } = AddApi;
+export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery, useAllRentcarQuery, useAddDetailsQuery, useAllAdsQuery, useFeatureAddMutation, useBumpAddMutation, useDltAddMutation, useDltAdImageMutation,
+    
+    useAddcarMutation, useUpdateCarMutation, 
+    useAddBikeMutation, useAddWorkshopMutation, useAddAccessoriesMutation, useAddRentCarMutation, useAddJobMutation, useAddExchangeMutation, useAddLawyerMutation, useAllFeatureAdsQuery } = AddApi;

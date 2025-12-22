@@ -34,7 +34,7 @@ export type Add = {
     title: string
     price: number
     description: string | null
-    images: { key: string, url: string }[],
+    images: { key: string, url: string, id : number }[],
     category: Category
     car: ICar
     bike: IBike
@@ -47,9 +47,13 @@ export type Add = {
     createdAt: Date
     updatedAt: Date
 
-    division?: IDivision
-    district?: IDistrict
-    area?: IArea
+    divisionId : number | null,
+    division: IDivision | null
+    districtId : number | null
+    district: IDistrict | null
+    
+    areaId : number | null
+    area: IArea | null
 
     owner: IUser
 
@@ -74,21 +78,21 @@ export enum Category {
 export interface ICar {
     id: number;
 
-    car_type?: string | null;
-    condition?: string | null;
-    brand?: string | null;
-    model?: string | null;
-    body_type?: string | null;
-    mileage?: number | null;
-    year?: number | null;
-    engine?: string | null;
-    color?: string | null;
-    fuel_type?: string | null;
-    transmission?: string | null;
-    gear_box?: string | null;
-    drive_type?: string | null;
-    air_condition?: boolean | null;
-    seat?: string | null;
+    car_type: string | null;
+    condition: string | null;
+    brand: string | null;
+    model: string | null;
+    body_type: string | null;
+    mileage: number | null;
+    year: number | null;
+    engine: string | null;
+    color: string | null;
+    fuel_type: string | null;
+    transmission: string | null;
+    gear_box: string | null;
+    drive_type: string | null;
+    air_condition: boolean | string;
+    seat: string | null;
 }
 
 export interface IBike {

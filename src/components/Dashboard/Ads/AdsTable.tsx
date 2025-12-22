@@ -32,6 +32,7 @@ import { Trash2 } from 'lucide-react';
 import { FaArrowDownLong } from 'react-icons/fa6';
 import { FaRegStar } from 'react-icons/fa';
 import { toast } from 'sonner';
+import EditPost from '@/components/EditPost/EditPost';
 
 function AdsTable() {
     const [page, setPage] = useState(1);
@@ -214,7 +215,7 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                                             <HiOutlineDotsVertical className="text-lg" />
                                         </button>
                                     </DropdownMenuTrigger>
-                                    <DropdownMenuContent className="z-40 bg-white font-figtree min-w-40" align="end">
+                                    <DropdownMenuContent className="z-40 bg-white font-figtree min-w-40" align="end" >
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
                                             <button onClick={() => handleFeature(ad?.id)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
@@ -223,12 +224,17 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                                             </button>
                                         </DropdownMenuItem>
 
-                                        <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
+                                        <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150 w-full">
                                             <button onClick={() => handleBump(ad?.id)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
                                                 <FaArrowDownLong className='text-black rotate-180' />
                                                 Bump Up
                                             </button>
                                         </DropdownMenuItem>
+
+                                        <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
+                                            <EditPost defaultData={ad}></EditPost>
+                                        </DropdownMenuItem>
+
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
                                             <button onClick={() => handleDelete(ad?.id)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>

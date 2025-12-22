@@ -1,7 +1,7 @@
 "use client"
 import { Trash2 } from 'lucide-react';
 import Image from 'next/image';
-import { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { GoPlus } from 'react-icons/go';
 import { MdDeleteOutline } from 'react-icons/md';
@@ -9,35 +9,37 @@ import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { Carbrands } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
 import { toast } from 'sonner';
-import { useAddcarMutation } from '@/redux/api/ads.api';
+import { useAddcarMutation, useDltAdImageMutation, useUpdateCarMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
+import { Add } from '@/redux/types';
+import { Popconfirm } from 'antd';
 
 type FieldType = {
     title: string,
-    "price": string | null,
-    "description": string,
+    "price": number | string | null,
+    "description": string | null,
 
     "divisionId": string | null,
     "districtId": string | null,
     "areaId": string | null,
 
-    "car_type": string,
-    "condition": string,
-    "brand": string,
-    "model": string,
-    "body_type": string,
-    "mileage": string | null,
-    "year": string | null,
-    "engine": string,
-    "color": string,
-    "fuel_type": string,
-    "transmission": string,
-    "gear_box": string,
-    "drive_type": string,
-    "air_condition": boolean,
-    "seat": string
+    "car_type": string | null,
+    "condition": string | null,
+    "brand": string | null,
+    "model": string | null,
+    "body_type": string | null,
+    "mileage": number | string | null,
+    "year": number | string | null,
+    "engine": string | null,
+    "color": string | null,
+    "fuel_type": string | null,
+    "transmission": string | null,
+    "gear_box": string | null,
+    "drive_type": string | null,
+    "air_condition": boolean | string,
+    "seat": string | null
 }
 
 const carTypes = [
@@ -63,7 +65,12 @@ const carTypes = [
     },
 ]
 
-function CarSellForm() {
+function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
+
+    const [postCar, { isLoading }] = useAddcarMutation();
+    const [updateCar, { isLoading: updateLoading }] = useUpdateCarMutation();
+    const [dltImage] = useDltAdImageMutation();
+
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
 
     const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
@@ -83,8 +90,6 @@ function CarSellForm() {
 
     const { isLoading: areatLoad, isFetching: areaFetch, data: areas, isSuccess: areaSuccess } = useAreasByDivDistrictQuery(query);
 
-    const [postCar, { isLoading }] = useAddcarMutation();
-
     const [images, setImages] = useState<File[]>([]);
 
     const {
@@ -94,11 +99,23 @@ function CarSellForm() {
         reset,
         resetField,
         formState: { errors },
-    } = useForm<FieldType>({ defaultValues: {} });
+    } = useForm<FieldType>({
+        defaultValues: {
+            title: defaultData?.title,
+            price: defaultData?.price,
+            description: defaultData?.description,
+            divisionId: defaultData?.divisionId?.toString(),
+            districtId: defaultData?.districtId?.toString(),
+            areaId: defaultData?.areaId?.toString(),
+
+            ...defaultData?.car,
+            air_condition: defaultData?.car?.air_condition?.toString()
+        }
+    });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
         try {
-            if (images?.length <= 0) {
+            if (images?.length <= 0 && !defaultData) {
                 toast.error('Please, select minimum 1 image', { position: "top-center" });
                 return;
             }
@@ -110,11 +127,16 @@ function CarSellForm() {
                 form.append('images', image);
             });
 
-            const res = await postCar(form).unwrap();
+            if (defaultData) {
+                await updateCar({ id: defaultData?.id, body: form }).unwrap();
+            } else {
+                await postCar(form).unwrap();
+            }
+
 
             Swal.fire({
-                title: "Car Ad posted successfully!",
-                text: "Your car add posted successfully",
+                title: `Car Ad ${defaultData ? "updated" : "posted"} successfully!`,
+                text: `Your car add ${defaultData ? "updated" : "posted"} successfully`,
                 customClass: {
                     title: "text-2xl text-black font-figtree",
                     container: "text-sm font-medium font-figtree text-zinc-900",
@@ -128,6 +150,15 @@ function CarSellForm() {
                 confirmButtonColor: "#38CB6E",
                 cancelButtonText: "Close",
             })
+
+            if (defaultData) {
+
+                if (setOpen) {
+                    setOpen(false)
+                }
+
+                return;
+            }
 
             reset({
                 title: "",
@@ -175,7 +206,11 @@ function CarSellForm() {
     }, [images]);
 
     useEffect(() => {
-        if (profileSuccess) {
+        if (defaultData) {
+            setDivision({ id: defaultData?.divisionId })
+            setDistrict({ id: defaultData?.districtId })
+        }
+        else if (profileSuccess) {
             reset({
                 divisionId: profile?.data?.division?.id.toString(),
                 districtId: profile?.data?.district?.id.toString(),
@@ -185,7 +220,7 @@ function CarSellForm() {
             setDivision({ id: profile?.data?.division?.id })
             setDistrict({ id: profile?.data?.district?.id })
         }
-    }, [profile, profileSuccess])
+    }, [profile, profileSuccess, defaultData])
 
     useEffect(() => {
         if (division && division?.label) {
@@ -206,6 +241,15 @@ function CarSellForm() {
         }
     }, [district])
 
+    const handleDltUploadedImg = async (payload: { id: number, addId: number }) => {
+        try {
+            await dltImage(payload).unwrap();
+            toast.success("Image deleted successfully")
+        } catch (err: any) {
+            toast.error(err?.data?.message || 'Something went wrong, try again')
+        }
+    }
+
 
     return (
         <div>
@@ -216,6 +260,31 @@ function CarSellForm() {
                     <span className="text-red-500 text-base ml-1">*</span>
                 </div>
                 <div className='flex flex-row flex-wrap gap-x-2 items-center'>
+
+                    {/* //uploaded images  */}
+                    {
+                        defaultData?.images?.map((img, indx) => {
+                            return <div key={img?.key} className='relative'>
+                                <div className=' w-24 h-24'>
+                                    <Image src={img?.url} fill className='h-full w-full object-cover rounded-md' alt='uploaded image' />
+                                </div>
+
+                                <Popconfirm
+                                    title="Are you sure ?"
+                                    description={`This image will be delete permanently`}
+                                    onConfirm={() => handleDltUploadedImg({ id: img?.id, addId: defaultData?.id })}
+                                    okText="Yes"
+                                    cancelText="No"
+                                >
+                                    <button type='button' className='absolute top-0 right-0 p-1 bg-black/90 z-50 cursor-pointer'>
+                                        <Trash2 className='text-sm text-danger' size={16} />
+                                    </button>
+                                </Popconfirm>
+                            </div>
+                        })
+                    }
+
+                    {/* ---------local images------------- */}
                     {
                         images?.map((img, indx) => {
                             return <div key={indx} className='relative'>
@@ -267,7 +336,7 @@ function CarSellForm() {
                                 value: /^[0-9]+$/,
                                 message: "Invalid price format",
                             },
-                            
+
                         })}
                         placeholder="Write price"
                         className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.price ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
@@ -508,7 +577,7 @@ function CarSellForm() {
                                 // required: "Select a type",
                             }}
                         />
-                        
+
                         {errors?.transmission && <p className="text-red-500 text-sm col-span-2">{errors?.transmission?.message}</p>}
                     </div>
                     <div className="w-full mx-auto mb-3">
@@ -528,7 +597,7 @@ function CarSellForm() {
                                 // required: "Select a type",
                             }}
                         />
-                        
+
                         {errors?.gear_box && <p className="text-red-500 text-sm col-span-2">{errors?.gear_box?.message}</p>}
                     </div>
                 </div>
@@ -681,9 +750,9 @@ function CarSellForm() {
                 </div>
 
 
-                <button type='submit' disabled={isLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
-                    {isLoading && <ImSpinner2 className="text-lg text-white animate-spin" />}
-                    <span>{isLoading ? 'Loading...' : "Submit"}</span>
+                <button type='submit' disabled={isLoading || updateLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
+                    {(isLoading || updateLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
+                    <span>{(isLoading || updateLoading) ? 'Loading...' : "Submit"}</span>
                 </button>
 
             </form>
