@@ -231,9 +231,9 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                                             </button>
                                         </DropdownMenuItem>
 
-                                        <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
+                                        {/* <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
                                             <EditPost defaultData={ad}></EditPost>
-                                        </DropdownMenuItem>
+                                        </DropdownMenuItem> */}
 
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
