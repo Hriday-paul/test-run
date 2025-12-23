@@ -6,6 +6,7 @@ import Footer from "@/shared/Footer/Footer";
 import ReduxProvider from "@/shared/ReduxProvider";
 import { Toaster } from 'sonner';
 import NextJsTopLoader from "@/shared/NextJsTopLoader";
+import TawkTo from "@/utils/TawkTo";
 
 const poppins = Poppins({
   variable: "--font-poppin",
@@ -51,6 +52,8 @@ export default function RootLayout({
         />
         {/* <link rel="manifest" href="/site.webmanifest" /> */}
       </head>
+
+      <TawkTo />
 
       <body
         className={`${poppins.variable} ${figtree.variable} antialiased`}
