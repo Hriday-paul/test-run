@@ -140,5 +140,7 @@ export const Carbrands = [
     "Suzuki",
     "Dodge",
     "Ram",
-    "Chrysler"
+    "Chrysler",
+    "Tata",
+    "Mazda"
 ]
