@@ -212,7 +212,7 @@ function WorkshopForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
                     Images
                     <span className="text-red-500 text-base ml-1">*</span>
                 </div>
-                <div className='flex flex-row flex-wrap gap-x-2 items-center'>
+                <div className='flex flex-row flex-wrap gap-2 items-center'>
                      {/* //uploaded images  */}
                     {
                         defaultData?.images?.map((img, indx) => {
