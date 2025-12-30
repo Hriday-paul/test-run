@@ -93,6 +93,14 @@ const AddApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['ads', "bikes"]
         }),
+        updateBike: builder.mutation<{ message: string }, {id : number, body : any}>({
+            query: ({body, id}) => ({
+                url: `/ads/bikes/${id}`,
+                method: "PATCH",
+                body
+            }),
+            invalidatesTags: ['ads', "bikes"]
+        }),
 
         maxBikesCount: builder.query<{ message: string, data: { maxPrice: { _max: { price: number } }, maxMileage: { _max: { mileage: number } } } }, void>({
             query: () => ({
@@ -116,6 +124,15 @@ const AddApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['ads', "workshops"]
         }),
+        updateWorkshop: builder.mutation<{ message: string }, {id : number, body : any}>({
+            query: ({body, id}) => ({
+                url: `/ads/work-shops/${id}`,
+                method: "PATCH",
+                body
+            }),
+            invalidatesTags: ['ads', "workshops"]
+        }),
+
         allAccessories: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
             query: (query) => ({
                 url: '/ads/accessories',
@@ -123,11 +140,21 @@ const AddApi = baseApi.injectEndpoints({
             }),
             providesTags: ['ads', "accessories"]
         }),
+        
 
         addAccessories: builder.mutation<{ message: string }, any>({
             query: (body) => ({
                 url: '/ads/accessories',
                 method: "POST",
+                body
+            }),
+            invalidatesTags: ['ads', "accessories"]
+        }),
+
+        updateAccessories: builder.mutation<{ message: string }, {id : number, body : any}>({
+            query: ({body, id}) => ({
+                url: `/ads/accessories/${id}`,
+                method: "PATCH",
                 body
             }),
             invalidatesTags: ['ads', "accessories"]
@@ -164,6 +191,14 @@ const AddApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['ads', "lawyers"]
         }),
+        updateLawyer: builder.mutation<{ message: string }, {id : number, body : any}>({
+            query: ({body, id}) => ({
+                url: `/ads/lawyers/${id}`,
+                method: "PATCH",
+                body
+            }),
+            invalidatesTags: ['ads', "lawyers"]
+        }),
 
         allExchanges: builder.query<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
             query: (query) => ({
@@ -195,6 +230,14 @@ const AddApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ['ads', "rentCars"]
         }),
+        updateRentCar: builder.mutation<{ message: string }, {id : number, body : any}>({
+            query: ({body, id}) => ({
+                url: `/ads/rent-cars/${id}`,
+                method: "PATCH",
+                body
+            }),
+            invalidatesTags: ['ads', "rentCars"]
+        }),
 
         dltAdImage: builder.mutation<{ message: string }, {addId : number, id : number}>({
             query: ({id, addId}) => ({
@@ -208,7 +251,16 @@ const AddApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, useAllWorkshopsQuery, useAllAccessoriesQuery, useAllJobsQuery, useAllLawyersQuery, useAllExchangesQuery, useAllRentcarQuery, useAddDetailsQuery, useAllAdsQuery, useFeatureAddMutation, useBumpAddMutation, useDltAddMutation, useDltAdImageMutation,
+export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, 
+
+    useAllWorkshopsQuery, useUpdateWorkshopMutation,
+
+     useAllAccessoriesQuery, useAllJobsQuery, 
+     useAllLawyersQuery, useUpdateLawyerMutation, 
+     useAllExchangesQuery, useAllRentcarQuery, useAddDetailsQuery, useAllAdsQuery, useFeatureAddMutation, useBumpAddMutation, useDltAddMutation, useDltAdImageMutation,
     
     useAddcarMutation, useUpdateCarMutation, 
-    useAddBikeMutation, useAddWorkshopMutation, useAddAccessoriesMutation, useAddRentCarMutation, useAddJobMutation, useAddExchangeMutation, useAddLawyerMutation, useAllFeatureAdsQuery } = AddApi;
+    useAddBikeMutation, useUpdateBikeMutation,
+     useAddWorkshopMutation, useAddAccessoriesMutation,  useUpdateAccessoriesMutation,
+     useAddRentCarMutation, useUpdateRentCarMutation,
+      useAddJobMutation, useAddExchangeMutation, useAddLawyerMutation, useAllFeatureAdsQuery } = AddApi;

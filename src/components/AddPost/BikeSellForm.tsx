@@ -8,38 +8,46 @@ import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { bikeBrands, Carbrands } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
 import { toast } from 'sonner';
-import { useAddBikeMutation, useAddcarMutation } from '@/redux/api/ads.api';
+import { useAddBikeMutation, useAddcarMutation, useDltAdImageMutation, useUpdateBikeMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
 import { number } from 'motion/react';
+import { Add } from '@/redux/types';
+import { Popconfirm } from 'antd';
 
 type FieldType = {
     title: string,
-    "price": string | null,
+    "price": number | string | null,
 
-    "description": string,
-     "divisionId": string | null,
+    "description": string | null,
+    "divisionId": string | null,
     "districtId": string | null,
     "areaId": string | null,
 
-    condition: string
-    brand: string
-    model: string
-    year: string | null
-    engine: string
-    mileage: string | null
-    kilometer: string | null
-    color: string
-    fuel_type: string
-    edition: string
-    bike_type: string
+    condition: string | null
+    brand: string | null
+    model: string | null
+    year: string | null | number
+    engine: string | null
+    mileage: string | number | null
+    kilometer: string | number | null
+    color: string | null
+    fuel_type: string | null
+    edition: string | null
+    bike_type: string | null
 }
 
-function BikeSellForm() {
-    const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
+function BikeSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
+
+    const [updateAd, { isLoading: updateLoading }] = useUpdateBikeMutation();
+    const [dltImage] = useDltAdImageMutation();
 
     const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
+
+    const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
+
+
     const [division, setDivision] = useState<any>(null);
     const [district, setDistrict] = useState<any>(null);
 
@@ -67,11 +75,23 @@ function BikeSellForm() {
         reset,
         resetField,
         formState: { errors },
-    } = useForm<FieldType>({ defaultValues: { } });
+    } = useForm<FieldType>({
+        defaultValues: {
+            title: defaultData?.title,
+            price: defaultData?.price,
+            description: defaultData?.description,
+            divisionId: defaultData?.divisionId?.toString(),
+            districtId: defaultData?.districtId?.toString(),
+            areaId: defaultData?.areaId?.toString(),
+
+            ...defaultData?.bike,
+
+        }
+    });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
         try {
-            if (images?.length <= 0) {
+            if (images?.length <= 0 && !defaultData) {
                 toast.error('Please, select minimum 1 image', { position: "top-center" });
                 return;
             }
@@ -83,11 +103,15 @@ function BikeSellForm() {
                 form.append('images', image);
             });
 
-            const res = await postAd(form).unwrap();
+            if (defaultData) {
+                await updateAd({ id: defaultData?.id, body: form }).unwrap();
+            } else {
+                await postAd(form).unwrap();
+            }
 
             Swal.fire({
-                title: "Bike Ad posted successfully!",
-                text: "Your bike add posted successfully",
+                title: `Bike Ad ${defaultData ? "updated" : "posted"} successfully!`,
+                text: `Your bike add ${defaultData ? "updated" : "posted"} successfully`,
                 customClass: {
                     title: "text-2xl text-black font-figtree",
                     container: "text-sm font-medium font-figtree text-zinc-900",
@@ -101,6 +125,15 @@ function BikeSellForm() {
                 confirmButtonColor: "#38CB6E",
                 cancelButtonText: "Close",
             })
+
+            if (defaultData) {
+
+                if (setOpen) {
+                    setOpen(false)
+                }
+
+                return;
+            }
 
             reset({
                 title: "",
@@ -144,7 +177,11 @@ function BikeSellForm() {
     }, [images]);
 
     useEffect(() => {
-        if (profileSuccess) {
+        if (defaultData) {
+            setDivision({ id: defaultData?.divisionId })
+            setDistrict({ id: defaultData?.districtId })
+        }
+        else if (profileSuccess) {
             reset({
                 divisionId: profile?.data?.division?.id.toString(),
                 districtId: profile?.data?.district?.id.toString(),
@@ -154,7 +191,7 @@ function BikeSellForm() {
             setDivision({ id: profile?.data?.division?.id })
             setDistrict({ id: profile?.data?.district?.id })
         }
-    }, [profile, profileSuccess])
+    }, [profile, profileSuccess, defaultData])
 
     useEffect(() => {
         if (division && division?.label) {
@@ -175,6 +212,15 @@ function BikeSellForm() {
         }
     }, [district])
 
+    const handleDltUploadedImg = async (payload: { id: number, addId: number }) => {
+        try {
+            await dltImage(payload).unwrap();
+            toast.success("Image deleted successfully")
+        } catch (err: any) {
+            toast.error(err?.data?.message || 'Something went wrong, try again')
+        }
+    }
+
     return (
         <div>
 
@@ -184,6 +230,31 @@ function BikeSellForm() {
                     <span className="text-red-500 text-base ml-1">*</span>
                 </div>
                 <div className='flex flex-row flex-wrap gap-x-2 items-center'>
+                    {/* //uploaded images  */}
+                    {
+                        defaultData?.images?.map((img, indx) => {
+                            return <div key={img?.key} className='relative'>
+                                <div className=' w-24 h-24'>
+                                    <Image src={img?.url} fill className='h-full w-full object-cover rounded-md' alt='uploaded image' />
+                                </div>
+
+                                <Popconfirm
+                                    title="Are you sure ?"
+                                    description={`This image will be delete permanently`}
+                                    onConfirm={() => handleDltUploadedImg({ id: img?.id, addId: defaultData?.id })}
+                                    okText="Yes"
+                                    cancelText="No"
+                                    getPopupContainer={(node) => node.parentElement!}
+                                >
+                                    <button type='button' className='absolute top-0 right-0 p-1 bg-black/90 z-50 cursor-pointer'>
+                                        <Trash2 className='text-sm text-danger' size={16} />
+                                    </button>
+                                </Popconfirm>
+                            </div>
+                        })
+                    }
+
+                    {/* ---------local images------------- */}
                     {
                         images?.map((img, indx) => {
                             return <div key={indx} className='relative'>
@@ -559,9 +630,9 @@ function BikeSellForm() {
                 </div>
 
 
-                <button type='submit' disabled={isLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
-                    {isLoading && <ImSpinner2 className="text-lg text-white animate-spin" />}
-                    <span>{isLoading ? 'Loading...' : "Submit"}</span>
+                <button type='submit' disabled={isLoading || updateLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
+                    {(isLoading || updateLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
+                    <span>{(isLoading || updateLoading) ? 'Loading...' : "Submit"}</span>
                 </button>
 
             </form>

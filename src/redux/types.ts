@@ -98,15 +98,15 @@ export interface ICar {
 export interface IBike {
     id: number;
 
-    condition?: string | null;
-    model?: string | null;
-    year?: number | null;
-    engine?: string | null;
-    mileage?: number | null;
-    kilometer?: number | null;
-    color?: string | null;
-    fuel_type?: string | null;
-    edition?: string | null;
+    condition: string | null;
+    model: string | null;
+    year: number | null;
+    engine: string | null;
+    mileage: number | null;
+    kilometer: number | null;
+    color: string | null;
+    fuel_type: string | null;
+    edition: string | null;
     brand: string | null;
     bike_type: string | null
 }

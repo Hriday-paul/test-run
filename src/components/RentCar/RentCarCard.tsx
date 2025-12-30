@@ -21,7 +21,7 @@ function RentCarCard({ rent }: { rent: Add }) {
             <Link href={`/car-rent/${rent?.id}`}>
                 <div className="p-5 space-y-2 bg-white rounded-t-2xl border-t border-stroke -mt-3 relative z-40">
                     <div className="border-b border-stroke py-4 space-y-2.5">
-                        <h3 className="font-semibold text-gray-900 text-lg">
+                        <h3 className="font-semibold text-gray-900 text-lg leading-2">
                             {rent?.title}
                         </h3>
                         <p className="flex items-center text-sm font-popin gap-1">

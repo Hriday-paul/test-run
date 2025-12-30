@@ -12,26 +12,26 @@ import {
 } from "@/components/ui/dialog"
 import CarSellForm from '../AddPost/CarSellForm'
 import { FaArrowDownLong } from 'react-icons/fa6'
+import BikeSellForm from '../AddPost/BikeSellForm'
+import AccessoriesForm from '../AddPost/AccessoriesForm'
+import CarrentForm from '../AddPost/CarrentForm'
+import WorkshopForm from '../AddPost/WorkshopForm'
+import LawyerForm from '../AddPost/LawyerForm'
 
-function EditPost({ defaultData }: { defaultData: Add }) {
+function EditPost({ defaultData, clicker }: { defaultData: Add, clicker: React.ReactNode }) {
     const [open, setOpen] = useState(false);
     return (
-        <div>
+        <>
 
             <Dialog open={open} onOpenChange={setOpen}>
 
 
-                <DialogTrigger>
-
-                    <button className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
-                        <FaArrowDownLong className='text-black rotate-180' />
-                        Edit Post
-                    </button>
-
+                <DialogTrigger className='w-full text-left py-1 hover:bg-zinc-100 duration-150 rounded-sm'>
+                    {clicker}
                 </DialogTrigger>
 
 
-                <DialogContent className='max-h-screen overflow-y-auto min-w-[600px] mx-auto z-50'>
+                <DialogContent className='max-h-screen overflow-y-auto lg:min-w-[600px] mx-auto z-50'>
                     <DialogHeader>
                         <DialogTitle className="font-medium">Edit Post</DialogTitle>
                         <DialogDescription>
@@ -41,7 +41,13 @@ function EditPost({ defaultData }: { defaultData: Add }) {
 
 
                     {
-                        defaultData?.car ? <CarSellForm defaultData={defaultData} setOpen={setOpen}/> : <></>
+                        defaultData?.car ? 
+                        <CarSellForm defaultData={defaultData} setOpen={setOpen} /> : defaultData?.bike ? 
+                        <BikeSellForm defaultData={defaultData} setOpen={setOpen}/> : defaultData?.carRent ? 
+                        <CarrentForm defaultData={defaultData} setOpen={setOpen}></CarrentForm> : defaultData?.workshop ? 
+                        <WorkshopForm defaultData={defaultData} setOpen={setOpen}/> : defaultData?.lawyer ? 
+                        <LawyerForm defaultData={defaultData} setOpen={setOpen}/> :
+                        <AccessoriesForm defaultData={defaultData} setOpen={setOpen}></AccessoriesForm>
                     }
 
 
@@ -50,7 +56,7 @@ function EditPost({ defaultData }: { defaultData: Add }) {
 
             </Dialog>
 
-        </div>
+        </>
     )
 }
 

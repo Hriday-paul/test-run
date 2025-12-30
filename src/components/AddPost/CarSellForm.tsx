@@ -138,6 +138,7 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
                 title: `Car Ad ${defaultData ? "updated" : "posted"} successfully!`,
                 text: `Your car add ${defaultData ? "updated" : "posted"} successfully`,
                 customClass: {
+                    popup: "bg-white rounded-lg p-6 shadow-lg pointer-events-auto",
                     title: "text-2xl text-black font-figtree",
                     container: "text-sm font-medium font-figtree text-zinc-900",
                     cancelButton: "!bg-primary text-white",
@@ -275,6 +276,7 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
                                     onConfirm={() => handleDltUploadedImg({ id: img?.id, addId: defaultData?.id })}
                                     okText="Yes"
                                     cancelText="No"
+                                    getPopupContainer={(node) => node.parentElement!}
                                 >
                                     <button type='button' className='absolute top-0 right-0 p-1 bg-black/90 z-50 cursor-pointer'>
                                         <Trash2 className='text-sm text-danger' size={16} />

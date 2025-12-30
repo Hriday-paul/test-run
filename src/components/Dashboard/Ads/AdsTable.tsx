@@ -28,11 +28,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { Trash2 } from 'lucide-react';
+import { SquarePen, Trash2 } from 'lucide-react';
 import { FaArrowDownLong } from 'react-icons/fa6';
 import { FaRegStar } from 'react-icons/fa';
 import { toast } from 'sonner';
 import EditPost from '@/components/EditPost/EditPost';
+import { Badge } from '@/components/ui/badge';
 
 function AdsTable() {
     const [page, setPage] = useState(1);
@@ -201,8 +202,13 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
 
                             <TableCell className=''>{ad?.title}</TableCell>
 
-                            <TableCell>{ad?.category}</TableCell>
-                            <TableCell>{ad?.price}</TableCell>
+                            <TableCell>
+                                <Badge variant={"outline"}>
+                                    {ad?.category}
+                                </Badge>
+                            </TableCell>
+
+                            <TableCell>{ad?.price || "N/A"}</TableCell>
                             <TableCell>{ad?.status ? "Active" : <p className='text-primary'>Disabled</p>}</TableCell>
 
                             <TableCell className="font-medium ">{moment(ad?.createdAt).format("MMM Do YYYY, h:mm a")}</TableCell>
@@ -231,9 +237,15 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                                             </button>
                                         </DropdownMenuItem>
 
-                                        {/* <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
-                                            <EditPost defaultData={ad}></EditPost>
-                                        </DropdownMenuItem> */}
+                                        <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150 w-full">
+                                            <EditPost defaultData={ad} clicker={
+                                                <div className='w-full text-left hover:bg-zinc-100 duration-150 flex flex-row gap-x-2 items-center px-2 rounded-lg'>
+
+                                                    <SquarePen className='text-black size-4' />
+                                                    Edit Post
+                                                </div>
+                                            }></EditPost>
+                                        </DropdownMenuItem>
 
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">

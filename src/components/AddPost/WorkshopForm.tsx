@@ -7,30 +7,38 @@ import { GoPlus } from 'react-icons/go';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { ImSpinner2 } from 'react-icons/im';
 import { toast } from 'sonner';
-import { useAddBikeMutation, useAddWorkshopMutation } from '@/redux/api/ads.api';
+import { useAddBikeMutation, useAddWorkshopMutation, useDltAdImageMutation, useUpdateWorkshopMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
+import { Add } from '@/redux/types';
+import { Popconfirm } from 'antd';
 
 type FieldType = {
     title: string,
-    description: string,
+    description: string | null,
+
+    price: string | null | number
 
     "divisionId": string | null,
     "districtId": string | null,
     "areaId": string | null,
 
-    address: string
-    open_time: string
-    close_time: string
+    address: string | null
+    open_time: string | null
+    close_time: string | null
     open_days: string[]
-    workshop_type: string
+    workshop_type: string | null
 }
 
-function WorkshopForm() {
+function WorkshopForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
+    const [updateAd, { isLoading: updateLoading }] = useUpdateWorkshopMutation();
+
+    const [dltImage] = useDltAdImageMutation();
+
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
 
-        const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
+    const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
     const [division, setDivision] = useState<any>(null);
     const [district, setDistrict] = useState<any>(null);
 
@@ -58,11 +66,23 @@ function WorkshopForm() {
         reset,
         resetField,
         formState: { errors },
-    } = useForm<FieldType>({ defaultValues: { } });
+    } = useForm<FieldType>({
+        defaultValues: {
+            title: defaultData?.title,
+            price: defaultData?.price,
+            description: defaultData?.description,
+            divisionId: defaultData?.divisionId?.toString(),
+            districtId: defaultData?.districtId?.toString(),
+            areaId: defaultData?.areaId?.toString(),
+
+            ...defaultData?.workshop,
+
+        }
+    });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
         try {
-            if (images?.length <= 0) {
+            if (images?.length <= 0 && !defaultData) {
                 toast.error('Please, select minimum 1 image', { position: "top-center" });
                 return;
             }
@@ -74,11 +94,15 @@ function WorkshopForm() {
                 form.append('images', image);
             });
 
-            const res = await postAd(form).unwrap();
+            if (defaultData) {
+                await updateAd({ id: defaultData?.id, body: form }).unwrap();
+            } else {
+                await postAd(form).unwrap();
+            }
 
             Swal.fire({
-                title: "Workshop Ad posted successfully!",
-                text: "Your workshop add posted successfully",
+                title: `Workshop Ad ${defaultData ? "updated" : "posted"} successfully!`,
+                text: `Your workshop add ${defaultData ? "updated" : "posted"} successfully`,
                 customClass: {
                     title: "text-2xl text-black font-figtree",
                     container: "text-sm font-medium font-figtree text-zinc-900",
@@ -93,16 +117,25 @@ function WorkshopForm() {
                 cancelButtonText: "Close",
             })
 
+            if (defaultData) {
+
+                if (setOpen) {
+                    setOpen(false)
+                }
+
+                return;
+            }
+
             reset({
                 title: "",
                 "description": "",
                 "divisionId": data?.divisionId,
                 "districtId": data?.districtId,
                 "areaId": data?.areaId,
-                address : "",
-                open_time : "",
-                close_time : '',
-                workshop_type : ""
+                address: "",
+                open_time: "",
+                close_time: '',
+                workshop_type: ""
             });
             setImages([]);
 
@@ -126,8 +159,12 @@ function WorkshopForm() {
         setImages(finalImgs)
     }, [images]);
 
-        useEffect(() => {
-        if (profileSuccess) {
+    useEffect(() => {
+        if (defaultData) {
+            setDivision({ id: defaultData?.divisionId })
+            setDistrict({ id: defaultData?.districtId })
+        }
+        else if (profileSuccess) {
             reset({
                 divisionId: profile?.data?.division?.id.toString(),
                 districtId: profile?.data?.district?.id.toString(),
@@ -137,7 +174,7 @@ function WorkshopForm() {
             setDivision({ id: profile?.data?.division?.id })
             setDistrict({ id: profile?.data?.district?.id })
         }
-    }, [profile, profileSuccess])
+    }, [profile, profileSuccess, defaultData])
 
     useEffect(() => {
         if (division && division?.label) {
@@ -158,6 +195,15 @@ function WorkshopForm() {
         }
     }, [district])
 
+    const handleDltUploadedImg = async (payload: { id: number, addId: number }) => {
+        try {
+            await dltImage(payload).unwrap();
+            toast.success("Image deleted successfully")
+        } catch (err: any) {
+            toast.error(err?.data?.message || 'Something went wrong, try again')
+        }
+    }
+
     return (
         <div>
 
@@ -167,6 +213,31 @@ function WorkshopForm() {
                     <span className="text-red-500 text-base ml-1">*</span>
                 </div>
                 <div className='flex flex-row flex-wrap gap-x-2 items-center'>
+                     {/* //uploaded images  */}
+                    {
+                        defaultData?.images?.map((img, indx) => {
+                            return <div key={img?.key} className='relative'>
+                                <div className=' w-24 h-24'>
+                                    <Image src={img?.url} fill className='h-full w-full object-cover rounded-md' alt='uploaded image' />
+                                </div>
+
+                                <Popconfirm
+                                    title="Are you sure ?"
+                                    description={`This image will be delete permanently`}
+                                    onConfirm={() => handleDltUploadedImg({ id: img?.id, addId: defaultData?.id })}
+                                    okText="Yes"
+                                    cancelText="No"
+                                    getPopupContainer={(node) => node.parentElement!}
+                                >
+                                    <button type='button' className='absolute top-0 right-0 p-1 bg-black/90 z-50 cursor-pointer'>
+                                        <Trash2 className='text-sm text-danger' size={16} />
+                                    </button>
+                                </Popconfirm>
+                            </div>
+                        })
+                    }
+
+                    {/* ---------local images------------- */}
                     {
                         images?.map((img, indx) => {
                             return <div key={indx} className='relative'>
@@ -203,7 +274,7 @@ function WorkshopForm() {
                     />
                     {errors?.title && <p className="text-red-500 text-sm col-span-2">{errors?.title?.message}</p>}
                 </div>
-                
+
                 <div className="w-full mx-auto mb-3">
                     <label htmlFor='description' className="mb-1.5 block text-black font-popin">
                         Description
@@ -251,7 +322,7 @@ function WorkshopForm() {
                         <input
                             type="text"
                             id='address'
-                            {...register("address", 
+                            {...register("address",
                                 // { required: true }
                             )}
                             placeholder="Write workshop address"
@@ -270,7 +341,7 @@ function WorkshopForm() {
                         <input
                             type="text"
                             id='opentime'
-                            {...register("open_time", 
+                            {...register("open_time",
                                 // { required: true }
                             )}
                             placeholder="eg : 09:00 Am"
@@ -290,7 +361,7 @@ function WorkshopForm() {
                             {...register("close_time",
                                 // { required: true }
                             )}
-                             placeholder="eg : 11:00 PM"
+                            placeholder="eg : 11:00 PM"
                             className={`w-full rounded bg-white border  py-2.5 px-4 text-black outline-none transition disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-white font-popin placeholder:font-popin ${errors?.close_time ? 'border-danger' : 'dark:text-white border-strokeinput focus:border-black active:border-black'}`}
                         />
                         {errors?.close_time && <p className="text-red-500 text-sm col-span-2">{errors?.close_time?.message}</p>}
@@ -372,9 +443,9 @@ function WorkshopForm() {
                 </div>
 
 
-                <button type='submit' disabled={isLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
-                    {isLoading && <ImSpinner2 className="text-lg text-white animate-spin" />}
-                    <span>{isLoading ? 'Loading...' : "Submit"}</span>
+                <button type='submit' disabled={isLoading || updateLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
+                    {(isLoading || updateLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
+                    <span>{(isLoading || updateLoading) ? 'Loading...' : "Submit"}</span>
                 </button>
 
             </form>

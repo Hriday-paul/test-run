@@ -8,16 +8,18 @@ import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { Carbrands, carType } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
 import { toast } from 'sonner';
-import { useAddcarMutation, useAddRentCarMutation } from '@/redux/api/ads.api';
+import { useAddcarMutation, useAddRentCarMutation, useDltAdImageMutation, useUpdateRentCarMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
+import { Add } from '@/redux/types';
+import { Popconfirm } from 'antd';
 
 type FieldType = {
     title: string,
-    "price": string,
+    "price": string | null | number,
 
-    "description": string,
+    "description": string | null,
     "divisionId": string | null,
     "districtId": string | null,
     "areaId": string | null,
@@ -27,7 +29,12 @@ type FieldType = {
     location: string
 }
 
-function CarrentForm() {
+function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
+
+    const [updateAd, { isLoading: updateLoading }] = useUpdateRentCarMutation();
+
+    const [dltImage] = useDltAdImageMutation();
+
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
 
     const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
@@ -58,11 +65,23 @@ function CarrentForm() {
         reset,
         resetField,
         formState: { errors },
-    } = useForm<FieldType>({ defaultValues: { } });
+    } = useForm<FieldType>({
+        defaultValues: {
+            title: defaultData?.title,
+            price: defaultData?.price,
+            description: defaultData?.description,
+            divisionId: defaultData?.divisionId?.toString(),
+            districtId: defaultData?.districtId?.toString(),
+            areaId: defaultData?.areaId?.toString(),
+
+            ...defaultData?.carRent,
+
+        }
+    });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
         try {
-            if (images?.length <= 0) {
+            if (images?.length <= 0 && !defaultData) {
                 toast.error('Please, select minimum 1 image', { position: "top-center" });
                 return;
             }
@@ -74,11 +93,15 @@ function CarrentForm() {
                 form.append('images', image);
             });
 
-            const res = await postAdd(form).unwrap();
+            if (defaultData) {
+                await updateAd({ id: defaultData?.id, body: form }).unwrap();
+            } else {
+                await postAdd(form).unwrap();
+            }
 
             Swal.fire({
-                title: "Car Rent Ad posted successfully!",
-                text: "Your car rent add posted successfully",
+                title: `Car Rent Ad ${defaultData ? "updated" : "posted"} successfully!`,
+                text: `Your car rent add ${defaultData ? "updated" : "posted"} successfully`,
                 customClass: {
                     title: "text-2xl text-black font-figtree",
                     container: "text-sm font-medium font-figtree text-zinc-900",
@@ -92,6 +115,15 @@ function CarrentForm() {
                 confirmButtonColor: "#38CB6E",
                 cancelButtonText: "Close",
             })
+
+            if (defaultData) {
+
+                if (setOpen) {
+                    setOpen(false)
+                }
+
+                return;
+            }
 
             reset({
                 title: "",
@@ -126,8 +158,12 @@ function CarrentForm() {
         setImages(finalImgs)
     }, [images]);
 
-        useEffect(() => {
-        if (profileSuccess) {
+    useEffect(() => {
+        if (defaultData) {
+            setDivision({ id: defaultData?.divisionId })
+            setDistrict({ id: defaultData?.districtId })
+        }
+        else if (profileSuccess) {
             reset({
                 divisionId: profile?.data?.division?.id.toString(),
                 districtId: profile?.data?.district?.id.toString(),
@@ -137,7 +173,7 @@ function CarrentForm() {
             setDivision({ id: profile?.data?.division?.id })
             setDistrict({ id: profile?.data?.district?.id })
         }
-    }, [profile, profileSuccess])
+    }, [profile, profileSuccess, defaultData])
 
     useEffect(() => {
         if (division && division?.label) {
@@ -158,6 +194,15 @@ function CarrentForm() {
         }
     }, [district])
 
+    const handleDltUploadedImg = async (payload: { id: number, addId: number }) => {
+        try {
+            await dltImage(payload).unwrap();
+            toast.success("Image deleted successfully")
+        } catch (err: any) {
+            toast.error(err?.data?.message || 'Something went wrong, try again')
+        }
+    }
+
     return (
         <div>
 
@@ -167,6 +212,31 @@ function CarrentForm() {
                     <span className="text-red-500 text-base ml-1">*</span>
                 </div>
                 <div className='flex flex-row flex-wrap gap-x-2 items-center'>
+                    {/* //uploaded images  */}
+                    {
+                        defaultData?.images?.map((img, indx) => {
+                            return <div key={img?.key} className='relative'>
+                                <div className=' w-24 h-24'>
+                                    <Image src={img?.url} fill className='h-full w-full object-cover rounded-md' alt='uploaded image' />
+                                </div>
+
+                                <Popconfirm
+                                    title="Are you sure ?"
+                                    description={`This image will be delete permanently`}
+                                    onConfirm={() => handleDltUploadedImg({ id: img?.id, addId: defaultData?.id })}
+                                    okText="Yes"
+                                    cancelText="No"
+                                    getPopupContainer={(node) => node.parentElement!}
+                                >
+                                    <button type='button' className='absolute top-0 right-0 p-1 bg-black/90 z-50 cursor-pointer'>
+                                        <Trash2 className='text-sm text-danger' size={16} />
+                                    </button>
+                                </Popconfirm>
+                            </div>
+                        })
+                    }
+
+                    {/* ---------local images------------- */}
                     {
                         images?.map((img, indx) => {
                             return <div key={indx} className='relative'>
@@ -355,9 +425,9 @@ function CarrentForm() {
                 </div>
 
 
-                <button type='submit' disabled={isLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
-                    {isLoading && <ImSpinner2 className="text-lg text-white animate-spin" />}
-                    <span>{isLoading ? 'Loading...' : "Submit"}</span>
+                <button type='submit' disabled={isLoading || updateLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
+                    {(isLoading || updateLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
+                    <span>{(isLoading || updateLoading) ? 'Loading...' : "Submit"}</span>
                 </button>
 
             </form>

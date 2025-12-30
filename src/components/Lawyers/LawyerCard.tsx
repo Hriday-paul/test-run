@@ -22,7 +22,7 @@ function LawyerCard({ lawyer }: { lawyer: Add }) {
             <Link href={`/lawyers/${lawyer?.id}`}>
                 <div className="p-5 space-y-2 bg-white rounded-t-2xl border-t border-stroke -mt-3 relative z-40">
                     <div className="border-b border-stroke py-4 space-y-2.5">
-                        <h3 className="font-semibold text-gray-900 text-lg">
+                        <h3 className="font-semibold text-gray-900 text-lg leading-2">
                             {lawyer?.title}
                         </h3>
                         <p className="flex items-center text-sm font-popin font-medium gap-1">

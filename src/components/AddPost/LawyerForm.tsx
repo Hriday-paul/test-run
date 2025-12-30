@@ -8,14 +8,18 @@ import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { lawyerSpecializations } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
 import { toast } from 'sonner';
-import { useAddLawyerMutation } from '@/redux/api/ads.api';
+import { useAddLawyerMutation, useDltAdImageMutation, useUpdateLawyerMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import MultipleSelect from '../ui/MultiSelect';
+import { Add } from '@/redux/types';
+import { Popconfirm } from 'antd';
 
 type FieldType = {
     title: string,
 
-    "description": string,
+    price: string | null | null
+
+    "description": string | null,
 
     phone: string | null
     gender: string | null
@@ -23,18 +27,26 @@ type FieldType = {
     bar_council: string | null
 
     specialization: string[] // e.g. ["criminal", "corporate", "family"]
-    experience_years: string | null // years of experience
+    experience_years: string | number | null // years of experience
     language: string[]
     chamber_location: string | null
 
-    consultation_fee: string | null // fee per consultation
-    hourly_rate: string | null
+    consultation_fee: string | number | null // fee per consultation
+    hourly_rate: string | number | null
 
     available_from: string | null
     available_to: string | null
+
+    "divisionId": string | null,
+    "districtId": string | null,
+    "areaId": string | null,
 }
 
-function LawyerForm() {
+function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
+
+    const [updateAd, { isLoading: updateLoading }] = useUpdateLawyerMutation();
+
+    const [dltImage] = useDltAdImageMutation();
 
     const [postAdd, { isLoading }] = useAddLawyerMutation();
 
@@ -46,12 +58,23 @@ function LawyerForm() {
         control,
         reset,
         formState: { errors },
-    } = useForm<FieldType>({ defaultValues: {} });
+    } = useForm<FieldType>({
+        defaultValues: {
+            title: defaultData?.title,
+            description: defaultData?.description,
+            divisionId: defaultData?.divisionId?.toString(),
+            districtId: defaultData?.districtId?.toString(),
+            areaId: defaultData?.areaId?.toString(),
+
+            ...defaultData?.lawyer,
+
+        }
+    });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
         try {
-            if (!image) {
-                toast.error('Please, select minimum 1 image', { position: "top-center" });
+            if (!image && !defaultData) {
+                toast.error('Please, select 1 image', { position: "top-center" });
                 return;
             }
 
@@ -59,13 +82,17 @@ function LawyerForm() {
 
             form.append('data', JSON.stringify(data))
 
-            form.append('images', image);
+            if (image) form.append('images', image);
 
-            const res = await postAdd(form).unwrap();
+            if (defaultData) {
+                await updateAd({ id: defaultData?.id, body: form }).unwrap();
+            } else {
+                await postAdd(form).unwrap();
+            }
 
             Swal.fire({
-                title: "Lawyer Ad posted successfully!",
-                text: "Your lawyer add posted successfully",
+                title: `Lawyer Ad ${defaultData ? "updated" : "posted"} successfully!`,
+                text: `Your lawyer add ${defaultData ? "updated" : "posted"} successfully`,
                 customClass: {
                     title: "text-2xl text-black font-figtree",
                     container: "text-sm font-medium font-figtree text-zinc-900",
@@ -78,7 +105,16 @@ function LawyerForm() {
                 confirmButtonText: "Close",
                 confirmButtonColor: "#38CB6E",
                 cancelButtonText: "Close",
-            })
+            });
+
+            if (defaultData) {
+
+                if (setOpen) {
+                    setOpen(false)
+                }
+
+                return;
+            }
 
             reset({
                 title: "",
@@ -115,12 +151,21 @@ function LawyerForm() {
         setImage(null)
     }, [image]);
 
+    const handleDltUploadedImg = async (payload: { id: number, addId: number }) => {
+        try {
+            await dltImage(payload).unwrap();
+            toast.success("Image deleted successfully")
+        } catch (err: any) {
+            toast.error(err?.data?.message || 'Something went wrong, try again')
+        }
+    }
+
     return (
         <div>
 
             <section className='mb-4'>
                 <div className='mb-1.5 block text-black font-popin text-base text-left'>
-                    Images
+                    Image
                     <span className="text-red-500 text-base ml-1">*</span>
                 </div>
                 {!image ? <div className='flex flex-row flex-wrap gap-x-2 items-center'>
@@ -130,16 +175,43 @@ function LawyerForm() {
                     </label>
                     <input onChange={fileonChange} type="file" name="addImage" id="addImage" className='hidden' accept="image/*" />
                 </div> :
+                    <>
+                        {/* //uploaded images  */}
+                        {
+                            defaultData?.images?.map((img, indx) => {
+                                return <div key={img?.key} className='relative'>
+                                    <div className=' w-24 h-24'>
+                                        <Image src={img?.url} fill className='h-full w-full object-cover rounded-md' alt='uploaded image' />
+                                    </div>
 
-                    <div className='relative w-24 h-24'>
-                        <div className='w-24 h-24'>
-                            <Image src={URL.createObjectURL(image)} fill className='h-full w-full object-cover rounded-md' alt='uploaded' />
+                                    <Popconfirm
+                                        title="Are you sure ?"
+                                        description={`This image will be delete permanently`}
+                                        onConfirm={() => handleDltUploadedImg({ id: img?.id, addId: defaultData?.id })}
+                                        okText="Yes"
+                                        cancelText="No"
+                                        getPopupContainer={(node) => node.parentElement!}
+                                    >
+                                        <button type='button' className='absolute top-0 right-0 p-1 bg-black/90 z-50 cursor-pointer'>
+                                            <Trash2 className='text-sm text-danger' size={16} />
+                                        </button>
+                                    </Popconfirm>
+                                </div>
+                            })
+                        }
+
+                        {/* ---------local images------------- */}
+                        <div className='relative w-24 h-24'>
+                            <div className='w-24 h-24'>
+                                <Image src={URL.createObjectURL(image)} fill className='h-full w-full object-cover rounded-md' alt='uploaded' />
+                            </div>
+
+                            <button type='button' onClick={() => removeImg()} className='absolute top-0 right-0 p-1 bg-black/90 z-50 cursor-pointer'>
+                                <Trash2 className='text-sm text-danger' size={16} />
+                            </button>
                         </div>
 
-                        <button type='button' onClick={() => removeImg()} className='absolute top-0 right-0 p-1 bg-black/90 z-50 cursor-pointer'>
-                            <Trash2 className='text-sm text-danger' size={16} />
-                        </button>
-                    </div>
+                    </>
 
                 }
             </section>
@@ -228,7 +300,7 @@ function LawyerForm() {
                             id='Experience'
                             {...register("experience_years",
                                 // { required: true }
-                                
+
                                 {
                                     setValueAs: (v) => v === "" ? null : Number(v),
                                     pattern: {
@@ -430,10 +502,9 @@ function LawyerForm() {
                     {errors?.description && <p className="text-red-500 text-sm col-span-2">{errors?.description?.message}</p>}
                 </div>
 
-
-                <button type='submit' disabled={isLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
-                    {isLoading && <ImSpinner2 className="text-lg text-white animate-spin" />}
-                    <span>{isLoading ? 'Loading...' : "Submit"}</span>
+                <button type='submit' disabled={isLoading || updateLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
+                    {(isLoading || updateLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
+                    <span>{(isLoading || updateLoading) ? 'Loading...' : "Submit"}</span>
                 </button>
 
             </form>
