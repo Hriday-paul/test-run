@@ -23,7 +23,7 @@ function WorkShopCard({ workShop }: { workShop: Add }) {
                 <Link href={`/workshop/${workShop?.id}`}>
                     <div className="">
                         <div className="border-b border-stroke pb-2">
-                            <h3 className="font-semibold text-gray-900 text-lg leading-2">
+                            <h3 className="font-semibold text-gray-900 text-lg line-clamp-2">
                                 {workShop?.title}
                             </h3>
                             <div className="flex items-center text-sm text-gray-600 gap-1">

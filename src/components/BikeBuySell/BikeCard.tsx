@@ -23,7 +23,7 @@ function BikeCard({ bike }: { bike: Add }) {
             <Link href={`/bikebuysell/${bike?.id}`}>
                 <div className="p-5 space-y-2 bg-white rounded-t-2xl border-t border-stroke -mt-3 relative z-40">
                     <div className="border-b border-stroke pb-2 space-y-0.5">
-                        <h3 className="font-semibold text-gray-900 text-lg leading-2">
+                        <h3 className="font-semibold text-gray-900 text-lg line-clamp-2">
                             {bike?.title}
                         </h3>
                         <div className="flex items-center text-sm text-gray-600 gap-1">
