@@ -28,12 +28,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { HiOutlineDotsVertical } from "react-icons/hi";
-import { SquarePen, Trash2 } from 'lucide-react';
+import { Eye, SquarePen, Trash2 } from 'lucide-react';
 import { FaArrowDownLong } from 'react-icons/fa6';
 import { FaRegStar } from 'react-icons/fa';
 import { toast } from 'sonner';
 import EditPost from '@/components/EditPost/EditPost';
 import { Badge } from '@/components/ui/badge';
+import Link from 'next/link';
+import { categoryRouteMap } from '@/shared/FeatureAddCard';
 
 function AdsTable() {
     const [page, setPage] = useState(1);
@@ -235,6 +237,13 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                                                 <FaArrowDownLong className='text-black rotate-180' />
                                                 Bump Up
                                             </button>
+                                        </DropdownMenuItem>
+
+                                        <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
+                                            <Link href={`/${categoryRouteMap[ad?.category]}/${ad?.id}`}className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
+                                                <Eye className='text-black size-4' />
+                                                View Post
+                                            </Link>
                                         </DropdownMenuItem>
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150 w-full">

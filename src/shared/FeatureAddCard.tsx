@@ -5,7 +5,7 @@ import Image from "next/image";
 import { placeHolderBlurImg } from "@/utils/config";
 import { Button } from "@/components/ui/button";
 
-const categoryRouteMap: Record<string, string> = {
+export const categoryRouteMap: Record<string, string> = {
   Bike: "bikebuysell",
   Car: "carbuysell",
   Workshop: "workshop",
