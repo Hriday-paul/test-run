@@ -118,14 +118,17 @@ export const Carbrands = [
     "BMW",
     "Mercedes-Benz",
     "Hyundai",
+    "Nissan",
     "Honda",
     "Bajaj",
     "Toyota",
+    "Audi",
+    "Tata",
+    "Mazda",
+    "Mahindra",
     "Ford",
     "Chevrolet",
-    "Nissan",
     "Volkswagen",
-    "Audi",
     "Kia",
     "Jeep",
     "Land Rover",
@@ -140,7 +143,5 @@ export const Carbrands = [
     "Suzuki",
     "Dodge",
     "Ram",
-    "Chrysler",
-    "Tata",
-    "Mazda"
+    "Chrysler"
 ]
