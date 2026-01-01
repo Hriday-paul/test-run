@@ -39,7 +39,7 @@ const ResetPassword = () => {
             toast.success(res?.message || 'Password reset successfully');
             reset();
 
-            router.push('/signin')
+            router.push('/auth/login')
 
         } catch (err: any) {
             toast.error(err?.data?.message || 'Something went wrong, try again');
