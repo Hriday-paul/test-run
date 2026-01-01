@@ -64,11 +64,11 @@ const ResetPassword = () => {
                             errors={errors}
                             validationRules={{
                                 required: "New Password is required",
-                                pattern: {
-                                    value: /^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-                                    message:
-                                        "Password must include 1 uppercase, 1 number, 1 special character, and 8+ characters.",
-                                },
+                                // pattern: {
+                                //     value: /^(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
+                                //     message:
+                                //         "Password must include 1 uppercase, 1 number, 1 special character, and 8+ characters.",
+                                // },
                             }}
                         />
 
