@@ -69,6 +69,8 @@ const ResetPassword = () => {
                                 //     message:
                                 //         "Password must include 1 uppercase, 1 number, 1 special character, and 8+ characters.",
                                 // },
+
+                                
                             }}
                         />
 
