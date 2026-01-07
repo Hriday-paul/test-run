@@ -106,10 +106,18 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Documents in Runbd',
     description: 'You can download any file from Runbd according to your needs.',
+    url: '/documents',
+    siteName: 'Runbd',
+    images: ['/og-image.png'],
+    locale: 'bn_BD',
+    type: 'website',
   },
   twitter: {
     title: 'Documents in Runbd',
     description: 'You can download any file from Runbd according to your needs.',
+    card: 'summary_large_image',
+    creator: '@runbd',
+    images: ['/og-image.png'],
   },
 }
 

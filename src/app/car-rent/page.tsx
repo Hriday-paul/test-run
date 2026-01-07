@@ -13,10 +13,18 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Car Rent in Bangladesh | Runbd',
     description: 'Find car rent in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+    url: '/car-rent',
+    siteName: 'Runbd',
+    images: ['/og-image.png'],
+    locale: 'bn_BD',
+    type: 'website',
   },
   twitter: {
     title: 'Car Rent in Bangladesh | Runbd',
     description: 'Find car rent in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+    card: 'summary_large_image',
+    creator: '@runbd',
+    images: ['/og-image.png'],
   },
 }
 
@@ -33,7 +41,7 @@ function Exchang() {
 
       <div className=' bg-[#F2F4F8]'>
         <div className='container pt-8'>
-          
+
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 xl:grid-cols-4 gap-5 container py-5'>
             <div className='lg:col-span-2 xl:col-span-1 hidden lg:block'>
               <RentCarFilter />

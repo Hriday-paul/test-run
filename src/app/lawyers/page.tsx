@@ -7,17 +7,25 @@ import Lawyers from '@/components/Lawyers/Lawyers'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: "Lawyer",
-  description: "Find lawyer in Bangladesh on Runbd, the largest marketplace in Bangladesh! ",
+    title: "Lawyer",
+    description: "Find lawyer in Bangladesh on Runbd, the largest marketplace in Bangladesh! ",
 
-  openGraph: {
-    title: 'Lawyer in Bangladesh | Runbd',
-    description: 'Find lawyer in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
-  },
-  twitter: {
-    title: 'Lawyer in Bangladesh | Runbd',
-    description: 'Find lawyer in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
-  },
+    openGraph: {
+        title: 'Lawyer in Bangladesh | Runbd',
+        description: 'Find lawyer in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+        url: '/lawyers',
+        siteName: 'Runbd',
+        images: ['/og-image.png'],
+        locale: 'bn_BD',
+        type: 'website',
+    },
+    twitter: {
+        title: 'Lawyer in Bangladesh | Runbd',
+        description: 'Find lawyer in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+        card: 'summary_large_image',
+        creator: '@runbd',
+        images: ['/og-image.png'],
+    },
 }
 
 function Lawyer() {

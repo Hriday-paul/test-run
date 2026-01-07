@@ -13,10 +13,18 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Exchange in Bangladesh | Runbd',
     description: 'Find exchange in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+    url: '/exchange',
+    siteName: 'Runbd',
+    images: ['/og-image.png'],
+    locale: 'bn_BD',
+    type: 'website',
   },
   twitter: {
     title: 'Exchange in Bangladesh | Runbd',
     description: 'Find exchange in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+    card: 'summary_large_image',
+    creator: '@runbd',
+    images: ['/og-image.png'],
   },
 }
 

@@ -2,6 +2,22 @@
 import { XCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Payment Cancel",
+    description: "Runbd Payment Cancel",
+    robots: {
+        index: false,
+        follow: false,
+        nocache: false,
+        googleBot: {
+            index: false,
+            follow: false,
+            noimageindex: true,
+        },
+    }
+}
 
 const Page = () => {
 

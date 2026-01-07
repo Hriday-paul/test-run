@@ -1,7 +1,13 @@
 import SignUpForm from '@/components/Auth/SignUpForm'
 import Pagetop from '@/shared/Pagetop'
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
+
+export const metadata: Metadata = {
+    title: "Signup",
+    description: "Runbd signup Page",
+}
 
 function SignUp() {
     return (

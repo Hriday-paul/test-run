@@ -1,7 +1,13 @@
 import LoginForm from '@/components/Auth/LoginForm'
 import Pagetop from '@/shared/Pagetop'
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
+
+export const metadata: Metadata = {
+    title: "Login",
+    description: "Runbd login Page",
+}
 
 function LoginPage() {
     return (

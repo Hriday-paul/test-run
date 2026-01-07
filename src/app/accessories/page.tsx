@@ -13,10 +13,18 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Accessories in Bangladesh | Runbd',
     description: 'Find accessories in Bangladesh on Bikroy, the largest marketplace in Bangladesh!',
+    url: '/accessories',
+    siteName: 'Runbd',
+    images: ['/og-image.png'],
+    locale: 'bn_BD',
+    type: 'website',
   },
   twitter: {
     title: 'Accessories in Bangladesh | Runbd',
     description: 'Find accessories in Bangladesh on Bikroy, the largest marketplace in Bangladesh!',
+    card: 'summary_large_image',
+    creator: '@runbd',
+    images: ['/og-image.png'],
   },
 }
 

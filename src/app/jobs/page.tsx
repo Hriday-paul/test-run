@@ -13,10 +13,18 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Jobs in Bangladesh | Runbd',
     description: 'Find jobs in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+    url: '/jobs',
+    siteName: 'Runbd',
+    images: ['/og-image.png'],
+    locale: 'bn_BD',
+    type: 'website',
   },
   twitter: {
     title: 'Jobs in Bangladesh | Runbd',
     description: 'Find jobs in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+    card: 'summary_large_image',
+    creator: '@runbd',
+    images: ['/og-image.png'],
   },
 }
 
@@ -34,7 +42,7 @@ function JobList() {
       <div className='bg-[#F2F4F8] py-8'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 xl:grid-cols-4 gap-5 container py-5'>
           <div className='lg:col-span-2 xl:col-span-1 hidden lg:block'>
-              <JobFilter />
+            <JobFilter />
           </div>
           <div className='col-span-1 md:col-span-2 lg:col-span-6 xl:col-span-3'>
             <Jobs />

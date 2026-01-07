@@ -14,12 +14,22 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Buy & Sell Cars in Bangladesh | Runbd',
     description: 'Looking to buy a Car? Find bargain deals on new and used cars for sale in Bangladesh or sell cars online at the best price only on Runbd,The largest marketplace in Bangladesh!',
+    url: '/carbuysell',
+    siteName: 'Runbd',
+    images: ['/og-image.png'],
+    locale: 'bn_BD',
+    type: 'website',
   },
   twitter: {
     title: 'Buy & Sell Cars in Bangladesh | Runbd',
     description: 'Looking to buy a Car? Find bargain deals on new and used cars for sale in Bangladesh or sell cars online at the best price only on Runbd,The largest marketplace in Bangladesh!',
+    card: 'summary_large_image',
+    creator: '@runbd',
+    images: ['/og-image.png'],
   },
 }
+
+
 
 function CarBuySell() {
   return (

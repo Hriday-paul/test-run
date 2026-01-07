@@ -13,10 +13,18 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Buy & Sell Bike in Bangladesh | Runbd',
     description: 'Looking to buy a Bike? Find bargain deals on new and used bikes for sale in Bangladesh or sell bikes online at the best price only on Runbd,The largest marketplace in Bangladesh!',
+    url: '/bikebuysell',
+    siteName: 'Runbd',
+    images: ['/og-image.png'],
+    locale: 'bn_BD',
+    type: 'website',
   },
   twitter: {
     title: 'Buy & Sell Bike in Bangladesh | Runbd',
     description: 'Looking to buy a Bike? Find bargain deals on new and used bikes for sale in Bangladesh or sell bikes online at the best price only on Runbd,The largest marketplace in Bangladesh!',
+    card: 'summary_large_image',
+    creator: '@runbd',
+    images: ['/og-image.png'],
   },
 }
 
@@ -34,7 +42,7 @@ function CarBuySell() {
       <div className='bg-[#F2F4F8] py-8'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-8 xl:grid-cols-4 gap-5 container py-5'>
           <div className='lg:col-span-2 xl:col-span-1 hidden lg:block'>
-              <BikeFilter />
+            <BikeFilter />
           </div>
           <div className='col-span-1 md:col-span-2 lg:col-span-6 xl:col-span-3'>
             <Bikes />

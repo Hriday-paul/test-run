@@ -12,10 +12,18 @@ export const metadata: Metadata = {
     openGraph: {
         title: 'Vehicle Process in Bangladesh | Runbd',
         description: 'Process vehicle documents with Runbd, the largest marketplace in Bangladesh!',
+        url: '/vehicle-process',
+        siteName: 'Runbd',
+        images: ['/og-image.png'],
+        locale: 'bn_BD',
+        type: 'website',
     },
     twitter: {
         title: 'Vehicle Process in Bangladesh | Runbd',
         description: 'Process vehicle documents with Runbd, the largest marketplace in Bangladesh!',
+        card: 'summary_large_image',
+        creator: '@runbd',
+        images: ['/og-image.png'],
     },
 }
 
