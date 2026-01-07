@@ -4,6 +4,21 @@ import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import AccessoriesFilter from '@/components/Accessories/AccessoriesFilter'
 import Accessories from '@/components/Accessories/Accessories'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "Accessories",
+  description: "Find accessories in Bangladesh on Runbd, the largest marketplace in Bangladesh! ",
+
+  openGraph: {
+    title: 'Accessories in Bangladesh | Runbd',
+    description: 'Find accessories in Bangladesh on Bikroy, the largest marketplace in Bangladesh!',
+  },
+  twitter: {
+    title: 'Accessories in Bangladesh | Runbd',
+    description: 'Find accessories in Bangladesh on Bikroy, the largest marketplace in Bangladesh!',
+  },
+}
 
 function Accesories() {
   return (

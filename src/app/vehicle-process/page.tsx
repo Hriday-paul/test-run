@@ -3,9 +3,24 @@ import bannerimg from "../../../public/document-service-banner.png"
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import DocumentServices from '@/components/DocumentServices/DocumentServices'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+    title: "Vehicle Process",
+    description: "Process vehicle documents with Runbd, the largest marketplace in Bangladesh!",
+
+    openGraph: {
+        title: 'Vehicle Process in Bangladesh | Runbd',
+        description: 'Process vehicle documents with Runbd, the largest marketplace in Bangladesh!',
+    },
+    twitter: {
+        title: 'Vehicle Process in Bangladesh | Runbd',
+        description: 'Process vehicle documents with Runbd, the largest marketplace in Bangladesh!',
+    },
+}
 
 function DocumentProcess() {
-    
+
     return (
         <div>
             <ShopBanner

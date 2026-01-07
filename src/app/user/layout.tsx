@@ -1,9 +1,25 @@
 import Sidebar from '@/shared/Dashboard/Sidebar';
 import SmTopBar from '@/shared/Dashboard/SmTopBar';
+import { Metadata } from 'next';
 import React from 'react';
-import { IoCarOutline, IoSettingsOutline } from 'react-icons/io5';
-import { MdDashboard, MdFavoriteBorder } from 'react-icons/md';
+import { IoSettingsOutline } from 'react-icons/io5';
+import { MdDashboard } from 'react-icons/md';
 import { SlBadge } from "react-icons/sl";
+
+export const metadata: Metadata = {
+    title: "Profile",
+    description: "Runbd User Profile",
+    robots: {
+        index: false,
+        follow: false,
+        nocache: false,
+        googleBot: {
+            index: false,
+            follow: false,
+            noimageindex: true,
+        },
+    }
+}
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     // const t = useTranslations('dashboard.sidebar')
@@ -22,7 +38,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         },
         {
             id: 5,
-            name:"Setting",
+            name: "Setting",
             icon: <IoSettingsOutline className='text-lg' />,
             rout: '/user/settings'
         }]
@@ -31,10 +47,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <div className="container py-4 md:py-8">
                 <div className='grid grid-cols-1 lg:grid-cols-8 gap-x-5'>
                     <div className='hidden lg:block lg:col-span-2'>
-                        <Sidebar routs={routs} title={"Dashboard"} logoutTxt={"Logout"}/>
+                        <Sidebar routs={routs} title={"Dashboard"} logoutTxt={"Logout"} />
                     </div>
                     <div className='lg:hidden'>
-                        <SmTopBar routs={routs} logoutTxt={"Logout"}/>
+                        <SmTopBar routs={routs} logoutTxt={"Logout"} />
                     </div>
                     <div className='col-span-1 lg:col-span-6'>
                         {children}

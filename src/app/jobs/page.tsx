@@ -4,6 +4,21 @@ import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import JobFilter from '@/components/Job/JobFilter'
 import Jobs from '@/components/Job/Jobs'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "Jobs",
+  description: "Find jobs in Bangladesh on Runbd, the largest marketplace in Bangladesh! ",
+
+  openGraph: {
+    title: 'Jobs in Bangladesh | Runbd',
+    description: 'Find jobs in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+  },
+  twitter: {
+    title: 'Jobs in Bangladesh | Runbd',
+    description: 'Find jobs in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+  },
+}
 
 function JobList() {
   return (

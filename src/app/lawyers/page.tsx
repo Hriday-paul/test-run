@@ -4,6 +4,21 @@ import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import LawyerFilter from '@/components/Lawyers/LawyerFilter'
 import Lawyers from '@/components/Lawyers/Lawyers'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "Lawyer",
+  description: "Find lawyer in Bangladesh on Runbd, the largest marketplace in Bangladesh! ",
+
+  openGraph: {
+    title: 'Lawyer in Bangladesh | Runbd',
+    description: 'Find lawyer in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+  },
+  twitter: {
+    title: 'Lawyer in Bangladesh | Runbd',
+    description: 'Find lawyer in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+  },
+}
 
 function Lawyer() {
     return (

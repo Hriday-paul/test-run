@@ -1,9 +1,25 @@
 import Sidebar from '@/shared/Dashboard/Sidebar';
 import SmTopBar from '@/shared/Dashboard/SmTopBar';
+import { Metadata } from 'next';
 import React from 'react';
 import { IoCarOutline, IoSettingsOutline } from 'react-icons/io5';
-import { MdDashboard, MdFavoriteBorder } from 'react-icons/md';
+import { MdDashboard } from 'react-icons/md';
 import { SlBadge } from "react-icons/sl";
+
+export const metadata: Metadata = {
+    title: "Profile",
+    description: "Runbd Vendor Profile",
+    robots: {
+        index: false,
+        follow: false,
+        nocache: false,
+        googleBot: {
+            index: false,
+            follow: false,
+            noimageindex: true,
+        },
+    }
+}
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
     // const t = useTranslations('dashboard.sidebar')

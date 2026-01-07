@@ -28,7 +28,7 @@ const categories = [
     },
     {
         id: 3,
-        name: "Workshoops",
+        name: "Workshops",
         rout: "/workshop",
         icon: workshop
     },

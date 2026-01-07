@@ -4,6 +4,21 @@ import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import BikeFilter from '@/components/BikeBuySell/BikeFilter'
 import Bikes from '@/components/BikeBuySell/Bikes'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "Bike Buy/Sell",
+  description: "Looking to buy a Bike? Find bargain deals on new and used bikes for sale in Bangladesh or sell bikes online at the best price only on Runbd,The largest marketplace in Bangladesh!",
+
+  openGraph: {
+    title: 'Buy & Sell Bike in Bangladesh | Runbd',
+    description: 'Looking to buy a Bike? Find bargain deals on new and used bikes for sale in Bangladesh or sell bikes online at the best price only on Runbd,The largest marketplace in Bangladesh!',
+  },
+  twitter: {
+    title: 'Buy & Sell Bike in Bangladesh | Runbd',
+    description: 'Looking to buy a Bike? Find bargain deals on new and used bikes for sale in Bangladesh or sell bikes online at the best price only on Runbd,The largest marketplace in Bangladesh!',
+  },
+}
 
 function CarBuySell() {
   return (

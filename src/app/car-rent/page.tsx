@@ -4,6 +4,21 @@ import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import RentCarFilter from '@/components/RentCar/RentCarFilter'
 import RentCars from '@/components/RentCar/RentCars'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "Car Rent",
+  description: "Find car rent in Bangladesh on Runbd, the largest marketplace in Bangladesh!",
+
+  openGraph: {
+    title: 'Car Rent in Bangladesh | Runbd',
+    description: 'Find car rent in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+  },
+  twitter: {
+    title: 'Car Rent in Bangladesh | Runbd',
+    description: 'Find car rent in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+  },
+}
 
 function Exchang() {
   return (

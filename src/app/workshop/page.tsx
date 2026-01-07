@@ -4,6 +4,21 @@ import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import WorkShopFilter from '@/components/WorkShop/WorkShopFilter'
 import WorkShops from '@/components/WorkShop/WorkShops'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "Workshop",
+  description: "Find workshop in Bangladesh on Runbd, the largest marketplace in Bangladesh! ",
+
+  openGraph: {
+    title: 'Workshops in Bangladesh | Runbd',
+    description: 'Find workshop in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+  },
+  twitter: {
+    title: 'Workshops in Bangladesh | Runbd',
+    description: 'Find workshops in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+  },
+}
 
 function Workshop() {
   return (
