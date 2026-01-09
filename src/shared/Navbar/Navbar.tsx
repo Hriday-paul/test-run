@@ -18,12 +18,12 @@ export const navitems = [
         label: "Services"
     },
     {
-        id: 2,
+        id: 3,
         rout: "/#pricing",
         label: "Pricing"
     },
     {
-        id: 3,
+        id: 4,
         rout: "/about",
         label: "About Us"
     },

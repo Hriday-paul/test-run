@@ -1,46 +1,43 @@
-"use client"
-import { useAddDetailsQuery } from '@/redux/api/ads.api'
 import DetailsCarousel from '@/shared/DetailsCarousel'
-import DetailsSkeleton from '@/shared/DetailsSkeleton';
 import ErrorComponent from '@/shared/ErrorComponent';
-import ShopBanner from '@/shared/ShopBanner';
-import Link from 'next/link';
-import bannerimg from "../../../public/post-top-bg.jpg"
-import { IoIosArrowForward } from 'react-icons/io';
-import Image from 'next/image';
-import { Calendar, Eye, MapPin, Phone, Timer } from 'lucide-react';
-import { MdEmail } from 'react-icons/md';
-import { FaWhatsapp } from 'react-icons/fa';
-import moment from "moment";
 import { IoPricetagOutline } from 'react-icons/io5';
+import { Add } from '@/redux/types';
+import AdDetailsOwner from '@/shared/AdDetailsOwner';
 
-function CarDetails({ id }: { id: string }) {
-    const { isLoading, isError, isSuccess, data } = useAddDetailsQuery({ id });
+import { Calendar, Eye, Timer } from 'lucide-react'
+import moment from 'moment'
 
-    if (isError) {
-        return <ErrorComponent />
-    }
+
+async function CarDetails({ promiseCarDetails }: { promiseCarDetails: Promise<{ data: Add }> }) {
+
+    const data = await promiseCarDetails;
+
+    const carRows = [
+        { label: "Car Type", value: (car: any) => car?.car_type },
+        { label: "Brand", value: (car: any) => car?.brand },
+        { label: "Model", value: (car: any) => car?.model },
+        { label: "Condition", value: (car: any) => car?.condition },
+        { label: "Year", value: (car: any) => car?.year },
+        { label: "Color", value: (car: any) => car?.color },
+        { label: "Mileage", value: (car: any) => car?.mileage ? `${car.mileage} Km` : null },
+        { label: "Fuel Type", value: (car: any) => car?.fuel_type },
+        { label: "Engine", value: (car: any) => car?.engine },
+        { label: "Body Type", value: (car: any) => car?.body_type },
+        { label: "Gearbox", value: (car: any) => car?.gear_box },
+        { label: "Transmission", value: (car: any) => car?.transmission },
+        { label: "Air Condition", value: (car: any) => car?.air_condition ? "Yes" : "No" },
+        { label: "Driver Type", value: (car: any) => car?.drive_type },
+        { label: "Seat", value: (car: any) => car?.seat },
+    ];
 
     return (
         <div >
 
-            <ShopBanner
-                image={bannerimg}
-                title="Car Details"
-                desc="View car full details"
-            >
-                <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Car Details
-            </ShopBanner>
-
-            {
-                isLoading && <DetailsSkeleton />
-            }
-
-
-            {(data && isSuccess) ? data?.data?.category !== "Car" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
+            {data?.data?.category !== "Car" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
                 <div className='container'>
                     <div className='grid grid-cols-5 gap-8'>
 
+                        {/* ------------left side----------- */}
                         <div className='col-span-5 lg:col-span-3 space-y-5'>
                             <DetailsCarousel images={data?.data?.images} />
 
@@ -57,125 +54,39 @@ function CarDetails({ id }: { id: string }) {
                             </div>}
 
                             <div className='bg-white p-5 rounded-lg'>
-                                <h3 className='text-2xl font-popin font-semibold mb-3'>Car Features : </h3>
-                                <div className='grid grid-cols-1 md:grid-cols-2 gap-y-5 gap-x-10'>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Engine</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.engine || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Model</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.model || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Mileage</p>
-                                        <p className='text-base font-figtree font-medium'>{(data?.data?.car?.mileage ? data?.data?.car?.mileage + "Km" : "") || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Transmission</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.transmission || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Gearbox</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.gear_box || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Color</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.color || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Year</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.year || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Fuel Type</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.fuel_type || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Body Type</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.body_type || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Drive Type</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.drive_type || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Air con</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.air_condition ? "Yes" : "No"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Car Type</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.car_type || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Car Seat</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.seat || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Brand</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.brand || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Condition</p>
-                                        <p className='text-base font-figtree font-medium'>{data?.data?.car?.condition || "N/A"} </p>
-                                    </div>
-                                </div>
+                                <h3 className='text-xl font-popin font-semibold mb-3'>Car Features : </h3>
+
+                                <section className="border rounded-xl overflow-x-auto">
+                                    <table className="table-auto w-full">
+                                        <tbody>
+                                            {carRows.map((row, index) => (
+                                                <tr
+                                                    key={index}
+                                                    className="divide-x border-b last:border-b-0 border-b-gray-300"
+                                                >
+                                                    <td className="text-base font-medium text-gray-700 w-40 md:w-64 h-17 px-3 md:px-4 py-3 border-r border-gray-300 font-figtree">
+                                                        {row.label}
+                                                    </td>
+
+                                                    <td className="text-base font-semibold text-gray-900 px-3 md:px-4 py-3 font-figtree">
+                                                        {row.value(data?.data?.car) ?? "N/A"}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </section>
+
                             </div>
 
                         </div>
-                        <div className='col-span-5 lg:col-span-2 space-y-5'>
-                            <div className='bg-white p-5 rounded-lg'>
-                                <div className='pb-4 border-b border-stroke'>
-                                    <h3 className='text-xl font-popin font-medium'>Seller Information</h3>
-                                </div>
-                                <div className='flex flex-row gap-x-2.5 items-center pt-4'>
-                                    <Image src={data?.data?.owner?.picture?.url || "/empty-user.png"} height={1000} width={1000} className='h-8 w-8 bg-cover rounded-full' alt='user image' />
-                                    <h6 className='text-base font-popin font-medium'>{data?.data?.owner?.first_name + " " + (data?.data?.owner?.last_name || "")}</h6>
-                                </div>
-                                <div className='pt-4 space-y-4'>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <MapPin size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Location
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>
-                                            {data?.data
-                                                ? `${data?.data.division?.name || ''}${data.data.division ? ', ' : ''}${data?.data?.district?.name || ''}${data.data?.district ? ', ' : ''}${data.data?.area?.name || ''}`.trim() || 'N/A'
-                                                : 'N/A'}
-                                        </p>
-                                    </div>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <Phone size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Phone
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.phone || "N/A"}</p>
-                                    </div>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <MdEmail size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Email
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.email || "N/A"}</p>
-                                    </div>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <FaWhatsapp size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Whatsapp
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.whatsapp || "N/A"}</p>
-                                    </div>
-                                </div>
-                            </div>
 
+                        {/* ------------Right side----------- */}
+                        <div className='col-span-5 lg:col-span-2 space-y-5'>
+                            {/* ------------owner----------- */}
+                            <AdDetailsOwner data={data} />
+
+                            {/* ------------Post Overview----------- */}
                             <div className='bg-white p-5 rounded-lg'>
                                 <div className='pb-4 border-b border-stroke'>
                                     <h3 className='text-xl font-popin font-medium'>Post Overview</h3>
@@ -210,12 +121,11 @@ function CarDetails({ id }: { id: string }) {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
                     </div>
                 </div>
-            </div> : <></>}
+            </div>}
 
         </div>
     )

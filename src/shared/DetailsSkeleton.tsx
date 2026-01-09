@@ -1,24 +1,23 @@
 import { Skeleton } from '@/components/ui/skeleton'
-import React from 'react'
 
 function DetailsSkeleton() {
     return (
         <main className="bg-white p-6">
             <div className="container">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-5 gap-8">
                     {/* Left Column - Car Images & Details */}
-                    <div className="lg:col-span-2 space-y-6">
+                    <div className="col-span-5 lg:col-span-3 space-y-5">
                         {/* Main Car Image */}
                         <div className="rounded-2xl overflow-hidden">
                             <Skeleton className="w-full h-80" />
                         </div>
 
                         {/* Thumbnail Gallery */}
-                        <div className="flex gap-3 justify-between">
+                        <div className="flex gap-3">
                             {Array.from({ length: 5 }).map((_, i) => (
                                 <Skeleton
                                     key={i}
-                                    className="w-full h-24 rounded-lg"
+                                    className="w-16 md:w-24 lg:w-32 h-16 md:h-24 lg:h-32 rounded-lg"
                                 />
                             ))}
                         </div>
@@ -49,7 +48,7 @@ function DetailsSkeleton() {
                     </div>
 
                     {/* Right Column - Seller Info */}
-                    <div className="space-y-6">
+                    <div className="col-span-5 lg:col-span-2 space-y-5 border border-stroke rounded-lg">
                         {/* Seller Card */}
                         <div className="bg-card rounded-lg p-6 space-y-4">
                             {/* Seller Header with Avatar */}

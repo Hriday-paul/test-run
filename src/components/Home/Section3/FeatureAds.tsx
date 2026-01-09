@@ -7,58 +7,33 @@ import {
 } from "@/components/ui/carousel"
 
 import Autoplay from "embla-carousel-autoplay"
-import { useAllFeatureAdsQuery } from '@/redux/api/ads.api'
-import { LoadingCard } from '@/shared/LoadingCard'
 import FeatureAddCard from '@/shared/FeatureAddCard'
+import { Add } from "@/redux/types"
 
-function FeatureAds() {
-
-    const { isLoading, isSuccess, data } = useAllFeatureAdsQuery();
+function FeatureAds({ data }: { data: { data: { ad: Add, id: number }[] } }) {
 
     return (
-        <div>
-
-            {isLoading ? <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5'>
-
-                <LoadingCard />
-                <LoadingCard />
-                <LoadingCard />
-                <LoadingCard />
-                <LoadingCard />
-
-            </div> : isSuccess ?
-
-                <Carousel
-                    plugins={[
-                        Autoplay({ delay: 3500 })
-                    ]}
-                    opts={{
-                        align: "start",
-                        // slidesToScroll: 4
-                        // loop: true
-                    }}
-                    className="w-full"
-                >
-                    <CarouselContent>
-                        {data?.data.map((add) => (
-                            <CarouselItem key={add?.id} className="md:basis-1/3 lg:basis-1/4">
-                                <FeatureAddCard add={add?.ad} />
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
-                    {/* <CarouselPrevious /> */}
-                    {/* <CarouselNext /> */}
-                    <CarouselDots className='mt-5' />
-                </Carousel>
-
-                :
-
-                <></>
-
-            }
-
-
-        </div>
+        <>
+            <Carousel
+                plugins={[
+                    Autoplay({ delay: 3500 })
+                ]}
+                opts={{
+                    align: "start",
+                    // slidesToScroll: 4
+                    // loop: true
+                }}
+                className="w-full">
+                <CarouselContent>
+                    {data?.data.map((add) => (
+                        <CarouselItem key={add?.id} className="md:basis-1/3 lg:basis-1/4">
+                            <FeatureAddCard add={add?.ad} />
+                        </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <CarouselDots className='mt-5' />
+            </Carousel>
+        </>
     )
 }
 

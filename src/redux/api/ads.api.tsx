@@ -257,7 +257,9 @@ export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBi
 
      useAllAccessoriesQuery, useAllJobsQuery, 
      useAllLawyersQuery, useUpdateLawyerMutation, 
-     useAllExchangesQuery, useAllRentcarQuery, useAddDetailsQuery, useAllAdsQuery, useFeatureAddMutation, useBumpAddMutation, useDltAddMutation, useDltAdImageMutation,
+     useAllExchangesQuery, useAllRentcarQuery, 
+     
+     useAddDetailsQuery, useAllAdsQuery, useFeatureAddMutation, useBumpAddMutation, useDltAddMutation, useDltAdImageMutation,
     
     useAddcarMutation, useUpdateCarMutation, 
     useAddBikeMutation, useUpdateBikeMutation,

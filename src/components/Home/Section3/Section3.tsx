@@ -1,7 +1,12 @@
 import Title from './Title'
 import FeatureAds from './FeatureAds'
+import GetFeatureAds from '@/lib/services/FeatureAdds';
+import { Suspense } from 'react';
+import { LoadingCard } from '@/shared/LoadingCard';
+import { Add } from '@/redux/types';
 
-function Section3() {
+async function Section3() {
+    const featureadd = GetFeatureAds();
     return (
         <div className="pt-12 md:pt-16 lg:pt-20">
             <div className="bg-[#F5F7FA]">
@@ -10,7 +15,20 @@ function Section3() {
 
                     <Title />
 
-                    <FeatureAds />
+                    <Suspense fallback={
+                        <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5'>
+
+                            <LoadingCard />
+                            <LoadingCard />
+                            <LoadingCard />
+                            <LoadingCard />
+                            <LoadingCard />
+
+                        </div>
+                    }>
+                        <FeatureAddList featureAddPromise={featureadd} />
+                    </Suspense>
+
 
                 </div>
 
@@ -19,4 +37,14 @@ function Section3() {
     )
 }
 
-export default Section3
+export default Section3;
+
+const FeatureAddList = async ({ featureAddPromise }: { featureAddPromise: Promise<{ data: { ad: Add, id: number }[] }> }) => {
+
+    const data = await featureAddPromise;
+
+    return (
+        <FeatureAds data={data} />
+    )
+
+}
