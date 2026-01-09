@@ -19,11 +19,11 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
   return {
     title: `${data?.title}`,
-    description: TextTruncate(data?.description, 155),
+    description: `Looking to buy a Car? Find bargain deals on new and used cars for sale in Bangladesh or sell cars online at the best price only on Runbd,The largest marketplace in Bangladesh!`,
 
     openGraph: {
       title: TextTruncate(data?.title, 60),
-      description: TextTruncate(data?.description, 155),
+      description: `Looking to buy a Car? Find bargain deals on new and used cars for sale in Bangladesh or sell cars online at the best price only on Runbd,The largest marketplace in Bangladesh!`,
       url: `/carbuysell/${data?.id}`,
       siteName: 'Runbd',
       images: [data?.images[0]],
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     },
     twitter: {
       title: TextTruncate(data?.title, 60),
-      description: TextTruncate(data?.description, 155),
+      description: `Looking to buy a Car? Find bargain deals on new and used cars for sale in Bangladesh or sell cars online at the best price only on Runbd,The largest marketplace in Bangladesh!`,
       card: 'summary_large_image',
       creator: '@runbd',
       images: [data?.images[0]],
