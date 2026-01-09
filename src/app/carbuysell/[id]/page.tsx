@@ -47,7 +47,7 @@ async function CarDetils({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
   const promiseCarDetails = GetAdDetails({ id });
-  const promiseSimilarAd = GetSimilarAd({ id });
+  // const promiseSimilarAd = GetSimilarAd({ id });
 
   return (
     <div>
@@ -66,7 +66,7 @@ async function CarDetils({ params }: { params: Promise<{ id: string }> }) {
         <CarDetails promiseCarDetails={promiseCarDetails} />
       </Suspense>
 
-      <Suspense fallback={
+      {/* <Suspense fallback={
         <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5'>
 
           <LoadingCard />
@@ -78,7 +78,7 @@ async function CarDetils({ params }: { params: Promise<{ id: string }> }) {
         </div>
       }>
         <SimilarAd AddPromise={promiseSimilarAd} />
-      </Suspense>
+      </Suspense> */}
 
     </div>
   )
