@@ -64,7 +64,7 @@ async function CarDetails({ promiseCarDetails }: { promiseCarDetails: Promise<{ 
                                                     key={index}
                                                     className="divide-x border-b last:border-b-0 border-b-gray-300"
                                                 >
-                                                    <td className="text-base font-medium text-gray-700 w-40 md:w-64 h-17 px-3 md:px-4 py-3 border-r border-gray-300 font-figtree">
+                                                    <td className="text-base font-medium text-gray-700 w-40 md:w-64 h-10 px-3 md:px-4 py-3 border-r border-gray-300 font-figtree">
                                                         {row.label}
                                                     </td>
 
