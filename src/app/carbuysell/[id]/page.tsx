@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
   return {
     title: `${data?.title}`,
-    description: data?.description,
+    description: TextTruncate(data?.description, 155),
 
     openGraph: {
       title: TextTruncate(data?.title, 60),
