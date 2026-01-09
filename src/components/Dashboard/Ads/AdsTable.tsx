@@ -36,6 +36,7 @@ import EditPost from '@/components/EditPost/EditPost';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { categoryRouteMap } from '@/shared/FeatureAddCard';
+import { adFeature } from '@/lib/Actions/FeatureAd.action';
 
 function AdsTable() {
     const [page, setPage] = useState(1);
@@ -81,11 +82,13 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
     const handleFeature = async (addId: number) => {
         const loading = toast.loading("Loading...")
         try {
-            await addFeature({ addId }).unwrap();
-            toast.success("Add successfully featured");
+            // await addFeature({ addId }).unwrap();
+            await adFeature({ id: addId?.toString() });
+            toast.success("Ad successfully featured");
         } catch (err: any) {
+            console.log(err);
             Swal.fire({
-                title: err?.data?.message || "Something went wrong",
+                title: err?.message || "Something went wrong",
                 // text: "Job poster will review your quotes. You’ll be notified in you email when a quote arrives.",
                 icon: "error",
                 customClass: {
@@ -240,7 +243,7 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                                         </DropdownMenuItem>
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
-                                            <Link href={`/${categoryRouteMap[ad?.category]}/${ad?.id}`}className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
+                                            <Link href={`/${categoryRouteMap[ad?.category]}/${ad?.id}`} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
                                                 <Eye className='text-black size-4' />
                                                 View Post
                                             </Link>

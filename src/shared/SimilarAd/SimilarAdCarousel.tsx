@@ -17,9 +17,9 @@ export default function SimilarAdCarousel({ data }: { data: Add[] }) {
     return (
         <>
             <Carousel
-                plugins={[
-                    Autoplay({ delay: 3500 })
-                ]}
+                // plugins={[
+                //     Autoplay({ delay: 3500 })
+                // ]}
                 opts={{
                     align: "start",
                     // slidesToScroll: 4

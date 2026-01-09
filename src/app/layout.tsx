@@ -93,7 +93,7 @@ export default function RootLayout({
         className={`${poppins.variable} ${figtree.variable} antialiased`}
       >
         <ReduxProvider>
-          <Toaster richColors position="top-right" />
+          <Toaster richColors position="top-right" closeButton />
           <NextJsTopLoader />
           <Navbar />
           <div className="">
