@@ -19,11 +19,11 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
   return {
     title: `${data?.title}`,
-    description: `Looking to buy a Car? Find bargain deals on new and used cars for sale in Bangladesh or sell cars online at the best price only on Runbd,The largest marketplace in Bangladesh!`,
+    description: TextTruncate(data?.description, 155),
 
     openGraph: {
       title: TextTruncate(data?.title, 60),
-      description: `Looking to buy a Car? Find bargain deals on new and used cars for sale in Bangladesh or sell cars online at the best price only on Runbd,The largest marketplace in Bangladesh!`,
+      description: TextTruncate(data?.description, 155),
       url: `/carbuysell/${data?.id}`,
       siteName: 'Runbd',
       images: [data?.images[0]],
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     },
     twitter: {
       title: TextTruncate(data?.title, 60),
-      description: `Looking to buy a Car? Find bargain deals on new and used cars for sale in Bangladesh or sell cars online at the best price only on Runbd,The largest marketplace in Bangladesh!`,
+      description: TextTruncate(data?.description, 155),
       card: 'summary_large_image',
       creator: '@runbd',
       images: [data?.images[0]],
@@ -47,7 +47,7 @@ async function CarDetils({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
   const promiseCarDetails = GetAdDetails({ id });
-  // const promiseSimilarAd = GetSimilarAd({ id });
+  const promiseSimilarAd = GetSimilarAd({ id });
 
   return (
     <div>
@@ -66,7 +66,7 @@ async function CarDetils({ params }: { params: Promise<{ id: string }> }) {
         <CarDetails promiseCarDetails={promiseCarDetails} />
       </Suspense>
 
-      {/* <Suspense fallback={
+      <Suspense fallback={
         <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5'>
 
           <LoadingCard />
@@ -78,7 +78,7 @@ async function CarDetils({ params }: { params: Promise<{ id: string }> }) {
         </div>
       }>
         <SimilarAd AddPromise={promiseSimilarAd} />
-      </Suspense> */}
+      </Suspense>
 
     </div>
   )
