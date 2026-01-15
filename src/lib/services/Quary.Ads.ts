@@ -1,7 +1,6 @@
 import { config } from "@/utils/config";
-import { TagKey } from "../Tags";
 
-export const GetAdsByCategory = async ({ endPoint, query, tags }: { endPoint: string, query: { [key: string]: string }, tags: TagKey[] }) => {
+export const GetAdsByCategory = async ({ endPoint, query, tags }: { endPoint: string, query: { [key: string]: string }, tags: string[] }) => {
 
   try {
 

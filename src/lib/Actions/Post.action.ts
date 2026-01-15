@@ -3,7 +3,7 @@
 import { revalidateTag } from "next/cache"
 import { PostNewAdd } from "../services/Mutation.Ad";
 
-export const postNewAdd = async ({ payload, endPoint, tags }: { payload: FormData, endPoint: string, tags: string }) => {
+export const postNewAdd = async ({ payload, endPoint, tags }: { payload: FormData, endPoint: string, tags: string[] }) => {
 
     const res = await PostNewAdd({ payload, endPoint });
 

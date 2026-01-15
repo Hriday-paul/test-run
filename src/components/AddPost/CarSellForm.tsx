@@ -15,6 +15,8 @@ import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisio
 import { useMyProfileQuery } from '@/redux/api/user.api';
 import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
+import { postNewAdd } from '@/lib/Actions/Post.action';
+import { tags } from '@/lib/Tags';
 
 type FieldType = {
     title: string,
@@ -129,8 +131,10 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
 
             if (defaultData) {
                 await updateCar({ id: defaultData?.id, body: form }).unwrap();
+
             } else {
-                await postCar(form).unwrap();
+                // await postCar(form).unwrap();
+                await postNewAdd({ endPoint: "/ads/cars", payload: form, tags: [tags?.cars, tags?.my_ads] });
             }
 
 

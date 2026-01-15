@@ -6,6 +6,11 @@ import Cars from '@/components/CarBuySell/Cars'
 import CarFilter from '@/components/CarBuySell/CarFilter'
 import CarSearchBar from '@/components/CarBuySell/CarSearchBar'
 import { Metadata } from 'next'
+import Searchbar from '@/components/BikeBuySell/Searchbar'
+import { GetAdsByCategory } from '@/lib/services/Quary.Ads'
+import { tags } from '@/lib/Tags'
+import { Suspense } from 'react'
+import Adsloading from '@/shared/Adsloading'
 
 export const metadata: Metadata = {
   title: "Car Buy/Sell",
@@ -29,9 +34,84 @@ export const metadata: Metadata = {
   },
 }
 
+async function CarBuySell({
+  searchParams: ssp,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
 
+  const searchParams = await ssp;
 
-function CarBuySell() {
+  const limit = searchParams?.limit;
+  const sort = searchParams?.sort;
+  const page = searchParams?.page;
+  const minPrice = searchParams?.minPrice;
+  const maxPrice = searchParams?.maxPrice;
+  const minMileage = searchParams?.minMileage;
+  const maxMileage = searchParams?.maxMileage;
+  const division = searchParams?.division;
+  const district = searchParams?.district;
+  const area = searchParams?.area;
+  const condition = searchParams?.condition;
+  const brand = searchParams?.brand;
+  const car_type = searchParams?.car_type
+  const searchTerm = searchParams?.searchTerm
+
+  let sortBy = "createdAt";
+  let orderBy = "desc"
+
+  if (sort == "-createdAt") {
+    orderBy = "asc"
+  } else if (sort == "price") {
+    sortBy = "price";
+    orderBy = "asc"
+  }
+  else if (sort == "-price") {
+    sortBy = "price";
+    orderBy = "desc"
+  }
+
+  const query: any = { page, sortBy, sortOrder: orderBy, limit: 21 }
+
+  if (minPrice) {
+    query.minPrice = minPrice
+  }
+  if (maxPrice) {
+    query.maxPrice = maxPrice
+  }
+  if (minMileage) {
+    query.minMileage = minMileage
+  }
+  if (maxMileage) {
+    query.maxMileage = maxMileage
+  }
+  if (division) {
+    query.division = division
+  }
+  if (district) {
+    query.district = district
+  }
+  if (area) {
+    query.area = area
+  }
+  if (condition) {
+    query.condition = condition
+  }
+  if (brand) {
+    query.brand = brand
+  }
+  if (limit) {
+    query.limit = limit
+  }
+  if (car_type) {
+    query.car_type = car_type
+  }
+  if (searchTerm) {
+    query.searchTerm = searchTerm
+  }
+
+  const adsPromise = GetAdsByCategory({ endPoint: "/ads/cars", query, tags: [tags?.cars, tags?.my_ads] });
+
   return (
     <div>
       <ShopBanner
@@ -52,7 +132,15 @@ function CarBuySell() {
               <CarFilter />
             </div>
             <div className='col-span-1 md:col-span-2 lg:col-span-6 xl:col-span-3'>
-              <Cars />
+              <div>
+                <Searchbar />
+
+                <Suspense fallback={<Adsloading />}>
+                  <Cars adsPromise={adsPromise} limit={limit} page={Number(page)} sort={sort} />
+                </Suspense>
+
+              </div>
+
             </div>
           </div>
         </div>

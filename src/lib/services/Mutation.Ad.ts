@@ -20,7 +20,7 @@ export const PostNewAdd = async ({ payload, endPoint }: { payload: FormData, end
         const errorData = await response.json().catch(() => null);
 
         throw new Error(
-            errorData?.message || "Failed to add feature ad"
+            errorData?.message || "Failed to post new ad"
         );
     }
 

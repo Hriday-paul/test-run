@@ -1,3 +1,4 @@
+"use client"
 import {
     Select,
     SelectContent,
@@ -8,7 +9,7 @@ import {
 import { UseUpdateMultipleSearchParams } from "@/hooks/UseUpdateSearchPrams";
 
 
-function SortBar({ limit, sort = "createdAt" }: { limit: string, sort ?: string }) {
+function SortBar({ limit = "21", sort = "createdAt" }: { limit?: string, sort?: string }) {
 
     const updateMultipleSearchParam = UseUpdateMultipleSearchParams();
 
@@ -20,8 +21,8 @@ function SortBar({ limit, sort = "createdAt" }: { limit: string, sort ?: string 
                 <span className="text-sm font-popin">Show:</span>
                 <Select
                     // value={limit?.toString()}
-                    defaultValue="21"
-                    onValueChange={(value) => updateMultipleSearchParam({"limit" : value})}
+                    defaultValue={limit}
+                    onValueChange={(value) => updateMultipleSearchParam({ "limit": value })}
                 >
                     <SelectTrigger className="border-none shadow-none focus-visible:ring-0 px-2 truncate font-popin cursor-pointer">
                         <SelectValue placeholder={limit?.toString()} />
