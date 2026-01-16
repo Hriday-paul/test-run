@@ -5,6 +5,11 @@ import { IoIosArrowForward } from 'react-icons/io'
 import Exchanges from '@/components/Exchange/Exchanges'
 import ExchangeFilter from '@/components/Exchange/ExchangeFilter'
 import { Metadata } from 'next'
+import { GetAdsByCategory } from '@/lib/services/Quary.Ads'
+import { tags } from '@/lib/Tags'
+import Searchbar from '@/components/BikeBuySell/Searchbar'
+import { Suspense } from 'react'
+import Adsloading from '@/shared/Adsloading'
 
 export const metadata: Metadata = {
   title: "Exchange",
@@ -28,7 +33,56 @@ export const metadata: Metadata = {
   },
 }
 
-function Exchang() {
+async function Exchang({
+  searchParams: ssp,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
+
+  const { limit, sort, page, searchTerm, division, district, area, category, condition } = await ssp;
+
+  let sortBy = "createdAt";
+  let orderBy = "desc"
+
+  if (sort == "-createdAt") {
+    orderBy = "asc"
+  } else if (sort == "price") {
+    sortBy = "price";
+    orderBy = "asc"
+  }
+  else if (sort == "-price") {
+    sortBy = "price";
+    orderBy = "desc"
+  }
+
+  const query: any = { page, sortBy, sortOrder: orderBy, limit: 21 }
+
+
+  if (division) {
+    query.division = division
+  }
+  if (district) {
+    query.district = district
+  }
+  if (area) {
+    query.area = area
+  }
+
+  if (condition) {
+    query.condition = condition
+  }
+  if (category) {
+    query.category = category
+  }
+  if (searchTerm) {
+    query.searchTerm = searchTerm
+  }
+  if (limit) {
+    query.limit = limit
+  }
+
+  const adsPromise = GetAdsByCategory({ endPoint: "/ads/exchanges", query, tags: [tags?.exchanges, tags?.my_ads] });
+
   return (
     <div>
       <ShopBanner
@@ -45,7 +99,14 @@ function Exchang() {
             <ExchangeFilter />
           </div>
           <div className='col-span-1 md:col-span-2 lg:col-span-6 xl:col-span-3'>
-            <Exchanges />
+             <div>
+              <Searchbar />
+
+              <Suspense fallback={<Adsloading />}>
+                <Exchanges adsPromise={adsPromise} limit={limit} page={Number(page)} sort={sort} />
+              </Suspense>
+
+            </div>
           </div>
         </div>
       </div>

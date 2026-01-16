@@ -8,6 +8,8 @@ import { useAddcarMutation, useAddJobMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
+import { postNewAdd } from '@/lib/Actions/Post.action';
+import { tags } from '@/lib/Tags';
 
 type FieldType = {
     title: string,
@@ -51,7 +53,7 @@ function JobForm() {
 
     const { isLoading: areatLoad, isFetching: areaFetch, data: areas, isSuccess: areaSuccess } = useAreasByDivDistrictQuery(query);
 
-    const [postJob, { isLoading }] = useAddJobMutation();
+    // const [postJob, { isLoading }] = useAddJobMutation();
 
     const {
         register,
@@ -59,13 +61,14 @@ function JobForm() {
         control,
         reset,
         resetField,
-        formState: { errors },
+        formState: { errors, isLoading },
     } = useForm<FieldType>({ defaultValues: {} });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
         try {
 
-            await postJob(data).unwrap();
+            // await postJob(data).unwrap();
+            await postNewAdd({ endPoint: "/ads/jobs", payload: JSON.stringify(data), tags: [tags?.jobs] });
 
             Swal.fire({
                 title: "Job Ad posted successfully!",

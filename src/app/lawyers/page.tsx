@@ -5,6 +5,11 @@ import { IoIosArrowForward } from 'react-icons/io'
 import LawyerFilter from '@/components/Lawyers/LawyerFilter'
 import Lawyers from '@/components/Lawyers/Lawyers'
 import { Metadata } from 'next'
+import { GetAdsByCategory } from '@/lib/services/Quary.Ads'
+import { tags } from '@/lib/Tags'
+import Searchbar from '@/components/BikeBuySell/Searchbar'
+import Adsloading from '@/shared/Adsloading'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
     title: "Lawyer",
@@ -28,7 +33,56 @@ export const metadata: Metadata = {
     },
 }
 
-function Lawyer() {
+async function Lawyer({
+    searchParams: ssp,
+}: {
+    searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
+
+    const { limit, sort, page, searchTerm, division, district, area, gender, specialization, } = await ssp;
+
+    let sortBy = "createdAt";
+    let orderBy = "desc"
+
+    if (sort == "-createdAt") {
+        orderBy = "asc"
+    } else if (sort == "price") {
+        sortBy = "price";
+        orderBy = "asc"
+    }
+    else if (sort == "-price") {
+        sortBy = "price";
+        orderBy = "desc"
+    }
+
+    const query: any = { page, sortBy, sortOrder: orderBy, limit: 21 }
+
+
+    if (division) {
+        query.division = division
+    }
+    if (district) {
+        query.district = district
+    }
+    if (area) {
+        query.area = area
+    }
+
+    if (gender) {
+        query.gender = gender
+    }
+    if (specialization) {
+        query.specialization = specialization
+    }
+    if (searchTerm) {
+        query.searchTerm = searchTerm
+    }
+    if (limit) {
+        query.limit = limit
+    }
+
+    const adsPromise = GetAdsByCategory({ endPoint: "/ads/lawyers", query, tags: [tags?.lawyers, tags?.my_ads] });
+
     return (
         <div>
             <ShopBanner
@@ -45,7 +99,14 @@ function Lawyer() {
                         <LawyerFilter />
                     </div>
                     <div className='col-span-1 md:col-span-2 lg:col-span-6 xl:col-span-3'>
-                        <Lawyers />
+                        <div>
+                            <Searchbar />
+
+                            <Suspense fallback={<Adsloading />}>
+                                <Lawyers adsPromise={adsPromise} limit={limit} page={Number(page)} sort={sort} />
+                            </Suspense>
+
+                        </div>
                     </div>
                 </div>
             </div>

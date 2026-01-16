@@ -5,6 +5,11 @@ import { IoIosArrowForward } from 'react-icons/io'
 import RentCarFilter from '@/components/RentCar/RentCarFilter'
 import RentCars from '@/components/RentCar/RentCars'
 import { Metadata } from 'next'
+import Searchbar from '@/components/BikeBuySell/Searchbar'
+import { Suspense } from 'react'
+import Adsloading from '@/shared/Adsloading'
+import { GetAdsByCategory } from '@/lib/services/Quary.Ads'
+import { tags } from '@/lib/Tags'
 
 export const metadata: Metadata = {
   title: "Car Rent",
@@ -28,7 +33,57 @@ export const metadata: Metadata = {
   },
 }
 
-function Exchang() {
+async function CarRent({
+  searchParams: ssp,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
+
+  const { limit, sort, page, searchTerm, division, district, area, category, condition, } = await ssp;
+
+
+  let sortBy = "createdAt";
+  let orderBy = "desc"
+
+  if (sort == "-createdAt") {
+    orderBy = "asc"
+  } else if (sort == "price") {
+    sortBy = "price";
+    orderBy = "asc"
+  }
+  else if (sort == "-price") {
+    sortBy = "price";
+    orderBy = "desc"
+  }
+
+  const query: any = { page, sortBy, sortOrder: orderBy, limit: 21 }
+
+
+  if (division) {
+    query.division = division
+  }
+  if (district) {
+    query.district = district
+  }
+  if (area) {
+    query.area = area
+  }
+
+  if (condition) {
+    query.condition = condition
+  }
+  if (category) {
+    query.category = category
+  }
+  if (searchTerm) {
+    query.searchTerm = searchTerm
+  }
+  if (limit) {
+    query.limit = limit
+  }
+
+  const adsPromise = GetAdsByCategory({ endPoint: "/ads/rent-cars", query, tags: [tags?.rent_cars, tags?.my_ads] });
+
   return (
     <div>
       <ShopBanner
@@ -36,7 +91,7 @@ function Exchang() {
         title="Car Rent"
         desc="Find your perfect item"
       >
-        <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Car Rent
+        <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Car Rents
       </ShopBanner>
 
       <div className=' bg-[#F2F4F8]'>
@@ -47,7 +102,14 @@ function Exchang() {
               <RentCarFilter />
             </div>
             <div className='col-span-1 md:col-span-2 lg:col-span-6 xl:col-span-3'>
-              <RentCars />
+              <div>
+                <Searchbar />
+
+                <Suspense fallback={<Adsloading />}>
+                  <RentCars adsPromise={adsPromise} limit={limit} page={Number(page)} sort={sort} />
+                </Suspense>
+
+              </div>
             </div>
           </div>
         </div>
@@ -56,4 +118,4 @@ function Exchang() {
     </div>
   )
 }
-export default Exchang
+export default CarRent

@@ -15,6 +15,8 @@ import { useMyProfileQuery } from '@/redux/api/user.api';
 import { number } from 'motion/react';
 import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
+import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
+import { tags } from '@/lib/Tags';
 
 type FieldType = {
     title: string,
@@ -40,7 +42,7 @@ type FieldType = {
 
 function BikeSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
 
-    const [updateAd, { isLoading: updateLoading }] = useUpdateBikeMutation();
+    // const [updateAd, { isLoading: updateLoading }] = useUpdateBikeMutation();
     const [dltImage] = useDltAdImageMutation();
 
     const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
@@ -64,7 +66,7 @@ function BikeSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
 
     const { isLoading: areatLoad, isFetching: areaFetch, data: areas, isSuccess: areaSuccess } = useAreasByDivDistrictQuery(query);
 
-    const [postAd, { isLoading }] = useAddBikeMutation();
+    // const [postAd, { isLoading }] = useAddBikeMutation();
 
     const [images, setImages] = useState<File[]>([]);
 
@@ -74,7 +76,7 @@ function BikeSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
         control,
         reset,
         resetField,
-        formState: { errors },
+        formState: { errors, isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
@@ -104,9 +106,11 @@ function BikeSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
             });
 
             if (defaultData) {
-                await updateAd({ id: defaultData?.id, body: form }).unwrap();
+                // await updateAd({ id: defaultData?.id, body: form }).unwrap();
+                await updateAdd({ endPoint: `/ads/bikes/${defaultData?.id}`, payload: form, tags: [tags?.bikes, `details-${defaultData?.id}`] });
             } else {
-                await postAd(form).unwrap();
+                // await postAd(form).unwrap();
+                await postNewAdd({ endPoint: "/ads/bikes", payload: form, tags: [tags?.bikes] });
             }
 
             Swal.fire({
@@ -630,9 +634,9 @@ function BikeSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
                 </div>
 
 
-                <button type='submit' disabled={isLoading || updateLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
-                    {(isLoading || updateLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
-                    <span>{(isLoading || updateLoading) ? 'Loading...' : "Submit"}</span>
+                <button type='submit' disabled={isLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
+                    {(isLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
+                    <span>{(isLoading) ? 'Loading...' : "Submit"}</span>
                 </button>
 
             </form>

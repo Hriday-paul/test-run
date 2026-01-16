@@ -15,7 +15,7 @@ import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisio
 import { useMyProfileQuery } from '@/redux/api/user.api';
 import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
-import { postNewAdd } from '@/lib/Actions/Post.action';
+import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
 
 type FieldType = {
@@ -69,8 +69,8 @@ const carTypes = [
 
 function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
 
-    const [postCar, { isLoading }] = useAddcarMutation();
-    const [updateCar, { isLoading: updateLoading }] = useUpdateCarMutation();
+    // const [postCar, { isLoading }] = useAddcarMutation();
+    // const [updateCar, { isLoading: updateLoading }] = useUpdateCarMutation();
     const [dltImage] = useDltAdImageMutation();
 
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
@@ -100,7 +100,7 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
         control,
         reset,
         resetField,
-        formState: { errors },
+        formState: { errors, isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
@@ -130,11 +130,13 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
             });
 
             if (defaultData) {
-                await updateCar({ id: defaultData?.id, body: form }).unwrap();
+                // await updateCar({ id: defaultData?.id, body: form }).unwrap();
+
+                await updateAdd({ endPoint: `/ads/cars/${defaultData?.id}`, payload: form, tags: [tags?.cars, `details-${defaultData?.id}`] });
 
             } else {
                 // await postCar(form).unwrap();
-                await postNewAdd({ endPoint: "/ads/cars", payload: form, tags: [tags?.cars, tags?.my_ads] });
+                await postNewAdd({ endPoint: "/ads/cars", payload: form, tags: [tags?.cars] });
             }
 
 
@@ -756,9 +758,9 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
                 </div>
 
 
-                <button type='submit' disabled={isLoading || updateLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
-                    {(isLoading || updateLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
-                    <span>{(isLoading || updateLoading) ? 'Loading...' : "Submit"}</span>
+                <button type='submit' disabled={isLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
+                    {(isLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
+                    <span>{(isLoading) ? 'Loading...' : "Submit"}</span>
                 </button>
 
             </form>

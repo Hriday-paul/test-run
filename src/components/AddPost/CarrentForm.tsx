@@ -14,6 +14,8 @@ import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisio
 import { useMyProfileQuery } from '@/redux/api/user.api';
 import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
+import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
+import { tags } from '@/lib/Tags';
 
 type FieldType = {
     title: string,
@@ -31,7 +33,7 @@ type FieldType = {
 
 function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
 
-    const [updateAd, { isLoading: updateLoading }] = useUpdateRentCarMutation();
+    // const [updateAd, { isLoading: updateLoading }] = useUpdateRentCarMutation();
 
     const [dltImage] = useDltAdImageMutation();
 
@@ -54,7 +56,7 @@ function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
 
     const { isLoading: areatLoad, isFetching: areaFetch, data: areas, isSuccess: areaSuccess } = useAreasByDivDistrictQuery(query);
 
-    const [postAdd, { isLoading }] = useAddRentCarMutation();
+    // const [postAdd, { isLoading }] = useAddRentCarMutation();
 
     const [images, setImages] = useState<File[]>([]);
 
@@ -64,7 +66,7 @@ function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
         control,
         reset,
         resetField,
-        formState: { errors },
+        formState: { errors, isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
@@ -94,9 +96,12 @@ function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
             });
 
             if (defaultData) {
-                await updateAd({ id: defaultData?.id, body: form }).unwrap();
+                // await updateAd({ id: defaultData?.id, body: form }).unwrap();
+                await updateAdd({ endPoint: `/ads/rent-cars/${defaultData?.id}`, payload: form, tags: [tags?.rent_cars,`details-${defaultData?.id}`] });
+
             } else {
-                await postAdd(form).unwrap();
+                // await postAdd(form).unwrap();
+                await postNewAdd({ endPoint: "/ads/rent-cars", payload: form, tags: [tags?.rent_cars] });
             }
 
             Swal.fire({
@@ -425,9 +430,9 @@ function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
                 </div>
 
 
-                <button type='submit' disabled={isLoading || updateLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
-                    {(isLoading || updateLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
-                    <span>{(isLoading || updateLoading) ? 'Loading...' : "Submit"}</span>
+                <button type='submit' disabled={isLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
+                    {(isLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
+                    <span>{(isLoading) ? 'Loading...' : "Submit"}</span>
                 </button>
 
             </form>

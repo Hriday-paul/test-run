@@ -13,6 +13,8 @@ import { useAddcarMutation, useAddExchangeMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
+import { postNewAdd } from '@/lib/Actions/Post.action';
+import { tags } from '@/lib/Tags';
 
 type FieldType = {
     title: string,
@@ -46,7 +48,7 @@ function ExchangeForm() {
 
     const { isLoading: areatLoad, isFetching: areaFetch, data: areas, isSuccess: areaSuccess } = useAreasByDivDistrictQuery(query);
 
-    const [postAdd, { isLoading }] = useAddExchangeMutation();
+    // const [postAdd, { isLoading }] = useAddExchangeMutation();
 
     const [images, setImages] = useState<File[]>([]);
 
@@ -56,7 +58,7 @@ function ExchangeForm() {
         control,
         reset,
         resetField,
-        formState: { errors },
+        formState: { errors, isLoading },
     } = useForm<FieldType>({ defaultValues: {} });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
@@ -73,7 +75,8 @@ function ExchangeForm() {
                 form.append('images', image);
             });
 
-            const res = await postAdd(form).unwrap();
+            // const res = await postAdd(form).unwrap();
+            await postNewAdd({ endPoint: "/ads/exchanges", payload: form, tags: [tags?.exchanges] });
 
             Swal.fire({
                 title: "Exchange Ad posted successfully!",

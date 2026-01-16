@@ -13,6 +13,8 @@ import Swal from 'sweetalert2';
 import MultipleSelect from '../ui/MultiSelect';
 import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
+import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
+import { tags } from '@/lib/Tags';
 
 type FieldType = {
     title: string,
@@ -44,11 +46,11 @@ type FieldType = {
 
 function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
 
-    const [updateAd, { isLoading: updateLoading }] = useUpdateLawyerMutation();
+    // const [updateAd, { isLoading: updateLoading }] = useUpdateLawyerMutation();
 
     const [dltImage] = useDltAdImageMutation();
 
-    const [postAdd, { isLoading }] = useAddLawyerMutation();
+    // const [postAdd, { isLoading }] = useAddLawyerMutation();
 
     const [image, setImage] = useState<File | null>(null);
 
@@ -57,7 +59,7 @@ function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Rea
         handleSubmit,
         control,
         reset,
-        formState: { errors },
+        formState: { errors, isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
@@ -85,9 +87,11 @@ function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Rea
             if (image) form.append('images', image);
 
             if (defaultData) {
-                await updateAd({ id: defaultData?.id, body: form }).unwrap();
+                // await updateAd({ id: defaultData?.id, body: form }).unwrap();
+                await updateAdd({ endPoint: `/ads/lawyers/${defaultData?.id}`, payload: form, tags: [tags?.lawyers, `details-${defaultData?.id}`] });
             } else {
-                await postAdd(form).unwrap();
+                // await postAdd(form).unwrap();
+                await postNewAdd({ endPoint: "/ads/lawyers", payload: form, tags: [tags?.lawyers] });
             }
 
             Swal.fire({
@@ -502,9 +506,9 @@ function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Rea
                     {errors?.description && <p className="text-red-500 text-sm col-span-2">{errors?.description?.message}</p>}
                 </div>
 
-                <button type='submit' disabled={isLoading || updateLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
-                    {(isLoading || updateLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
-                    <span>{(isLoading || updateLoading) ? 'Loading...' : "Submit"}</span>
+                <button type='submit' disabled={isLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
+                    {(isLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
+                    <span>{(isLoading) ? 'Loading...' : "Submit"}</span>
                 </button>
 
             </form>

@@ -5,6 +5,11 @@ import { IoIosArrowForward } from 'react-icons/io'
 import WorkShopFilter from '@/components/WorkShop/WorkShopFilter'
 import WorkShops from '@/components/WorkShop/WorkShops'
 import { Metadata } from 'next'
+import Searchbar from '@/components/BikeBuySell/Searchbar'
+import { Suspense } from 'react'
+import Adsloading from '@/shared/Adsloading'
+import { GetAdsByCategory } from '@/lib/services/Quary.Ads'
+import { tags } from '@/lib/Tags'
 
 export const metadata: Metadata = {
   title: "Workshop",
@@ -28,7 +33,52 @@ export const metadata: Metadata = {
   },
 }
 
-function Workshop() {
+async function Workshop({
+  searchParams: ssp,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
+
+  const { limit, sort, page, searchTerm, division, district, area, workshop_type } = await ssp;
+
+
+  let sortBy = "createdAt";
+  let orderBy = "desc"
+
+  if (sort == "-createdAt") {
+    orderBy = "asc"
+  } else if (sort == "price") {
+    sortBy = "price";
+    orderBy = "asc"
+  }
+  else if (sort == "-price") {
+    sortBy = "price";
+    orderBy = "desc"
+  }
+
+  const query: any = { page, sortBy, sortOrder: orderBy, limit: 21 }
+
+  if (division) {
+    query.division = division
+  }
+  if (district) {
+    query.district = district
+  }
+  if (area) {
+    query.area = area
+  }
+  if (workshop_type) {
+    query.workshop_type = workshop_type
+  }
+  if (searchTerm) {
+    query.searchTerm = searchTerm
+  }
+  if (limit) {
+    query.limit = limit || 21
+  }
+
+  const adsPromise = GetAdsByCategory({ endPoint: "/ads/work-shops", query, tags: [tags?.work_shops, tags?.my_ads] });
+
   return (
     <div>
       <ShopBanner
@@ -36,7 +86,7 @@ function Workshop() {
         title="Work Shops"
         desc="Search and find wrokshop for best service"
       >
-        <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Workshop
+        <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Workshops
       </ShopBanner>
 
       <div className='bg-[#F2F4F8] py-8'>
@@ -45,7 +95,14 @@ function Workshop() {
             <WorkShopFilter />
           </div>
           <div className='col-span-1 md:col-span-2 lg:col-span-6 xl:col-span-3'>
-            <WorkShops />
+
+            <div>
+              <Searchbar />
+              <Suspense fallback={<Adsloading />}>
+                <WorkShops adsPromise={adsPromise} limit={limit} page={Number(page)} sort={sort} />
+              </Suspense>
+            </div>
+
           </div>
         </div>
       </div>

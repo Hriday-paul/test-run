@@ -5,6 +5,11 @@ import { IoIosArrowForward } from 'react-icons/io'
 import JobFilter from '@/components/Job/JobFilter'
 import Jobs from '@/components/Job/Jobs'
 import { Metadata } from 'next'
+import Searchbar from '@/components/BikeBuySell/Searchbar'
+import Adsloading from '@/shared/Adsloading'
+import { Suspense } from 'react'
+import { GetAdsByCategory } from '@/lib/services/Quary.Ads'
+import { tags } from '@/lib/Tags'
 
 export const metadata: Metadata = {
   title: "Jobs",
@@ -28,7 +33,56 @@ export const metadata: Metadata = {
   },
 }
 
-function JobList() {
+async function JobList({
+  searchParams: ssp,
+}: {
+  searchParams: Promise<{ [key: string]: string | undefined }>;
+}) {
+
+  const { limit, sort, page, searchTerm, division, district, area, jobType, employmentType, } = await ssp;
+
+  let sortBy = "createdAt";
+  let orderBy = "desc"
+
+  if (sort == "-createdAt") {
+    orderBy = "asc"
+  } else if (sort == "price") {
+    sortBy = "price";
+    orderBy = "asc"
+  }
+  else if (sort == "-price") {
+    sortBy = "price";
+    orderBy = "desc"
+  }
+
+  const query: any = { page, sortBy, sortOrder: orderBy, limit: 21 }
+
+
+  if (division) {
+    query.division = division
+  }
+  if (district) {
+    query.district = district
+  }
+  if (area) {
+    query.area = area
+  }
+
+  if (jobType) {
+    query.job_type = jobType
+  }
+  if (employmentType) {
+    query.employment_type = employmentType
+  }
+  if (searchTerm) {
+    query.searchTerm = searchTerm
+  }
+  if (limit) {
+    query.limit = limit
+  }
+
+  const adsPromise = GetAdsByCategory({ endPoint: "/ads/jobs", query, tags: [tags?.jobs, tags?.my_ads] });
+
   return (
     <div>
       <ShopBanner
@@ -45,7 +99,14 @@ function JobList() {
             <JobFilter />
           </div>
           <div className='col-span-1 md:col-span-2 lg:col-span-6 xl:col-span-3'>
-            <Jobs />
+            <div>
+              <Searchbar />
+
+              <Suspense fallback={<Adsloading />}>
+                <Jobs adsPromise={adsPromise} limit={limit} page={Number(page)} sort={sort} />
+              </Suspense>
+
+            </div>
           </div>
         </div>
       </div>

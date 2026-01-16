@@ -13,7 +13,7 @@ import other from "../../../../public/categories/other.svg"
 import Image from "next/image"
 import Link from "next/link"
 
-const categories = [
+export const categories = [
     {
         id: 1,
         name: "Car Buy/Sell",

@@ -13,6 +13,8 @@ import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisio
 import { useMyProfileQuery } from '@/redux/api/user.api';
 import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
+import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
+import { tags } from '@/lib/Tags';
 
 type FieldType = {
     title: string,
@@ -25,7 +27,7 @@ type FieldType = {
 
 function AccessoriesForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
 
-    const [updateAd, { isLoading: updateLoading }] = useUpdateAccessoriesMutation();
+    // const [updateAd, { isLoading: updateLoading }] = useUpdateAccessoriesMutation();
 
     const [dltImage] = useDltAdImageMutation();
 
@@ -48,7 +50,7 @@ function AccessoriesForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?
 
     const { isLoading: areatLoad, isFetching: areaFetch, data: areas, isSuccess: areaSuccess } = useAreasByDivDistrictQuery(query);
 
-    const [postAd, { isLoading }] = useAddAccessoriesMutation();
+    // const [postAd, { isLoading }] = useAddAccessoriesMutation();
 
     const [images, setImages] = useState<File[]>([]);
 
@@ -58,7 +60,7 @@ function AccessoriesForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?
         control,
         reset,
         resetField,
-        formState: { errors },
+        formState: { errors, isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
@@ -86,9 +88,11 @@ function AccessoriesForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?
             });
 
             if (defaultData) {
-                await updateAd({ id: defaultData?.id, body: form }).unwrap();
+                // await updateAd({ id: defaultData?.id, body: form }).unwrap();
+                await updateAdd({ endPoint: `/ads/accessories/${defaultData?.id}`, payload: form, tags: [tags?.accessories, `details-${defaultData?.id}`] });
             } else {
-                await postAd(form).unwrap();
+                // await postAd(form).unwrap();
+                await postNewAdd({ endPoint: "/ads/accessories", payload: form, tags: [tags?.accessories,] });
             }
 
             Swal.fire({
@@ -374,9 +378,9 @@ function AccessoriesForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?
                 </div>
 
 
-                <button type='submit' disabled={isLoading || updateLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
-                    {(isLoading || updateLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
-                    <span>{(isLoading || updateLoading) ? 'Loading...' : "Submit"}</span>
+                <button type='submit' disabled={isLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
+                    {(isLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
+                    <span>{(isLoading) ? 'Loading...' : "Submit"}</span>
                 </button>
 
             </form>

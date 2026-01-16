@@ -5,18 +5,21 @@ import SmNavSheet from "./SmNavsheet"
 import logo from "../../../public/logo.png"
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '@/components/ui/menubar'
+import { ChevronDown } from 'lucide-react'
+import { categories } from '@/components/Home/Section2/Section2'
 
 export const navitems = [
-    {
-        id: 1,
-        rout: "/",
-        label: "Home"
-    },
-    {
-        id: 2,
-        rout: "/#services",
-        label: "Services"
-    },
+    // {
+    //     id: 1,
+    //     rout: "/",
+    //     label: "Home"
+    // },
+    // {
+    //     id: 2,
+    //     rout: "/#services",
+    //     label: "Services"
+    // },
     {
         id: 3,
         rout: "/#pricing",
@@ -32,10 +35,10 @@ export const navitems = [
 function Navbar() {
     const router = useRouter();
 
-    const handlePostAdd = ()=>{
+    const handlePostAdd = () => {
         router.push(`/vendor/post-ad`);
     }
-    const handleMoveProfile = ()=>{
+    const handleMoveProfile = () => {
         router.push(`/profile`);
     }
 
@@ -48,8 +51,44 @@ function Navbar() {
                     </Link>
                     <div className="flex flex-row gap-x-2.5 md:gap-x-4 lg:gap-x-5 items-center">
                         <ul className='lg:flex flex-row gap-x-5 lg:gap-x-8 xl:gap-x-10 items-center hidden'>
+
+                            <li className='font-popin text-lg text-gray-800 font-normal hover:text-primary duration-200'>
+                                <Link href={"/"}>
+                                    Home
+                                </Link>
+                            </li>
+
+                            <Menubar className="border-none shadow-none bg-transparent">
+                                <MenubarMenu>
+                                    <MenubarTrigger className="font-popin text-lg text-gray-800 font-normal">
+                                        Services
+                                        <ChevronDown className="ml-2" size={20} />
+                                    </MenubarTrigger>
+                                    <MenubarContent className='p-0'>
+                                        {categories?.map(
+                                            (category, idx: number) => (
+                                                <div key={idx}>
+                                                    <Link
+                                                        href={category?.rout}
+                                                        className='cursor-pointer'
+                                                    >
+                                                        <MenubarItem className="cursor-pointer rounded-none">
+                                                            <div className='flex flex-row gap-x-2 items-center'>
+                                                                <Image src={category?.icon} alt="runbd category icon" className="h-3 w-auto mx-auto" />
+                                                                <p className='font-popin'>{category?.name}</p>
+                                                            </div>
+                                                        </MenubarItem>
+                                                    </Link>
+                                                    <hr />
+                                                </div>
+                                            ),
+                                        )}
+                                    </MenubarContent>
+                                </MenubarMenu>
+                            </Menubar>
+
                             {navitems?.map(i => {
-                                return <li key={i?.id} className='font-popin text-lg text-gray-800 font-normal'>
+                                return <li key={i?.id} className='font-popin text-lg text-gray-800 font-normal hover:text-primary duration-200'>
                                     <Link href={i?.rout}>
                                         {i?.label}
                                     </Link>
@@ -57,14 +96,14 @@ function Navbar() {
                             })}
                         </ul>
 
-                        
-                            <button onClick={handlePostAdd} className="group relative inline-flex py-2 text-sm md:text-base lg:text-lg items-center justify-center overflow-hidden rounded-full bg-primary px-3 px-5 lg:px-6 font-normal text-white transition hover:scale-105 cursor-pointer font-popin">
-                                <span>+ Post Your Add</span>
-                                <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
-                                    <div className="relative h-full w-8 bg-white/20"></div>
-                                </div>
-                            </button>
-                        
+
+                        <button onClick={handlePostAdd} className="group relative inline-flex py-2 text-sm md:text-base lg:text-lg items-center justify-center rounded-full bg-primary px-3 px-5 lg:px-6 font-normal text-white transition hover:scale-105 cursor-pointer font-popin overflow-hidden">
+                            <span>+ Post Your Add</span>
+                            <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
+                                <div className="relative h-full w-8 bg-white/20"></div>
+                            </div>
+                        </button>
+
 
                         <button onClick={handleMoveProfile} className='cursor-pointer'>
                             <FaRegUser className="text-xl md:text-2xl text-gray-800" />

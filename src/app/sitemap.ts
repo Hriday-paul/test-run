@@ -9,10 +9,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 1,
         },
         {
+            url: 'https://runbd.com/carbuysell',
+            lastModified: new Date(),
+            changeFrequency: 'yearly',
+            priority: 0.97,
+        },
+        {
+            url: 'https://runbd.com/bikebuysell',
+            lastModified: new Date(),
+            changeFrequency: 'yearly',
+            priority: 0.95,
+        },
+        {
             url: 'https://runbd.com/login',
             lastModified: new Date(),
             changeFrequency: 'yearly',
-            priority: 0.9,
+            priority: 0.90,
         },
         {
             url: 'https://runbd.com/vehicle-process',
@@ -24,13 +36,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
             url: 'https://runbd.com/documents',
             lastModified: new Date(),
             changeFrequency: 'yearly',
-            priority: 0.8,
-        },
-        {
-            url: 'https://runbd.com/carbuysell',
-            lastModified: new Date(),
-            changeFrequency: 'yearly',
             priority: 0.7,
-        }
+        },
+        
     ]
 }

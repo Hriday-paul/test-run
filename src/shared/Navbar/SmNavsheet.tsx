@@ -62,8 +62,6 @@ const SmNavSheet = () => {
                                 }
                             </ul>
 
-
-
                         </div>
 
                     </SheetHeader>
