@@ -174,6 +174,7 @@ export interface Lawyer {
 
 export interface IWorkshop {
     id: number,
+    workshop_type ?: string
     address: string
     open_time?: string
     close_time?: string

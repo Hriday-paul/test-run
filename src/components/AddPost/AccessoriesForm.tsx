@@ -60,7 +60,7 @@ function AccessoriesForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?
         control,
         reset,
         resetField,
-        formState: { errors, isLoading },
+        formState: { errors, isSubmitting : isLoading  },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,

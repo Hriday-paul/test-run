@@ -58,7 +58,7 @@ function ExchangeForm() {
         control,
         reset,
         resetField,
-        formState: { errors, isLoading },
+        formState: { errors, isSubmitting : isLoading  },
     } = useForm<FieldType>({ defaultValues: {} });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {

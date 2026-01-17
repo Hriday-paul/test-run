@@ -1,9 +1,10 @@
+
 import { config } from "@/utils/config";
 import { cookies } from "next/headers";
 
 export const PostNewAdd = async ({ payload, endPoint }: { payload: FormData | string, endPoint: string }) => {
     const cookieStore = await cookies()
-    const token = cookieStore.get("accessToken")?.value;
+    const token = cookieStore.get("accessToken")?.value
 
     const response = await fetch(
         config.serverBaseApi + endPoint,
@@ -15,6 +16,7 @@ export const PostNewAdd = async ({ payload, endPoint }: { payload: FormData | st
             body: payload
         }
     );
+    
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => null);

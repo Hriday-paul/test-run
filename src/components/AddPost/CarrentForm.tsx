@@ -66,7 +66,7 @@ function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
         control,
         reset,
         resetField,
-        formState: { errors, isLoading },
+        formState: { errors, isSubmitting : isLoading  },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,

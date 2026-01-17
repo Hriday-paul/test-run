@@ -76,7 +76,7 @@ function BikeSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
         control,
         reset,
         resetField,
-        formState: { errors, isLoading },
+        formState: { errors, isSubmitting : isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,

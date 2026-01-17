@@ -1,42 +1,26 @@
-"use client"
-import { useAddDetailsQuery } from '@/redux/api/ads.api'
 import DetailsCarousel from '@/shared/DetailsCarousel'
-import DetailsSkeleton from '@/shared/DetailsSkeleton';
 import ErrorComponent from '@/shared/ErrorComponent';
-import ShopBanner from '@/shared/ShopBanner';
-import Link from 'next/link';
-import bannerimg from "../../../public/workshop-banner.png"
-import { IoIosArrowForward } from 'react-icons/io';
-import Image from 'next/image';
-import { Calendar, Eye, MapPin, Phone, Timer } from 'lucide-react';
-import { MdEmail } from 'react-icons/md';
-import { FaWhatsapp } from 'react-icons/fa';
+import { Calendar, Eye, Timer } from 'lucide-react';
 import moment from "moment";
+import { Add, IWorkshop } from '@/redux/types';
+import AdDetailsOwner from '@/shared/AdDetailsOwner';
 
-function WorkshopDetails({ id }: { id: string }) {
-    const { isLoading, isError, isSuccess, data } = useAddDetailsQuery({ id });
+async function WorkshopDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
-    if (isError) {
-        return <ErrorComponent />
-    }
+    const data = await promiseAdDetails;
+
+    const workshopRows = [
+        { label: "Work Shop Type", value: (work_shop: IWorkshop) => work_shop?.workshop_type },
+        { label: "Address", value: (work_shop: IWorkshop) => work_shop?.address },
+        { label: "Open Time", value: (work_shop: IWorkshop) => work_shop?.open_time },
+        { label: "Close Time", value: (work_shop: IWorkshop) => work_shop?.close_time },
+    ];
 
     return (
         <div >
 
-            <ShopBanner
-                image={bannerimg}
-                title="Workshop Details"
-                desc="View Workshop full details"
-            >
-                <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Workshop
-            </ShopBanner>
 
-            {
-                isLoading && <DetailsSkeleton />
-            }
-
-
-            {(data && isSuccess) ? data?.data?.category !== "Workshop" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
+            {(data) ? data?.data?.category !== "Workshop" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
                 <div className='container'>
                     <div className='grid grid-cols-5 gap-8'>
 
@@ -48,60 +32,37 @@ function WorkshopDetails({ id }: { id: string }) {
                                 <pre className='text-sm font-medium font-figtree'>{data?.data?.description}</pre>
                             </div>
 
-                        </div>
-                        <div className='col-span-5 lg:col-span-2 space-y-5'>
                             <div className='bg-white p-5 rounded-lg'>
-                                <div className='pb-4 border-b border-stroke'>
-                                    <h3 className='text-xl font-popin font-medium'>Seller Information</h3>
-                                </div>
-                                <div className='flex flex-row gap-x-2.5 items-center pt-4'>
-                                    <Image src={data?.data?.owner?.picture?.url || "/empty-user.png"} height={1000} width={1000} className='h-8 w-8 bg-cover rounded-full' alt='user image' />
-                                    <h6 className='text-base font-popin font-medium'>{data?.data?.owner?.first_name + " " + (data?.data?.owner?.last_name || "")}</h6>
-                                </div>
-                                <div className='pt-4 space-y-4'>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <MapPin size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Location
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>
-                                            {data?.data
-                                                ? `${data?.data.division?.name || ''}${data.data.division ? ', ' : ''}${data?.data?.district?.name || ''}${data.data?.district ? ', ' : ''}${data.data?.area?.name || ''}`.trim() || 'N/A'
-                                                : 'N/A'}
-                                        </p>
-                                    </div>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <Phone size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Phone
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.phone || "N/A"}</p>
-                                    </div>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <MdEmail size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Email
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.email || "N/A"}</p>
-                                    </div>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <FaWhatsapp size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Whatsapp
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.whatsapp || "N/A"}</p>
-                                    </div>
-                                </div>
-                            </div>
+                                <h3 className='text-2xl font-popin font-semibold mb-3'>Workshop Information : </h3>
+                                <section className="border rounded-xl overflow-x-auto">
+                                    <table className="table-auto w-full">
+                                        <tbody>
+                                            {workshopRows.map((row, index) => (
+                                                <tr
+                                                    key={index}
+                                                    className="divide-x border-b last:border-b-0 border-b-gray-300"
+                                                >
+                                                    <td className="text-base font-medium text-gray-700 w-40 md:w-64 h-10 px-3 md:px-4 py-3 border-r border-gray-300 font-figtree">
+                                                        {row.label}
+                                                    </td>
 
+                                                    <td className="text-base font-semibold text-gray-900 px-3 md:px-4 py-3 font-figtree">
+                                                        {row.value(data?.data?.workshop) ?? "N/A"}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </section>
+                            </div>
+                        </div>
+
+                        {/* ------------Right side----------- */}
+                        <div className='col-span-5 lg:col-span-2 space-y-5'>
+                            {/* ------------owner----------- */}
+                            <AdDetailsOwner data={data} />
+
+                            {/* ------------Post Overview----------- */}
                             <div className='bg-white p-5 rounded-lg'>
                                 <div className='pb-4 border-b border-stroke'>
                                     <h3 className='text-xl font-popin font-medium'>Post Overview</h3>

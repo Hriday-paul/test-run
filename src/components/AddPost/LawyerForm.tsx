@@ -59,7 +59,7 @@ function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Rea
         handleSubmit,
         control,
         reset,
-        formState: { errors, isLoading },
+        formState: { errors, isSubmitting : isLoading  },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
