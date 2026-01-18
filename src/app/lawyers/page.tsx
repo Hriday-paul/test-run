@@ -81,7 +81,7 @@ async function Lawyer({
         query.limit = limit
     }
 
-    const adsPromise = GetAdsByCategory({ endPoint: "/ads/lawyers", query, tags: [tags?.lawyers, tags?.my_ads] });
+    const adsPromise = GetAdsByCategory({ endPoint: "/ads/lawyers", query, tags: [tags?.lawyers] });
 
     return (
         <div>

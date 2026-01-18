@@ -81,7 +81,7 @@ async function JobList({
     query.limit = limit
   }
 
-  const adsPromise = GetAdsByCategory({ endPoint: "/ads/jobs", query, tags: [tags?.jobs, tags?.my_ads] });
+  const adsPromise = GetAdsByCategory({ endPoint: "/ads/jobs", query, tags: [tags?.jobs] });
 
   return (
     <div>

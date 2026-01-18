@@ -82,7 +82,7 @@ async function CarRent({
     query.limit = limit
   }
 
-  const adsPromise = GetAdsByCategory({ endPoint: "/ads/rent-cars", query, tags: [tags?.rent_cars, tags?.my_ads] });
+  const adsPromise = GetAdsByCategory({ endPoint: "/ads/rent-cars", query, tags: [tags?.rent_cars] });
 
   return (
     <div>

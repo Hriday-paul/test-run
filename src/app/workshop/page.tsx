@@ -77,7 +77,7 @@ async function Workshop({
     query.limit = limit || 21
   }
 
-  const adsPromise = GetAdsByCategory({ endPoint: "/ads/work-shops", query, tags: [tags?.work_shops, tags?.my_ads] });
+  const adsPromise = GetAdsByCategory({ endPoint: "/ads/work-shops", query, tags: [tags?.work_shops] });
 
   return (
     <div>

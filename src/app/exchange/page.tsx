@@ -81,7 +81,7 @@ async function Exchang({
     query.limit = limit
   }
 
-  const adsPromise = GetAdsByCategory({ endPoint: "/ads/exchanges", query, tags: [tags?.exchanges, tags?.my_ads] });
+  const adsPromise = GetAdsByCategory({ endPoint: "/ads/exchanges", query, tags: [tags?.exchanges] });
 
   return (
     <div>

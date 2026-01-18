@@ -1,43 +1,22 @@
-"use client"
-import { useAddDetailsQuery } from "@/redux/api/ads.api";
-import DetailsSkeleton from "@/shared/DetailsSkeleton";
-import ErrorComponent from "@/shared/ErrorComponent";
-import ShopBanner from "@/shared/ShopBanner";
 import { BookOpen, Clock, DollarSign, Globe, MapPin, Phone, VenusAndMars } from "lucide-react"
 import Image from "next/image"
-import Link from "next/link";
-import { IoIosArrowForward } from "react-icons/io";
-import bannerimg from "../../../public/lawyer_banner.png"
 import { placeHolderBlurImg } from "@/utils/config";
+import { Add } from "@/redux/types";
+import ErrorComponent from "@/shared/ErrorComponent";
 
-function LawyerDetails({ id }: { id: string }) {
+async function LawyerDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
-    const { isLoading, isError, isSuccess, data } = useAddDetailsQuery({ id });
-
-    if (isError) {
-        return <ErrorComponent />
-    }
+    const data = await promiseAdDetails;
 
 
     return (
         <div>
-            <ShopBanner
-                image={bannerimg}
-                title="lawyer Details"
-                desc="View Lawyer full details"
-            >
-                <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Lawyer Details
-            </ShopBanner>
 
             <div className="bg-[#F2F4F8]">
 
                 <div className="container">
 
-                    {
-                        isLoading && <DetailsSkeleton />
-                    }
-
-                    {(data && isSuccess) ? data?.data?.category !== "Lawyer" ? <ErrorComponent /> : <div>
+                    {(data) ? data?.data?.category !== "Lawyer" ? <ErrorComponent /> : <div>
 
                         {/* Hero Section */}
                         <section className="border-b border-border">

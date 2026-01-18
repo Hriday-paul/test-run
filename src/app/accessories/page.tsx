@@ -73,7 +73,7 @@ async function Accesories({
     query.limit = limit
   }
 
-  const adsPromise = GetAdsByCategory({ endPoint: "/ads/accessories", query, tags: [tags?.accessories, tags?.my_ads] });
+  const adsPromise = GetAdsByCategory({ endPoint: "/ads/accessories", query, tags: [tags?.accessories] });
 
   return (
     <div>

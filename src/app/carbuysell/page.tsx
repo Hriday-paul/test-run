@@ -110,7 +110,7 @@ async function CarBuySell({
     query.searchTerm = searchTerm
   }
 
-  const adsPromise = GetAdsByCategory({ endPoint: "/ads/cars", query, tags: [tags?.cars, tags?.my_ads] });
+  const adsPromise = GetAdsByCategory({ endPoint: "/ads/cars", query, tags: [tags?.cars] });
 
   return (
     <div>

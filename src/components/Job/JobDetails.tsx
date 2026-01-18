@@ -1,38 +1,16 @@
-"use client"
-import { useAddDetailsQuery } from '@/redux/api/ads.api'
-import DetailsSkeleton from '@/shared/DetailsSkeleton';
 import ErrorComponent from '@/shared/ErrorComponent';
-import ShopBanner from '@/shared/ShopBanner';
-import Link from 'next/link';
-import bannerimg from "../../../public/Job banner.png"
-import { IoIosArrowForward } from 'react-icons/io';
 import { Building, Calendar } from 'lucide-react';
 import moment from "moment";
+import { Add } from '@/redux/types';
 
-function JobDetails({ id }: { id: string }) {
-    const { isLoading, isError, isSuccess, data } = useAddDetailsQuery({ id });
-
-    if (isError) {
-        return <ErrorComponent />
-    }
+async function JobDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
+    
+    const data = await promiseAdDetails;
 
     return (
-        <div >
+        <>
 
-            <ShopBanner
-                image={bannerimg}
-                title="Job Details"
-                desc="View job full details"
-            >
-                <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Job Details
-            </ShopBanner>
-
-            {
-                isLoading && <DetailsSkeleton />
-            }
-
-
-            {(data && isSuccess) ? data?.data?.category !== "Job" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
+            {(data) ? data?.data?.category !== "Job" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
                 <div className='container space-y-5 lg:space-y-6'>
 
                     <div className='p-5 lg:p-8 bg-white space-y-2 rounded-lg'>
@@ -86,7 +64,7 @@ function JobDetails({ id }: { id: string }) {
                 </div>
             </div> : <></>}
 
-        </div>
+        </>
     )
 }
 

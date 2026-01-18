@@ -94,7 +94,7 @@ async function BikeBuySell({
     query.limit = limit
   }
 
-  const adsPromise = GetAdsByCategory({ endPoint: "/ads/bikes", query, tags: [tags?.bikes, tags?.my_ads] });
+  const adsPromise = GetAdsByCategory({ endPoint: "/ads/bikes", query, tags: [tags?.bikes] });
 
   return (
     <div>
