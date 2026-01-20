@@ -1,5 +1,6 @@
 "use client"
 import { UseUpdateMultipleSearchParams } from '@/hooks/UseUpdateSearchPrams';
+import { Car } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import React from 'react'
 import { MdOutlineDashboardCustomize } from 'react-icons/md'
@@ -32,8 +33,14 @@ const carTypes = [
         icon: <TbCar className='text-base md:text-lg' />
     },
     {
-        id: 3,
-        name: "Car/Hiace",
+        id: 4,
+        name: "Car",
+        value: "Car",
+        icon: <Car className='text-base md:text-lg' />
+    },
+    {
+        id: 5,
+        name: "Hiace",
         value: "Hiace",
         icon: <TbCar className='text-base md:text-lg' />
     },
