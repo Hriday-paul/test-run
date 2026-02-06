@@ -97,7 +97,7 @@ function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
 
             if (defaultData) {
                 // await updateAd({ id: defaultData?.id, body: form }).unwrap();
-                await updateAdd({ endPoint: `/ads/rent-cars/${defaultData?.id}`, payload: form, tags: [tags?.rent_cars,`details-${defaultData?.id}`] });
+                await updateAdd({ endPoint: `/ads/rent-cars/${defaultData?.id}`, payload: form, tags: [tags?.rent_cars] });
 
             } else {
                 // await postAdd(form).unwrap();

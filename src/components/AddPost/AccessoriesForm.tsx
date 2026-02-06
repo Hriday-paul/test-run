@@ -89,7 +89,7 @@ function AccessoriesForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?
 
             if (defaultData) {
                 // await updateAd({ id: defaultData?.id, body: form }).unwrap();
-                await updateAdd({ endPoint: `/ads/accessories/${defaultData?.id}`, payload: form, tags: [tags?.accessories, `details-${defaultData?.id}`] });
+                await updateAdd({ endPoint: `/ads/accessories/${defaultData?.id}`, payload: form, tags: [tags?.accessories] });
             } else {
                 // await postAd(form).unwrap();
                 await postNewAdd({ endPoint: "/ads/accessories", payload: form, tags: [tags?.accessories,] });

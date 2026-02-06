@@ -107,7 +107,7 @@ function BikeSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
 
             if (defaultData) {
                 // await updateAd({ id: defaultData?.id, body: form }).unwrap();
-                await updateAdd({ endPoint: `/ads/bikes/${defaultData?.id}`, payload: form, tags: [tags?.bikes, `details-${defaultData?.id}`] });
+                await updateAdd({ endPoint: `/ads/bikes/${defaultData?.id}`, payload: form, tags: [tags?.bikes] });
             } else {
                 // await postAd(form).unwrap();
                 await postNewAdd({ endPoint: "/ads/bikes", payload: form, tags: [tags?.bikes] });

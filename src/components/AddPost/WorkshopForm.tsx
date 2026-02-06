@@ -98,7 +98,7 @@ function WorkshopForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
 
             if (defaultData) {
                 // await updateAd({ id: defaultData?.id, body: form }).unwrap();
-                 await updateAdd({ endPoint: `/ads/work-shops/${defaultData?.id}`, payload: form, tags: [tags?.work_shops, `details-${defaultData?.id}`] });
+                 await updateAdd({ endPoint: `/ads/work-shops/${defaultData?.id}`, payload: form, tags: [tags?.work_shops] });
 
             } else {
                 // await postAd(form).unwrap();

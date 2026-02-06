@@ -132,7 +132,7 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
             if (defaultData) {
                 // await updateCar({ id: defaultData?.id, body: form }).unwrap();
 
-                await updateAdd({ endPoint: `/ads/cars/${defaultData?.id}`, payload: form, tags: [tags?.cars, `details-${defaultData?.id}`] });
+                await updateAdd({ endPoint: `/ads/cars/${defaultData?.id}`, payload: form, tags: [tags?.cars] });
 
             } else {
                 // await postCar(form).unwrap();

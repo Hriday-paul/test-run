@@ -50,9 +50,9 @@ function Navbar() {
                         <Image src={logo} alt='logo' className='h-7 md:h-10 xl:h-12 w-auto object-cover' />
                     </Link>
                     <div className="flex flex-row gap-x-2.5 md:gap-x-4 lg:gap-x-5 items-center">
-                        <ul className='lg:flex flex-row gap-x-5 lg:gap-x-8 xl:gap-x-10 items-center hidden'>
+                        <ul className='lg:flex flex-row gap-x-5 lg:gap-x-8 items-center hidden'>
 
-                            <li className='font-popin text-lg text-gray-800 font-normal hover:text-primary duration-200'>
+                            <li className='font-popin text-lg text-gray-800 font-medium hover:text-primary duration-200'>
                                 <Link href={"/"}>
                                     Home
                                 </Link>
@@ -60,7 +60,7 @@ function Navbar() {
 
                             <Menubar className="border-none shadow-none bg-transparent">
                                 <MenubarMenu>
-                                    <MenubarTrigger className="font-popin text-lg text-gray-800 font-normal">
+                                    <MenubarTrigger className="font-popin text-lg text-gray-800 font-medium">
                                         Services
                                         <ChevronDown className="ml-2" size={20} />
                                     </MenubarTrigger>
@@ -88,7 +88,7 @@ function Navbar() {
                             </Menubar>
 
                             {navitems?.map(i => {
-                                return <li key={i?.id} className='font-popin text-lg text-gray-800 font-normal hover:text-primary duration-200'>
+                                return <li key={i?.id} className='font-popin text-lg text-gray-800 font-medium hover:text-primary duration-200'>
                                     <Link href={i?.rout}>
                                         {i?.label}
                                     </Link>

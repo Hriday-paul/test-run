@@ -88,7 +88,7 @@ function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Rea
 
             if (defaultData) {
                 // await updateAd({ id: defaultData?.id, body: form }).unwrap();
-                await updateAdd({ endPoint: `/ads/lawyers/${defaultData?.id}`, payload: form, tags: [tags?.lawyers, `details-${defaultData?.id}`] });
+                await updateAdd({ endPoint: `/ads/lawyers/${defaultData?.id}`, payload: form, tags: [tags?.lawyers] });
             } else {
                 // await postAdd(form).unwrap();
                 await postNewAdd({ endPoint: "/ads/lawyers", payload: form, tags: [tags?.lawyers] });
