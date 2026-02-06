@@ -49,7 +49,7 @@ function FeatureAddCard({ add }: { add: Add }) {
                         <p className="font-semibold text-gray-900 flex items-center gap-1 text-base">
                             {add?.price ? `Tk ${add?.price}` : "N/A"}
                         </p>
-                        <Link href={`/${categoryRouteMap[add?.category]}/${add?.id}`}>
+                        
                             <Button
                                 variant="outline"
                                 size="sm"
@@ -57,7 +57,7 @@ function FeatureAddCard({ add }: { add: Add }) {
                             >
                                 View Details
                             </Button>
-                        </Link>
+                        
                     </div>
                 </div>
             </Link>
