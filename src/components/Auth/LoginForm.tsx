@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { config } from "@/utils/config";
 import { addUserDetails } from "@/redux/slices/userSlice";
 import { toast } from "sonner";
+import baseApi from "@/redux/api/baseApi";
 
 type FormType = {
     phone: string,
@@ -61,6 +62,8 @@ const LoginForm = () => {
                 profilePicture: res?.data?.user?.picture?.url || "/empty-user.png",
                 role: res?.data?.user?.auth?.role
             }))
+
+            dispatch(baseApi.util.resetApiState());
 
             toast.success(res?.message || 'Signin successfully');
             reset();

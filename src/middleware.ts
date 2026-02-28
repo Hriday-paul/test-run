@@ -3,8 +3,15 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server'
 import { jwtDecode } from "jwt-decode";
 
+import createMiddleware from 'next-intl/middleware';
+import { routing } from './i18n/routing';
+
+const intlMiddleware = createMiddleware(routing);
 
 export default async function middleware(request: NextRequest) {
+
+  const intlResponse = intlMiddleware(request);
+  if (intlResponse) return intlResponse;
 
   const current_req = request.nextUrl.pathname;
   const accessToken = request.cookies.get('accessToken')?.value;
@@ -66,9 +73,11 @@ export default async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/profile",
-    "/user/:path*",
-    '/vendor/:path*',
-    '/post/:path*',
+    // "/profile",
+    // "/user/:path*",
+    // '/vendor/:path*',
+    // '/post/:path*',
+
+    '/((?!api|trpc|_next|_vercel|.*\\..*).*)'
   ],
 };

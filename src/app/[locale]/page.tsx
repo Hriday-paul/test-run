@@ -3,8 +3,9 @@ import Section2 from "@/components/Home/Section2/Section2";
 import Section3 from "@/components/Home/Section3/Section3";
 import Section4 from "@/components/Home/Section4/Section4";
 import Section5 from "@/components/Home/Section5/Section5";
+import Section6 from "@/components/Home/Section6/Section6";
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="">
       <Section1 />
@@ -12,6 +13,7 @@ export default function Home() {
       <Section3 />
       <Section4 />
       <Section5 />
+      <Section6 />
     </div>
   );
 }

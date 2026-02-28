@@ -1,9 +1,9 @@
-import Title from './Title'
 import FeatureAds from './FeatureAds'
 import GetFeatureAds from '@/lib/services/FeatureAdds';
 import { Suspense } from 'react';
 import { LoadingCard } from '@/shared/LoadingCard';
 import { Add } from '@/redux/types';
+import Title from '../Section2/Title';
 
 async function Section3() {
     const featureadd = GetFeatureAds();
@@ -13,7 +13,7 @@ async function Section3() {
 
                 <div className='container py-16'>
 
-                    <Title />
+                    <Title subtitle='Featured Ads' title='Explore Featured Ads' />
 
                     <Suspense fallback={
                         <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5'>

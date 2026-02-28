@@ -49,52 +49,55 @@ function Navbar() {
                     <Link href={"/"}>
                         <Image src={logo} alt='logo' className='h-7 md:h-10 xl:h-12 w-auto object-cover' />
                     </Link>
-                    <div className="flex flex-row gap-x-2.5 md:gap-x-4 lg:gap-x-5 items-center">
-                        <ul className='lg:flex flex-row gap-x-5 lg:gap-x-8 items-center hidden'>
 
-                            <li className='font-popin text-lg text-gray-800 font-medium hover:text-primary duration-200'>
-                                <Link href={"/"}>
-                                    Home
+                    <ul className='lg:flex flex-row gap-x-5 lg:gap-x-8 items-center hidden'>
+
+                        <li className='font-popin text-lg text-gray-800 font-medium hover:text-primary duration-200'>
+                            <Link href={"/"}>
+                                Home
+                            </Link>
+                        </li>
+
+                        <Menubar className="border-none shadow-none bg-transparent">
+                            <MenubarMenu>
+                                <MenubarTrigger className="font-popin text-lg text-gray-800 font-medium">
+                                    Services
+                                    <ChevronDown className="ml-2" size={20} />
+                                </MenubarTrigger>
+                                <MenubarContent className='p-0'>
+                                    {categories?.map(
+                                        (category, idx: number) => (
+                                            <div key={idx}>
+                                                <Link
+                                                    href={category?.rout}
+                                                    className='cursor-pointer'
+                                                >
+                                                    <MenubarItem className="cursor-pointer rounded-none">
+                                                        <div className='flex flex-row gap-x-2 items-center'>
+                                                            <Image src={category?.icon} alt="runbd category icon" className="h-3 w-auto mx-auto" />
+                                                            <p className='font-popin'>{category?.name}</p>
+                                                        </div>
+                                                    </MenubarItem>
+                                                </Link>
+                                                <hr />
+                                            </div>
+                                        ),
+                                    )}
+                                </MenubarContent>
+                            </MenubarMenu>
+                        </Menubar>
+
+                        {navitems?.map(i => {
+                            return <li key={i?.id} className='font-popin text-lg text-gray-800 font-medium hover:text-primary duration-200'>
+                                <Link href={i?.rout}>
+                                    {i?.label}
                                 </Link>
                             </li>
+                        })}
+                    </ul>
 
-                            <Menubar className="border-none shadow-none bg-transparent">
-                                <MenubarMenu>
-                                    <MenubarTrigger className="font-popin text-lg text-gray-800 font-medium">
-                                        Services
-                                        <ChevronDown className="ml-2" size={20} />
-                                    </MenubarTrigger>
-                                    <MenubarContent className='p-0'>
-                                        {categories?.map(
-                                            (category, idx: number) => (
-                                                <div key={idx}>
-                                                    <Link
-                                                        href={category?.rout}
-                                                        className='cursor-pointer'
-                                                    >
-                                                        <MenubarItem className="cursor-pointer rounded-none">
-                                                            <div className='flex flex-row gap-x-2 items-center'>
-                                                                <Image src={category?.icon} alt="runbd category icon" className="h-3 w-auto mx-auto" />
-                                                                <p className='font-popin'>{category?.name}</p>
-                                                            </div>
-                                                        </MenubarItem>
-                                                    </Link>
-                                                    <hr />
-                                                </div>
-                                            ),
-                                        )}
-                                    </MenubarContent>
-                                </MenubarMenu>
-                            </Menubar>
+                    <div className="flex flex-row gap-x-2.5 md:gap-x-4 lg:gap-x-5 items-center">
 
-                            {navitems?.map(i => {
-                                return <li key={i?.id} className='font-popin text-lg text-gray-800 font-medium hover:text-primary duration-200'>
-                                    <Link href={i?.rout}>
-                                        {i?.label}
-                                    </Link>
-                                </li>
-                            })}
-                        </ul>
 
 
                         <button onClick={handlePostAdd} className="group relative inline-flex py-2 text-sm md:text-base lg:text-lg items-center justify-center rounded-full bg-primary px-3 px-5 lg:px-6 font-normal text-white transition hover:scale-105 cursor-pointer font-popin overflow-hidden">
@@ -105,8 +108,8 @@ function Navbar() {
                         </button>
 
 
-                        <button onClick={handleMoveProfile} className='cursor-pointer'>
-                            <FaRegUser className="text-xl md:text-2xl text-gray-800" />
+                        <button onClick={handleMoveProfile} className='cursor-pointer bg-slate-50 border border-stroke rounded-full p-2.5'>
+                            <FaRegUser className="text-lg md:text-xl text-gray-800" />
                         </button>
 
                         <section className='lg:hidden'>

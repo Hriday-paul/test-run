@@ -12,6 +12,7 @@ import lawyer from "../../../../public/categories/lawyer.svg"
 import other from "../../../../public/categories/other.svg"
 import Image from "next/image"
 import Link from "next/link"
+import { getTranslations } from "next-intl/server"
 
 export const categories = [
     {
@@ -82,11 +83,12 @@ export const categories = [
     }
 ]
 
-function Section2() {
+async function Section2() {
+    const t = await getTranslations('Home.section2');
     return (
         <div className="bg-white" id="services">
             <div className="container pt-12 md:pt-16 lg:pt-20 ">
-                <Title />
+                <Title title={t("title")} subtitle={t("subtitle")}/>
 
                 {/* service categories */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
