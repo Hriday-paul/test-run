@@ -4,8 +4,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ErrorComponent from "@/shared/ErrorComponent";
 import PlanCard from "./PlanCard";
 import Title from "../Section2/Title";
+import { useTranslations } from "next-intl";
 
 export default function Section4() {
+
+  const t = useTranslations('Home.section4');
 
   const { isLoading, isSuccess, data, isError } = useAllPackagesQuery();
 
@@ -17,8 +20,8 @@ export default function Section4() {
     <section className="bg-[#F5F7FA] py-12 md:py-16 lg:py-20" id="pricing">
       <div className="container">
 
-        <Title subtitle="Plan" title="Our Pricing Plans"/>
-        <p className="text-center mx-auto max-w-xl text-gray-800 font-popin text-sm">All types of businesses need access to development resources, so we give you the option to decide how much you need to use.</p>
+        <Title subtitle={t("subtitle")} title={t("title")} />
+        <p className="text-center mx-auto max-w-xl text-gray-800 font-popin text-sm">{t("description")}</p>
 
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 my-15 font-figtree">
           {isLoading ? <>

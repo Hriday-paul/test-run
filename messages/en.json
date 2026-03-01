@@ -8,9 +8,64 @@
       "subtitle": "Skip the hassle and delays — easily buy, sell, or access essential services anytime from one reliable and secure platform.",
       "smTitle": "Find Your Dream Items Easily"
     },
-    "section2" : {
-      "title" : "Browse by Category",
-      "subtitle" : "Category"
+    "section2": {
+      "title": "Browse by Category",
+      "subtitle": "Category",
+      "categories": {
+        "car_buy_sell": "Car Buy/Sell",
+        "bike_buy_sell": "Bike Buy/Sell",
+        "workshops": "Workshops",
+        "accessories": "Accessories",
+        "car_rent": "Car Rent",
+        "vehicle_process": "Vehicle Process",
+        "job_service": "Job Service",
+        "exchange": "Exchange",
+        "documents": "Documents",
+        "lawyer": "Lawyer",
+        "other": "Other"
+      }
+    },
+    "section3": {
+      "title": "Explore Featured Ads",
+      "subtitle": "Featured Ads"
+    },
+    "section4": {
+      "title": "Our Pricing Plans",
+      "subtitle": "Plan",
+      "description": "All types of businesses need access to development resources, so we give you the option to decide how much you need to use.",
+      "package": {
+        "currency": "TK",
+        "days": "days",
+        "rg_ads": "Regular Ads",
+        "ft_ads": "Featured Ads",
+        "bmp_ads": "Ads will be bumped up",
+        "bs_support": "Basic Support",
+        "choose": "Choose"
+      }
+    },
+    "section5": {
+      "pb_ads": "Published Ads",
+      "rs_user": "Registered Users",
+      "vs": "Verified Seller",
+      "vc": "Verified Customer"
+    },
+    "section6": {
+      "title": "Faq",
+      "subtitle": "Frequently Asked Questions",
+      "faq": {
+        "question1": "What is Runbd?",
+        "answer1": "Runbd is an online marketplace where users can buy and sell products and services across various categories such as cars, bikes, vehicle processes, accessories, jobs, and more.",
+        "question2": "Who can use Runbd?",
+        "answer2": "Anyone in Bangladesh who wants to list a vehicle or service, or search for vehicles, rentals, accessories, or related information can use the site.",
+        "question3": "How do I post a listing on Runbd?",
+        "answer3": "1. Create an account or log in\n2. Click on 'Post Ad' or 'Sell Your Vehicle'\n3. Choose the correct category (e.g., bike, car, rent)\n4. Fill in the details and upload photos\n5. Submit your listing",
+        "question4": "How can I contact a seller or renter?",
+        "answer4": "Contact information (like phone number or chat) is provided in the listing. You can use that to reach out directly.",
+        "question5": "Can I edit or delete my listing after posting?",
+        "answer5": "Yes — you can edit or delete your listing anytime from your account as long as it is still active.",
+        "question6": "How do I rent a car from the site?",
+        "answer6": "Search the 'Car Rent' category, choose a listing, and contact the provider using the contact info in the listing to confirm availability and price."
+      }
     }
   }
 }
