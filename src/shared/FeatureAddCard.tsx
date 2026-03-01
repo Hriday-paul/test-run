@@ -4,6 +4,7 @@ import { SlLocationPin } from "react-icons/sl";
 import Image from "next/image";
 import { placeHolderBlurImg } from "@/utils/config";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 export const categoryRouteMap: Record<string, string> = {
   Bike: "bikebuysell",
@@ -18,6 +19,8 @@ export const categoryRouteMap: Record<string, string> = {
 
 
 function FeatureAddCard({ add }: { add: Add }) {
+
+    const t = useTranslations('Home.section3');
     
     return (
         <div
@@ -55,7 +58,7 @@ function FeatureAddCard({ add }: { add: Add }) {
                                 size="sm"
                                 className="text-primary hover:text-white bg-primary/10 hover:bg-primary transition-all duration-300 cursor-pointer py-5 px-6 font-popin"
                             >
-                                View Details
+                                {t("ad.details")}
                             </Button>
                         
                     </div>

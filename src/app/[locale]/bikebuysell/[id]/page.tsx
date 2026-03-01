@@ -1,16 +1,16 @@
-import CarDetails from '@/components/CarBuySell/CarDetails';
-import ShopBanner from '@/shared/ShopBanner';
-import React, { Suspense } from 'react'
-import bannerimg from "../../../../public/post-top-bg.jpg"
-import Link from 'next/link';
-import { IoIosArrowForward } from 'react-icons/io';
+import BikeDetails from '@/components/BikeBuySell/BikeDetails';
 import GetAdDetails from '@/lib/services/AdDetails';
-import DetailsSkeleton from '@/shared/DetailsSkeleton';
 import GetSimilarAd from '@/lib/services/SimilarAd';
-import SimilarAd from '@/shared/SimilarAd/SimilarAd';
+import DetailsSkeleton from '@/shared/DetailsSkeleton';
 import { LoadingCard } from '@/shared/LoadingCard';
-import { Add } from '@/redux/types';
+import ShopBanner from '@/shared/ShopBanner';
+import SimilarAd from '@/shared/SimilarAd/SimilarAd';
+import Link from 'next/link';
+import { Suspense } from 'react';
+import { IoIosArrowForward } from 'react-icons/io';
+import bannerimg from "../../../../../public/bikestop_img.png"
 import { TextTruncate } from '@/utils/TextTruncate';
+import { Add } from '@/redux/types';
 
 // ---------------dynamic metadata--------------
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     openGraph: {
       title: TextTruncate(data?.title, 60),
       description: TextTruncate(data?.description, 155),
-      url: `/carbuysell/${data?.id}`,
+      url: `/bikebuysell/${data?.id}`,
       siteName: 'Runbd',
       images: [data?.images[0]],
       locale: 'bn_BD',
@@ -43,27 +43,27 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   }
 }
 
-async function CarDetils({ params }: { params: Promise<{ id: string }> }) {
+async function BikeDetils({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
-  const promiseCarDetails = GetAdDetails({ id });
+  const promiseAdDetails = GetAdDetails({ id });
   const promiseSimilarAd = GetSimilarAd({ id });
 
   return (
     <div>
       <ShopBanner
         image={bannerimg}
-        title="Car Details"
-        desc="View car full details"
+        title="Bike Details"
+        desc="View bike full details"
       >
         <Link href='/' className='text-primary'>Home</Link>
         <IoIosArrowForward className='' />
-        <Link href='/carbuysell' className='text-primary'>Car Buy/Sell</Link>
-        <IoIosArrowForward className='' /> Car Details
+        <Link href='/bikebuysell' className='text-primary'>Bike Buy/Sell</Link>
+        <IoIosArrowForward className='' /> Bike Details
       </ShopBanner>
 
       <Suspense fallback={<DetailsSkeleton />}>
-        <CarDetails promiseCarDetails={promiseCarDetails} />
+        <BikeDetails promiseAdDetails={promiseAdDetails} />
       </Suspense>
 
       <Suspense fallback={
@@ -84,4 +84,4 @@ async function CarDetils({ params }: { params: Promise<{ id: string }> }) {
   )
 }
 
-export default CarDetils;
+export default BikeDetils

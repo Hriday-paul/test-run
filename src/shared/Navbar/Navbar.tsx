@@ -1,13 +1,14 @@
 "use client"
-import Link from 'next/link'
+// import Link from 'next/link'
 import { FaRegUser } from "react-icons/fa"
 import SmNavSheet from "./SmNavsheet"
 import logo from "../../../public/logo.png"
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarTrigger } from '@/components/ui/menubar'
 import { ChevronDown } from 'lucide-react'
 import { categories } from '@/components/Home/Section2/Section2'
+import { useTranslations } from 'next-intl'
+import { Link, useRouter } from "@/i18n/navigation"
 
 export const navitems = [
     // {
@@ -23,16 +24,18 @@ export const navitems = [
     {
         id: 3,
         rout: "/#pricing",
-        label: "Pricing"
+        label: "pricing"
     },
     {
         id: 4,
         rout: "/about",
-        label: "About Us"
+        label: "about"
     },
 ]
 
 function Navbar() {
+    const t = useTranslations("navbar");
+    const tc = useTranslations('Home.section2');
     const router = useRouter();
 
     const handlePostAdd = () => {
@@ -54,14 +57,14 @@ function Navbar() {
 
                         <li className='font-popin text-lg text-gray-800 font-medium hover:text-primary duration-200'>
                             <Link href={"/"}>
-                                Home
+                                {t("home")}
                             </Link>
                         </li>
 
                         <Menubar className="border-none shadow-none bg-transparent">
                             <MenubarMenu>
                                 <MenubarTrigger className="font-popin text-lg text-gray-800 font-medium">
-                                    Services
+                                    {t("categories")}
                                     <ChevronDown className="ml-2" size={20} />
                                 </MenubarTrigger>
                                 <MenubarContent className='p-0'>
@@ -75,7 +78,7 @@ function Navbar() {
                                                     <MenubarItem className="cursor-pointer rounded-none">
                                                         <div className='flex flex-row gap-x-2 items-center'>
                                                             <Image src={category?.icon} alt="runbd category icon" className="h-3 w-auto mx-auto" />
-                                                            <p className='font-popin'>{category?.name}</p>
+                                                            <p className='font-popin'>{tc(category.name)}</p>
                                                         </div>
                                                     </MenubarItem>
                                                 </Link>
@@ -90,7 +93,7 @@ function Navbar() {
                         {navitems?.map(i => {
                             return <li key={i?.id} className='font-popin text-lg text-gray-800 font-medium hover:text-primary duration-200'>
                                 <Link href={i?.rout}>
-                                    {i?.label}
+                                    {t(i?.label)}
                                 </Link>
                             </li>
                         })}
@@ -101,7 +104,7 @@ function Navbar() {
 
 
                         <button onClick={handlePostAdd} className="group relative inline-flex py-2 text-sm md:text-base lg:text-lg items-center justify-center rounded-full bg-primary px-3 px-5 lg:px-6 font-normal text-white transition hover:scale-105 cursor-pointer font-popin overflow-hidden">
-                            <span>+ Post Your Add</span>
+                            <span>+ {t("btn")}</span>
                             <div className="absolute inset-0 flex h-full w-full justify-center [transform:skew(-12deg)_translateX(-100%)] group-hover:duration-1000 group-hover:[transform:skew(-12deg)_translateX(100%)]">
                                 <div className="relative h-full w-8 bg-white/20"></div>
                             </div>

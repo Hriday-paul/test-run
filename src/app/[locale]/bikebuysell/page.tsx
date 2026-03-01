@@ -1,5 +1,5 @@
 import ShopBanner from '@/shared/ShopBanner'
-import bannerimg from "../../../public/bikestop_img.png"
+import bannerimg from "../../../../public/bikestop_img.png"
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import BikeFilter from '@/components/BikeBuySell/BikeFilter'

@@ -1,4 +1,11 @@
 {
+  "navbar": {
+    "home": "Home",
+    "pricing": "Pricing",
+    "categories": "Categories",
+    "about": "About Us",
+    "btn" : "Post Your Ad"
+  },
   "Home": {
     "section1": {
       "title": {
@@ -27,7 +34,10 @@
     },
     "section3": {
       "title": "Explore Featured Ads",
-      "subtitle": "Featured Ads"
+      "subtitle": "Featured Ads",
+      "ad": {
+        "details": "View Details"
+      }
     },
     "section4": {
       "title": "Our Pricing Plans",
@@ -65,6 +75,56 @@
         "answer5": "Yes — you can edit or delete your listing anytime from your account as long as it is still active.",
         "question6": "How do I rent a car from the site?",
         "answer6": "Search the 'Car Rent' category, choose a listing, and contact the provider using the contact info in the listing to confirm availability and price."
+      }
+    }
+  },
+  "category_page": {
+    "item_found": "{count, plural, =0 {no ad yet} =1 {one ad found} other {# ad found}}.",
+    "not_found": "No ads found",
+    "limit" : "Limit"
+  },
+  "car_buy": {
+    "banner": {
+      "title": "Find Your Perfect Car",
+      "subtitle": "Search and find your best car for buy"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "car_buy_sell": "Car Buy/Sell"
+    },
+    "search": {
+      "location": {
+        "placeholder": "location",
+        "slct_div": "Select Division",
+        "slct_dis": "Select District",
+        "slct_area": "Select Area"
+      },
+      "input": {
+        "placeholder": "search...",
+        "btn": "Search"
+      }
+    },
+    "filter": {
+      "car_type": {
+        "all": "All",
+        "truck": "Truck",
+        "bus": "Bus",
+        "mini_bus": "Mini Bus",
+        "car_hiace": "Car/Hiace"
+      },
+      "condition": {
+        "title": "Condition",
+        "new": "New",
+        "used": "Used"
+      },
+      "km": {
+        "title": "Kilometers run"
+      },
+      "price": {
+        "title": "Price"
+      },
+      "brand": {
+        "title": "Brand"
       }
     }
   }

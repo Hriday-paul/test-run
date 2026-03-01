@@ -7,18 +7,21 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { UseUpdateMultipleSearchParams } from "@/hooks/UseUpdateSearchPrams";
+import { useTranslations } from "next-intl";
 
 
 function SortBar({ limit = "21", sort = "createdAt" }: { limit?: string, sort?: string }) {
 
     const updateMultipleSearchParam = UseUpdateMultipleSearchParams();
 
+    const t = useTranslations("category_page");
+
     return (
 
         <div className="flex items-center gap-2">
 
             <div className="flex items-center border border-stroke md:px-2.5 px-1 rounded-md">
-                <span className="text-sm font-popin">Show:</span>
+                <span className="text-sm font-popin">{t("limit")}:</span>
                 <Select
                     // value={limit?.toString()}
                     defaultValue={limit}

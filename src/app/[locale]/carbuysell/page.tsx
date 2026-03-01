@@ -1,5 +1,5 @@
 import ShopBanner from '@/shared/ShopBanner'
-import bannerimg from "../../../public/post-top-bg.jpg"
+import bannerimg from "../../../../public/post-top-bg.jpg"
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import Cars from '@/components/CarBuySell/Cars'
@@ -11,6 +11,7 @@ import { GetAdsByCategory } from '@/lib/services/Quary.Ads'
 import { tags } from '@/lib/Tags'
 import { Suspense } from 'react'
 import Adsloading from '@/shared/Adsloading'
+import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
   title: "Car Buy/Sell",
@@ -112,14 +113,16 @@ async function CarBuySell({
 
   const adsPromise = GetAdsByCategory({ endPoint: "/ads/cars", query, tags: [tags?.cars] });
 
+  const t = await getTranslations('car_buy');
+
   return (
     <div>
       <ShopBanner
         image={bannerimg}
-        title="Find Your Perfect Car"
-        desc="Search and find your best car for buy"
+        title={t("banner.title")}
+        desc={t("banner.subtitle")}
       >
-        <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Car Buy/Sell
+        <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link> <IoIosArrowForward className='' /> {t("bread_cump.car_buy_sell")}
       </ShopBanner>
 
       <div className=' bg-[#F2F4F8]'>
