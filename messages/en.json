@@ -4,7 +4,7 @@
     "pricing": "Pricing",
     "categories": "Categories",
     "about": "About Us",
-    "btn" : "Post Your Ad"
+    "btn": "Post Your Ad"
   },
   "Home": {
     "section1": {
@@ -81,7 +81,11 @@
   "category_page": {
     "item_found": "{count, plural, =0 {no ad yet} =1 {one ad found} other {# ad found}}.",
     "not_found": "No ads found",
-    "limit" : "Limit"
+    "limit": "Limit",
+    "adCard": {
+      "details": "View Details",
+      "currency": "TK"
+    }
   },
   "car_buy": {
     "banner": {
@@ -111,6 +115,50 @@
         "bus": "Bus",
         "mini_bus": "Mini Bus",
         "car_hiace": "Car/Hiace"
+      },
+      "condition": {
+        "title": "Condition",
+        "new": "New",
+        "used": "Used"
+      },
+      "km": {
+        "title": "Kilometers run"
+      },
+      "price": {
+        "title": "Price"
+      },
+      "brand": {
+        "title": "Brand"
+      }
+    }
+  },
+  "bike_buy": {
+    "banner": {
+      "title": "Find Your Perfect Bike",
+      "subtitle": "Search and find your best bike for buy"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "bike_buy_sell": "Bike Buy/Sell"
+    },
+    "search": {
+      "location": {
+        "placeholder": "location",
+        "slct_div": "Select Division",
+        "slct_dis": "Select District",
+        "slct_area": "Select Area"
+      },
+      "input": {
+        "placeholder": "search...",
+        "btn": "Search"
+      }
+    },
+    "filter": {
+      "bike_type": {
+        "title": "Bike Type",
+        "Motorcycle": "Motorcycle",
+        "Scooter": "Scooter",
+        "E-bikes": "E-bikes"
       },
       "condition": {
         "title": "Condition",

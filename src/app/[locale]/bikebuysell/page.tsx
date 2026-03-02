@@ -10,6 +10,7 @@ import { Suspense } from 'react'
 import Adsloading from '@/shared/Adsloading'
 import { GetAdsByCategory } from '@/lib/services/Quary.Ads'
 import { tags } from '@/lib/Tags'
+import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
   title: "Bike Buy/Sell",
@@ -96,14 +97,16 @@ async function BikeBuySell({
 
   const adsPromise = GetAdsByCategory({ endPoint: "/ads/bikes", query, tags: [tags?.bikes] });
 
+  const t = await getTranslations('bike_buy');
+
   return (
     <div>
       <ShopBanner
         image={bannerimg}
-        title="Find Your Perfect Bike"
-        desc="Search and find your best bike for buy"
+        title={t("banner.title")}
+        desc={t("banner.subtitle")}
       >
-        <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Bike Buy/Sell
+        <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link> <IoIosArrowForward className='' /> {t("bread_cump.bike_buy_sell")}
       </ShopBanner>
 
       <div className='bg-[#F2F4F8] py-8'>
