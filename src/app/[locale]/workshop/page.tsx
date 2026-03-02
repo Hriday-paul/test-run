@@ -1,5 +1,5 @@
 import ShopBanner from '@/shared/ShopBanner'
-import bannerimg from "../../../public/workshop-banner.png"
+import bannerimg from "../../../../public/workshop-banner.png"
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import WorkShopFilter from '@/components/WorkShop/WorkShopFilter'
@@ -10,6 +10,7 @@ import { Suspense } from 'react'
 import Adsloading from '@/shared/Adsloading'
 import { GetAdsByCategory } from '@/lib/services/Quary.Ads'
 import { tags } from '@/lib/Tags'
+import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
   title: "Workshop",
@@ -79,14 +80,16 @@ async function Workshop({
 
   const adsPromise = GetAdsByCategory({ endPoint: "/ads/work-shops", query, tags: [tags?.work_shops] });
 
+   const t = await getTranslations('workshop');
+
   return (
     <div>
       <ShopBanner
         image={bannerimg}
-        title="Work Shops"
-        desc="Search and find wrokshop for best service"
+        title={t("banner.title")}
+        desc={t("banner.subtitle")}
       >
-        <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Workshops
+        <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link> <IoIosArrowForward className='' /> {t("bread_cump.workshops")}
       </ShopBanner>
 
       <div className='bg-[#F2F4F8] py-8'>

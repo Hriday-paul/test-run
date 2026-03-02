@@ -4,8 +4,11 @@ import { SlLocationPin } from "react-icons/sl";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { placeHolderBlurImg } from "@/utils/config";
+import { getTranslations } from "next-intl/server";
 
-function RentCarCard({ rent }: { rent: Add }) {
+async function RentCarCard({ rent }: { rent: Add }) {
+    const t = await getTranslations("category_page.adCard");
+
     return (
         <div
             className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree bg-white">
@@ -35,7 +38,7 @@ function RentCarCard({ rent }: { rent: Add }) {
                                 size="sm"
                                 className="text-primary hover:text-white bg-primary/10 hover:bg-primary transition-all duration-300 cursor-pointer py-5 px-6 font-popin w-full"
                             >
-                                View Details
+                                {t("details")}
                             </Button>
                         </Link>
                     </div>

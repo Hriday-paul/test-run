@@ -9,7 +9,7 @@ import { TextTruncate } from '@/utils/TextTruncate';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
-import bannerimg from "../../../../public/post-top-bg.jpg"
+import bannerimg from "../../../../../public/post-top-bg.jpg"
 import { Add } from '@/redux/types';
 
 // ---------------dynamic metadata--------------

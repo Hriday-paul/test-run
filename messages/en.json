@@ -141,18 +141,6 @@
       "home": "Home",
       "bike_buy_sell": "Bike Buy/Sell"
     },
-    "search": {
-      "location": {
-        "placeholder": "location",
-        "slct_div": "Select Division",
-        "slct_dis": "Select District",
-        "slct_area": "Select Area"
-      },
-      "input": {
-        "placeholder": "search...",
-        "btn": "Search"
-      }
-    },
     "filter": {
       "bike_type": {
         "title": "Bike Type",
@@ -173,6 +161,38 @@
       },
       "brand": {
         "title": "Brand"
+      }
+    }
+  },
+  "workshop": {
+    "banner": {
+      "title": "Work Shops",
+      "subtitle": "Search and find wrokshop for best service"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "workshops": "Workshops"
+    },
+    "filter": {
+      "workshop_type": {
+        "title": "Workshop Type",
+        "Car": "Car",
+        "Bike": "Bike"
+      }
+    }
+  },
+  "car_rent": {
+    "banner": {
+      "title": "Car Rent",
+      "subtitle": "Find your perfect car for rent"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "carRents": "Car Rents"
+    },
+    "filter": {
+      "category": {
+        "title": "Category"
       }
     }
   }

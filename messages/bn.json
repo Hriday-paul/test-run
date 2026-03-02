@@ -84,7 +84,7 @@
         "limit": "সীমা",
         "adCard": {
             "details": "বিস্তারিত",
-            "currency" : "৳"
+            "currency": "৳"
         }
     },
     "car_buy": {
@@ -173,6 +173,38 @@
             },
             "brand": {
                 "title": "ব্র্যান্ড"
+            }
+        }
+    },
+    "workshop": {
+        "banner": {
+            "title": "ওয়ার্কশপ",
+            "subtitle": "সেরা সার্ভিসের জন্য ওয়ার্কশপ সার্চ করুন এবং খুঁজুন"
+        },
+        "bread_cump": {
+            "home": "হোম",
+            "workshops": "ওয়ার্কশপসমূহ"
+        },
+        "filter": {
+            "workshop_type": {
+                "title": "ওয়ার্কশপের ধরন",
+                "Car": "গাড়ি",
+                "Bike": "বাইক"
+            }
+        }
+    },
+    "car_rent": {
+        "banner": {
+            "title": "গাড়ি ভাড়া",
+            "subtitle": "ভাড়া নেওয়ার জন্য আপনার পরফেক্ট গাড়ি খুঁজুন"
+        },
+        "bread_cump": {
+            "home": "হোম",
+            "carRents": "গাড়ি ভাড়া"
+        },
+        "filter": {
+            "category": {
+                "title": "ক্যাটাগরি"
             }
         }
     }
