@@ -1,9 +1,10 @@
 import ShopBanner from '@/shared/ShopBanner'
-import bannerimg from "../../../public/document-service-banner.png"
+import bannerimg from "../../../../public/document-service-banner.png"
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import DocumentServices from '@/components/DocumentServices/DocumentServices'
 import { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
     title: "Vehicle Process",
@@ -27,16 +28,17 @@ export const metadata: Metadata = {
     },
 }
 
-function DocumentProcess() {
+async function DocumentProcess() {
+
+    const t = await getTranslations("vehicle_process")
 
     return (
         <div>
             <ShopBanner
                 image={bannerimg}
-                title="Vehicle Process"
-                desc="Process your documents with us without any hassle"
-            >
-                <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Vehicle Process
+                title={t("banner.title")}
+                desc={t("banner.subtitle")}>
+                <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link> <IoIosArrowForward className='' /> {t("bread_cump.vehicle_process")}
             </ShopBanner>
 
             <div className='bg-[#F2F4F8] py-8'>

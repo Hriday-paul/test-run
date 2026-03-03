@@ -11,6 +11,7 @@ import SimilarAd from '@/shared/SimilarAd/SimilarAd';
 import { LoadingCard } from '@/shared/LoadingCard';
 import { Add } from '@/redux/types';
 import { TextTruncate } from '@/utils/TextTruncate';
+import { getTranslations } from 'next-intl/server';
 
 // ---------------dynamic metadata--------------
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -49,17 +50,19 @@ async function CarDetils({ params }: { params: Promise<{ id: string }> }) {
   const promiseCarDetails = GetAdDetails({ id });
   const promiseSimilarAd = GetSimilarAd({ id });
 
+  const t = await getTranslations("car_buy")
+
   return (
     <div>
       <ShopBanner
         image={bannerimg}
-        title="Car Details"
-        desc="View car full details"
+        title={t("details.title")}
+        desc={t("details.subtitle")}
       >
-        <Link href='/' className='text-primary'>Home</Link>
+        <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link>
         <IoIosArrowForward className='' />
-        <Link href='/carbuysell' className='text-primary'>Car Buy/Sell</Link>
-        <IoIosArrowForward className='' /> Car Details
+        <Link href='/carbuysell' className='text-primary'>{t("bread_cump.car_buy_sell")}</Link>
+        <IoIosArrowForward className='' /> {t("bread_cump.details")}
       </ShopBanner>
 
       <Suspense fallback={<DetailsSkeleton />}>

@@ -1,10 +1,11 @@
+"use client"
 import { Add } from "@/redux/types";
 import Link from "next/link";
 import { SlLocationPin } from "react-icons/sl";
 import Image from "next/image";
 import { placeHolderBlurImg } from "@/utils/config";
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 export const categoryRouteMap: Record<string, string> = {
   Bike: "bikebuysell",
@@ -18,9 +19,10 @@ export const categoryRouteMap: Record<string, string> = {
 };
 
 
-function FeatureAddCard({ add }: { add: Add }) {
+async function FeatureAddCard({ add }: { add: Add }) {
 
-    const t = useTranslations('Home.section3');
+     const t = useTranslations("category_page.adCard");
+    const locale = useLocale();
     
     return (
         <div
@@ -50,7 +52,7 @@ function FeatureAddCard({ add }: { add: Add }) {
                     </div>
                     <div className="flex items-center justify-between">
                         <p className="font-semibold text-gray-900 flex items-center gap-1 text-base">
-                            {add?.price ? `Tk ${add?.price}` : "N/A"}
+                            {add?.price ? `${t("currency")} ${(add?.price).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")}` : "N/A"}
                         </p>
                         
                             <Button
@@ -58,7 +60,7 @@ function FeatureAddCard({ add }: { add: Add }) {
                                 size="sm"
                                 className="text-primary hover:text-white bg-primary/10 hover:bg-primary transition-all duration-300 cursor-pointer py-5 px-6 font-popin"
                             >
-                                {t("ad.details")}
+                                {t("details")}
                             </Button>
                         
                     </div>

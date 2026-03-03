@@ -85,6 +85,25 @@
     "adCard": {
       "details": "View Details",
       "currency": "TK"
+    },
+    "details": {
+      "seller": {
+        "title": "Seller Information",
+        "location": "Location",
+        "phone": "Phone",
+        "email": "Email",
+        "whatsapp": "Whatsapp"
+      },
+      "post_overview": {
+        "title": "Post Overview",
+        "calander": "Calander",
+        "time": "Time",
+        "view": "View"
+      },
+      "similar": {
+        "title": "Similar Ads",
+        "currency": "TK"
+      }
     }
   },
   "car_buy": {
@@ -94,7 +113,8 @@
     },
     "bread_cump": {
       "home": "Home",
-      "car_buy_sell": "Car Buy/Sell"
+      "car_buy_sell": "Car Buy/Sell",
+      "details": "Car Details"
     },
     "search": {
       "location": {
@@ -130,6 +150,35 @@
       "brand": {
         "title": "Brand"
       }
+    },
+    "details": {
+      "title": "Car Details",
+      "subtitle": "View car full details",
+      "price": {
+        "title": "Price",
+        "currency": "TK"
+      },
+      "feature": {
+        "title": "Car Features",
+        "car_type": "Car Type",
+        "brand": "Brand",
+        "model": "Model",
+        "condition": "Condition",
+        "year": "Year",
+        "color": "Color",
+        "mileage": "Mileage",
+        "fuel_type": "Fuel Type",
+        "engine": "Engine",
+        "body_type": "Body Type",
+        "gear_box": "Gearbox",
+        "transmission": "Transmission",
+        "air_condition": "Air Condition",
+        "drive_type": "Driver Type",
+        "seat": "Seat",
+        "km": "Km",
+        "yes": "Yes",
+        "no": "No"
+      }
     }
   },
   "bike_buy": {
@@ -139,7 +188,8 @@
     },
     "bread_cump": {
       "home": "Home",
-      "bike_buy_sell": "Bike Buy/Sell"
+      "bike_buy_sell": "Bike Buy/Sell",
+      "details": "Bike Details"
     },
     "filter": {
       "bike_type": {
@@ -161,6 +211,28 @@
       },
       "brand": {
         "title": "Brand"
+      }
+    },
+    "details": {
+      "title": "Bike Details",
+      "subtitle": "View Bike full details",
+      "price": {
+        "title": "Price",
+        "currency": "TK"
+      },
+      "feature": {
+        "title": "Bike Features",
+        "bike_type": "Bike Type",
+        "brand": "Brand",
+        "model": "Model",
+        "mileage": "Mileage",
+        "year": "Year",
+        "color": "Color",
+        "fuel_type": "Fuel Type",
+        "engine": "Engine",
+        "edition": "Edition",
+        "condition": "Condition",
+        "km": "Km"
       }
     }
   },
@@ -284,7 +356,40 @@
     },
     "main": {
       "title": "All Documents",
-      "subtitle": "You can download any file from here according to your needs."
+      "subtitle": "You can download any file from here according to your needs.",
+      "btn": {
+        "docx": "Download Docx",
+        "pdf": "Download Pdf"
+      }
+    }
+  },
+  "vehicle_process": {
+    "banner": {
+      "title": "Vehicle Process",
+      "subtitle": "Process your documents with us without any hassle"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "vehicle_process": "Vehicle Process"
+    },
+    "main": {
+      "title": "All Document Process List",
+      "subtitle": "We provide fast, reliable, and hassle-free solutions for all your vehicle documentation and processing needs. Our goal is to make every step smooth and convenient for you.",
+      "btn": {
+        "fee-title": "Processing Price",
+        "currency": "TK",
+        "txt": "Process Now"
+      }
+    },
+    "details": {
+      "bread_cump": {
+        "home": "Home",
+        "vehicle_process": "Vehicle Process",
+        "apply_process": "Apply Process"
+      },
+      "title": "Apply Vehicle Process",
+      "note": "[Special Note]: Any charges outside the list are negotiable and are exclusive of government fees. If necessary, RunBD pays government online charges. \n No transaction without a receipt is allowed. \nRunBD does not accept cash.",
+      "btnTxt": "Submit"
     }
   }
 }

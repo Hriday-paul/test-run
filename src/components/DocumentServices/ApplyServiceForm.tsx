@@ -15,8 +15,10 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import SignUpPopup from '@/shared/SignUpPopup';
+import { useLocale, useTranslations } from 'next-intl';
 
 function ApplyServiceForm({ id }: { id: string }) {
+    const locale = useLocale();
     const { isLoading, isError, isSuccess, data } = useServiceDetailsQuery({ id });
 
     if (isLoading) {
@@ -32,7 +34,7 @@ function ApplyServiceForm({ id }: { id: string }) {
 
             <div className="flex items-start gap-2 lg:gap-3 justify-center mb-5">
                 <Image src={pdfIcon} alt='pdf icon' height={100} width={1000} className='h-8 lg:h-10 w-auto' />
-                <h3 className='text-xl lg:text-3xl text-center font-popin font-semibold text-gray-800'>{data?.data?.name}</h3>
+                <h3 className='text-xl lg:text-3xl text-center font-popin font-semibold text-gray-800'>{locale == "bn" ? data?.data?.bnName : data?.data?.name}</h3>
             </div>
 
             {
@@ -70,6 +72,9 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
 
     const [open, setOpen] = useState<boolean>(false);
     const [cookie, _] = useCookies(['accessToken']);
+
+    const locale = useLocale();
+    const t = useTranslations("vehicle_process.details");
 
     const [OrderService, { isLoading }] = useAddNewOrderMutation();
 
@@ -178,7 +183,7 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
                                 <Form.Item
                                     name={requirement?.field_name}
                                     key={requirement?.id}
-                                    label={requirement?.bnName}
+                                    label={locale == "bn" ? requirement?.bnName : requirement?.name}
                                     valuePropName="fileList"
                                     getValueFromEvent={(e) => {
                                         if (Array.isArray(e)) {
@@ -218,7 +223,7 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
                                 <Form.Item
                                     key={requirement?.id}
                                     name={requirement?.field_name}
-                                    label={requirement?.bnName}
+                                    label={locale == "bn" ? requirement?.bnName : requirement?.name}
                                     rules={[{ required: requirement?.required, message: "Field is required" }]}>
                                     <Input size="large" placeholder={"Write " + requirement?.name} />
                                 </Form.Item>
@@ -232,7 +237,7 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
                     <Form.Item<FieldType>
                         name={"otherFiles"}
 
-                        label={"অন্যান্য যেকোন ফাইল"}
+                        label={locale == "bn" ? "অন্যান্য যেকোন ফাইল" : "Other File"}
                         valuePropName="fileList"
                         getValueFromEvent={(e) => {
                             if (Array.isArray(e)) {
@@ -277,14 +282,12 @@ const ApplicationForm = ({ requirements, serviceId }: { requirements: IRequireme
                     </Form.Item>
 
                     <div className='space-y-2 my-5'>
-                        <p className='text-sm font-popin font-medium'>[বিশেষ দৃষ্টব্য] :  লিস্টের বাহিরেও যেকোনো কাজের চার্জ আলোচনা সাপেক্ষে এবং উক্ত চার্জ সরকারি ফি ব্যতিত। প্রয়োজনে রানবিডি সরকারি অনলাইন চার্জ প্রদান করে।</p>
-                        <p className='text-sm font-popin font-medium'>কোন প্রকার লেনদেন রশিদ ছাড়া করা নিষেধ।</p>
-                        <p className='text-sm font-popin font-medium'>রানবিডি নগদ অর্থ গ্রহণ করেনা।</p>
+                        <p className='text-sm font-popin font-mediumn whitespace-pre-line'>{t("note")}</p>
                     </div>
 
 
                     <Button htmlType="submit" className='mt-4' type="primary" size="large" block disabled={isLoading} icon={isLoading ? <ImSpinner2 className="animate-spin size-5 text-primary" /> : <></>} iconPlacement="end">
-                        Submit
+                        {t("btnTxt")}
                     </Button>
 
 

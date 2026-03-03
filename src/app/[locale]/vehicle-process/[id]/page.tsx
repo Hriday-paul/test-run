@@ -1,15 +1,17 @@
 import ApplyServiceForm from '@/components/DocumentServices/ApplyServiceForm';
 import Pagetop from '@/shared/Pagetop';
+import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 import { IoIosArrowForward } from 'react-icons/io';
 
 async function ProcessDetails({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
+    const t = await getTranslations('vehicle_process.details');
     return (
         <div>
-            <Pagetop title='Apply Vehicle Process'>
+            <Pagetop title={t("title")}>
                 <h3 className="text-xs md:text-sm font-figtree text-gray-500 flex flex-row gap-x-1.5 justify-center items-center">
-                    <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='text-primary' /> <Link href='/vehicle-process'>Vehicle Process</Link> <IoIosArrowForward className='text-primary' /> Apply Process
+                    <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link> <IoIosArrowForward className='text-primary' /> <Link href='/vehicle-process'>{t("bread_cump.vehicle_process")}</Link> <IoIosArrowForward className='text-primary' /> {t("bread_cump.apply_process")}
                 </h3>
             </Pagetop>
             <div className='bg-[#F2F4F8]'>
