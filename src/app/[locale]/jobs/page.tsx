@@ -1,5 +1,5 @@
 import ShopBanner from '@/shared/ShopBanner'
-import bannerimg from "../../../public/Job banner.png"
+import bannerimg from "../../../../public/Job banner.png"
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import JobFilter from '@/components/Job/JobFilter'
@@ -10,6 +10,7 @@ import Adsloading from '@/shared/Adsloading'
 import { Suspense } from 'react'
 import { GetAdsByCategory } from '@/lib/services/Quary.Ads'
 import { tags } from '@/lib/Tags'
+import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
   title: "Jobs",
@@ -83,14 +84,15 @@ async function JobList({
 
   const adsPromise = GetAdsByCategory({ endPoint: "/ads/jobs", query, tags: [tags?.jobs] });
 
+  const t = await getTranslations('job');
+
   return (
     <div>
       <ShopBanner
         image={bannerimg}
-        title="Jobs"
-        desc="Find and Apply your job"
-      >
-        <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Jobs
+        title={t("banner.title")}
+        desc={t("banner.subtitle")}>
+        <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link> <IoIosArrowForward className='' /> {t("bread_cump.jobs")}
       </ShopBanner>
 
       <div className='bg-[#F2F4F8] py-8'>

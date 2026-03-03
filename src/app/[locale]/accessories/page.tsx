@@ -1,5 +1,5 @@
 import ShopBanner from '@/shared/ShopBanner'
-import bannerimg from "../../../public/Accessories Image.png"
+import bannerimg from "../../../../public/Accessories Image.png"
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import AccessoriesFilter from '@/components/Accessories/AccessoriesFilter'
@@ -10,6 +10,7 @@ import { tags } from '@/lib/Tags'
 import Searchbar from '@/components/BikeBuySell/Searchbar'
 import { Suspense } from 'react'
 import Adsloading from '@/shared/Adsloading'
+import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
   title: "Accessories",
@@ -75,14 +76,16 @@ async function Accesories({
 
   const adsPromise = GetAdsByCategory({ endPoint: "/ads/accessories", query, tags: [tags?.accessories] });
 
+   const t = await getTranslations('accessories');
+
   return (
     <div>
       <ShopBanner
         image={bannerimg}
-        title="Accessories"
-        desc="Search and find your accessories"
+        title={t("banner.title")}
+        desc={t("banner.subtitle")}
       >
-        <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Accessories
+        <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link> <IoIosArrowForward className='' /> {t("bread_cump.accessories")}
       </ShopBanner>
 
       <div className='bg-[#F2F4F8] py-8'>

@@ -10,7 +10,7 @@ import { TextTruncate } from '@/utils/TextTruncate';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
-import bannerimg from "../../../../public/post-top-bg.jpg"
+import bannerimg from "../../../../../public/post-top-bg.jpg"
 
 // ---------------dynamic metadata--------------
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {

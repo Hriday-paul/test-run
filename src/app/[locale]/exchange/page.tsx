@@ -1,5 +1,5 @@
 import ShopBanner from '@/shared/ShopBanner'
-import bannerimg from "../../../public/post-top-bg.jpg"
+import bannerimg from "../../../../public/post-top-bg.jpg"
 import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import Exchanges from '@/components/Exchange/Exchanges'
@@ -10,6 +10,7 @@ import { tags } from '@/lib/Tags'
 import Searchbar from '@/components/BikeBuySell/Searchbar'
 import { Suspense } from 'react'
 import Adsloading from '@/shared/Adsloading'
+import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
   title: "Exchange",
@@ -83,14 +84,16 @@ async function Exchang({
 
   const adsPromise = GetAdsByCategory({ endPoint: "/ads/exchanges", query, tags: [tags?.exchanges] });
 
+  const t = await getTranslations('exchange');
+
   return (
     <div>
       <ShopBanner
         image={bannerimg}
-        title="Exchange"
-        desc="Find your perfect item for Exchange"
+        title={t("banner.title")}
+        desc={t("banner.subtitle")}
       >
-        <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Exchange
+        <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link> <IoIosArrowForward className='' /> {t("bread_cump.exchange")}
       </ShopBanner>
 
       <div className='bg-[#F2F4F8] py-8'>
@@ -99,7 +102,7 @@ async function Exchang({
             <ExchangeFilter />
           </div>
           <div className='col-span-1 md:col-span-2 lg:col-span-6 xl:col-span-3'>
-             <div>
+            <div>
               <Searchbar />
 
               <Suspense fallback={<Adsloading />}>

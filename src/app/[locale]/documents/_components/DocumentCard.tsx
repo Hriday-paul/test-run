@@ -1,14 +1,19 @@
-import {FaRegFilePdf, FaRegFileWord } from 'react-icons/fa';
+
+import { getLocale } from 'next-intl/server';
+import { FaRegFilePdf, FaRegFileWord } from 'react-icons/fa';
 import { PiFilesDuotone } from 'react-icons/pi';
 
-function DocumentCard({ document }: { document: { e_name: string, b_name: string, doc_path: string, pdf_path: string } }) {
+async function DocumentCard({ document }: { document: { e_name: string, b_name: string, doc_path: string, pdf_path: string } }) {
+
+    const locale = await getLocale();
+
     return (
         <div className="p-6 border border-stroke bg-white rounded-lg space-y-4">
             <div className="flex items-start gap-3">
                 <PiFilesDuotone size={80} />
             </div>
 
-            <h3 className="text-xl font-popin font-medium text-foreground">{document?.b_name}</h3>
+            <h3 className="text-xl font-popin font-medium text-foreground">{locale === "bn" ? document?.b_name : document?.e_name}</h3>
 
             <div className='flex flex-row gap-x-2 items-center w-full'>
                 <a href={document?.doc_path} download={true} className='w-full'>

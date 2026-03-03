@@ -5,7 +5,7 @@ import GetSimilarAd from '@/lib/services/SimilarAd';
 import { Add } from '@/redux/types';
 import ShopBanner from '@/shared/ShopBanner';
 import { TextTruncate } from '@/utils/TextTruncate';
-import bannerimg from "../../../../public/lawyer_banner.png"
+import bannerimg from "../../../../../public/lawyer_banner.png"
 import Link from 'next/link';
 import { IoIosArrowForward } from 'react-icons/io';
 import { Suspense } from 'react';

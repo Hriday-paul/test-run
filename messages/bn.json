@@ -207,5 +207,96 @@
                 "title": "ক্যাটাগরি"
             }
         }
+    },
+    "accessories": {
+        "banner": {
+            "title": "অ্যাক্সেসরিজ",
+            "subtitle": "আপনার পছন্দের অ্যাক্সেসরিজ খুঁজে নিন"
+        },
+        "bread_cump": {
+            "home": "হোম",
+            "accessories": "অ্যাক্সেসরিজ"
+        },
+        "filter": {
+            "location": {
+                "title": "লোকেশন"
+            }
+        }
+    },
+    "job": {
+        "banner": {
+            "title": "চাকরি",
+            "subtitle": "আপনার পছন্দের চাকরি খুঁজে আবেদন করুন"
+        },
+        "bread_cump": {
+            "home": "হোম",
+            "jobs": "চাকরি"
+        },
+        "filter": {
+            "job_type": {
+                "title": "চাকরির ধরন",
+                "Onsite": "অফিসে",
+                "Remote": "রিমোট"
+            },
+            "employment_type": {
+                "title": "কাজের ধরন",
+                "Fulltime": "ফুলটাইম",
+                "Parttime": "পার্টটাইম"
+            }
+        }
+    },
+    "exchange": {
+        "banner": {
+            "title": "এক্সচেঞ্জ",
+            "subtitle": "এক্সচেঞ্জের জন্য আপনার পছন্দের পণ্য খুঁজে নিন"
+        },
+        "bread_cump": {
+            "home": "হোম",
+            "exchange": "এক্সচেঞ্জ"
+        },
+        "filter": {
+            "condition": {
+                "title": "অবস্থা",
+                "New": "নতুন",
+                "Used": "ব্যবহৃত"
+            },
+            "category": {
+                "title": "ক্যাটাগরি"
+            }
+        }
+    },
+    "lawyer": {
+        "banner": {
+            "title": "আইনজীবী",
+            "subtitle": "আপনার জন্য সেরা আইনজীবী খুঁজে নিন"
+        },
+        "bread_cump": {
+            "home": "হোম",
+            "lawyer": "আইনজীবী"
+        },
+        "filter": {
+            "specialization": {
+                "title": "বিশেষজ্ঞতা"
+            },
+            "gender": {
+                "title": "লিঙ্গ",
+                "Male": "পুরুষ",
+                "Female": "মহিলা"
+            }
+        }
+    },
+    "documents": {
+        "banner": {
+            "title": "ডকুমেন্টস",
+            "subtitle": "আপনার প্রয়োজন অনুযায়ী ডকুমেন্ট ডাউনলোড করুন"
+        },
+        "bread_cump": {
+            "home": "হোম",
+            "document": "ডকুমেন্টস"
+        },
+        "main": {
+            "title": "সব ডকুমেন্ট",
+            "subtitle": "আপনার প্রয়োজন অনুযায়ী এখান থেকে যেকোনো ফাইল ডাউনলোড করতে পারেন।"
+        }
     }
 }

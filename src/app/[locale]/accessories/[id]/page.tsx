@@ -1,6 +1,4 @@
 import AccessoriesDetails from '@/components/Accessories/AccessoriesDetails';
-import BikeDetails from '@/components/BikeBuySell/BikeDetails';
-import WorkshopDetails from '@/components/WorkShop/WorkshopDetails';
 import GetAdDetails from '@/lib/services/AdDetails';
 import GetSimilarAd from '@/lib/services/SimilarAd';
 import { Add } from '@/redux/types';
@@ -12,7 +10,7 @@ import { TextTruncate } from '@/utils/TextTruncate';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
-import bannerimg from "../../../../public/Accessories Image.png"
+import bannerimg from "../../../../../public/Accessories Image.png"
 
 // ---------------dynamic metadata--------------
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {

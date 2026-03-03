@@ -195,5 +195,96 @@
         "title": "Category"
       }
     }
+  },
+  "accessories": {
+    "banner": {
+      "title": "Accessories",
+      "subtitle": "Search and find your accessories"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "accessories": "Accessories"
+    },
+    "filter": {
+      "location": {
+        "title": "Location"
+      }
+    }
+  },
+  "job": {
+    "banner": {
+      "title": "Jobs",
+      "subtitle": "Find and Apply your job"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "jobs": "Jobs"
+    },
+    "filter": {
+      "job_type": {
+        "title": "Job Type",
+        "Onsite": "Onsite",
+        "Remote": "Remote"
+      },
+      "employment_type": {
+        "title": "Employment Type",
+        "Fulltime": "Fulltime",
+        "Parttime": "Parttime"
+      }
+    }
+  },
+  "exchange": {
+    "banner": {
+      "title": "Exchange",
+      "subtitle": "Find your perfect item for Exchange"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "exchange": "Exchange"
+    },
+    "filter": {
+      "condition": {
+        "title": "Condition",
+        "New": "New",
+        "Used": "Used"
+      },
+      "category": {
+        "title": "Category"
+      }
+    }
+  },
+  "lawyer": {
+    "banner": {
+      "title": "Lawyers",
+      "subtitle": "Find and search best Lawyers for you"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "lawyer": "Lawyers"
+    },
+    "filter": {
+      "specilazation": {
+        "title": "Specilazation"
+      },
+      "gender": {
+        "title": "Gender",
+        "Male": "Male",
+        "Female": "Female"
+      }
+    }
+  },
+  "documents": {
+    "banner": {
+      "title": "Documents",
+      "subtitle": "Download Document Based on your need"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "document": "Documents"
+    },
+    "main": {
+      "title": "All Documents",
+      "subtitle": "You can download any file from here according to your needs."
+    }
   }
 }

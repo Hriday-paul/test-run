@@ -1,5 +1,3 @@
-"use client"
-
 import { PiSlidersHorizontalDuotone } from "react-icons/pi";
 import Image from "next/image";
 import SortBar from "../CarBuySell/SortBar";
@@ -9,11 +7,14 @@ import { AiOutlineFilter } from "react-icons/ai";
 import JobFilter from "./JobFilter";
 import { Add, IMeta } from "@/redux/types";
 import SearchParamsPagination from "@/shared/SearchParamsPagination";
+import { getTranslations } from "next-intl/server";
 
 
 async function Jobs({ adsPromise, page, limit, sort }: { adsPromise: Promise<{ data: { data: Add[], meta: IMeta } }>, page: number, limit?: string, sort?: string }) {
 
     const data = await adsPromise;
+
+    const t = await getTranslations("category_page");
 
     return (
         <div>
@@ -34,7 +35,7 @@ async function Jobs({ adsPromise, page, limit, sort }: { adsPromise: Promise<{ d
                 </div>
                 <p className="text-gray-500 text-sm font-popin font-medium flex flex-row gap-x-1.5 items-center">
                     <PiSlidersHorizontalDuotone className="text-xl" />
-                    {data?.data?.meta?.total} items found
+                    {t("item_found", { count: data?.data?.meta?.total })}
                 </p>
                 <SortBar limit={limit} sort={sort} />
             </div>
@@ -47,7 +48,7 @@ async function Jobs({ adsPromise, page, limit, sort }: { adsPromise: Promise<{ d
             {
                 data?.data?.meta?.total <= 0 && <section className='min-h-[calc(25vh)] flex flex-col items-center justify-center'>
                     <Image src={"/empty_data.jpg"} height={1000} width={1000} className='h-28 w-auto mx-auto' alt='empty data' />
-                    <h5 className='text-base font-figtree text-center'>Item is empty</h5>
+                    <h5 className='text-base font-figtree text-center'>{t("not_found")}</h5>
                 </section>
             }
 

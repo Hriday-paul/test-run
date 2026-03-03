@@ -1,9 +1,10 @@
 import ShopBanner from "@/shared/ShopBanner"
-import bannerimg from "../../../public/document-service-banner.png"
+import bannerimg from "../../../../public/document-service-banner.png"
 import Link from 'next/link'
 import { IoIosArrowForward } from "react-icons/io"
 import DocumentCard from "./_components/DocumentCard"
 import { Metadata } from "next"
+import { getTranslations } from "next-intl/server"
 
 const documents = [
     {
@@ -100,37 +101,39 @@ const documents = [
 ]
 
 export const metadata: Metadata = {
-  title: "Documents",
-  description: "You can download any file from Runbd according to your needs.",
+    title: "Documents",
+    description: "You can download any file from Runbd according to your needs.",
 
-  openGraph: {
-    title: 'Documents in Runbd',
-    description: 'You can download any file from Runbd according to your needs.',
-    url: '/documents',
-    siteName: 'Runbd',
-    images: ['/og-image.png'],
-    locale: 'bn_BD',
-    type: 'website',
-  },
-  twitter: {
-    title: 'Documents in Runbd',
-    description: 'You can download any file from Runbd according to your needs.',
-    card: 'summary_large_image',
-    creator: '@runbd',
-    images: ['/og-image.png'],
-  },
+    openGraph: {
+        title: 'Documents in Runbd',
+        description: 'You can download any file from Runbd according to your needs.',
+        url: '/documents',
+        siteName: 'Runbd',
+        images: ['/og-image.png'],
+        locale: 'bn_BD',
+        type: 'website',
+    },
+    twitter: {
+        title: 'Documents in Runbd',
+        description: 'You can download any file from Runbd according to your needs.',
+        card: 'summary_large_image',
+        creator: '@runbd',
+        images: ['/og-image.png'],
+    },
 }
 
-function DocumentProcess() {
+async function DocumentProcess() {
+
+    const t = await getTranslations('documents');
 
     return (
         <div>
             <ShopBanner
                 image={bannerimg}
-                title="Documents"
-                desc="Download Document Based on your need"
+                title={t("banner.title")}
+                desc={t("banner.subtitle")}
             >
-                <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Documents
+                <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link> <IoIosArrowForward className='' /> {t("bread_cump.document")}
             </ShopBanner>
 
             <div className='bg-[#F2F4F8] py-8'>
@@ -139,8 +142,8 @@ function DocumentProcess() {
                     <div>
                         <div className='grid grid-cols-1 md:grid-cols-3 gap-5 justify-between items-center mb-8 lg:mb-12 md:pt-5'>
                             <div className='space-y-2 md:col-span-2'>
-                                <h4 className='text-lg md:text-xl lg:text-2xl xl:text-3xl font-popin font-semibold text-black'>All Documents</h4>
-                                <p className='tet-sm text-gray-800 font-popin'>You can download any file from here according to your needs.</p>
+                                <h4 className='text-lg md:text-xl lg:text-2xl xl:text-3xl font-popin font-semibold text-black'>{t("main.title")}</h4>
+                                <p className='tet-sm text-gray-800 font-popin'>{t("main.subtitle")}</p>
                             </div>
 
                         </div>

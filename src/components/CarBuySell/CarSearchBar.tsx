@@ -2,7 +2,6 @@
 import { UseUpdateMultipleSearchParams } from '@/hooks/UseUpdateSearchPrams';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import React from 'react'
 import { MdOutlineDashboardCustomize } from 'react-icons/md'
 import { PiTruckLight } from 'react-icons/pi'
 import { TbBus, TbCar } from "react-icons/tb";
@@ -39,7 +38,6 @@ const carTypes = [
         icon: <TbCar className='text-base md:text-lg' />
     },
 ]
-
 
 function CarSearchBar() {
 

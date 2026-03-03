@@ -4,8 +4,11 @@ import { SlLocationPin } from "react-icons/sl";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { placeHolderBlurImg } from "@/utils/config";
+import { getLocale, getTranslations } from "next-intl/server";
 
-function AccessoriesCard({ accessories }: { accessories: Add }) {
+async function AccessoriesCard({ accessories }: { accessories: Add }) {
+    const t = await getTranslations("category_page.adCard");
+    const locale = await getLocale();
     return (
         <div
             className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree bg-white">
@@ -31,7 +34,7 @@ function AccessoriesCard({ accessories }: { accessories: Add }) {
 
                     <div className="flex items-center justify-between">
                         <p className="font-semibold text-gray-900 flex items-center gap-1 text-base">
-                            {accessories?.price ? `Tk ${accessories?.price}` : "N/A"}
+                            {accessories?.price ? `${t("currency")} ${(accessories?.price).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")}` : "N/A"}
                         </p>
                         <Link href={`/accessories/${accessories?.id}`}>
                             <Button
@@ -39,7 +42,7 @@ function AccessoriesCard({ accessories }: { accessories: Add }) {
                                 size="sm"
                                 className="text-primary hover:text-white bg-primary/10 hover:bg-primary transition-all duration-300 cursor-pointer py-5 px-6 font-popin"
                             >
-                                View Details
+                                {t("details")}
                             </Button>
                         </Link>
                     </div>
