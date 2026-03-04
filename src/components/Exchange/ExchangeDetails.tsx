@@ -3,16 +3,19 @@ import ErrorComponent from '@/shared/ErrorComponent';
 import { Eye } from 'lucide-react';
 import { Add, IExchange } from '@/redux/types';
 import AdDetailsOwner from '@/shared/AdDetailsOwner';
+import { getTranslations } from 'next-intl/server';
 
 async function ExchangeDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
     const data = await promiseAdDetails;
 
+    const t = await getTranslations("exchange.details");
+
     const exchangeRows = [
-        { label: "Add Type", value: (exchange: IExchange) => exchange?.exchange_category },
-        { label: "Want", value: (exchange: IExchange) => exchange?.wanted_category },
-        { label: "Condition", value: (exchange: IExchange) => exchange?.condition },
-        { label: "Address", value: (exchange: IExchange) => exchange?.location },
+        { label: t("feature.add_type"), value: (exchange: IExchange) => exchange?.exchange_category },
+        { label: t("feature.want"), value: (exchange: IExchange) => exchange?.wanted_category },
+        { label: t("feature.condition"), value: (exchange: IExchange) => exchange?.condition },
+        { label: t("feature.address"), value: (exchange: IExchange) => exchange?.location },
     ];
 
     return (
@@ -30,7 +33,7 @@ async function ExchangeDetails({ promiseAdDetails }: { promiseAdDetails: Promise
                             </div>
 
                             <div className='bg-white p-5 rounded-lg'>
-                                <h3 className='text-2xl font-popin font-semibold mb-3'>Workshop Information : </h3>
+                                <h3 className='text-2xl font-popin font-semibold mb-3'>{t("feature.title")} : </h3>
                                 <section className="border rounded-xl overflow-x-auto">
                                     <table className="table-auto w-full">
                                         <tbody>

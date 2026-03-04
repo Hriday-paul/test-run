@@ -4,16 +4,20 @@ import { Calendar, Eye, Timer } from 'lucide-react';
 import moment from "moment";
 import { Add, IWorkshop } from '@/redux/types';
 import AdDetailsOwner from '@/shared/AdDetailsOwner';
+import { getTranslations } from 'next-intl/server';
 
 async function WorkshopDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
     const data = await promiseAdDetails;
 
+    const t = await getTranslations("workshop.details");
+    const tp = await getTranslations("category_page.details")
+
     const workshopRows = [
-        { label: "Work Shop Type", value: (work_shop: IWorkshop) => work_shop?.workshop_type },
-        { label: "Address", value: (work_shop: IWorkshop) => work_shop?.address },
-        { label: "Open Time", value: (work_shop: IWorkshop) => work_shop?.open_time },
-        { label: "Close Time", value: (work_shop: IWorkshop) => work_shop?.close_time },
+        { label: t("feature.type"), value: (work_shop: IWorkshop) => work_shop?.workshop_type },
+        { label: t("feature.address"), value: (work_shop: IWorkshop) => work_shop?.address },
+        { label: t("feature.open_time"), value: (work_shop: IWorkshop) => work_shop?.open_time },
+        { label: t("feature.close_time"), value: (work_shop: IWorkshop) => work_shop?.close_time },
     ];
 
     return (
@@ -65,14 +69,14 @@ async function WorkshopDetails({ promiseAdDetails }: { promiseAdDetails: Promise
                             {/* ------------Post Overview----------- */}
                             <div className='bg-white p-5 rounded-lg'>
                                 <div className='pb-4 border-b border-stroke'>
-                                    <h3 className='text-xl font-popin font-medium'>Post Overview</h3>
+                                    <h3 className='text-xl font-popin font-medium'>{tp("post_overview.title")}</h3>
                                 </div>
                                 <div className='pt-4 space-y-4'>
                                     <div className='flex flex-row gap-x-1 justify-between items-center'>
                                         <div className='flex flex-row gap-x-1 items-center'>
                                             <Calendar size={20} />
                                             <p className='font-popin text-sm font-medium'>
-                                                Calander
+                                                {tp("post_overview.calander")}
                                             </p>
                                         </div>
                                         <p className='font-popin text-base'>{moment(data?.data?.createdAt).format("MMM Do YY") || "N/A"}</p>
@@ -81,7 +85,7 @@ async function WorkshopDetails({ promiseAdDetails }: { promiseAdDetails: Promise
                                         <div className='flex flex-row gap-x-1 items-center'>
                                             <Timer size={20} />
                                             <p className='font-popin text-sm font-medium'>
-                                                Time
+                                                {tp("post_overview.time")}
                                             </p>
                                         </div>
                                         <p className='font-popin text-base'>{moment(data?.data?.createdAt).format("h:mm a") || "N/A"}</p>
@@ -90,7 +94,7 @@ async function WorkshopDetails({ promiseAdDetails }: { promiseAdDetails: Promise
                                         <div className='flex flex-row gap-x-1 items-center'>
                                             <Eye size={20} />
                                             <p className='font-popin text-sm font-medium'>
-                                                View
+                                                {tp("post_overview.view")}
                                             </p>
                                         </div>
                                         <p className='font-popin text-base'>{data?.data?.view_count}</p>

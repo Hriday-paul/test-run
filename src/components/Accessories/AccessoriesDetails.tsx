@@ -3,10 +3,13 @@ import ErrorComponent from '@/shared/ErrorComponent';
 import { Eye, Tag } from 'lucide-react';
 import { Add } from '@/redux/types';
 import AdDetailsOwner from '@/shared/AdDetailsOwner';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 async function AccessoriesDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
     const data = await promiseAdDetails;
+    const t = await getTranslations("accessories.details");
+    const locale = await getLocale();
 
     return (
         <>
@@ -33,13 +36,13 @@ async function AccessoriesDetails({ promiseAdDetails }: { promiseAdDetails: Prom
 
                             <div className='bg-white p-5 rounded-lg'>
                                 <div className='pb-4 border-b border-stroke'>
-                                    <h3 className='text-xl font-popin font-medium'>Product Details</h3>
+                                    <h3 className='text-xl font-popin font-medium'>{t("title")}</h3>
                                 </div>
                                 <div className='flex flex-row gap-x-1 justify-between items-center pt-4'>
                                     <div className='flex flex-row gap-x-1 items-center'>
                                         <Eye size={20} />
                                         <p className='font-popin text-sm font-medium'>
-                                            View
+                                            {t("view")}
                                         </p>
                                     </div>
                                     <p className='font-popin text-base'>{data?.data?.view_count}</p>
@@ -49,10 +52,12 @@ async function AccessoriesDetails({ promiseAdDetails }: { promiseAdDetails: Prom
                                         <div className='flex flex-row gap-x-1 items-center'>
                                             <Tag size={20} />
                                             <p className='font-popin text-sm font-medium'>
-                                                Price
+                                                {t("price.title")}
                                             </p>
                                         </div>
-                                        <p className='font-popin text-base'>{data?.data?.price ? `${data?.data?.price} TK` : "N/A"}</p>
+                                        <p className='font-popin text-base'>
+                                            {data?.data?.price ? `${(data?.data?.price).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")} ${t("price.currency")} ` : "N/A"}
+                                        </p>
                                     </div>
                                 </div>
                             </div>

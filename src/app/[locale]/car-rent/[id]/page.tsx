@@ -11,6 +11,7 @@ import { Suspense } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import bannerimg from "../../../../../public/post-top-bg.jpg"
 import { Add } from '@/redux/types';
+import { getTranslations } from 'next-intl/server';
 
 // ---------------dynamic metadata--------------
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -49,17 +50,19 @@ async function Detils({ params }: { params: Promise<{ id: string }> }) {
   const promiseAdDetails = GetAdDetails({ id });
   const promiseSimilarAd = GetSimilarAd({ id });
 
+  const t = await getTranslations("car_rent")
+
   return (
     <div>
       <ShopBanner
         image={bannerimg}
-        title="Car Rent Details"
-        desc="View Car rent full details"
+        title={t("details.title")}
+        desc={t("details.subtitle")}
       >
-        <Link href='/' className='text-primary'>Home</Link>
+        <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link>
         <IoIosArrowForward className='' />
-        <Link href='/car-rent' className='text-primary'>Car Rents</Link>
-        <IoIosArrowForward className='' /> Car Rent Details
+        <Link href='/car-rent' className='text-primary'>{t("bread_cump.carRents")}</Link>
+        <IoIosArrowForward className='' /> {t("bread_cump.details")}
       </ShopBanner>
 
       <Suspense fallback={<DetailsSkeleton />}>

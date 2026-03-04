@@ -12,7 +12,7 @@ function Resetpass() {
                 </h3>
             </Pagetop>
 
-            <div className='container px-5 md:px-0 mb-10'>
+            <div className='container px-5 md:px-0 my-10'>
                 <ResetPassword />
             </div>
         </div>

@@ -6,6 +6,100 @@
         "about": "আমাদের সম্পর্কে",
         "btn": "বিজ্ঞাপন দিন"
     },
+    "login": {
+        "bread_cump": {
+            "home": "হোম",
+            "login": "লগইন"
+        },
+        "title": "লগইন",
+        "form": {
+            "phone": "ফোন",
+            "phone_placeholder": "01*********",
+            "phone_required": "ফোন নম্বর আবশ্যক",
+            "phone_invalid": "সঠিক ফোন নম্বর দিন",
+            "password": "পাসওয়ার্ড",
+            "password_placeholder": "আপনার পাসওয়ার্ড লিখুন",
+            "password_required": "পাসওয়ার্ড আবশ্যক",
+            "forgot": "পাসওয়ার্ড ভুলে গেছেন?",
+            "dont_have_account": "এখনও কোনো অ্যাকাউন্ট নেই?",
+            "register": "নিবন্ধন করুন",
+            "btns": {
+                "signin": "সাইন ইন",
+                "loading": "লোড হচ্ছে..."
+            }
+        }
+    },
+    "forgot_pass": {
+        "bread_cump": {
+            "home": "হোম",
+            "forgot": "পাসওয়ার্ড ভুলে গেছেন"
+        },
+        "title": "পাসওয়ার্ড ভুলে গেছেন",
+        "form": {
+            "phone": "ফোন",
+            "phone_placeholder": "01*********",
+            "phone_required": "ফোন নম্বর প্রয়োজন",
+            "phone_invalid": "সঠিক ফোন নম্বর লিখুন"
+        }
+    },
+    "signup": {
+        "bread_cump": {
+            "home": "হোম",
+            "signup": "নিবন্ধন"
+        },
+        "title": "নিবন্ধন",
+        "form": {
+            "role": {
+                "user": "ব্যবহারকারী",
+                "vendor": "পোষ্ট দাতা"
+            },
+            "fields": {
+                "first_name": {
+                    "label": "প্রথম নাম",
+                    "placeholder": "আপনার প্রথম নাম লিখুন",
+                    "required": "প্রথম নাম আবশ্যক"
+                },
+                "last_name": {
+                    "label": "শেষ নাম",
+                    "placeholder": "আপনার শেষ নাম লিখুন"
+                },
+                "phone": {
+                    "label": "ফোন",
+                    "placeholder": "01****",
+                    "invalid": "ভুল ফোন নম্বর"
+                },
+                "email": {
+                    "label": "ইমেইল ঠিকানা",
+                    "placeholder": "xyz@gmail.com",
+                    "invalid": "ভুল ইমেইল"
+                },
+                "password": {
+                    "label": "পাসওয়ার্ড",
+                    "placeholder": "আপনার পাসওয়ার্ড লিখুন",
+                    "required": "পাসওয়ার্ড আবশ্যক"
+                },
+                "confirm_password": {
+                    "label": "পাসওয়ার্ড নিশ্চিত করুন",
+                    "placeholder": "আপনার পাসওয়ার্ড পুনরায় লিখুন",
+                    "required": "পাসওয়ার্ড নিশ্চিতকরণ আবশ্যক",
+                    "mismatch": "পাসওয়ার্ড মিলছে না"
+                },
+                "terms": {
+                    "label": "\"রেজিস্টার\" বোতামটি চাপলে, আপনি {terms} এবং {privacy} এ সম্মত হচ্ছেন",
+                    "terms": "শর্তাবলী",
+                    "privacy": "গোপনীয়তা নীতি",
+                    "required": "আপনাকে শর্তাবলীতে সম্মত হতে হবে"
+                }
+            },
+            "button": {
+                "sign_up": "নিবন্ধন করুন",
+                "sign_up_free": "ফ্রি তে নিবন্ধন করুন",
+                "loading": "লোড হচ্ছে..."
+            },
+            "login_prompt": "ইতিমধ্যে একটি অ্যাকাউন্ট আছে?",
+            "login_now": "লগইন করুন"
+        }
+    },
     "Home": {
         "section1": {
             "title": {
@@ -255,13 +349,29 @@
         },
         "bread_cump": {
             "home": "হোম",
-            "workshops": "ওয়ার্কশপসমূহ"
+            "workshops": "ওয়ার্কশপসমূহ",
+            "details": "বিস্তারিত"
         },
         "filter": {
             "workshop_type": {
                 "title": "ওয়ার্কশপের ধরন",
                 "Car": "গাড়ি",
                 "Bike": "বাইক"
+            }
+        },
+        "details": {
+            "title": "ওয়ার্কশপের বিস্তারিত তথ্য",
+            "subtitle": "ওয়ার্কশপের সম্পূর্ণ বিস্তারিত দেখুন",
+            "price": {
+                "title": "Price",
+                "currency": "TK"
+            },
+            "feature": {
+                "title": "ওয়ার্কশপের তথ্য",
+                "type": "ওয়ার্কশপের ধরন",
+                "address": "ঠিকানা",
+                "open_time": "খোলার সময়",
+                "close_time": "বন্ধের সময়"
             }
         }
     },
@@ -272,11 +382,26 @@
         },
         "bread_cump": {
             "home": "হোম",
-            "carRents": "গাড়ি ভাড়া"
+            "carRents": "গাড়ি ভাড়া",
+            "details": "বিস্তারিত"
         },
         "filter": {
             "category": {
                 "title": "ক্যাটাগরি"
+            }
+        },
+        "details": {
+            "title": "গাড়ি ভাড়ার বিস্তারিত",
+            "subtitle": "গাড়ি ভাড়ার সম্পূর্ণ বিস্তারিত দেখুন",
+            "price": {
+                "title": "মূল্য",
+                "currency": "টাকা"
+            },
+            "feature": {
+                "title": "ভাড়ার তথ্য",
+                "type": "গাড়ির ধরন",
+                "address": "ঠিকানা",
+                "view": "দেখেছে"
             }
         }
     },
@@ -287,11 +412,21 @@
         },
         "bread_cump": {
             "home": "হোম",
-            "accessories": "অ্যাক্সেসরিজ"
+            "accessories": "অ্যাক্সেসরিজ",
+            "details": "বিস্তারিত"
         },
         "filter": {
             "location": {
                 "title": "লোকেশন"
+            }
+        },
+        "details": {
+            "title": "অ্যাক্সেসরিজের বিস্তারিত",
+            "subtitle": "অ্যাক্সেসরিজের সম্পূর্ণ বিস্তারিত দেখুন",
+            "view": "দেখেছে",
+            "price": {
+                "title": "মুল্য",
+                "currency": "৳"
             }
         }
     },
@@ -302,7 +437,8 @@
         },
         "bread_cump": {
             "home": "হোম",
-            "jobs": "চাকরি"
+            "jobs": "চাকরি",
+            "details": "বিস্তারিত"
         },
         "filter": {
             "job_type": {
@@ -315,6 +451,30 @@
                 "Fulltime": "ফুলটাইম",
                 "Parttime": "পার্টটাইম"
             }
+        },
+        "details": {
+            "title": "চাকরির বিস্তারিত",
+            "subtitle": "চাকরির সম্পূর্ণ বিস্তারিত দেখুন",
+            "company_section": {
+                "about_company": "কোম্পানি সম্পর্কে",
+                "deadline": "শেষ তারিখ",
+                "not_available": "প্রযোজ্য নয়"
+            },
+            "summary": {
+                "title": "সারসংক্ষেপ",
+                "vacancy": "পদ সংখ্যা",
+                "age": "বয়স",
+                "location": "কর্মস্থল",
+                "salary": "বেতন",
+                "experience": "অভিজ্ঞতা",
+                "published": "প্রকাশিত"
+            },
+            "overview": {
+                "title": "বিস্তারিত বিবরণ"
+            },
+            "error": {
+                "invalid_category": "অবৈধ জব ক্যাটাগরি"
+            }
         }
     },
     "exchange": {
@@ -324,7 +484,8 @@
         },
         "bread_cump": {
             "home": "হোম",
-            "exchange": "এক্সচেঞ্জ"
+            "exchange": "এক্সচেঞ্জ",
+            "details": "বিস্তারিত"
         },
         "filter": {
             "condition": {
@@ -335,6 +496,21 @@
             "category": {
                 "title": "ক্যাটাগরি"
             }
+        },
+        "details": {
+            "title": "এক্সচেঞ্জের বিস্তারিত",
+            "subtitle": "এক্সচেঞ্জের সম্পূর্ণ বিস্তারিত দেখুন",
+            "price": {
+                "title": "মূল্য",
+                "currency": "৳"
+            },
+            "feature": {
+                "title": "এক্সচেঞ্জের তথ্য",
+                "add_type": "অ্যাডের ধরন",
+                "want": "চাহিদা",
+                "condition": "অবস্থা",
+                "address": "ঠিকানা"
+            }
         }
     },
     "lawyer": {
@@ -344,7 +520,8 @@
         },
         "bread_cump": {
             "home": "হোম",
-            "lawyer": "আইনজীবী"
+            "lawyer": "আইনজীবী",
+            "details": "বিস্তারিত"
         },
         "filter": {
             "specialization": {
@@ -354,6 +531,31 @@
                 "title": "লিঙ্গ",
                 "Male": "পুরুষ",
                 "Female": "মহিলা"
+            }
+        },
+        "details": {
+            "title": "অ্যাডভোকেটের বিস্তারিত",
+            "subtitle": "অ্যাডভোকেটের সম্পূর্ণ বিস্তারিত দেখুন",
+            "hero": {
+                "phone": "ফোন",
+                "location": "ঠিকানা",
+                "gender": "লিঙ্গ",
+                "specializations": "বিশেষজ্ঞতা",
+                "experience": "অভিজ্ঞতা"
+            },
+            "professional": {
+                "title": "পেশাদারী তথ্য",
+                "license_number": "লাইসেন্স নম্বর",
+                "bar_council": "বার কাউন্সিল",
+                "chamber_location": "চেম্বারের অবস্থান",
+                "consultation_fee": "পরামর্শ ফি",
+                "hourly_rate": "প্রতি ঘণ্টার হার",
+                "office_hours": "অফিস সময়",
+                "languages": "ভাষা"
+            },
+            "not_available": "প্রযোজ্য নয়",
+            "error": {
+                "invalid_category": "অবৈধ অ্যাডভোকেট ক্যাটাগরি"
             }
         }
     },

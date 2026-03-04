@@ -12,6 +12,7 @@ import { Suspense } from 'react';
 import DetailsSkeleton from '@/shared/DetailsSkeleton';
 import { LoadingCard } from '@/shared/LoadingCard';
 import SimilarAd from '@/shared/SimilarAd/SimilarAd';
+import { getTranslations } from 'next-intl/server';
 
 // ---------------dynamic metadata--------------
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -50,17 +51,19 @@ async function Detils({ params }: { params: Promise<{ id: string }> }) {
   const promiseAdDetails = GetAdDetails({ id });
   const promiseSimilarAd = GetSimilarAd({ id });
 
+  const t = await getTranslations("lawyer");
+
   return (
     <div>
       <ShopBanner
         image={bannerimg}
-        title="lawyer Details"
-        desc="View Lawyer full details"
+         title={t("details.title")}
+        desc={t("details.subtitle")}
       >
-        <Link href='/' className='text-primary'>Home</Link>
+        <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link>
         <IoIosArrowForward className='' />
-        <Link href='/lawyers' className='text-primary'>Lawyers</Link>
-        <IoIosArrowForward className='' /> Lawyer Details
+        <Link href='/lawyers' className='text-primary'>{t("bread_cump.lawyer")}</Link>
+        <IoIosArrowForward className='' /> {t("bread_cump.details")}
       </ShopBanner>
 
       <Suspense fallback={<DetailsSkeleton />}>

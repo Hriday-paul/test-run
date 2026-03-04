@@ -6,6 +6,98 @@
     "about": "About Us",
     "btn": "Post Your Ad"
   },
+  "login": {
+    "bread_cump": {
+      "home": "Home",
+      "login": "Login"
+    },
+    "title": "Login",
+    "form": {
+      "phone": "Phone",
+      "phone_placeholder": "01*********",
+      "phone_required": "Phone number is required",
+      "phone_invalid": "Enter a valid phone number",
+      "password": "Password",
+      "password_placeholder": "Enter your password",
+      "password_required": "Password is required",
+      "forgot": "Forgot Password?",
+      "dont_have_account": "Don't have an account yet?",
+      "register": "Register",
+      "btns": {
+        "signin": "Sign In",
+        "loading": "Loading..."
+      }
+    }
+  },
+  "signup": {
+    "bread_cump": {
+      "home": "Home",
+      "signup": "Sign Up"
+    },
+    "title": "Sign Up",
+    "form": {
+      "role": {
+        "user": "User",
+        "vendor": "Vendor"
+      },
+      "fields": {
+        "first_name": {
+          "label": "First Name",
+          "placeholder": "Enter your first name",
+          "required": "First name is required"
+        },
+        "last_name": {
+          "label": "Last Name",
+          "placeholder": "Enter your last name"
+        },
+        "phone": {
+          "label": "Phone",
+          "placeholder": "01****",
+          "invalid": "Invalid Phone"
+        },
+        "email": {
+          "label": "Email Address",
+          "placeholder": "xyz@gmail.com",
+          "invalid": "Email invalid"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password",
+          "required": "Password is required"
+        },
+        "confirm_password": {
+          "label": "Confirm Password",
+          "placeholder": "Enter your confirm password",
+          "required": "Confirm Password is required",
+          "mismatch": "Password not match"
+        },
+        "terms": {
+          "label": "By hitting the \"Register\" button, you agree to the {terms} & {privacy}",
+          "terms": "Terms conditions",
+          "privacy": "Privacy Policy",
+          "required": "You must agree to the terms"
+        }
+      },
+      "button": {
+        "sign_up": "Sign Up",
+        "sign_up_free": "Sign Up for Free",
+        "loading": "Loading..."
+      },
+      "login_prompt": "Already have an account?",
+      "login_now": "Login Now"
+    }
+  },
+  "forgot_pass": {
+    "bread_cump": {
+      "home": "Home",
+      "forgot": "Forgot password"
+    },
+    "title": "Forgot Password",
+    "phone": "Phone",
+    "phone_placeholder": "01*********",
+    "phone_required": "Phone number is required",
+    "phone_invalid": "Enter a valid phone number"
+  },
   "Home": {
     "section1": {
       "title": {
@@ -243,13 +335,29 @@
     },
     "bread_cump": {
       "home": "Home",
-      "workshops": "Workshops"
+      "workshops": "Workshops",
+      "details": "Details"
     },
     "filter": {
       "workshop_type": {
         "title": "Workshop Type",
         "Car": "Car",
         "Bike": "Bike"
+      }
+    },
+    "details": {
+      "title": "WorkShop Details",
+      "subtitle": "View workshop full details",
+      "price": {
+        "title": "Price",
+        "currency": "TK"
+      },
+      "feature": {
+        "title": "Workshop Information",
+        "type": "Workshop Type",
+        "address": "Address",
+        "open_time": "Opening Time",
+        "close_time": "Closing Time"
       }
     }
   },
@@ -260,11 +368,26 @@
     },
     "bread_cump": {
       "home": "Home",
-      "carRents": "Car Rents"
+      "carRents": "Car Rents",
+      "details": "Details"
     },
     "filter": {
       "category": {
         "title": "Category"
+      }
+    },
+    "details": {
+      "title": "Car Rent Details",
+      "subtitle": "View Car rent full details",
+      "price": {
+        "title": "Price",
+        "currency": "TK"
+      },
+      "feature": {
+        "title": "Rent Information",
+        "type": "Car Type",
+        "address": "Address",
+        "view": "View"
       }
     }
   },
@@ -275,11 +398,24 @@
     },
     "bread_cump": {
       "home": "Home",
-      "accessories": "Accessories"
+      "accessories": "Accessories",
+      "details": "Details"
     },
     "filter": {
       "location": {
         "title": "Location"
+      }
+    },
+    "details": {
+      "title": "Accessories Details",
+      "subtitle": "View Accessories full details",
+      "price": {
+        "title": "Price",
+        "currency": "TK"
+      },
+      "feature": {
+        "title": "Accessories Information",
+        "view": "View"
       }
     }
   },
@@ -290,7 +426,8 @@
     },
     "bread_cump": {
       "home": "Home",
-      "jobs": "Jobs"
+      "jobs": "Jobs",
+      "details": "Details"
     },
     "filter": {
       "job_type": {
@@ -303,6 +440,30 @@
         "Fulltime": "Fulltime",
         "Parttime": "Parttime"
       }
+    },
+    "details": {
+      "title": "Job Details",
+      "subtitle": "View job full details",
+      "company_section": {
+        "about_company": "About Company",
+        "deadline": "Deadline",
+        "not_available": "N/A"
+      },
+      "summary": {
+        "title": "Summary",
+        "vacancy": "Vacancy",
+        "age": "Age",
+        "location": "Location",
+        "salary": "Salary",
+        "experience": "Experience",
+        "published": "Published"
+      },
+      "overview": {
+        "title": "Overview"
+      },
+      "error": {
+        "invalid_category": "Invalid Job Category"
+      }
     }
   },
   "exchange": {
@@ -312,7 +473,8 @@
     },
     "bread_cump": {
       "home": "Home",
-      "exchange": "Exchange"
+      "exchange": "Exchange",
+      "details": "Details"
     },
     "filter": {
       "condition": {
@@ -323,6 +485,21 @@
       "category": {
         "title": "Category"
       }
+    },
+    "details": {
+      "title": "Exchange Details",
+      "subtitle": "View Exchange full details",
+      "price": {
+        "title": "Price",
+        "currency": "TK"
+      },
+      "feature": {
+        "title": "Exchange Information",
+        "add_type": "Add Type",
+        "want": "Want",
+        "condition": "Condition",
+        "address": "Address"
+      }
     }
   },
   "lawyer": {
@@ -332,7 +509,8 @@
     },
     "bread_cump": {
       "home": "Home",
-      "lawyer": "Lawyers"
+      "lawyer": "Lawyers",
+      "details": "Details"
     },
     "filter": {
       "specilazation": {
@@ -342,6 +520,31 @@
         "title": "Gender",
         "Male": "Male",
         "Female": "Female"
+      }
+    },
+    "details": {
+      "title": "Lawyer Details",
+      "subtitle": "View full lawyer details",
+      "hero": {
+        "phone": "Phone",
+        "location": "Location",
+        "gender": "Gender",
+        "specializations": "Specializations",
+        "experience": "Experience"
+      },
+      "professional": {
+        "title": "Professional Details",
+        "license_number": "License Number",
+        "bar_council": "Bar Council",
+        "chamber_location": "Chamber Location",
+        "consultation_fee": "Consultation Fee",
+        "hourly_rate": "Hourly Rate",
+        "office_hours": "Office Hours",
+        "languages": "Languages"
+      },
+      "not_available": "N/A",
+      "error": {
+        "invalid_category": "Invalid Lawyer Category"
       }
     }
   },

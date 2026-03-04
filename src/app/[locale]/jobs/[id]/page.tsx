@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { Suspense } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import bannerimg from "../../../../../public/Job banner.png"
+import { getTranslations } from 'next-intl/server';
 
 // ---------------dynamic metadata--------------
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -49,17 +50,19 @@ async function Detils({ params }: { params: Promise<{ id: string }> }) {
   const promiseAdDetails = GetAdDetails({ id });
   const promiseSimilarAd = GetSimilarAd({ id });
 
+  const t = await getTranslations("job");
+
   return (
     <div>
       <ShopBanner
         image={bannerimg}
-        title="Job Details"
-        desc="View job full details"
+        title={t("details.title")}
+        desc={t("details.subtitle")}
       >
-        <Link href='/' className='text-primary'>Home</Link>
+        <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link>
         <IoIosArrowForward className='' />
-        <Link href='/jobs' className='text-primary'>Jobs</Link>
-        <IoIosArrowForward className='' /> Workshop Details
+        <Link href='/jobs' className='text-primary'>{t("bread_cump.jobs")}</Link>
+        <IoIosArrowForward className='' /> {t("bread_cump.details")}
       </ShopBanner>
 
       <Suspense fallback={<DetailsSkeleton />}>

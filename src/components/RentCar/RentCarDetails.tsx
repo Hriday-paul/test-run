@@ -3,14 +3,18 @@ import ErrorComponent from '@/shared/ErrorComponent';
 import { Eye, Tag } from 'lucide-react';
 import { Add, IRentCar } from '@/redux/types';
 import AdDetailsOwner from '@/shared/AdDetailsOwner';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 async function RentCarDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
     const data = await promiseAdDetails;
 
+    const t = await getTranslations("car_rent.details")
+    const locale = await getLocale();
+
     const rentRows = [
-        { label: "Car Type", value: (rent: IRentCar) => rent?.car_type },
-        { label: "Address", value: (rent: IRentCar) => rent?.location },
+        { label: t("feature.type"), value: (rent: IRentCar) => rent?.car_type },
+        { label: t("feature.address"), value: (rent: IRentCar) => rent?.location },
     ];
 
     return (
@@ -29,7 +33,7 @@ async function RentCarDetails({ promiseAdDetails }: { promiseAdDetails: Promise<
                             </div>
 
                             <div className='bg-white p-5 rounded-lg'>
-                                <h3 className='text-2xl font-popin font-semibold mb-3'>Rent Information : </h3>
+                                <h3 className='text-2xl font-popin font-semibold mb-3'>{t("feature.title")} : </h3>
                                 <section className="border rounded-xl overflow-x-auto">
                                     <table className="table-auto w-full">
                                         <tbody>
@@ -62,7 +66,7 @@ async function RentCarDetails({ promiseAdDetails }: { promiseAdDetails: Promise<
                             {/* ------------Post Overview----------- */}
                             <div className='bg-white p-5 rounded-lg'>
                                 <div className='pb-4 border-b border-stroke'>
-                                    <h3 className='text-xl font-popin font-medium'>Rent Price</h3>
+                                    <h3 className='text-xl font-popin font-medium'>{t("price.title")}</h3>
                                 </div>
 
                                 <div className='pt-4 space-y-4'>
@@ -70,10 +74,10 @@ async function RentCarDetails({ promiseAdDetails }: { promiseAdDetails: Promise<
                                         <div className='flex flex-row gap-x-1 items-center'>
                                             <Tag size={20} />
                                             <p className='font-popin text-sm font-medium'>
-                                                Price
+                                                {t("price.title")}
                                             </p>
                                         </div>
-                                        <p className='font-popin text-base'>{(data?.data?.price && data?.data?.price > 0) ? `Tk ${data?.data?.price}` : "N/A"}</p>
+                                        <p className='font-popin text-base'>{data?.data?.price ? `${(data?.data?.price).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")} ${t("price.currency")} ` : "N/A"}</p>
                                     </div>
 
                                     <div className='flex flex-row gap-x-1 justify-between items-center'>

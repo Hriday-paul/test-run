@@ -7,6 +7,7 @@ import { useForgotPasswordMutation } from "@/redux/api/authApi";
 import { useCookies } from "react-cookie";
 import { config } from "@/utils/config";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 type FormType = {
     phone: string,
@@ -17,6 +18,7 @@ const ForgotPassForm = () => {
     const [postResend, { isLoading }] = useForgotPasswordMutation();
     const [_, setCookie] = useCookies(['token']);
     const router = useRouter();
+    const t = useTranslations("forgot_pass.form");
     const {
         register,
         handleSubmit,
@@ -55,7 +57,7 @@ const ForgotPassForm = () => {
 
                 <div className="my-5">
                     <label htmlFor={"phone"} className={`mb-1.5 font-popin block text-black text-lg`}>
-                        Phone
+                        {t("phone")}
                         <span className="text-red-500 text-base ml-1">*</span>
                     </label>
                     <div className={`w-full flex flex-row items-center border rounded-md ${errors?.phone ? 'border-danger' : 'border-stroke '}`}>
@@ -63,14 +65,14 @@ const ForgotPassForm = () => {
                         <input
                             type="number"
                             id='phone'
-                            {...register("phone", { pattern: /^01\d{9}$/, minLength: 11, required: true })}
+                            {...register("phone", { pattern: /^01\d{9}$/, minLength: 11, required: t("phone_required") })}
                             placeholder="01****"
                             className={`w-full px-2 bg-white py-2.5 text-black outline-none transition disabled:cursor-default disabled:bg-whiter font-figtree placeholder:font-figtree rounded-r-md`}
                         />
                     </div>
                     {errors.phone && <div className='flex items-center mb-2'>
                         <MdErrorOutline className='text-sm text-orange-500' />
-                        <p className='text-orange-500 text-sm ml-1'>Invalid Phone</p>
+                        <p className='text-orange-500 text-sm ml-1'>{t("phone_invalid")}</p>
                     </div>}
                 </div>
 

@@ -107,6 +107,7 @@ function JobForm() {
             });
 
         } catch (err: any) {
+            console.log(err)
             toast.error(err?.data?.message || 'Something went wrong, try again')
         }
     }
