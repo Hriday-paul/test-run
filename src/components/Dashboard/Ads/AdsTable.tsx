@@ -37,14 +37,16 @@ import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { categoryRouteMap } from '@/shared/FeatureAddCard';
 import { adFeature } from '@/lib/Actions/FeatureAd.action';
+import { useTranslations } from 'next-intl';
 
 function AdsTable() {
     const [page, setPage] = useState(1);
+    const t = useTranslations("vendor.ads")
     const { isLoading, isError, isSuccess, data } = useAllAdsQuery({ page });
     return (
         <div>
             <div className=''>
-                <h3 className='text-base lg:text-lg font-popin text-black py-3'>Posted Ads</h3>
+                <h3 className='text-base lg:text-lg font-popin text-black py-3'>{t("title")}</h3>
                 {
                     isLoading ?
                         <div>
@@ -78,6 +80,7 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
     const [addFeature] = useFeatureAddMutation();
     const [addBump] = useBumpAddMutation();
     const [addDlt] = useDltAddMutation();
+    const t = useTranslations("vendor.ads")
 
     const handleFeature = async (addId: number) => {
         const loading = toast.loading("Loading...")
@@ -182,13 +185,13 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
             <Table className="font-figtree">
                 <TableHeader className="!bg-primary/10 font-figtree ">
                     <TableRow className="">
-                        <TableHead className="p-5 font-medium font-figtree">Image</TableHead>
-                        <TableHead className="font-medium font-figtree">Ad title</TableHead>
-                        <TableHead className="font-medium font-figtree">Category</TableHead>
-                        <TableHead className="font-medium font-figtree">Price</TableHead>
-                        <TableHead className="font-medium font-figtree">Status</TableHead>
-                        <TableHead className="font-medium font-figtree">Posted At</TableHead>
-                        <TableHead className="text-right font-figtree p-5">Action</TableHead>
+                        <TableHead className="p-5 font-medium font-figtree">{t("table.img")}</TableHead>
+                        <TableHead className="font-medium font-figtree">{t("table.title")}</TableHead>
+                        <TableHead className="font-medium font-figtree">{t("table.category")}</TableHead>
+                        <TableHead className="font-medium font-figtree">{t("table.price")}</TableHead>
+                        <TableHead className="font-medium font-figtree">{t("table.status")}</TableHead>
+                        <TableHead className="font-medium font-figtree">{t("table.postedAt")}</TableHead>
+                        <TableHead className="text-right font-figtree p-5">{t("table.action")}</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody className="border border-stroke">
@@ -231,21 +234,21 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
                                             <button onClick={() => handleFeature(ad?.id)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
                                                 <FaRegStar className='text-black' />
-                                                Feature
+                                                {t("action.feature")}
                                             </button>
                                         </DropdownMenuItem>
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150 w-full">
                                             <button onClick={() => handleBump(ad?.id)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
                                                 <FaArrowDownLong className='text-black rotate-180' />
-                                                Bump Up
+                                                {t("action.bump")}
                                             </button>
                                         </DropdownMenuItem>
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
                                             <Link href={`/${categoryRouteMap[ad?.category]}/${ad?.id}`} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
                                                 <Eye className='text-black size-4' />
-                                                View Post
+                                                {t("action.view")}
                                             </Link>
                                         </DropdownMenuItem>
 
@@ -254,7 +257,7 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                                                 <div className='w-full text-left hover:bg-zinc-100 duration-150 flex flex-row gap-x-2 items-center px-2 rounded-lg'>
 
                                                     <SquarePen className='text-black size-4' />
-                                                    Edit Post
+                                                    {t("action.edit")}
                                                 </div>
                                             }></EditPost>
                                         </DropdownMenuItem>
@@ -263,7 +266,7 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
                                             <button onClick={() => handleDelete(ad?.id)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
                                                 <Trash2 className='text-primary' />
-                                                Delete
+                                                {t("action.dlt")}
                                             </button>
                                         </DropdownMenuItem>
 
@@ -281,7 +284,7 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
             {
                 ads?.length <= 0 && <section className='min-h-[calc(25vh)] flex flex-col items-center justify-center'>
                     <Image src={emptyDataImg} className='h-28 w-auto mx-auto' alt='empty data' />
-                    <h5 className='text-base font-figtree text-center'>Data is empty</h5>
+                    <h5 className='text-base font-figtree text-center'>{t("empty")}</h5>
                 </section>
             }
 

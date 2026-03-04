@@ -13,6 +13,8 @@ export default async function middleware(request: NextRequest) {
   const intlResponse = intlMiddleware(request);
   if (intlResponse) return intlResponse;
 
+  console.log("-----------called------------");
+
   const current_req = request.nextUrl.pathname;
   const accessToken = request.cookies.get('accessToken')?.value;
 
@@ -33,7 +35,7 @@ export default async function middleware(request: NextRequest) {
     }
   }
 
-  //check contructor
+  //check vendor
   if (current_req.includes('/vendor') || current_req.includes('/post')) {
     try {
       // Decode and validate the access token

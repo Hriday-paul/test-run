@@ -6,6 +6,65 @@
     "about": "About Us",
     "btn": "Post Your Ad"
   },
+  "sidebar": {
+    "title": "Dashboard",
+    "dashboard": "Dashboard",
+    "ads": "Ads",
+    "orders": "Service Orders",
+    "setting": "Setting",
+    "logout": "Logout"
+  },
+  "vendor": {
+    "home": {
+      "stats": {
+        "post_limit": "Post Limit",
+        "posted_ad": "Posted Ads",
+        "remain_ad": "Remaining Ads",
+        "feature_ad": "Featured Ads",
+        "bump_ad": "Bump Ads",
+        "expire_date": "Expire Date"
+      },
+      "payments": {
+        "title": "Payments",
+        "tranId": "Tran. Id",
+        "pack_service": "Package/Service",
+        "amount": "Amount",
+        "date": "Date",
+        "empty": "Data is Empty"
+      }
+    },
+    "ads": {
+      "title": "Posted Ads",
+      "table": {
+        "img": "Images",
+        "title": "Ad Title",
+        "category": "Category",
+        "price": "Price",
+        "status": "Status",
+        "postedAt": "Posted At",
+        "action": "Action",
+        "empty": "Data is Empty"
+      },
+      "action": {
+        "feature": "Feature Ad",
+        "bump": "Bump Up",
+        "view": "View Post",
+        "edit": "Edit Post",
+        "dlt": "Delete"
+      }
+    },
+    "service": {
+      "title": "Document Service Orders",
+      "table": {
+        "service": "Service",
+        "price": "Price",
+        "status": "Status",
+        "date": "Date",
+        "action": "Action",
+        "empty" : "Data is empty"
+      }
+    }
+  },
   "login": {
     "bread_cump": {
       "home": "Home",
@@ -97,6 +156,72 @@
     "phone_placeholder": "01*********",
     "phone_required": "Phone number is required",
     "phone_invalid": "Enter a valid phone number"
+  },
+  "reset_pass": {
+    "bread_cump": {
+      "home": "Home",
+      "forgot": "Forgot password",
+      "reset": "Reset password"
+    },
+    "title": "Reset Password",
+    "form": {
+      "fields": {
+        "new_password": {
+          "label": "Password",
+          "placeholder": "Enter new password",
+          "required": "Password is required"
+        },
+        "confirm_password": {
+          "label": "Confirm Password",
+          "placeholder": "Enter your confirm password",
+          "required": "Confirm Password is required",
+          "mismatch": "Password not match"
+        }
+      },
+      "btn": {
+        "txt": "Update",
+        "loading": "Loading..."
+      },
+      "toast": {
+        "success": "Password updated successfully",
+        "error": "Something went wrong, try again"
+      }
+    }
+  },
+  "verify_otp": {
+    "bread_cump": {
+      "home": "Home",
+      "verify": "Verify otp"
+    },
+    "title": "Verify Otp",
+    "form": {
+      "btn": {
+        "verify": "Verify",
+        "resend": "Resend"
+      }
+    }
+  },
+  "resend_otp": {
+    "bread_cump": {
+      "home": "Home",
+      "resend": "Resend otp"
+    },
+    "title": "Resend Otp",
+    "form": {
+      "phone": {
+        "label": "Phone",
+        "placeholder": "01****",
+        "invalid": "Invalid Phone"
+      },
+      "btn": {
+        "txt": "Submit",
+        "loading": "Loading..."
+      },
+      "toast": {
+        "success": "Otp Send successfully",
+        "error": "Something went wrong, try again"
+      }
+    }
   },
   "Home": {
     "section1": {
