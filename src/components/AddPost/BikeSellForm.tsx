@@ -18,6 +18,8 @@ import { Popconfirm } from 'antd';
 import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
 import { useRouter } from '@/i18n/navigation';
+import { useDispatch } from 'react-redux';
+import baseApi from '@/redux/api/baseApi';
 
 type FieldType = {
     title: string,
@@ -46,6 +48,7 @@ function BikeSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
     // const [updateAd, { isLoading: updateLoading }] = useUpdateBikeMutation();
     const [dltImage] = useDltAdImageMutation();
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
 
@@ -130,6 +133,8 @@ function BikeSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
                     return;
                 }
             }
+
+            dispatch(baseApi.util.invalidateTags(["ads"]))
 
             Swal.fire({
                 title: `Bike Ad ${defaultData ? "updated" : "posted"} successfully!`,

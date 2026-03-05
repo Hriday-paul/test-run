@@ -8,7 +8,7 @@ import { MdDeleteOutline } from 'react-icons/md';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { Carbrands } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
-import { useAddcarMutation, useDltAdImageMutation, useUpdateCarMutation } from '@/redux/api/ads.api';
+import { useDltAdImageMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
@@ -18,6 +18,8 @@ import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
 import { useRouter } from '@/i18n/navigation';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import baseApi from '@/redux/api/baseApi';
 
 type FieldType = {
     title: string,
@@ -78,6 +80,8 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
     // const [postCar, { isLoading }] = useAddcarMutation();
     // const [updateCar, { isLoading: updateLoading }] = useUpdateCarMutation();
     const [dltImage] = useDltAdImageMutation();
+
+    const dispatch = useDispatch();
 
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
 
@@ -164,6 +168,7 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
                 }
             }
 
+            dispatch(baseApi.util.invalidateTags(["ads"]))
 
             Swal.fire({
                 title: `Car Ad ${defaultData ? "updated" : "posted"} successfully!`,

@@ -17,6 +17,8 @@ import { Popconfirm } from 'antd';
 import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
 import { useRouter } from '@/i18n/navigation';
+import { useDispatch } from 'react-redux';
+import baseApi from '@/redux/api/baseApi';
 
 type FieldType = {
     title: string,
@@ -38,6 +40,7 @@ function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
 
     const [dltImage] = useDltAdImageMutation();
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
 
@@ -121,6 +124,8 @@ function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
                     return;
                 }
             }
+
+            dispatch(baseApi.util.invalidateTags(["ads"]))
 
             Swal.fire({
                 title: `Car Rent Ad ${defaultData ? "updated" : "posted"} successfully!`,

@@ -115,10 +115,10 @@ export interface IJob {
     id: number;
 
     dedline?: string | null;
-    vacancy?: number | null;
+    vacancy?: string | null;
     salary?: string | null;
     age?: string | null;
-    experience?: number | null;
+    experience?: string | null;
     job_location?: string | null;
     about_company?: string | null;
 

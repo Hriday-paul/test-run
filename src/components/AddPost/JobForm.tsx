@@ -1,89 +1,96 @@
 "use client"
-import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { ImSpinner2 } from 'react-icons/im';
 import { toast } from 'react-toastify';
-import { useAddcarMutation, useAddJobMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
-import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
-import { useMyProfileQuery } from '@/redux/api/user.api';
-import { postNewAdd } from '@/lib/Actions/Post.action';
+import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
 import { useRouter } from '@/i18n/navigation';
+import { Add } from '@/redux/types';
+import { useDispatch } from 'react-redux';
+import baseApi from '@/redux/api/baseApi';
 
 type FieldType = {
     title: string,
     // "price": number,
 
-    "description": string,
+    "description": string | null,
 
     "divisionId": string | null,
     "districtId": string | null,
     "areaId": string | null,
 
-    dedline: string
+    dedline: string | null
     vacancy: string | null
-    salary: string
-    age: string
+    salary: string | null
+    age: string | null
     experience: string | null
-    job_location: string
-    about_company: string
-    company_name: string
-    job_type: string
-    employment_type: string
+    job_location: string | null
+    about_company: string | null
+    company_name: string | null
+    job_type: string | null
+    employment_type: string | null
 }
 
-function JobForm() {
-    const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
+function JobForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
 
-    const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
-    const [division, setDivision] = useState<any>(null);
-    const [district, setDistrict] = useState<any>(null);
     const router = useRouter();
-
-    const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : 1 });
-
-    const query: { division?: number, district?: number } = {}
-
-    if (division) {
-        query.division = division?.id
-    }
-    if (district) {
-        query.district = district?.id
-    }
-
-    const { isLoading: areatLoad, isFetching: areaFetch, data: areas, isSuccess: areaSuccess } = useAreasByDivDistrictQuery(query);
-
-    // const [postJob, { isLoading }] = useAddJobMutation();
+    const dispatch = useDispatch();
 
     const {
         register,
         handleSubmit,
         control,
         reset,
-        resetField,
         formState: { errors, isSubmitting: isLoading },
-    } = useForm<FieldType>({ defaultValues: {} });
+    } = useForm<FieldType>({
+        defaultValues: {
+            title: defaultData?.title,
+            description: defaultData?.description,
+            ...defaultData?.job,
+        }
+    });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
         try {
 
-            // await postJob(data).unwrap();
-            const postedRes = await postNewAdd({ endPoint: "/ads/jobs", payload: JSON.stringify(data), tags: [tags?.jobs] });
+            if (defaultData) {
+                // await updateAd({ id: defaultData?.id, body: form }).unwrap();
+                const updatedRes = await updateAdd({ endPoint: `/ads/jobs/${defaultData?.id}`, payload: JSON.stringify(data), tags: [tags?.jobs] });
+                if (updatedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (updatedRes.error) {
+                    toast.error(updatedRes.error)
+                    return;
+                }
 
-            if (postedRes?.redirect) {
-                router.push("/auth/login");
-                toast.error("Session expired. Please log in again.");
-                return;
-            } else if (postedRes.error) {
-                toast.error(postedRes.error)
-                return;
+            } else {
+
+                // await postJob(data).unwrap();
+                const postedRes = await postNewAdd({
+                    endPoint: "/ads/jobs",
+                    payload: JSON.stringify(data),
+                    tags: [tags?.jobs]
+                });
+
+                if (postedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (postedRes.error) {
+                    toast.error(postedRes.error)
+                    return;
+                }
             }
 
+            dispatch(baseApi.util.invalidateTags(["ads"]))
+
             Swal.fire({
-                title: "Job Ad posted successfully!",
-                text: "Your Job add posted successfully",
+                title: `Job Ad ${defaultData ? "updated" : "posted"} successfully!`,
+                text: `Your Job add ${defaultData ? "updated" : "posted"} successfully`,
                 customClass: {
                     title: "text-2xl text-black font-figtree",
                     container: "text-sm font-medium font-figtree text-zinc-900",
@@ -97,6 +104,15 @@ function JobForm() {
                 confirmButtonColor: "#38CB6E",
                 cancelButtonText: "Close",
             })
+
+            if (defaultData) {
+
+                if (setOpen) {
+                    setOpen(false)
+                }
+
+                return;
+            }
 
             reset({
                 title: "",
@@ -122,38 +138,6 @@ function JobForm() {
             toast.error(err?.data?.message || 'Something went wrong, try again')
         }
     }
-
-    useEffect(() => {
-        if (profileSuccess) {
-            reset({
-                divisionId: profile?.data?.division?.id.toString(),
-                districtId: profile?.data?.district?.id.toString(),
-                areaId: profile?.data?.area?.id.toString(),
-            })
-
-            setDivision({ id: profile?.data?.division?.id })
-            setDistrict({ id: profile?.data?.district?.id })
-        }
-    }, [profile, profileSuccess])
-
-    useEffect(() => {
-        if (division && division?.label) {
-            resetField("districtId", {
-                defaultValue: null
-            })
-            resetField("areaId", {
-                defaultValue: null
-            })
-        }
-    }, [division])
-
-    useEffect(() => {
-        if (district && district?.label) {
-            resetField("areaId", {
-                defaultValue: null
-            })
-        }
-    }, [district])
 
     return (
         <div>

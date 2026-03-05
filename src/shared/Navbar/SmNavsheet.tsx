@@ -15,11 +15,21 @@ import { motion } from "motion/react"
 import { navitems } from './Navbar';
 import Image from 'next/image';
 import logo from "../../../public/logo.png"
+import { usePathname, useRouter } from "@/i18n/navigation";
+import { useLocale } from "next-intl";
 
 
 const SmNavSheet = () => {
+    const router = useRouter();
+    const locale = useLocale();
+    const pathname = usePathname();
 
-    const routes = navitems
+    const routes = navitems;
+
+    const handleSwitchLocal = () => {
+        const newLocale = locale == "en" ? "bn" : "en";
+        router.push(pathname, { locale: newLocale });
+    }
 
     return (
         <div>
@@ -61,6 +71,10 @@ const SmNavSheet = () => {
                                     })
                                 }
                             </ul>
+
+                            <button onClick={handleSwitchLocal} className=" border border-primary/40 rounded px-2 py-1 font-popin text-xs">
+                                {locale == "en" ? "বাংলা" : "English"}
+                            </button>
 
                         </div>
 

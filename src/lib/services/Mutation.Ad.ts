@@ -2,20 +2,26 @@
 import { config } from "@/utils/config";
 import { cookies } from "next/headers";
 
-export const serverQueryWithReauth = async ({ payload, endPoint, method }: { payload?: FormData | string, endPoint: string, method: string }) => {
+export const serverQueryWithReauth = async ({ payload, endPoint, method }: { payload: FormData | string, endPoint: string, method: string }) => {
     const cookieStore = await cookies()
     const accessToken = cookieStore.get("accessToken")?.value;
     const refreshToken = cookieStore.get('refreshToken')?.value;
 
     const makeRequest = async (token?: string) => {
+        console.log(payload);
         return fetch(
             config.serverBaseApi + endPoint,
             {
                 method,
                 headers: {
-                    ...(token ? { Authorization: `Bearer ${token}` } : {})
+                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+
+                    ...(typeof payload === "string"
+                        ? { "Content-Type": "application/json" }
+                        : {}),
+
                 },
-                body: payload ?? undefined
+                body: payload
             }
         );
     };

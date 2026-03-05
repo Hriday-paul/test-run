@@ -32,12 +32,17 @@ import { Eye, SquarePen, Trash2 } from 'lucide-react';
 import { FaArrowDownLong } from 'react-icons/fa6';
 import { FaRegStar } from 'react-icons/fa';
 import { toast } from 'sonner';
+import { toast as toastify } from 'react-toastify';
 import EditPost from '@/components/EditPost/EditPost';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { categoryRouteMap } from '@/shared/FeatureAddCard';
 import { adFeature } from '@/lib/Actions/FeatureAd.action';
 import { useTranslations } from 'next-intl';
+import { DeleteAdd } from '@/lib/Actions/Post.action';
+import { useRouter } from '@/i18n/navigation';
+import { useDispatch } from 'react-redux';
+import baseApi from '@/redux/api/baseApi';
 
 function AdsTable() {
     const [page, setPage] = useState(1);
@@ -76,14 +81,28 @@ function AdsTable() {
     )
 }
 
-export default AdsTable
+export default AdsTable;
+
+const tagLookUpByCategory = {
+    Bike: "bikes",
+    Car: "cars",
+    Workshop: "workshops",
+    Accessories: "accessories",
+    CarRent: "rent-cars",
+    Job: "jobs",
+    Exchange: "exchanges",
+    Lawyer: "lawyers"
+
+}
 
 const AdTable = ({ ads }: { ads: Add[] }) => {
 
     // const [addFeature] = useFeatureAddMutation();
     const [addBump] = useBumpAddMutation();
     const [addDlt] = useDltAddMutation();
-    const t = useTranslations("vendor.ads")
+    const t = useTranslations("vendor.ads");
+    const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleFeature = async (addId: number) => {
         const loading = toast.loading("Loading...")
@@ -92,7 +111,6 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
             await adFeature({ id: addId?.toString() });
             toast.success("Ad successfully featured");
         } catch (err: any) {
-            console.log(err);
             Swal.fire({
                 title: err?.message || "Something went wrong",
                 // text: "Job poster will review your quotes. You’ll be notified in you email when a quote arrives.",
@@ -137,7 +155,7 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
         }
     }
 
-    const handleDelete = async (addId: number) => {
+    const handleDelete = async (addId: number, category: string) => {
         let loadingId: string | number | undefined;
 
         const result = await Swal.fire({
@@ -159,7 +177,19 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
         try {
             loadingId = toast.loading("Loading...");
 
-            await addDlt({ addId }).unwrap();
+            const tag = tagLookUpByCategory[category as keyof typeof tagLookUpByCategory];
+
+            const postedRes = await DeleteAdd({ endPoint: `/ads/${addId}`, payload: JSON.stringify({}), tags: [tag] });
+            if (postedRes?.redirect) {
+                router.push("/auth/login");
+                toastify.error("Session expired. Please log in again.");
+                return;
+            } else if (postedRes.error) {
+                toastify.error(postedRes.error)
+                return;
+            }
+
+            dispatch(baseApi.util.invalidateTags(["ads"]));
 
             toast.success("Ad deleted successfully");
 
@@ -203,12 +233,12 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                         <TableRow key={ad?.id}>
 
                             <TableCell>
-                                <div className='relative w-16'>
+                                {ad?.images?.length > 0 ? <div className='relative w-16'>
                                     <Image height={800} width={1000} src={ad?.images[0]?.url} alt='add images' className='object-cover h-auto w-full rounded' />
                                     <div className='bg-black/50 absolute top-0 left-0 h-full w-full flex justify-center items-center'>
                                         <p className='text-sm text-white font-popin'>{ad?.images?.length}</p>
                                     </div>
-                                </div>
+                                </div> : "N/A"}
                             </TableCell>
 
                             <TableCell className=''>{ad?.title}</TableCell>
@@ -267,7 +297,7 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
 
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
-                                            <button onClick={() => handleDelete(ad?.id)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
+                                            <button onClick={() => handleDelete(ad?.id, ad?.category)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
                                                 <Trash2 className='text-primary' />
                                                 {t("action.dlt")}
                                             </button>

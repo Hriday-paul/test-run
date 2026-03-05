@@ -16,6 +16,8 @@ import { Popconfirm } from 'antd';
 import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
 import { useRouter } from '@/i18n/navigation';
+import { useDispatch } from 'react-redux';
+import baseApi from '@/redux/api/baseApi';
 
 type FieldType = {
     title: string,
@@ -46,6 +48,7 @@ function WorkshopForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
     const [district, setDistrict] = useState<any>(null);
 
     const router = useRouter();
+    const dispatch = useDispatch();
 
     const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : 1 });
 
@@ -123,6 +126,8 @@ function WorkshopForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
                     return;
                 }
             }
+
+            dispatch(baseApi.util.invalidateTags(["ads"]))
 
             Swal.fire({
                 title: `Workshop Ad ${defaultData ? "updated" : "posted"} successfully!`,

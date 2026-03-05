@@ -16,6 +16,8 @@ import { Popconfirm } from 'antd';
 import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
 import { useRouter } from '@/i18n/navigation';
+import { useDispatch } from 'react-redux';
+import baseApi from '@/redux/api/baseApi';
 
 type FieldType = {
     title: string,
@@ -51,6 +53,7 @@ function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Rea
 
     const [dltImage] = useDltAdImageMutation();
     const router = useRouter();
+    const dispatch = useDispatch();
 
     // const [postAdd, { isLoading }] = useAddLawyerMutation();
 
@@ -111,6 +114,8 @@ function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Rea
                     return;
                 }
             }
+
+            dispatch(baseApi.util.invalidateTags(["ads"]))
 
             Swal.fire({
                 title: `Lawyer Ad ${defaultData ? "updated" : "posted"} successfully!`,

@@ -16,6 +16,8 @@ import { Popconfirm } from 'antd';
 import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
 import { useRouter } from '@/i18n/navigation';
+import { useDispatch } from 'react-redux';
+import baseApi from '@/redux/api/baseApi';
 
 type FieldType = {
     title: string,
@@ -32,6 +34,8 @@ function AccessoriesForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?
 
     const [dltImage] = useDltAdImageMutation();
     const router = useRouter();
+
+    const dispatch = useDispatch();
 
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
 
@@ -112,6 +116,8 @@ function AccessoriesForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?
                     return;
                 }
             }
+
+            dispatch(baseApi.util.invalidateTags(["ads"]))
 
             Swal.fire({
                 title: `Accessories Ad ${defaultData ? "updated" : "posted"} successfully!`,
