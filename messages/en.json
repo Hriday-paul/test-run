@@ -367,7 +367,8 @@
         "truck": "Truck",
         "bus": "Bus",
         "mini_bus": "Mini Bus",
-        "car_hiace": "Car/Hiace"
+        "car": "Car",
+        "hiace": "Hiace"
       },
       "condition": {
         "title": "Condition",

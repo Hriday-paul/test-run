@@ -2,6 +2,7 @@
 
 export const tags = {
   feature_add: "feature-ads",
+  packages : "packages",
   cars: "cars",
   bikes: "bikes",
   work_shops : "workshops",

@@ -33,7 +33,12 @@ const carTypes = [
     },
     {
         id: 4,
-        name: "car_type.car_hiace",
+        name: "car_type.car",
+        value: "Car",
+    },
+    {
+        id: 5,
+        name: "car_type.hiace",
         value: "Hiace",
         icon: <TbCar className='text-base md:text-lg' />
     },

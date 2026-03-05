@@ -62,9 +62,14 @@ const carTypes = [
         value: "Mini Bus"
     },
     {
-        id: 3,
-        name: "Car/Hiace",
-        value: "Hiace"
+        id: 4,
+        name: "Car",
+        value: "Car",
+    },
+    {
+        id: 5,
+        name: "Hiace",
+        value: "Hiace",
     },
 ]
 
