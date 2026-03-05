@@ -1,85 +1,55 @@
-
-import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server'
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 import { jwtDecode } from "jwt-decode";
 
-import createMiddleware from 'next-intl/middleware';
-import { routing } from './i18n/routing';
+import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);
 
-export default async function middleware(request: NextRequest) {
+export default function middleware(request: NextRequest) {
 
-  const intlResponse = intlMiddleware(request);
-  if (intlResponse) return intlResponse;
+  // run next-intl middleware
+  const response = intlMiddleware(request);
 
-  console.log("-----------called------------");
+  const pathname = request.nextUrl.pathname.replace(/^\/(en|bn)/, "");
+  const accessToken = request.cookies.get("accessToken")?.value;
 
-  const current_req = request.nextUrl.pathname;
-  const accessToken = request.cookies.get('accessToken')?.value;
+  const privateRoutes = ["/profile", "/user", "/vendor", "/post"];
+  const isPrivate = privateRoutes.some(route => pathname.startsWith(route));
 
-  if (!accessToken) {
-    return NextResponse.redirect(new URL(`/auth/login?next=${current_req}`, request.url));
+  if (isPrivate && !accessToken) {
+    const loginUrl = new URL(`/auth/login?next=${pathname}`, request.url);
+    return NextResponse.redirect(loginUrl);
   }
 
-  //send to profile
-  if (current_req.includes('/profile')) {
+  if (accessToken) {
     try {
-      // Decode and validate the access token
-      const { role } = jwtDecode<{ role: 'User' | 'Vendor' }>(accessToken);
+      const { role } = jwtDecode<{ role: "User" | "Vendor" }>(accessToken);
 
-      return NextResponse.redirect(new URL(role == "User" ? `/user` : `/vendor`, request.url));
+      if (pathname.startsWith("/vendor") && role !== "Vendor") {
+        return NextResponse.redirect(new URL("/auth/login", request.url));
+      }
 
-    } catch (error) {
-      return NextResponse.redirect(new URL(`/auth/login?next=${current_req}`, request.url));
+      if (pathname.startsWith("/user") && role !== "User") {
+        return NextResponse.redirect(new URL("/auth/login", request.url));
+      }
+
+      if (pathname === "/profile") {
+        return NextResponse.redirect(
+          new URL(role === "User" ? "/user" : "/vendor", request.url)
+        );
+      }
+
+    } catch {
+      return NextResponse.redirect(new URL("/auth/login", request.url));
     }
   }
 
-  //check vendor
-  if (current_req.includes('/vendor') || current_req.includes('/post')) {
-    try {
-      // Decode and validate the access token
-      const { role } = jwtDecode<{ role: 'User' | 'Vendor' }>(accessToken);
-
-      if (role !== 'Vendor') {
-        return NextResponse.redirect(new URL(`/auth/login?next=${current_req}`, request.url));
-      }
-      else {
-        return NextResponse.next();
-      }
-    } catch (error) {
-      return NextResponse.redirect(new URL(`/auth/login?next=${current_req}`, request.url));
-    }
-  }
-
-  //check user
-  if ((current_req.includes('/user'))) {
-
-    try {
-      // Decode and validate the access token
-      const { role } = jwtDecode<{ role: 'User' | 'Vendor' }>(accessToken);
-
-      if (role !== 'User') {
-        return NextResponse.redirect(new URL(`/auth/login`, request.url));
-      } else {
-        return NextResponse.next();
-      }
-    } catch (error) {
-      return NextResponse.redirect(new URL(`/auth/login`, request.url));
-    }
-  }
-
-  return NextResponse.next();
-
+  // IMPORTANT: return intl response so translations work
+  return response;
 }
 
 export const config = {
-  matcher: [
-    // "/profile",
-    // "/user/:path*",
-    // '/vendor/:path*',
-    // '/post/:path*',
-
-    '/((?!api|trpc|_next|_vercel|.*\\..*).*)'
-  ],
+  matcher: ["/((?!api|trpc|_next|_vercel|.*\\..*).*)"],
 };

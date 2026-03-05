@@ -2,7 +2,7 @@
 import { ImSpinner2 } from "react-icons/im";
 import { MdErrorOutline } from "react-icons/md";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useResendOtpMutation } from "@/redux/api/authApi";
 import { useCookies } from "react-cookie";
 import { config } from "@/utils/config";

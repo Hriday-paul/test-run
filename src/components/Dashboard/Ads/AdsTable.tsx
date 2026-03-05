@@ -46,7 +46,10 @@ function AdsTable() {
     return (
         <div>
             <div className=''>
-                <h3 className='text-base lg:text-lg font-popin text-black py-3'>{t("title")}</h3>
+                <div className="flex flex-row justify-between items-center">
+                    <h3 className='text-base lg:text-lg font-popin text-black py-3'>{t("title")}</h3>
+                    <Link href={'/vendor/post-ad'} className='bg-primary text-white font-popin hover:bg-primary/60 duration-150 cursor-pointer rounded-2xl border-none text-sm px-4 py-1.5'>{t("btn.txt")}</Link>
+                </div>
                 {
                     isLoading ?
                         <div>
@@ -77,7 +80,7 @@ export default AdsTable
 
 const AdTable = ({ ads }: { ads: Add[] }) => {
 
-    const [addFeature] = useFeatureAddMutation();
+    // const [addFeature] = useFeatureAddMutation();
     const [addBump] = useBumpAddMutation();
     const [addDlt] = useDltAddMutation();
     const t = useTranslations("vendor.ads")
@@ -284,7 +287,7 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
             {
                 ads?.length <= 0 && <section className='min-h-[calc(25vh)] flex flex-col items-center justify-center'>
                     <Image src={emptyDataImg} className='h-28 w-auto mx-auto' alt='empty data' />
-                    <h5 className='text-base font-figtree text-center'>{t("empty")}</h5>
+                    <h5 className='text-base font-figtree text-center'>{t("table.empty")}</h5>
                 </section>
             }
 

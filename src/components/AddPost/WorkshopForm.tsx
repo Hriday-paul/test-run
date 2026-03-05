@@ -6,8 +6,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { GoPlus } from 'react-icons/go';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { ImSpinner2 } from 'react-icons/im';
-import { toast } from 'sonner';
-import { useAddBikeMutation, useAddWorkshopMutation, useDltAdImageMutation, useUpdateWorkshopMutation } from '@/redux/api/ads.api';
+import { toast } from 'react-toastify';
+import { useDltAdImageMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
@@ -15,6 +15,7 @@ import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
 import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
+import { useRouter } from '@/i18n/navigation';
 
 type FieldType = {
     title: string,
@@ -44,6 +45,8 @@ function WorkshopForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
     const [division, setDivision] = useState<any>(null);
     const [district, setDistrict] = useState<any>(null);
 
+    const router = useRouter();
+
     const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : 1 });
 
     const query: { division?: number, district?: number } = {}
@@ -67,7 +70,7 @@ function WorkshopForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
         control,
         reset,
         resetField,
-        formState: { errors, isSubmitting : isLoading  },
+        formState: { errors, isSubmitting: isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
@@ -98,11 +101,27 @@ function WorkshopForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
 
             if (defaultData) {
                 // await updateAd({ id: defaultData?.id, body: form }).unwrap();
-                 await updateAdd({ endPoint: `/ads/work-shops/${defaultData?.id}`, payload: form, tags: [tags?.work_shops] });
+                const updatedRes = await updateAdd({ endPoint: `/ads/work-shops/${defaultData?.id}`, payload: form, tags: [tags?.work_shops] });
+                if (updatedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (updatedRes.error) {
+                    toast.error(updatedRes.error)
+                    return;
+                }
 
             } else {
                 // await postAd(form).unwrap();
-                await postNewAdd({ endPoint: "/ads/work-shops", payload: form, tags: [tags?.work_shops] });
+                const postedRes = await postNewAdd({ endPoint: "/ads/work-shops", payload: form, tags: [tags?.work_shops] });
+                if (postedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (postedRes.error) {
+                    toast.error(postedRes.error)
+                    return;
+                }
             }
 
             Swal.fire({
@@ -218,7 +237,7 @@ function WorkshopForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
                     <span className="text-red-500 text-base ml-1">*</span>
                 </div>
                 <div className='flex flex-row flex-wrap gap-2 items-center'>
-                     {/* //uploaded images  */}
+                    {/* //uploaded images  */}
                     {
                         defaultData?.images?.map((img, indx) => {
                             return <div key={img?.key} className='relative'>

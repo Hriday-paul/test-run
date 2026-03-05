@@ -6,6 +6,8 @@ import NextJsTopLoader from "@/shared/NextJsTopLoader";
 import TawkTo from "@/utils/TawkTo";
 import { NextIntlClientProvider } from 'next-intl';
 
+import { ToastContainer } from 'react-toastify';
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -15,6 +17,18 @@ export default function RootLayout({
         <ReduxProvider>
             <TawkTo />
             <Toaster richColors position="top-right" closeButton />
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
             <NextJsTopLoader />
             <NextIntlClientProvider>
                 <Navbar />

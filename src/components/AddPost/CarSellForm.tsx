@@ -8,7 +8,6 @@ import { MdDeleteOutline } from 'react-icons/md';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { Carbrands } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
-import { toast } from 'sonner';
 import { useAddcarMutation, useDltAdImageMutation, useUpdateCarMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
@@ -17,6 +16,8 @@ import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
 import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
+import { useRouter } from '@/i18n/navigation';
+import { toast } from 'react-toastify';
 
 type FieldType = {
     title: string,
@@ -79,6 +80,8 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
     const [division, setDivision] = useState<any>(null);
     const [district, setDistrict] = useState<any>(null);
 
+    const router = useRouter();
+
     const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : 1 });
 
     const query: { division?: number, district?: number } = {}
@@ -100,7 +103,7 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
         control,
         reset,
         resetField,
-        formState: { errors, isSubmitting : isLoading  },
+        formState: { errors, isSubmitting: isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
@@ -132,11 +135,28 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
             if (defaultData) {
                 // await updateCar({ id: defaultData?.id, body: form }).unwrap();
 
-                await updateAdd({ endPoint: `/ads/cars/${defaultData?.id}`, payload: form, tags: [tags?.cars] });
+                const updatedRes = await updateAdd({ endPoint: `/ads/cars/${defaultData?.id}`, payload: form, tags: [tags?.cars] });
+
+                if (updatedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (updatedRes.error) {
+                    toast.error(updatedRes.error)
+                    return;
+                }
 
             } else {
                 // await postCar(form).unwrap();
-                await postNewAdd({ endPoint: "/ads/cars", payload: form, tags: [tags?.cars] });
+                const postedRes = await postNewAdd({ endPoint: "/ads/cars", payload: form, tags: [tags?.cars] });
+                if (postedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (postedRes.error) {
+                    toast.error(postedRes.error)
+                    return;
+                }
             }
 
 
@@ -193,6 +213,7 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
             setImages([]);
 
         } catch (err: any) {
+            console.log(err, "got error from catch")
             toast.error(err?.data?.message || 'Something went wrong, try again')
         }
     }
@@ -256,7 +277,6 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
             toast.error(err?.data?.message || 'Something went wrong, try again')
         }
     }
-
 
     return (
         <div>

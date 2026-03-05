@@ -8,13 +8,14 @@ import { MdDeleteOutline } from 'react-icons/md';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { Carbrands, ExchangeCategory } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { useAddcarMutation, useAddExchangeMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
 import { postNewAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
+import { useRouter } from '@/i18n/navigation';
 
 type FieldType = {
     title: string,
@@ -34,6 +35,7 @@ function ExchangeForm() {
     const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
     const [division, setDivision] = useState<any>(null);
     const [district, setDistrict] = useState<any>(null);
+    const router = useRouter();
 
     const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : 1 });
 
@@ -58,7 +60,7 @@ function ExchangeForm() {
         control,
         reset,
         resetField,
-        formState: { errors, isSubmitting : isLoading  },
+        formState: { errors, isSubmitting: isLoading },
     } = useForm<FieldType>({ defaultValues: {} });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
@@ -76,7 +78,16 @@ function ExchangeForm() {
             });
 
             // const res = await postAdd(form).unwrap();
-            await postNewAdd({ endPoint: "/ads/exchanges", payload: form, tags: [tags?.exchanges] });
+            const postedRes = await postNewAdd({ endPoint: "/ads/exchanges", payload: form, tags: [tags?.exchanges] });
+
+            if (postedRes?.redirect) {
+                router.push("/auth/login");
+                toast.error("Session expired. Please log in again.");
+                return;
+            } else if (postedRes.error) {
+                toast.error(postedRes.error)
+                return;
+            }
 
             Swal.fire({
                 title: "Exchange Ad posted successfully!",

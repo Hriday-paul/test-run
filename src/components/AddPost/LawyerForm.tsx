@@ -7,7 +7,7 @@ import { GoPlus } from 'react-icons/go';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { lawyerSpecializations } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { useAddLawyerMutation, useDltAdImageMutation, useUpdateLawyerMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import MultipleSelect from '../ui/MultiSelect';
@@ -15,6 +15,7 @@ import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
 import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
+import { useRouter } from '@/i18n/navigation';
 
 type FieldType = {
     title: string,
@@ -49,6 +50,7 @@ function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Rea
     // const [updateAd, { isLoading: updateLoading }] = useUpdateLawyerMutation();
 
     const [dltImage] = useDltAdImageMutation();
+    const router = useRouter();
 
     // const [postAdd, { isLoading }] = useAddLawyerMutation();
 
@@ -59,7 +61,7 @@ function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Rea
         handleSubmit,
         control,
         reset,
-        formState: { errors, isSubmitting : isLoading  },
+        formState: { errors, isSubmitting: isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
@@ -88,10 +90,26 @@ function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Rea
 
             if (defaultData) {
                 // await updateAd({ id: defaultData?.id, body: form }).unwrap();
-                await updateAdd({ endPoint: `/ads/lawyers/${defaultData?.id}`, payload: form, tags: [tags?.lawyers] });
+                const updatedRes = await updateAdd({ endPoint: `/ads/lawyers/${defaultData?.id}`, payload: form, tags: [tags?.lawyers] });
+                if (updatedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (updatedRes.error) {
+                    toast.error(updatedRes.error)
+                    return;
+                }
             } else {
                 // await postAdd(form).unwrap();
-                await postNewAdd({ endPoint: "/ads/lawyers", payload: form, tags: [tags?.lawyers] });
+                const postedRes = await postNewAdd({ endPoint: "/ads/lawyers", payload: form, tags: [tags?.lawyers] });
+                if (postedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (postedRes.error) {
+                    toast.error(postedRes.error)
+                    return;
+                }
             }
 
             Swal.fire({

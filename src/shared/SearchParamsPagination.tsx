@@ -6,8 +6,6 @@ function SearchParamsPagination({ totalData = 1, activePage = 1 }: { totalData: 
 
     const updateParams = UseUpdateSearchParams();
 
-    console.log(activePage)
-
     return (
         <Pagination
             totalPages={totalData}

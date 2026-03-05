@@ -7,7 +7,7 @@ import { GoPlus } from 'react-icons/go';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { bikeBrands, Carbrands } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { useAddBikeMutation, useAddcarMutation, useDltAdImageMutation, useUpdateBikeMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
@@ -17,6 +17,7 @@ import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
 import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
+import { useRouter } from '@/i18n/navigation';
 
 type FieldType = {
     title: string,
@@ -44,6 +45,7 @@ function BikeSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
 
     // const [updateAd, { isLoading: updateLoading }] = useUpdateBikeMutation();
     const [dltImage] = useDltAdImageMutation();
+    const router = useRouter();
 
     const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
 
@@ -76,7 +78,7 @@ function BikeSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
         control,
         reset,
         resetField,
-        formState: { errors, isSubmitting : isLoading },
+        formState: { errors, isSubmitting: isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
@@ -107,10 +109,26 @@ function BikeSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: R
 
             if (defaultData) {
                 // await updateAd({ id: defaultData?.id, body: form }).unwrap();
-                await updateAdd({ endPoint: `/ads/bikes/${defaultData?.id}`, payload: form, tags: [tags?.bikes] });
+                const updatedRes = await updateAdd({ endPoint: `/ads/bikes/${defaultData?.id}`, payload: form, tags: [tags?.bikes] });
+                if (updatedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (updatedRes.error) {
+                    toast.error(updatedRes.error)
+                    return;
+                }
             } else {
                 // await postAd(form).unwrap();
-                await postNewAdd({ endPoint: "/ads/bikes", payload: form, tags: [tags?.bikes] });
+                const postedRes = await postNewAdd({ endPoint: "/ads/bikes", payload: form, tags: [tags?.bikes] });
+                if (postedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (postedRes.error) {
+                    toast.error(postedRes.error)
+                    return;
+                }
             }
 
             Swal.fire({

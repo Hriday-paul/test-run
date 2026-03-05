@@ -6,13 +6,13 @@ const cookies = new Cookies();
 
 
 export interface userType {
-    user: { firstName: string | null, profilePicture: string | null, role : "User" | "Vendor" }
+    user: { firstName: string | null, profilePicture: string | null, role: "User" | "Vendor" }
 }
 
-type addUserType = { firstName: string, profilePicture: string, role : "User" | "Vendor" }
+type addUserType = { firstName: string, profilePicture: string, role: "User" | "Vendor" }
 
 const initialState: userType = {
-    user: { firstName: null, profilePicture: null, role : "User" }
+    user: { firstName: null, profilePicture: null, role: "User" }
 }
 
 
@@ -29,10 +29,13 @@ const userSlice = createSlice({
         removeUser: (state) => {
             state.user.firstName = null;
             state.user.profilePicture = null;
-            
+
             cookies.remove("accessToken", { path: "/" });
             cookies.remove("token", { path: "/" });
             cookies.remove("refreshToken", { path: "/" });
+            // if (typeof window !== "undefined") {
+            //     window.location.href = "/auth/login";
+            // }
         },
     },
 })

@@ -1,11 +1,11 @@
 "use client"
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ImSpinner2 } from 'react-icons/im';
 import { useRegisterUserMutation } from '@/redux/api/authApi';
 import { useCookies } from 'react-cookie';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { config } from '@/utils/config';
 import { MdErrorOutline } from 'react-icons/md';
 import PasswordInput from './PasswordInput';

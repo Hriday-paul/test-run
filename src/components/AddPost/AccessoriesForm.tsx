@@ -6,8 +6,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { GoPlus } from 'react-icons/go';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { ImSpinner2 } from 'react-icons/im';
-import { toast } from 'sonner';
-import { useAddAccessoriesMutation, useDltAdImageMutation, useUpdateAccessoriesMutation } from '@/redux/api/ads.api';
+import { toast } from 'react-toastify';
+import { useDltAdImageMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
@@ -15,6 +15,7 @@ import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
 import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
 import { tags } from '@/lib/Tags';
+import { useRouter } from '@/i18n/navigation';
 
 type FieldType = {
     title: string,
@@ -30,6 +31,7 @@ function AccessoriesForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?
     // const [updateAd, { isLoading: updateLoading }] = useUpdateAccessoriesMutation();
 
     const [dltImage] = useDltAdImageMutation();
+    const router = useRouter();
 
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
 
@@ -60,7 +62,7 @@ function AccessoriesForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?
         control,
         reset,
         resetField,
-        formState: { errors, isSubmitting : isLoading  },
+        formState: { errors, isSubmitting: isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
@@ -89,10 +91,26 @@ function AccessoriesForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?
 
             if (defaultData) {
                 // await updateAd({ id: defaultData?.id, body: form }).unwrap();
-                await updateAdd({ endPoint: `/ads/accessories/${defaultData?.id}`, payload: form, tags: [tags?.accessories] });
+                const updatedRes = await updateAdd({ endPoint: `/ads/accessories/${defaultData?.id}`, payload: form, tags: [tags?.accessories] });
+                if (updatedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (updatedRes.error) {
+                    toast.error(updatedRes.error)
+                    return;
+                }
             } else {
                 // await postAd(form).unwrap();
-                await postNewAdd({ endPoint: "/ads/accessories", payload: form, tags: [tags?.accessories,] });
+                const postedRes = await postNewAdd({ endPoint: "/ads/accessories", payload: form, tags: [tags?.accessories,] });
+                if (postedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (postedRes.error) {
+                    toast.error(postedRes.error)
+                    return;
+                }
             }
 
             Swal.fire({

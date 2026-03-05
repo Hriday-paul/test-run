@@ -7,13 +7,14 @@ import {
 } from "@/components/ui/accordion"
 
 import { Checkbox } from "@/components/ui/checkbox"
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { useCallback } from "react";
 import { Skeleton } from "../ui/skeleton";
 import RangeFilter from "@/shared/RangeFilter";
 import { useMaxBikesCountQuery } from "@/redux/api/ads.api";
 import { bikeBrands } from "@/utils/config";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 
 
 function BikeFilter() {

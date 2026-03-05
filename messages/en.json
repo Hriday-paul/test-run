@@ -35,6 +35,9 @@
     },
     "ads": {
       "title": "Posted Ads",
+      "btn": {
+        "txt": "Post New Ad"
+      },
       "table": {
         "img": "Images",
         "title": "Ad Title",
@@ -61,8 +64,21 @@
         "status": "Status",
         "date": "Date",
         "action": "Action",
-        "empty" : "Data is empty"
+        "empty": "Data is empty"
       }
+    },
+    "post_ad": {
+      "title": "Post New Ad",
+      "subtitle": "Choose any option below",
+      "steps": {
+        "step1": "Category",
+        "step2": "Fill-up Form"
+      }
+    }
+  },
+  "user": {
+    "home": {
+      "title": "Welcome, {name} 🎉"
     }
   },
   "login": {
@@ -318,7 +334,7 @@
         "view": "View"
       },
       "similar": {
-        "title": "Similar Ads",
+        "title": "Explore Similar Ads",
         "currency": "TK"
       }
     }

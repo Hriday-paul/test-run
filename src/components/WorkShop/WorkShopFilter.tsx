@@ -7,9 +7,10 @@ import {
 } from "@/components/ui/accordion"
 
 import { Checkbox } from "@/components/ui/checkbox"
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { useCallback } from "react";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 
 
 function WorkShopFilter() {

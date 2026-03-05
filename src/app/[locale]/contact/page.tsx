@@ -2,7 +2,7 @@
 import ShopBanner from "@/shared/ShopBanner";
 import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
-import bannerimg from "../../../public/contact_banner.png"
+import bannerimg from "../../../../public/contact_banner.png"
 
  function ContctPage() {
 

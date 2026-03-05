@@ -17,13 +17,13 @@ import Loader from '@/shared/Loader';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useState } from 'react';
 import { IDistrict, IDivision } from '@/redux/types';
-import { UseUpdateMultipleSearchParams, UseUpdateSearchParams } from '@/hooks/UseUpdateSearchPrams'
+import { useUpdateMultipleSearchParams } from '@/hooks/UseUpdateSearchPrams'
 import { useSearchParams } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
 function Searchbar() {
 
-  const updateMultipleSearchParam = UseUpdateMultipleSearchParams();
+  const updateMultipleSearchParam = useUpdateMultipleSearchParams();
 
   return (
     <div className='w-auto bg-white px-2 md:p-2 border border-stroke grid grid-cols-1 md:grid-cols-2 gap-x-5 '>
@@ -68,9 +68,11 @@ const Search = ({ updateMultipleSearchParam }: { updateMultipleSearchParam: any 
 
 const LocationModal = ({ updateSearchParam }: { updateSearchParam: any }) => {
 
-  const district = useSearchParams().get("district");
-  const division = useSearchParams().get("division");
-  const area = useSearchParams().get("area");
+  const searchParams = useSearchParams()
+
+  const district = searchParams.get("district");
+  const division = searchParams.get("division");
+  const area = searchParams.get("area");
 
   const t = useTranslations("car_buy.search.location")
 
@@ -104,7 +106,9 @@ const DivisionSlide = ({ updateSearchParam }: { updateSearchParam: any }) => {
   const t = useTranslations("car_buy.search.location")
 
   if (isLoading) {
-    return <Loader />
+    return <div>
+      <Loader />
+    </div>
   }
 
   return (
@@ -149,7 +153,9 @@ const DistrictSlide = ({ division, updateSearchParam }: { division: IDivision, u
   const [selectedDistrict, setSelectedDistrict] = useState<IDistrict | null>(null);
 
   if (isLoading) {
-    return <Loader />
+    return <div>
+      <Loader />
+    </div>
   }
 
   return (
@@ -204,7 +210,9 @@ const AreaSlide = ({ division, district, updateSearchParam }: { division: IDivis
   const { isLoading, data, isSuccess } = useAreasByDivDistrictQuery({ division: division?.id, district: district?.id });
 
   if (isLoading) {
-    return <Loader />
+    return <div>
+      <Loader />
+    </div>
   }
 
   return (

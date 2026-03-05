@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ImSpinner2 } from 'react-icons/im';
 import { useResetPasswordMutation } from '@/redux/api/authApi';

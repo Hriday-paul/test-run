@@ -1,5 +1,5 @@
 "use client"
-import { UseUpdateMultipleSearchParams } from '@/hooks/UseUpdateSearchPrams';
+import { useUpdateMultipleSearchParams } from '@/hooks/UseUpdateSearchPrams';
 import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
 import { MdOutlineDashboardCustomize } from 'react-icons/md'
@@ -32,7 +32,7 @@ const carTypes = [
         icon: <TbCar className='text-base md:text-lg' />
     },
     {
-        id: 3,
+        id: 4,
         name: "car_type.car_hiace",
         value: "Hiace",
         icon: <TbCar className='text-base md:text-lg' />
@@ -40,10 +40,10 @@ const carTypes = [
 ]
 
 function CarSearchBar() {
-
-    const updateMultipleSearchParam = UseUpdateMultipleSearchParams();
     const car_type = useSearchParams().get("car_type");
     const t = useTranslations("car_buy.filter")
+    const updateMultipleSearchParam = useUpdateMultipleSearchParams();
+
 
     return (
         <div className=''>

@@ -11,7 +11,7 @@ import Dragger from 'antd/es/upload/Dragger';
 import { ImSpinner2, ImSpinner3 } from 'react-icons/im';
 import { useAddNewOrderMutation } from '@/redux/api/order.api';
 import Swal from 'sweetalert2';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { useEffect, useState } from 'react';
 import { useCookies } from 'react-cookie';
 import SignUpPopup from '@/shared/SignUpPopup';

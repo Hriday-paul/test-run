@@ -21,53 +21,54 @@ import JobForm from "./JobForm"
 import ExchangeForm from "./ExchangeForm"
 import WorkshopForm from "./WorkshopForm"
 import LawyerForm from "./LawyerForm"
+import { useTranslations } from "next-intl"
 
 const categories = [
     {
         id: 1,
-        name: "Car Sell",
+        name: "categories.car_buy_sell",
         icon: carbuy,
         rout: "/post/car-sell"
     },
     {
         id: 2,
-        name: "Bike Sell",
+        name: "categories.bike_buy_sell",
         icon: bike,
         rout: "/post/bike-sell"
     },
     {
         id: 3,
-        name: "Car Rent",
+        name: "categories.car_rent",
         icon: carRent,
         rout: "/post/car-rent"
     },
     {
         id: 4,
-        name: "Accessories",
+        name: "categories.accessories",
         icon: accessories,
         rout: "/post/accessories"
     },
     {
         id: 5,
-        name: "Job",
+        name: "categories.job_service",
         icon: job,
         rout: "/post/job"
     },
     {
         id: 6,
-        name: "Exchange",
+        name: "categories.exchange",
         icon: exchange,
         rout: "/post/exchange"
     },
     {
         id: 7,
-        name: "Workshop",
+        name: "categories.workshops",
         icon: workshop,
         rout: "/post/workshop"
     },
     {
         id: 8,
-        name: "Lawyer",
+        name: "categories.lawyer",
         icon: lawyer,
         rout: "/post/lawyer"
     }
@@ -76,14 +77,18 @@ const categories = [
 function PostNewAdd() {
     const [step, setStep] = useState(0);
     const [category, setCategory] = useState<null | number>(null);
+    const t = useTranslations("vendor.post_ad");
+    const tc = useTranslations('Home.section2');
 
     const stepList = [
         {
-            title: 'Category',
+            id : 1,
+            title: t("steps.step1"),
             description: null,
         },
         {
-            title: "Fill-up Form",
+            id : 2,
+            title: t("steps.step2"),
             description: null,
         }
     ]
@@ -121,7 +126,7 @@ function PostNewAdd() {
             </div>
 
             <div className='max-w-3xl mx-auto'>
-                {(category && step == 1) && <h3 className='text-xl font-medium font-popin py-5'>{categories[category - 1]?.name} Post</h3>}
+                {(category && step == 1) && <h3 className='text-xl font-medium font-popin py-5'>{tc(categories[category - 1]?.name)}</h3>}
                 {
                     step == 0 ? <Category selectCategory={selectCategory} /> : <div className="bg-white p-8 rounded-lg">
                         {
@@ -138,20 +143,21 @@ function PostNewAdd() {
 export default PostNewAdd;
 
 const Category = ({ selectCategory }: { selectCategory: (c: number) => void }) => {
-
+    const t = useTranslations("vendor.post_ad");
+    const tc = useTranslations('Home.section2');
 
     return (
         <div className="mt-5">
-            <h3 className='text-base lg:text-lg font-popin text-black mb-0.5 font-semibold text-center'>Post New Ad</h3>
-            <h3 className='text-sm font-popin text-gray-700 text-center'>Choose any option below</h3>
+            <h3 className='text-base lg:text-lg font-popin text-black mb-0.5 font-semibold text-center'>{t("title")}</h3>
+            <h3 className='text-sm font-popin text-gray-700 text-center'>{t("subtitle")}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2  border border-stroke max-w-2xl mx-auto mt-8">
                 {
                     categories?.map(category => {
-                        return <div onClick={() => selectCategory(category?.id)} className="flex flex-row items-center justify-between gap-3 py-5 px-4 border border-stroke hover:bg-slate-100 duration-150 cursor-pointer">
+                        return <div key={category?.id} onClick={() => selectCategory(category?.id)} className="flex flex-row items-center justify-between gap-3 py-5 px-4 border border-stroke hover:bg-slate-100 duration-150 cursor-pointer">
 
                             <div className="flex flex-row items-center gap-x-2">
                                 <Image src={category?.icon} alt="category icon" className="w-5 h-auto" />
-                                <h6 className="text-sm font-popin font-medium">{category?.name}</h6>
+                                <h6 className="text-sm font-popin font-medium">{tc(category?.name)}</h6>
                             </div>
 
                             <IoIosArrowForward className='' />

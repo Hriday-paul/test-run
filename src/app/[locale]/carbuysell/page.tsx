@@ -41,6 +41,8 @@ async function CarBuySell({
   searchParams: Promise<{ [key: string]: string | undefined }>;
 }) {
 
+  const t = await getTranslations('car_buy');
+
   const searchParams = await ssp;
 
   const limit = searchParams?.limit;
@@ -112,8 +114,6 @@ async function CarBuySell({
   }
 
   const adsPromise = GetAdsByCategory({ endPoint: "/ads/cars", query, tags: [tags?.cars] });
-
-  const t = await getTranslations('car_buy');
 
   return (
     <div>

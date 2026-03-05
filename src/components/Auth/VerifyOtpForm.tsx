@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { ImSpinner2 } from 'react-icons/im';
 import OTPInput from "react-otp-input";
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 
 const VerifyOtpForm = () => {
     const [postVerify, { isLoading }] = useVerifyOtpMutation();

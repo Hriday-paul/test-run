@@ -2,9 +2,11 @@
 import { Skeleton } from '@/components/ui/skeleton';
 import { useGetUserProfileQuery } from '@/redux/api/authApi';
 import ErrorComponent from '@/shared/ErrorComponent';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 function UserHome() {
+    const t = useTranslations("user.home");
     const { isLoading: profileGetLoad, isSuccess: profileSuccess, isError, data: profileData } = useGetUserProfileQuery();
 
     if (profileGetLoad) {
@@ -19,7 +21,7 @@ function UserHome() {
 
     return (
         <div>
-             <h3 className='text-base lg:text-lg font-popin text-black py-3'>Welcome, {profileData?.data?.first_name} 🎉</h3>
+            <h3 className='text-base lg:text-lg font-popin text-black py-3'>{t("title", { name: profileData?.data?.first_name || "" })}</h3>
             <div className='bg-white py-8 flex flex-row gap-2 justify-center items-center border border-stroke rounded-xl'>
                 <div className='relative'>
                     <Image src={profileData?.data?.picture?.url || "/empty-user.png"} alt='user image' className='h-20 w-20 object-cover rounded-full border border-primary' height={600} width={600} />

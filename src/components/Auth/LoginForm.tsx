@@ -3,16 +3,17 @@ import Link from "next/link";
 import { ImSpinner2 } from "react-icons/im";
 import { MdErrorOutline } from "react-icons/md";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import PasswordInput from "./PasswordInput";
 import { useLoginUserMutation } from "@/redux/api/authApi";
 import { useCookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { config } from "@/utils/config";
 import { addUserDetails } from "@/redux/slices/userSlice";
-import { toast } from "sonner";
+import { toast } from "react-toastify";
 import baseApi from "@/redux/api/baseApi";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 
 type FormType = {
     phone: string,

@@ -6,15 +6,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { UseUpdateMultipleSearchParams } from "@/hooks/UseUpdateSearchPrams";
+import { useUpdateMultipleSearchParams } from "@/hooks/UseUpdateSearchPrams";
 import { useTranslations } from "next-intl";
 
 
 function SortBar({ limit = "21", sort = "createdAt" }: { limit?: string, sort?: string }) {
 
-    const updateMultipleSearchParam = UseUpdateMultipleSearchParams();
-
     const t = useTranslations("category_page");
+    const updateMultipleSearchParam = useUpdateMultipleSearchParams();
+
 
     return (
 
@@ -25,7 +25,7 @@ function SortBar({ limit = "21", sort = "createdAt" }: { limit?: string, sort?: 
                 <Select
                     // value={limit?.toString()}
                     defaultValue={limit}
-                    onValueChange={(value) => updateMultipleSearchParam({ "limit": value })}
+                onValueChange={(value) => updateMultipleSearchParam({ "limit": value })}
                 >
                     <SelectTrigger className="border-none shadow-none focus-visible:ring-0 px-2 truncate font-popin cursor-pointer">
                         <SelectValue placeholder={limit?.toString()} />
