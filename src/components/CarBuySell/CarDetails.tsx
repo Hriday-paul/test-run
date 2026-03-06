@@ -6,28 +6,33 @@ import AdDetailsOwner from '@/shared/AdDetailsOwner';
 
 import { Calendar, Eye, Timer } from 'lucide-react'
 import moment from 'moment'
+import { getLocale, getTranslations } from 'next-intl/server';
 
 
 async function CarDetails({ promiseCarDetails }: { promiseCarDetails: Promise<{ data: Add }> }) {
 
     const data = await promiseCarDetails;
 
+    const t = await getTranslations("car_buy.details")
+    const tp = await getTranslations("category_page.details")
+    const locale = await getLocale();
+
     const carRows = [
-        { label: "Car Type", value: (car: any) => car?.car_type },
-        { label: "Brand", value: (car: any) => car?.brand },
-        { label: "Model", value: (car: any) => car?.model },
-        { label: "Condition", value: (car: any) => car?.condition },
-        { label: "Year", value: (car: any) => car?.year },
-        { label: "Color", value: (car: any) => car?.color },
-        { label: "Mileage", value: (car: any) => car?.mileage ? `${car.mileage} Km` : null },
-        { label: "Fuel Type", value: (car: any) => car?.fuel_type },
-        { label: "Engine", value: (car: any) => car?.engine },
-        { label: "Body Type", value: (car: any) => car?.body_type },
-        { label: "Gearbox", value: (car: any) => car?.gear_box },
-        { label: "Transmission", value: (car: any) => car?.transmission },
-        { label: "Air Condition", value: (car: any) => car?.air_condition ? "Yes" : "No" },
-        { label: "Driver Type", value: (car: any) => car?.drive_type },
-        { label: "Seat", value: (car: any) => car?.seat },
+        { label: t("feature.car_type"), value: (car: any) => car?.car_type },
+        { label: t("feature.brand"), value: (car: any) => car?.brand },
+        { label: t("feature.model"), value: (car: any) => car?.model },
+        { label: t("feature.condition"), value: (car: any) => car?.condition },
+        { label: t("feature.year"), value: (car: any) => car?.year },
+        { label: t("feature.color"), value: (car: any) => car?.color },
+        { label: t("feature.mileage"), value: (car: any) => car?.mileage ? `${car.mileage} ${t("feature.km")}` : null },
+        { label: t("feature.fuel_type"), value: (car: any) => car?.fuel_type },
+        { label: t("feature.engine"), value: (car: any) => car?.engine },
+        { label: t("feature.body_type"), value: (car: any) => car?.body_type },
+        { label: t("feature.gear_box"), value: (car: any) => car?.gear_box },
+        { label: t("feature.transmission"), value: (car: any) => car?.transmission },
+        { label: t("feature.air_condition"), value: (car: any) => car?.air_condition ? t("feature.yes") : t("feature.no") },
+        { label: t("feature.drive_type"), value: (car: any) => car?.drive_type },
+        { label: t("feature.seat"), value: (car: any) => car?.seat },
     ];
 
     return (
@@ -49,12 +54,12 @@ async function CarDetails({ promiseCarDetails }: { promiseCarDetails: Promise<{ 
                             {data?.data?.price && <div className='bg-white p-5 rounded-lg'>
                                 <h3 className='text-xl font-popin font-semibold mb-2 flex flex-row gap-x-1.5 items-center'>
                                     <IoPricetagOutline />
-                                    Price</h3>
-                                <p className='text-lg font-semibold font-figtree'>{data?.data?.price}</p>
+                                    {t("price.title")}</h3>
+                                <p className='text-lg font-semibold font-figtree'>{data?.data?.price ? `${(data?.data?.price).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")} ${t("price.currency")} ` : "N/A"}</p>
                             </div>}
 
                             <div className='bg-white p-5 rounded-lg'>
-                                <h3 className='text-xl font-popin font-semibold mb-3'>Car Features : </h3>
+                                <h3 className='text-xl font-popin font-semibold mb-3'>{t("feature.title")} : </h3>
 
                                 <section className="border rounded-xl overflow-x-auto">
                                     <table className="table-auto w-full">
@@ -89,14 +94,14 @@ async function CarDetails({ promiseCarDetails }: { promiseCarDetails: Promise<{ 
                             {/* ------------Post Overview----------- */}
                             <div className='bg-white p-5 rounded-lg'>
                                 <div className='pb-4 border-b border-stroke'>
-                                    <h3 className='text-xl font-popin font-medium'>Post Overview</h3>
+                                    <h3 className='text-xl font-popin font-medium'>{tp("post_overview.title")}</h3>
                                 </div>
                                 <div className='pt-4 space-y-4'>
                                     <div className='flex flex-row gap-x-1 justify-between items-center'>
                                         <div className='flex flex-row gap-x-1 items-center'>
                                             <Calendar size={20} />
                                             <p className='font-popin text-sm font-medium'>
-                                                Calander
+                                                {tp("post_overview.calander")}
                                             </p>
                                         </div>
                                         <p className='font-popin text-base'>{moment(data?.data?.createdAt).format("MMM Do YY") || "N/A"}</p>
@@ -105,7 +110,7 @@ async function CarDetails({ promiseCarDetails }: { promiseCarDetails: Promise<{ 
                                         <div className='flex flex-row gap-x-1 items-center'>
                                             <Timer size={20} />
                                             <p className='font-popin text-sm font-medium'>
-                                                Time
+                                                {tp("post_overview.time")}
                                             </p>
                                         </div>
                                         <p className='font-popin text-base'>{moment(data?.data?.createdAt).format("h:mm a") || "N/A"}</p>
@@ -114,7 +119,7 @@ async function CarDetails({ promiseCarDetails }: { promiseCarDetails: Promise<{ 
                                         <div className='flex flex-row gap-x-1 items-center'>
                                             <Eye size={20} />
                                             <p className='font-popin text-sm font-medium'>
-                                                View
+                                                {tp("post_overview.view")}
                                             </p>
                                         </div>
                                         <p className='font-popin text-base'>{data?.data?.view_count}</p>

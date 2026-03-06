@@ -7,12 +7,17 @@ import { GoPlus } from 'react-icons/go';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { lawyerSpecializations } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { useAddLawyerMutation, useDltAdImageMutation, useUpdateLawyerMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import MultipleSelect from '../ui/MultiSelect';
 import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
+import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
+import { tags } from '@/lib/Tags';
+import { useRouter } from '@/i18n/navigation';
+import { useDispatch } from 'react-redux';
+import baseApi from '@/redux/api/baseApi';
 
 type FieldType = {
     title: string,
@@ -44,11 +49,13 @@ type FieldType = {
 
 function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
 
-    const [updateAd, { isLoading: updateLoading }] = useUpdateLawyerMutation();
+    // const [updateAd, { isLoading: updateLoading }] = useUpdateLawyerMutation();
 
     const [dltImage] = useDltAdImageMutation();
+    const router = useRouter();
+    const dispatch = useDispatch();
 
-    const [postAdd, { isLoading }] = useAddLawyerMutation();
+    // const [postAdd, { isLoading }] = useAddLawyerMutation();
 
     const [image, setImage] = useState<File | null>(null);
 
@@ -57,7 +64,7 @@ function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Rea
         handleSubmit,
         control,
         reset,
-        formState: { errors },
+        formState: { errors, isSubmitting: isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
@@ -85,10 +92,30 @@ function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Rea
             if (image) form.append('images', image);
 
             if (defaultData) {
-                await updateAd({ id: defaultData?.id, body: form }).unwrap();
+                // await updateAd({ id: defaultData?.id, body: form }).unwrap();
+                const updatedRes = await updateAdd({ endPoint: `/ads/lawyers/${defaultData?.id}`, payload: form, tags: [tags?.lawyers] });
+                if (updatedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (updatedRes.error) {
+                    toast.error(updatedRes.error)
+                    return;
+                }
             } else {
-                await postAdd(form).unwrap();
+                // await postAdd(form).unwrap();
+                const postedRes = await postNewAdd({ endPoint: "/ads/lawyers", payload: form, tags: [tags?.lawyers] });
+                if (postedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (postedRes.error) {
+                    toast.error(postedRes.error)
+                    return;
+                }
             }
+
+            dispatch(baseApi.util.invalidateTags(["ads"]))
 
             Swal.fire({
                 title: `Lawyer Ad ${defaultData ? "updated" : "posted"} successfully!`,
@@ -502,9 +529,9 @@ function LawyerForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Rea
                     {errors?.description && <p className="text-red-500 text-sm col-span-2">{errors?.description?.message}</p>}
                 </div>
 
-                <button type='submit' disabled={isLoading || updateLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
-                    {(isLoading || updateLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
-                    <span>{(isLoading || updateLoading) ? 'Loading...' : "Submit"}</span>
+                <button type='submit' disabled={isLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
+                    {(isLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
+                    <span>{(isLoading) ? 'Loading...' : "Submit"}</span>
                 </button>
 
             </form>

@@ -16,15 +16,17 @@ import Image from 'next/image';
 import Pagination from '@/components/ui/Pagination';
 import ErrorComponent from '@/shared/ErrorComponent';
 import { Payment } from '@/redux/types';
+import { useTranslations } from 'next-intl';
 
 const Payments = () => {
+    const t = useTranslations("vendor.home.payments")
 
     const [page, setPage] = useState(1);
     const { isLoading, isSuccess, data, isError } = useMyPaymentsQuery({ page });
 
     return (
         <div className='mt-5 md:mt-6 lg:mt-8'>
-            <h3 className='text-base lg:text-lg font-popin text-black py-3'>Payments</h3>
+            <h3 className='text-base lg:text-lg font-popin text-black py-3'>{t("title")}</h3>
             {
                 isLoading ?
                     <div>
@@ -51,14 +53,17 @@ const Payments = () => {
 };
 
 export const PaymentTable = ({ payments }: { payments: Payment[] }) => {
+
+    const t = useTranslations("vendor.home.payments");
+
     return <div className="pb-8">
         <Table className="font-figtree">
             <TableHeader className="!bg-primary/10 font-figtree ">
                 <TableRow className="">
-                    <TableHead className="p-5 font-medium font-figtree">Tran. Id</TableHead>
-                    <TableHead className="font-medium font-figtree">Package/Service</TableHead>
-                    <TableHead className="font-medium font-figtree">Amount</TableHead>
-                    <TableHead className="font-medium font-figtree">Date</TableHead>
+                    <TableHead className="p-5 font-medium font-figtree">{t("tranId")}</TableHead>
+                    <TableHead className="font-medium font-figtree">{t("pack_service")}</TableHead>
+                    <TableHead className="font-medium font-figtree">{t("amount")}</TableHead>
+                    <TableHead className="font-medium font-figtree">{t("date")}</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody className="border border-stroke">
@@ -82,7 +87,7 @@ export const PaymentTable = ({ payments }: { payments: Payment[] }) => {
         {
             payments?.length <= 0 && <section className='min-h-[calc(25vh)] flex flex-col items-center justify-center'>
                 <Image src={emptyDataImg} className='h-28 w-auto mx-auto' alt='empty data' />
-                <h5 className='text-base font-figtree text-center'>Data is empty</h5>
+                <h5 className='text-base font-figtree text-center'>{t("empty")}</h5>
             </section>
         }
 

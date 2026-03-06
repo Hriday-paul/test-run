@@ -4,11 +4,6 @@ const GetAdDetails = async ({ id }: { id: string }) => {
   try {
     const response = await fetch(
       config.serverBaseApi + `/ads/details/${id}`,
-      {
-        next: {
-          tags: [`details-${id}`],
-        },
-      }
     );
     if (!response.ok) {
       // This will activate the closest `error.js` Error Boundary

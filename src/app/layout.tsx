@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins, Figtree } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/shared/Navbar/Navbar";
-import Footer from "@/shared/Footer/Footer";
-import ReduxProvider from "@/shared/ReduxProvider";
-import { Toaster } from 'sonner';
-import NextJsTopLoader from "@/shared/NextJsTopLoader";
-import TawkTo from "@/utils/TawkTo";
 
 const poppins = Poppins({
   variable: "--font-poppin",
@@ -87,20 +81,8 @@ export default function RootLayout({
         {/* <link rel="manifest" href="/site.webmanifest" /> */}
       </head>
 
-      <TawkTo />
-
-      <body
-        className={`${poppins.variable} ${figtree.variable} antialiased`}
-      >
-        <ReduxProvider>
-          <Toaster richColors position="top-right" closeButton />
-          <NextJsTopLoader />
-          <Navbar />
-          <div className="">
-            {children}
-          </div>
-          <Footer />
-        </ReduxProvider>
+      <body className={`${poppins.variable} ${figtree.variable} antialiased`}>
+        {children}
       </body>
     </html>
   );

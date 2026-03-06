@@ -1,42 +1,19 @@
-"use client"
-import { useAddDetailsQuery } from '@/redux/api/ads.api'
 import DetailsCarousel from '@/shared/DetailsCarousel'
-import DetailsSkeleton from '@/shared/DetailsSkeleton';
 import ErrorComponent from '@/shared/ErrorComponent';
-import ShopBanner from '@/shared/ShopBanner';
-import Link from 'next/link';
-import bannerimg from "../../../public/Accessories Image.png"
-import { IoIosArrowForward } from 'react-icons/io';
-import Image from 'next/image';
-import { Calendar, Eye, MapPin, Phone, Tag, Timer } from 'lucide-react';
-import { MdEmail } from 'react-icons/md';
-import { FaWhatsapp } from 'react-icons/fa';
-import moment from "moment";
+import { Eye, Tag } from 'lucide-react';
+import { Add } from '@/redux/types';
+import AdDetailsOwner from '@/shared/AdDetailsOwner';
+import { getLocale, getTranslations } from 'next-intl/server';
 
-function AccessoriesDetails({ id }: { id: string }) {
-    const { isLoading, isError, isSuccess, data } = useAddDetailsQuery({ id });
+async function AccessoriesDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
-    if (isError) {
-        return <ErrorComponent />
-    }
+    const data = await promiseAdDetails;
+    const t = await getTranslations("accessories.details");
+    const locale = await getLocale();
 
     return (
-        <div >
-
-            <ShopBanner
-                image={bannerimg}
-                title="Accessories Details"
-                desc="View Accessories full details"
-            >
-                <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Accessories
-            </ShopBanner>
-
-            {
-                isLoading && <DetailsSkeleton />
-            }
-
-
-            {(data && isSuccess) ? data?.data?.category !== "Accessories" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
+        <>
+            {(data) ? data?.data?.category !== "Accessories" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
                 <div className='container'>
                     <div className='grid grid-cols-5 gap-8'>
 
@@ -49,68 +26,23 @@ function AccessoriesDetails({ id }: { id: string }) {
                             </div>
 
                         </div>
+
+                        {/* ------------Right side----------- */}
                         <div className='col-span-5 lg:col-span-2 space-y-5'>
-                            <div className='bg-white p-5 rounded-lg'>
-                                <div className='pb-4 border-b border-stroke'>
-                                    <h3 className='text-xl font-popin font-medium'>Seller Information</h3>
-                                </div>
-                                <div className='flex flex-row gap-x-2.5 items-center pt-4'>
-                                    <Image src={data?.data?.owner?.picture?.url || "/empty-user.png"} height={1000} width={1000} className='h-8 w-8 bg-cover rounded-full' alt='user image' />
-                                    <h6 className='text-base font-popin font-medium'>{data?.data?.owner?.first_name + " " + (data?.data?.owner?.last_name || "")}</h6>
-                                </div>
-                                <div className='pt-4 space-y-4'>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <MapPin size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Location
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>
-                                            {data?.data
-                                                ? `${data?.data.division?.name || ''}${data.data.division ? ', ' : ''}${data?.data?.district?.name || ''}${data.data?.district ? ', ' : ''}${data.data?.area?.name || ''}`.trim() || 'N/A'
-                                                : 'N/A'}
-                                        </p>
-                                    </div>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <Phone size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Phone
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.phone || "N/A"}</p>
-                                    </div>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <MdEmail size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Email
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.email || "N/A"}</p>
-                                    </div>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <FaWhatsapp size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Whatsapp
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.whatsapp || "N/A"}</p>
-                                    </div>
-                                </div>
-                            </div>
+                            {/* ------------owner----------- */}
+                            <AdDetailsOwner data={data} />
+
+                            {/* ------------Post Overview----------- */}
 
                             <div className='bg-white p-5 rounded-lg'>
                                 <div className='pb-4 border-b border-stroke'>
-                                    <h3 className='text-xl font-popin font-medium'>Product Details</h3>
+                                    <h3 className='text-xl font-popin font-medium'>{t("title")}</h3>
                                 </div>
                                 <div className='flex flex-row gap-x-1 justify-between items-center pt-4'>
                                     <div className='flex flex-row gap-x-1 items-center'>
                                         <Eye size={20} />
                                         <p className='font-popin text-sm font-medium'>
-                                            View
+                                            {t("view")}
                                         </p>
                                     </div>
                                     <p className='font-popin text-base'>{data?.data?.view_count}</p>
@@ -120,10 +52,12 @@ function AccessoriesDetails({ id }: { id: string }) {
                                         <div className='flex flex-row gap-x-1 items-center'>
                                             <Tag size={20} />
                                             <p className='font-popin text-sm font-medium'>
-                                                Price
+                                                {t("price.title")}
                                             </p>
                                         </div>
-                                        <p className='font-popin text-base'>{data?.data?.price ? `${data?.data?.price} TK` : "N/A"}</p>
+                                        <p className='font-popin text-base'>
+                                            {data?.data?.price ? `${(data?.data?.price).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")} ${t("price.currency")} ` : "N/A"}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -134,7 +68,7 @@ function AccessoriesDetails({ id }: { id: string }) {
                 </div>
             </div> : <></>}
 
-        </div>
+        </>
     )
 }
 

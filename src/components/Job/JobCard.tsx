@@ -6,8 +6,10 @@ import { Button } from "../ui/button";
 import { RiMoneyDollarBoxLine } from "react-icons/ri";
 import { PiBuildingOffice } from "react-icons/pi";
 import { MdOutlineWorkOutline } from "react-icons/md";
+import { getTranslations } from "next-intl/server";
 
-function JobCard({ job }: { job: Add }) {
+async function JobCard({ job }: { job: Add }) {
+    const t = await getTranslations("category_page.adCard");
     return (
         <div
             className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree bg-white">
@@ -47,7 +49,7 @@ function JobCard({ job }: { job: Add }) {
                                 size="sm"
                                 className="text-primary hover:text-white bg-primary/10 hover:bg-primary transition-all duration-300 cursor-pointer py-5 px-6 font-popin w-full"
                             >
-                                View Details
+                               {t("details")}
                             </Button>
                         </Link>
                     </div>

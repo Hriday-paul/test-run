@@ -1,43 +1,36 @@
-"use client"
-import { useAddDetailsQuery } from '@/redux/api/ads.api'
-import DetailsCarousel from '@/shared/DetailsCarousel'
-import DetailsSkeleton from '@/shared/DetailsSkeleton';
 import ErrorComponent from '@/shared/ErrorComponent';
-import ShopBanner from '@/shared/ShopBanner';
-import Link from 'next/link';
-import bannerimg from "../../../public/bikestop_img.png"
-import { IoIosArrowForward } from 'react-icons/io';
-import Image from 'next/image';
-import { Calendar, Eye, MapPin, Phone, Timer } from 'lucide-react';
-import { MdEmail } from 'react-icons/md';
-import { FaWhatsapp } from 'react-icons/fa';
+import { Calendar, Eye, Timer } from 'lucide-react';
 import moment from "moment";
 import { IoPricetagOutline } from 'react-icons/io5';
+import { Add, IBike } from '@/redux/types';
+import DetailsCarousel from '@/shared/DetailsCarousel';
+import AdDetailsOwner from '@/shared/AdDetailsOwner';
+import { getLocale, getTranslations } from 'next-intl/server';
 
-function BikeDetails({ id }: { id: string }) {
-    const { isLoading, isError, isSuccess, data } = useAddDetailsQuery({ id });
+async function BikeDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
-    if (isError) {
-        return <ErrorComponent />
-    }
+    const data = await promiseAdDetails;
+    const t = await getTranslations("bike_buy.details");
+    const locale = await getLocale();
+    const tp = await getTranslations("category_page.details")
+
+    const bikeRows = [
+        { label: t("feature.bike_type"), value: (bike: IBike) => bike?.bike_type },
+        { label: t("feature.brand"), value: (bike: IBike) => bike?.brand },
+        { label: t("feature.model"), value: (bike: IBike) => bike?.model },
+        { label: t("feature.mileage"), value: (bike: IBike) => bike?.mileage ? `${bike.mileage} ${t("feature.km")}` : null },
+        { label: t("feature.year"), value: (bike: IBike) => bike?.year },
+        { label: t("feature.color"), value: (bike: IBike) => bike?.color },
+        { label: t("feature.fuel_type"), value: (bike: IBike) => bike?.fuel_type },
+        { label: t("feature.engine"), value: (bike: IBike) => bike?.engine },
+        { label: t("feature.edition"), value: (bike: IBike) => bike?.edition },
+        { label: t("feature.condition"), value: (bike: IBike) => bike?.condition },
+    ];
 
     return (
         <div >
 
-            <ShopBanner
-                image={bannerimg}
-                title="Bike Details"
-                desc="View bike full details"
-            >
-                <Link href='/' className='text-primary'>Home</Link> <IoIosArrowForward className='' /> Bike Details
-            </ShopBanner>
-
-            {
-                isLoading && <DetailsSkeleton />
-            }
-
-
-            {(data && isSuccess) ? data?.data?.category !== "Bike" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
+            {data?.data?.category !== "Bike" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
                 <div className='container'>
                     <div className='grid grid-cols-5 gap-8'>
 
@@ -52,120 +45,52 @@ function BikeDetails({ id }: { id: string }) {
                             {data?.data?.price && <div className='bg-white p-5 rounded-lg'>
                                 <h3 className='text-xl font-popin font-semibold mb-2 flex flex-row gap-x-1.5 items-center'>
                                     <IoPricetagOutline />
-                                    Price</h3>
-                                <p className='text-lg font-semibold font-figtree'>{data?.data?.price}</p>
+                                    {t("price.title")}</h3>
+                                <p className='text-lg font-semibold font-figtree'>{data?.data?.price ? `${(data?.data?.price).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")} ${t("price.currency")} ` : "N/A"}</p>
                             </div>}
 
                             <div className='bg-white p-5 rounded-lg'>
-                                <h3 className='text-2xl font-popin font-semibold mb-3'>Bike Features : </h3>
-                                <div className='grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-10'>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Engine</p>
-                                        <p className='text-base font-figtree font-semibold'>{data?.data?.bike?.engine || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Model</p>
-                                        <p className='text-base font-figtree font-semibold'>{data?.data?.bike?.model || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Mileage</p>
-                                        <p className='text-base font-figtree font-semibold'>{data?.data?.bike?.mileage || "N/A"} Km </p>
-                                    </div>
-                                    {/* <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Gearbox</p>
-                                        <p className='text-base font-figtree font-semibold'>{data?.data?.bike?.g || "N/A"} </p>
-                                    </div> */}
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Color</p>
-                                        <p className='text-base font-figtree font-semibold'>{data?.data?.bike?.color || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Year</p>
-                                        <p className='text-base font-figtree font-semibold'>{data?.data?.bike?.year || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Fuel Type</p>
-                                        <p className='text-base font-figtree font-semibold'>{data?.data?.bike?.fuel_type || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Edition</p>
-                                        <p className='text-base font-figtree font-semibold'>{data?.data?.bike?.edition || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Brand</p>
-                                        <p className='text-base font-figtree font-semibold'>{data?.data?.bike?.brand || "N/A"} </p>
-                                    </div>
-                                    <div className='flex flex-row justify-between items-center'>
-                                        <p className='text-base font-figtree'>Condition</p>
-                                        <p className='text-base font-figtree font-semibold'>{data?.data?.bike?.condition || "N/A"} </p>
-                                    </div>
-                                </div>
+                                <h3 className='text-2xl font-popin font-semibold mb-3'>{t("feature.title")} : </h3>
+                                <section className="border rounded-xl overflow-x-auto">
+                                    <table className="table-auto w-full">
+                                        <tbody>
+                                            {bikeRows.map((row, index) => (
+                                                <tr
+                                                    key={index}
+                                                    className="divide-x border-b last:border-b-0 border-b-gray-300"
+                                                >
+                                                    <td className="text-base font-medium text-gray-700 w-40 md:w-64 h-10 px-3 md:px-4 py-3 border-r border-gray-300 font-figtree">
+                                                        {row.label}
+                                                    </td>
+
+                                                    <td className="text-base font-semibold text-gray-900 px-3 md:px-4 py-3 font-figtree">
+                                                        {row.value(data?.data?.bike) ?? "N/A"}
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </section>
                             </div>
 
                         </div>
-                        <div className='col-span-5 lg:col-span-2 space-y-5'>
-                            <div className='bg-white p-5 rounded-lg'>
-                                <div className='pb-4 border-b border-stroke'>
-                                    <h3 className='text-xl font-popin font-medium'>Seller Information</h3>
-                                </div>
-                                <div className='flex flex-row gap-x-2.5 items-center pt-4'>
-                                    <Image src={data?.data?.owner?.picture?.url || "/empty-user.png"} height={1000} width={1000} className='h-8 w-8 bg-cover rounded-full' alt='user image' />
-                                    <h6 className='text-base font-popin font-medium'>{data?.data?.owner?.first_name + " "+ (data?.data?.owner?.last_name || "")}</h6>
-                                </div>
-                                <div className='pt-4 space-y-4'>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <MapPin size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Location
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>
-                                            {data?.data
-                                                ? `${data?.data.division?.name || ''}${data.data.division ? ', ' : ''}${data?.data?.district?.name || ''}${data.data?.district ? ', ' : ''}${data.data?.area?.name || ''}`.trim() || 'N/A'
-                                                : 'N/A'}
-                                        </p>
-                                    </div>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <Phone size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Phone
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.phone || "N/A"}</p>
-                                    </div>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <MdEmail size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Email
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.email || "N/A"}</p>
-                                    </div>
-                                    <div className='flex flex-row gap-x-1 justify-between items-center'>
-                                        <div className='flex flex-row gap-x-1 items-center'>
-                                            <FaWhatsapp size={20} />
-                                            <p className='font-popin text-sm font-medium'>
-                                                Whatsapp
-                                            </p>
-                                        </div>
-                                        <p className='font-popin text-base'>{data?.data?.owner?.whatsapp || "N/A"}</p>
-                                    </div>
-                                </div>
-                            </div>
 
+                        {/* ------------Right side----------- */}
+                        <div className='col-span-5 lg:col-span-2 space-y-5'>
+                            {/* ------------owner----------- */}
+                            <AdDetailsOwner data={data} />
+
+                            {/* ------------Post Overview----------- */}
                             <div className='bg-white p-5 rounded-lg'>
                                 <div className='pb-4 border-b border-stroke'>
-                                    <h3 className='text-xl font-popin font-medium'>Post Overview</h3>
+                                    <h3 className='text-xl font-popin font-medium'>{tp("post_overview.title")}</h3>
                                 </div>
                                 <div className='pt-4 space-y-4'>
                                     <div className='flex flex-row gap-x-1 justify-between items-center'>
                                         <div className='flex flex-row gap-x-1 items-center'>
                                             <Calendar size={20} />
                                             <p className='font-popin text-sm font-medium'>
-                                                Calander
+                                                {tp("post_overview.calander")}
                                             </p>
                                         </div>
                                         <p className='font-popin text-base'>{moment(data?.data?.createdAt).format("MMM Do YY") || "N/A"}</p>
@@ -174,7 +99,7 @@ function BikeDetails({ id }: { id: string }) {
                                         <div className='flex flex-row gap-x-1 items-center'>
                                             <Timer size={20} />
                                             <p className='font-popin text-sm font-medium'>
-                                                Time
+                                                {tp("post_overview.time")}
                                             </p>
                                         </div>
                                         <p className='font-popin text-base'>{moment(data?.data?.createdAt).format("h:mm a") || "N/A"}</p>
@@ -183,7 +108,7 @@ function BikeDetails({ id }: { id: string }) {
                                         <div className='flex flex-row gap-x-1 items-center'>
                                             <Eye size={20} />
                                             <p className='font-popin text-sm font-medium'>
-                                                View
+                                                {tp("post_overview.view")}
                                             </p>
                                         </div>
                                         <p className='font-popin text-base'>{data?.data?.view_count}</p>
@@ -195,7 +120,7 @@ function BikeDetails({ id }: { id: string }) {
 
                     </div>
                 </div>
-            </div> : <></>}
+            </div>}
 
         </div>
     )

@@ -1,0 +1,771 @@
+{
+  "navbar": {
+    "sec1": {
+      "hello": "Hello!!",
+      "wellcome": " Welcome to Runbd."
+    },
+    "home": "Home",
+    "pricing": "Pricing",
+    "categories": "Categories",
+    "about": "About Us",
+    "btn": "Post Your Ad"
+  },
+  "about": {
+    "section1": {
+      "yearsInMarket": "10",
+      "yearsLabel1": "Years in",
+      "yearsLabel2": "Market",
+      "aboutUs": "About Us",
+      "heading": "Runbd is the best way to find & discover great local business",
+      "description": "Runbd is a top-rated classified ads theme, making it easy to find and connect with local businesses.",
+      "feature1Title": "Search On The Go",
+      "feature1Desc": "Find What You Need, Anytime, Anywhere! Easy Search, Instant Results.",
+      "feature2Title": "Real Time Classified Ads",
+      "feature2Desc": "Buy, Sell & Discover – Instantly, in Real Time! Fast, Easy, and Always Up-to-Date.",
+      "feature3Title": "Get Latest Info",
+      "feature3Desc": "Stay Informed, Stay Ahead! Get the Latest Info – Always Current, Always Reliable."
+    },
+    "section2": {
+      "subheading": "We Can Assist You Further",
+      "heading1": "How Runbd Works The Best",
+      "heading2": "Search Experience",
+      "step1Title": "Create Your Account",
+      "step1Desc": "Quick, Easy, and Start Exploring!",
+      "step2Title": "Post Your Ad",
+      "step2Desc": "Reach Local Buyers in Minutes!",
+      "step3Title": "Sell Your Item",
+      "step3Desc": "Turn Your Listings into Quick Sales!"
+    }
+  },
+  "sidebar": {
+    "title": "Dashboard",
+    "dashboard": "Dashboard",
+    "ads": "Ads",
+    "orders": "Service Orders",
+    "setting": "Setting",
+    "logout": "Logout"
+  },
+  "vendor": {
+    "home": {
+      "stats": {
+        "post_limit": "Post Limit",
+        "posted_ad": "Posted Ads",
+        "remain_ad": "Remaining Ads",
+        "feature_ad": "Featured Ads",
+        "bump_ad": "Bump Ads",
+        "expire_date": "Expire Date"
+      },
+      "payments": {
+        "title": "Payments",
+        "tranId": "Tran. Id",
+        "pack_service": "Package/Service",
+        "amount": "Amount",
+        "date": "Date",
+        "empty": "Data is Empty"
+      }
+    },
+    "ads": {
+      "title": "Posted Ads",
+      "btn": {
+        "txt": "Post New Ad"
+      },
+      "table": {
+        "img": "Images",
+        "title": "Ad Title",
+        "category": "Category",
+        "price": "Price",
+        "status": "Status",
+        "postedAt": "Posted At",
+        "action": "Action",
+        "empty": "Data is Empty"
+      },
+      "action": {
+        "feature": "Feature Ad",
+        "bump": "Bump Up",
+        "view": "View Post",
+        "edit": "Edit Post",
+        "dlt": "Delete"
+      }
+    },
+    "service": {
+      "title": "Document Service Orders",
+      "table": {
+        "service": "Service",
+        "price": "Price",
+        "status": "Status",
+        "date": "Date",
+        "action": "Action",
+        "empty": "Data is empty"
+      }
+    },
+    "post_ad": {
+      "title": "Post New Ad",
+      "subtitle": "Choose any option below",
+      "steps": {
+        "step1": "Category",
+        "step2": "Fill-up Form"
+      }
+    }
+  },
+  "user": {
+    "home": {
+      "title": "Welcome, {name} 🎉"
+    }
+  },
+  "login": {
+    "bread_cump": {
+      "home": "Home",
+      "login": "Login"
+    },
+    "title": "Login",
+    "form": {
+      "phone": "Phone",
+      "phone_placeholder": "01*********",
+      "phone_required": "Phone number is required",
+      "phone_invalid": "Enter a valid phone number",
+      "password": "Password",
+      "password_placeholder": "Enter your password",
+      "password_required": "Password is required",
+      "forgot": "Forgot Password?",
+      "dont_have_account": "Don't have an account yet?",
+      "register": "Register",
+      "btns": {
+        "signin": "Sign In",
+        "loading": "Loading..."
+      }
+    }
+  },
+  "signup": {
+    "bread_cump": {
+      "home": "Home",
+      "signup": "Sign Up"
+    },
+    "title": "Sign Up",
+    "form": {
+      "role": {
+        "user": "User",
+        "vendor": "Vendor"
+      },
+      "fields": {
+        "first_name": {
+          "label": "First Name",
+          "placeholder": "Enter your first name",
+          "required": "First name is required"
+        },
+        "last_name": {
+          "label": "Last Name",
+          "placeholder": "Enter your last name"
+        },
+        "phone": {
+          "label": "Phone",
+          "placeholder": "01****",
+          "invalid": "Invalid Phone"
+        },
+        "email": {
+          "label": "Email Address",
+          "placeholder": "xyz@gmail.com",
+          "invalid": "Email invalid"
+        },
+        "password": {
+          "label": "Password",
+          "placeholder": "Enter your password",
+          "required": "Password is required"
+        },
+        "confirm_password": {
+          "label": "Confirm Password",
+          "placeholder": "Enter your confirm password",
+          "required": "Confirm Password is required",
+          "mismatch": "Password not match"
+        },
+        "terms": {
+          "label": "By hitting the \"Register\" button, you agree to the {terms} & {privacy}",
+          "terms": "Terms conditions",
+          "privacy": "Privacy Policy",
+          "required": "You must agree to the terms"
+        }
+      },
+      "button": {
+        "sign_up": "Sign Up",
+        "sign_up_free": "Sign Up for Free",
+        "loading": "Loading..."
+      },
+      "login_prompt": "Already have an account?",
+      "login_now": "Login Now"
+    }
+  },
+  "forgot_pass": {
+    "bread_cump": {
+      "home": "Home",
+      "forgot": "Forgot password"
+    },
+    "title": "Forgot Password",
+    "phone": "Phone",
+    "phone_placeholder": "01*********",
+    "phone_required": "Phone number is required",
+    "phone_invalid": "Enter a valid phone number"
+  },
+  "reset_pass": {
+    "bread_cump": {
+      "home": "Home",
+      "forgot": "Forgot password",
+      "reset": "Reset password"
+    },
+    "title": "Reset Password",
+    "form": {
+      "fields": {
+        "new_password": {
+          "label": "Password",
+          "placeholder": "Enter new password",
+          "required": "Password is required"
+        },
+        "confirm_password": {
+          "label": "Confirm Password",
+          "placeholder": "Enter your confirm password",
+          "required": "Confirm Password is required",
+          "mismatch": "Password not match"
+        }
+      },
+      "btn": {
+        "txt": "Update",
+        "loading": "Loading..."
+      },
+      "toast": {
+        "success": "Password updated successfully",
+        "error": "Something went wrong, try again"
+      }
+    }
+  },
+  "verify_otp": {
+    "bread_cump": {
+      "home": "Home",
+      "verify": "Verify otp"
+    },
+    "title": "Verify Otp",
+    "form": {
+      "btn": {
+        "verify": "Verify",
+        "resend": "Resend"
+      }
+    }
+  },
+  "resend_otp": {
+    "bread_cump": {
+      "home": "Home",
+      "resend": "Resend otp"
+    },
+    "title": "Resend Otp",
+    "form": {
+      "phone": {
+        "label": "Phone",
+        "placeholder": "01****",
+        "invalid": "Invalid Phone"
+      },
+      "btn": {
+        "txt": "Submit",
+        "loading": "Loading..."
+      },
+      "toast": {
+        "success": "Otp Send successfully",
+        "error": "Something went wrong, try again"
+      }
+    }
+  },
+  "Home": {
+    "section1": {
+      "title": {
+        "line1": "Buy, Sell & Services —",
+        "line2": "All in One Click"
+      },
+      "subtitle": "Skip the hassle and delays — easily buy, sell, or access essential services anytime from one reliable and secure platform.",
+      "smTitle": "Find Your Dream Items Easily"
+    },
+    "section2": {
+      "title": "Browse by Category",
+      "subtitle": "Category",
+      "categories": {
+        "car_buy_sell": "Car Buy/Sell",
+        "bike_buy_sell": "Bike Buy/Sell",
+        "workshops": "Workshops",
+        "accessories": "Accessories",
+        "car_rent": "Car Rent",
+        "vehicle_process": "Vehicle Process",
+        "job_service": "Job Service",
+        "exchange": "Exchange",
+        "documents": "Documents",
+        "lawyer": "Lawyer",
+        "other": "Other"
+      }
+    },
+    "section3": {
+      "title": "Explore Featured Ads",
+      "subtitle": "Featured Ads",
+      "ad": {
+        "details": "View Details"
+      }
+    },
+    "section4": {
+      "title": "Our Pricing Plans",
+      "subtitle": "Plan",
+      "description": "All types of businesses need access to development resources, so we give you the option to decide how much you need to use.",
+      "package": {
+        "currency": "TK",
+        "days": "days",
+        "rg_ads": "Regular Ads",
+        "ft_ads": "Featured Ads",
+        "bmp_ads": "Ads will be bumped up",
+        "bs_support": "Basic Support",
+        "choose": "Choose"
+      }
+    },
+    "section5": {
+      "pb_ads": "Published Ads",
+      "rs_user": "Registered Users",
+      "vs": "Verified Seller",
+      "vc": "Verified Customer"
+    },
+    "section6": {
+      "title": "Faq",
+      "subtitle": "Frequently Asked Questions",
+      "faq": {
+        "question1": "What is Runbd?",
+        "answer1": "Runbd is an online marketplace where users can buy and sell products and services across various categories such as cars, bikes, vehicle processes, accessories, jobs, and more.",
+        "question2": "Who can use Runbd?",
+        "answer2": "Anyone in Bangladesh who wants to list a vehicle or service, or search for vehicles, rentals, accessories, or related information can use the site.",
+        "question3": "How do I post a listing on Runbd?",
+        "answer3": "1. Create an account or log in\n2. Click on 'Post Ad' or 'Sell Your Vehicle'\n3. Choose the correct category (e.g., bike, car, rent)\n4. Fill in the details and upload photos\n5. Submit your listing",
+        "question4": "How can I contact a seller or renter?",
+        "answer4": "Contact information (like phone number or chat) is provided in the listing. You can use that to reach out directly.",
+        "question5": "Can I edit or delete my listing after posting?",
+        "answer5": "Yes — you can edit or delete your listing anytime from your account as long as it is still active.",
+        "question6": "How do I rent a car from the site?",
+        "answer6": "Search the 'Car Rent' category, choose a listing, and contact the provider using the contact info in the listing to confirm availability and price."
+      }
+    }
+  },
+  "category_page": {
+    "item_found": "{count, plural, =0 {no ad yet} =1 {one ad found} other {# ad found}}.",
+    "not_found": "No ads found",
+    "limit": "Limit",
+    "adCard": {
+      "details": "View Details",
+      "currency": "TK"
+    },
+    "details": {
+      "seller": {
+        "title": "Seller Information",
+        "location": "Location",
+        "phone": "Phone",
+        "email": "Email",
+        "whatsapp": "Whatsapp"
+      },
+      "post_overview": {
+        "title": "Post Overview",
+        "calander": "Calander",
+        "time": "Time",
+        "view": "View"
+      },
+      "similar": {
+        "title": "Explore Similar Ads",
+        "currency": "TK"
+      }
+    }
+  },
+  "car_buy": {
+    "banner": {
+      "title": "Find Your Perfect Car",
+      "subtitle": "Search and find your best car for buy"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "car_buy_sell": "Car Buy/Sell",
+      "details": "Car Details"
+    },
+    "search": {
+      "location": {
+        "placeholder": "location",
+        "slct_div": "Select Division",
+        "slct_dis": "Select District",
+        "slct_area": "Select Area"
+      },
+      "input": {
+        "placeholder": "search...",
+        "btn": "Search"
+      }
+    },
+    "filter": {
+      "car_type": {
+        "all": "All",
+        "truck": "Truck",
+        "bus": "Bus",
+        "mini_bus": "Mini Bus",
+        "car": "Car",
+        "hiace": "Hiace"
+      },
+      "condition": {
+        "title": "Condition",
+        "new": "New",
+        "used": "Used"
+      },
+      "km": {
+        "title": "Kilometers run"
+      },
+      "price": {
+        "title": "Price"
+      },
+      "brand": {
+        "title": "Brand"
+      }
+    },
+    "details": {
+      "title": "Car Details",
+      "subtitle": "View car full details",
+      "price": {
+        "title": "Price",
+        "currency": "TK"
+      },
+      "feature": {
+        "title": "Car Features",
+        "car_type": "Car Type",
+        "brand": "Brand",
+        "model": "Model",
+        "condition": "Condition",
+        "year": "Year",
+        "color": "Color",
+        "mileage": "Mileage",
+        "fuel_type": "Fuel Type",
+        "engine": "Engine",
+        "body_type": "Body Type",
+        "gear_box": "Gearbox",
+        "transmission": "Transmission",
+        "air_condition": "Air Condition",
+        "drive_type": "Driver Type",
+        "seat": "Seat",
+        "km": "Km",
+        "yes": "Yes",
+        "no": "No"
+      }
+    }
+  },
+  "bike_buy": {
+    "banner": {
+      "title": "Find Your Perfect Bike",
+      "subtitle": "Search and find your best bike for buy"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "bike_buy_sell": "Bike Buy/Sell",
+      "details": "Bike Details"
+    },
+    "filter": {
+      "bike_type": {
+        "title": "Bike Type",
+        "Motorcycle": "Motorcycle",
+        "Scooter": "Scooter",
+        "E-bikes": "E-bikes"
+      },
+      "condition": {
+        "title": "Condition",
+        "new": "New",
+        "used": "Used"
+      },
+      "km": {
+        "title": "Kilometers run"
+      },
+      "price": {
+        "title": "Price"
+      },
+      "brand": {
+        "title": "Brand"
+      }
+    },
+    "details": {
+      "title": "Bike Details",
+      "subtitle": "View Bike full details",
+      "price": {
+        "title": "Price",
+        "currency": "TK"
+      },
+      "feature": {
+        "title": "Bike Features",
+        "bike_type": "Bike Type",
+        "brand": "Brand",
+        "model": "Model",
+        "mileage": "Mileage",
+        "year": "Year",
+        "color": "Color",
+        "fuel_type": "Fuel Type",
+        "engine": "Engine",
+        "edition": "Edition",
+        "condition": "Condition",
+        "km": "Km"
+      }
+    }
+  },
+  "workshop": {
+    "banner": {
+      "title": "Work Shops",
+      "subtitle": "Search and find wrokshop for best service"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "workshops": "Workshops",
+      "details": "Details"
+    },
+    "filter": {
+      "workshop_type": {
+        "title": "Workshop Type",
+        "Car": "Car",
+        "Bike": "Bike"
+      }
+    },
+    "details": {
+      "title": "WorkShop Details",
+      "subtitle": "View workshop full details",
+      "price": {
+        "title": "Price",
+        "currency": "TK"
+      },
+      "feature": {
+        "title": "Workshop Information",
+        "type": "Workshop Type",
+        "address": "Address",
+        "open_time": "Opening Time",
+        "close_time": "Closing Time"
+      }
+    }
+  },
+  "car_rent": {
+    "banner": {
+      "title": "Car Rent",
+      "subtitle": "Find your perfect car for rent"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "carRents": "Car Rents",
+      "details": "Details"
+    },
+    "filter": {
+      "category": {
+        "title": "Category"
+      }
+    },
+    "details": {
+      "title": "Car Rent Details",
+      "subtitle": "View Car rent full details",
+      "price": {
+        "title": "Price",
+        "currency": "TK"
+      },
+      "feature": {
+        "title": "Rent Information",
+        "type": "Car Type",
+        "address": "Address",
+        "view": "View"
+      }
+    }
+  },
+  "accessories": {
+    "banner": {
+      "title": "Accessories",
+      "subtitle": "Search and find your accessories"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "accessories": "Accessories",
+      "details": "Details"
+    },
+    "filter": {
+      "location": {
+        "title": "Location"
+      }
+    },
+    "details": {
+      "title": "Accessories Details",
+      "subtitle": "View Accessories full details",
+      "price": {
+        "title": "Price",
+        "currency": "TK"
+      },
+      "feature": {
+        "title": "Accessories Information",
+        "view": "View"
+      }
+    }
+  },
+  "job": {
+    "banner": {
+      "title": "Jobs",
+      "subtitle": "Find and Apply your job"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "jobs": "Jobs",
+      "details": "Details"
+    },
+    "filter": {
+      "job_type": {
+        "title": "Job Type",
+        "Onsite": "Onsite",
+        "Remote": "Remote"
+      },
+      "employment_type": {
+        "title": "Employment Type",
+        "Fulltime": "Fulltime",
+        "Parttime": "Parttime"
+      }
+    },
+    "details": {
+      "title": "Job Details",
+      "subtitle": "View job full details",
+      "company_section": {
+        "about_company": "About Company",
+        "deadline": "Deadline",
+        "not_available": "N/A"
+      },
+      "summary": {
+        "title": "Summary",
+        "vacancy": "Vacancy",
+        "age": "Age",
+        "location": "Location",
+        "salary": "Salary",
+        "experience": "Experience",
+        "published": "Published"
+      },
+      "overview": {
+        "title": "Overview"
+      },
+      "error": {
+        "invalid_category": "Invalid Job Category"
+      }
+    }
+  },
+  "exchange": {
+    "banner": {
+      "title": "Exchange",
+      "subtitle": "Find your perfect item for Exchange"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "exchange": "Exchange",
+      "details": "Details"
+    },
+    "filter": {
+      "condition": {
+        "title": "Condition",
+        "New": "New",
+        "Used": "Used"
+      },
+      "category": {
+        "title": "Category"
+      }
+    },
+    "details": {
+      "title": "Exchange Details",
+      "subtitle": "View Exchange full details",
+      "price": {
+        "title": "Price",
+        "currency": "TK"
+      },
+      "feature": {
+        "title": "Exchange Information",
+        "add_type": "Add Type",
+        "want": "Want",
+        "condition": "Condition",
+        "address": "Address"
+      }
+    }
+  },
+  "lawyer": {
+    "banner": {
+      "title": "Lawyers",
+      "subtitle": "Find and search best Lawyers for you"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "lawyer": "Lawyers",
+      "details": "Details"
+    },
+    "filter": {
+      "specilazation": {
+        "title": "Specilazation"
+      },
+      "gender": {
+        "title": "Gender",
+        "Male": "Male",
+        "Female": "Female"
+      }
+    },
+    "details": {
+      "title": "Lawyer Details",
+      "subtitle": "View full lawyer details",
+      "hero": {
+        "phone": "Phone",
+        "location": "Location",
+        "gender": "Gender",
+        "specializations": "Specializations",
+        "experience": "Experience"
+      },
+      "professional": {
+        "title": "Professional Details",
+        "license_number": "License Number",
+        "bar_council": "Bar Council",
+        "chamber_location": "Chamber Location",
+        "consultation_fee": "Consultation Fee",
+        "hourly_rate": "Hourly Rate",
+        "office_hours": "Office Hours",
+        "languages": "Languages"
+      },
+      "not_available": "N/A",
+      "error": {
+        "invalid_category": "Invalid Lawyer Category"
+      }
+    }
+  },
+  "documents": {
+    "banner": {
+      "title": "Documents",
+      "subtitle": "Download Document Based on your need"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "document": "Documents"
+    },
+    "main": {
+      "title": "All Documents",
+      "subtitle": "You can download any file from here according to your needs.",
+      "btn": {
+        "docx": "Download Docx",
+        "pdf": "Download Pdf"
+      }
+    }
+  },
+  "vehicle_process": {
+    "banner": {
+      "title": "Vehicle Process",
+      "subtitle": "Process your documents with us without any hassle"
+    },
+    "bread_cump": {
+      "home": "Home",
+      "vehicle_process": "Vehicle Process"
+    },
+    "main": {
+      "title": "All Document Process List",
+      "subtitle": "We provide fast, reliable, and hassle-free solutions for all your vehicle documentation and processing needs. Our goal is to make every step smooth and convenient for you.",
+      "btn": {
+        "fee-title": "Processing Price",
+        "currency": "TK",
+        "txt": "Process Now"
+      }
+    },
+    "details": {
+      "bread_cump": {
+        "home": "Home",
+        "vehicle_process": "Vehicle Process",
+        "apply_process": "Apply Process"
+      },
+      "title": "Apply Vehicle Process",
+      "note": "[Special Note]: Any charges outside the list are negotiable and are exclusive of government fees. If necessary, RunBD pays government online charges. \n No transaction without a receipt is allowed. \nRunBD does not accept cash.",
+      "btnTxt": "Submit"
+    }
+  }
+}

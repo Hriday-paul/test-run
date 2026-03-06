@@ -17,12 +17,13 @@ import Loader from '@/shared/Loader';
 import { IoIosArrowBack } from 'react-icons/io';
 import { useState } from 'react';
 import { IDistrict, IDivision } from '@/redux/types';
-import { UseUpdateMultipleSearchParams, UseUpdateSearchParams } from '@/hooks/UseUpdateSearchPrams'
+import { useUpdateMultipleSearchParams } from '@/hooks/UseUpdateSearchPrams'
 import { useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 function Searchbar() {
 
-  const updateMultipleSearchParam = UseUpdateMultipleSearchParams();
+  const updateMultipleSearchParam = useUpdateMultipleSearchParams();
 
   return (
     <div className='w-auto bg-white px-2 md:p-2 border border-stroke grid grid-cols-1 md:grid-cols-2 gap-x-5 '>
@@ -39,6 +40,7 @@ export default Searchbar;
 const Search = ({ updateMultipleSearchParam }: { updateMultipleSearchParam: any }) => {
 
   const searchTerm = useSearchParams().get("searchTerm");
+  const t = useTranslations("car_buy.search.input")
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,10 +56,10 @@ const Search = ({ updateMultipleSearchParam }: { updateMultipleSearchParam: any 
         <IoSearchOutline className='text-xl' />
         <input
           defaultValue={searchTerm || ""}
-          type="text" name='search' className='border-none outline-0 focus:outline-0 text-black font-figtree' placeholder='Search...' />
+          type="text" name='search' className='border-none outline-0 focus:outline-0 text-black font-figtree' placeholder={t("placeholder")} />
       </div>
 
-      <button type='submit' className='bg-primary text-white px-3 py-2 rounded font-figtree cursor-pointer hover:opacity-70 duration-200'>Search</button>
+      <button type='submit' className='bg-primary text-white px-3 py-2 rounded font-figtree cursor-pointer hover:opacity-70 duration-200'>{t("btn")}</button>
 
     </form>
   )
@@ -66,16 +68,20 @@ const Search = ({ updateMultipleSearchParam }: { updateMultipleSearchParam: any 
 
 const LocationModal = ({ updateSearchParam }: { updateSearchParam: any }) => {
 
-  const district = useSearchParams().get("district");
-  const division = useSearchParams().get("division");
-  const area = useSearchParams().get("area");
+  const searchParams = useSearchParams()
+
+  const district = searchParams.get("district");
+  const division = searchParams.get("division");
+  const area = searchParams.get("area");
+
+  const t = useTranslations("car_buy.search.location")
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         <button className={` py-3.5 md:py-0 flex flex-row gap-x-1 items-center border-b md:border-b-0 md:border-r border-stroke cursor-pointer ml-2 w-full ${district || division || area ? "text-black" : "text-gray-400"}`}>
           <MdLocationOn className='text-xl' />
-          <p className='text-base font-figtree'>{area ? area : district ? district : division ? division : "Location"}</p>
+          <p className='text-base font-figtree'>{area ? area : district ? district : division ? division : t("placeholder")}</p>
         </button>
       </DialogTrigger>
       <DialogContent>
@@ -97,16 +103,19 @@ const DivisionSlide = ({ updateSearchParam }: { updateSearchParam: any }) => {
 
   const { isLoading, data, isSuccess } = useAllDivisionsQuery();
   const [selectedDivision, setSelectedDivision] = useState<IDivision | null>(null);
+  const t = useTranslations("car_buy.search.location")
 
   if (isLoading) {
-    return <Loader />
+    return <div>
+      <Loader />
+    </div>
   }
 
   return (
     <div className='max-h-[80vh] overflow-y-auto overflow-x-hidden'>
       {!selectedDivision &&
         <>
-          <h4 className='text-lg font-figtree font-medium text-black mb-3'>Select Devesion</h4>
+          <h4 className='text-lg font-figtree font-medium text-black mb-3'>{t("slct_div")}</h4>
           <ul>
 
             <li className='w-full'>
@@ -137,13 +146,16 @@ const DivisionSlide = ({ updateSearchParam }: { updateSearchParam: any }) => {
 }
 
 const DistrictSlide = ({ division, updateSearchParam }: { division: IDivision, updateSearchParam: any }) => {
+  const t = useTranslations("car_buy.search.location")
 
   const { isLoading, data, isSuccess } = useDistrictsByDivisionQuery({ divisionId: division?.id });
 
   const [selectedDistrict, setSelectedDistrict] = useState<IDistrict | null>(null);
 
   if (isLoading) {
-    return <Loader />
+    return <div>
+      <Loader />
+    </div>
   }
 
   return (
@@ -161,7 +173,7 @@ const DistrictSlide = ({ division, updateSearchParam }: { division: IDivision, u
 
       {!selectedDistrict &&
         <>
-          <h4 className='text-lg font-figtree font-medium text-black mb-3'>Select Devesion</h4>
+          <h4 className='text-lg font-figtree font-medium text-black mb-3'>{t("slct_dis")}</h4>
           <ul>
             <li className='w-full'>
               <DialogTrigger asChild>
@@ -193,11 +205,14 @@ const DistrictSlide = ({ division, updateSearchParam }: { division: IDivision, u
 }
 
 const AreaSlide = ({ division, district, updateSearchParam }: { division: IDivision, district: IDistrict, updateSearchParam: any }) => {
+  const t = useTranslations("car_buy.search.location")
 
   const { isLoading, data, isSuccess } = useAreasByDivDistrictQuery({ division: division?.id, district: district?.id });
 
   if (isLoading) {
-    return <Loader />
+    return <div>
+      <Loader />
+    </div>
   }
 
   return (
@@ -212,7 +227,7 @@ const AreaSlide = ({ division, district, updateSearchParam }: { division: IDivis
         },
       }}
     >
-      <h4 className='text-lg font-figtree font-medium text-black mb-3'>Select Area</h4>
+      <h4 className='text-lg font-figtree font-medium text-black mb-3'>{t("slct_area")}</h4>
       <ul>
         <li className='w-full'>
           <DialogTrigger asChild>

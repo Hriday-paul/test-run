@@ -1,4 +1,3 @@
-import React from 'react'
 import AddStats from './AddStats'
 import Payments from './Payments'
 

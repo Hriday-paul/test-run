@@ -5,8 +5,12 @@ import { Button } from "../ui/button";
 import { FiPhoneCall } from "react-icons/fi";
 import Image from "next/image";
 import { placeHolderBlurImg } from "@/utils/config";
+import { getTranslations } from "next-intl/server";
 
-function ExchangeCard({ exchange }: { exchange: Add }) {
+async function ExchangeCard({ exchange }: { exchange: Add }) {
+
+    const t = await getTranslations("category_page.adCard");
+
     return (
         <div
             className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree bg-white">
@@ -36,7 +40,7 @@ function ExchangeCard({ exchange }: { exchange: Add }) {
                                 size="sm"
                                 className="text-primary hover:text-white bg-primary/10 hover:bg-primary transition-all duration-300 cursor-pointer py-5 px-6 font-popin w-full"
                             >
-                                View Details
+                                {t("details")}
                             </Button>
                         </Link>
                     </div>

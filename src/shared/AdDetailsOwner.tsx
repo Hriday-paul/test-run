@@ -4,16 +4,18 @@
 
 import { Add } from '@/redux/types'
 import {MapPin, Phone } from 'lucide-react'
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { FaWhatsapp } from 'react-icons/fa'
 import { MdEmail } from 'react-icons/md'
 
 function AdDetailsOwner({ data }: { data: { data: Add } }) {
+    const t = useTranslations("category_page.details.seller")
     return (
 
         <div className='bg-white p-5 rounded-lg'>
             <div className='pb-4 border-b border-stroke'>
-                <h3 className='text-xl font-popin font-medium'>Seller Information</h3>
+                <h3 className='text-xl font-popin font-medium'>{t("title")}</h3>
             </div>
             <div className='flex flex-row gap-x-2.5 items-center pt-4'>
                 <Image src={data?.data?.owner?.picture?.url || "/empty-user.png"} height={1000} width={1000} className='h-8 w-8 bg-cover rounded-full' alt='user image' />
@@ -24,7 +26,7 @@ function AdDetailsOwner({ data }: { data: { data: Add } }) {
                     <div className='flex flex-row gap-x-1 items-center'>
                         <MapPin size={20} />
                         <p className='font-popin text-sm font-medium'>
-                            Location
+                            {t("location")}
                         </p>
                     </div>
                     <p className='font-popin text-base'>
@@ -37,7 +39,7 @@ function AdDetailsOwner({ data }: { data: { data: Add } }) {
                     <div className='flex flex-row gap-x-1 items-center'>
                         <Phone size={20} />
                         <p className='font-popin text-sm font-medium'>
-                            Phone
+                            {t("phone")}
                         </p>
                     </div>
                     <p className='font-popin text-base'>{data?.data?.owner?.phone || "N/A"}</p>
@@ -46,7 +48,7 @@ function AdDetailsOwner({ data }: { data: { data: Add } }) {
                     <div className='flex flex-row gap-x-1 items-center'>
                         <MdEmail size={20} />
                         <p className='font-popin text-sm font-medium'>
-                            Email
+                            {t("email")}
                         </p>
                     </div>
                     <p className='font-popin text-base'>{data?.data?.owner?.email || "N/A"}</p>
@@ -55,7 +57,7 @@ function AdDetailsOwner({ data }: { data: { data: Add } }) {
                     <div className='flex flex-row gap-x-1 items-center'>
                         <FaWhatsapp size={20} />
                         <p className='font-popin text-sm font-medium'>
-                            Whatsapp
+                            {t("whatsapp")}
                         </p>
                     </div>
                     <p className='font-popin text-base'>{data?.data?.owner?.whatsapp || "N/A"}</p>

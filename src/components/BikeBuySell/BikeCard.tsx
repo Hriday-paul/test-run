@@ -6,8 +6,11 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { placeHolderBlurImg } from "@/utils/config";
 import { AiOutlineWoman } from "react-icons/ai";
+import { getLocale, getTranslations } from "next-intl/server";
 
-function BikeCard({ bike }: { bike: Add }) {
+async function BikeCard({ bike }: { bike: Add }) {
+    const t = await getTranslations("category_page.adCard")
+    const locale = await getLocale();
     return (
         <div
             className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree bg-white">
@@ -51,7 +54,7 @@ function BikeCard({ bike }: { bike: Add }) {
                     </div>
                     <div className="flex items-center justify-between">
                         <p className="font-semibold text-gray-900 flex items-center gap-1 text-base">
-                            {bike?.price ? `Tk ${bike?.price}` : "N/A"}
+                            {bike?.price ? `${t("currency")} ${(bike?.price).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")}` : "N/A"}
                         </p>
                         <Link href={`/bikebuysell/${bike?.id}`}>
                             <Button
@@ -59,7 +62,7 @@ function BikeCard({ bike }: { bike: Add }) {
                                 size="sm"
                                 className="text-primary hover:text-white bg-primary/10 hover:bg-primary transition-all duration-300 cursor-pointer py-5 px-6 font-popin"
                             >
-                                View Details
+                                {t("details")}
                             </Button>
                         </Link>
                     </div>

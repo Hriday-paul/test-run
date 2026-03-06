@@ -1,47 +1,62 @@
-"use client"
-import Title from "./Title";
-import { useAllPackagesQuery } from "@/redux/api/subcription";
 import { Skeleton } from "@/components/ui/skeleton";
-import ErrorComponent from "@/shared/ErrorComponent";
 import PlanCard from "./PlanCard";
+import Title from "../Section2/Title";
+import { Suspense } from "react";
+import { IPackage } from "@/redux/types";
+import { GetPlans } from "@/lib/services/quer.package";
+import { getTranslations } from "next-intl/server";
 
-export default function Section4() {
+export default async function Section4() {
 
-  const { isLoading, isSuccess, data, isError } = useAllPackagesQuery();
+  const plan = GetPlans();
 
-  if (isError) {
-    return <ErrorComponent />
-  }
+  const t = await getTranslations('Home.section4');
 
   return (
     <section className="bg-[#F5F7FA] py-12 md:py-16 lg:py-20" id="pricing">
       <div className="container">
 
-        <Title />
+        <Title subtitle={t("subtitle")} title={t("title")} />
+        <p className="text-center mx-auto max-w-xl text-gray-800 font-popin text-sm">{t("description")}</p>
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 my-15 font-figtree">
-          {isLoading ? <>
+        <div>
 
-            <PricingCardSkeleton />
-            <PricingCardSkeleton />
-            <PricingCardSkeleton />
+          <Suspense fallback={
+            <div className='grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-5'>
 
-          </> : <>
+              <PricingCardSkeleton />
+              <PricingCardSkeleton />
+              <PricingCardSkeleton />
 
-            {
-              isSuccess && data?.data.map((plan, index) => {
-                const isMiddle = index === 1;
-                return (
-                  <PlanCard plan={plan} key={plan?.id} isMiddle={isMiddle} />
-                );
-              })
-            }
+            </div>
+          }>
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 my-15 font-figtree">
+              <Plans planPromise={plan} />
+            </div>
 
-          </>}
+          </Suspense>
+
         </div>
       </div>
     </section>
   );
+}
+
+const Plans = async ({ planPromise }: { planPromise: Promise<{ data: IPackage[] }> }) => {
+
+  const data = await planPromise;
+
+  return (
+
+    data?.data.map((plan, index) => {
+      const isMiddle = index === 1;
+      return (
+        <PlanCard plan={plan} key={plan?.id} isMiddle={isMiddle} />
+      );
+    })
+
+  )
+
 }
 
 export function PricingCardSkeleton() {

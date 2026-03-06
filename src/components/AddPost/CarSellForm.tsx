@@ -8,13 +8,18 @@ import { MdDeleteOutline } from 'react-icons/md';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { Carbrands } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
-import { toast } from 'sonner';
-import { useAddcarMutation, useDltAdImageMutation, useUpdateCarMutation } from '@/redux/api/ads.api';
+import { useDltAdImageMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
 import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
+import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
+import { tags } from '@/lib/Tags';
+import { useRouter } from '@/i18n/navigation';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import baseApi from '@/redux/api/baseApi';
 
 type FieldType = {
     title: string,
@@ -72,15 +77,19 @@ const carTypes = [
 
 function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
 
-    const [postCar, { isLoading }] = useAddcarMutation();
-    const [updateCar, { isLoading: updateLoading }] = useUpdateCarMutation();
+    // const [postCar, { isLoading }] = useAddcarMutation();
+    // const [updateCar, { isLoading: updateLoading }] = useUpdateCarMutation();
     const [dltImage] = useDltAdImageMutation();
+
+    const dispatch = useDispatch();
 
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
 
     const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
     const [division, setDivision] = useState<any>(null);
     const [district, setDistrict] = useState<any>(null);
+
+    const router = useRouter();
 
     const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : 1 });
 
@@ -103,7 +112,7 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
         control,
         reset,
         resetField,
-        formState: { errors },
+        formState: { errors, isSubmitting: isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
@@ -133,11 +142,33 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
             });
 
             if (defaultData) {
-                await updateCar({ id: defaultData?.id, body: form }).unwrap();
+                // await updateCar({ id: defaultData?.id, body: form }).unwrap();
+
+                const updatedRes = await updateAdd({ endPoint: `/ads/cars/${defaultData?.id}`, payload: form, tags: [tags?.cars] });
+
+                if (updatedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (updatedRes.error) {
+                    toast.error(updatedRes.error)
+                    return;
+                }
+
             } else {
-                await postCar(form).unwrap();
+                // await postCar(form).unwrap();
+                const postedRes = await postNewAdd({ endPoint: "/ads/cars", payload: form, tags: [tags?.cars] });
+                if (postedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (postedRes.error) {
+                    toast.error(postedRes.error)
+                    return;
+                }
             }
 
+            dispatch(baseApi.util.invalidateTags(["ads"]))
 
             Swal.fire({
                 title: `Car Ad ${defaultData ? "updated" : "posted"} successfully!`,
@@ -192,6 +223,7 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
             setImages([]);
 
         } catch (err: any) {
+            console.log(err, "got error from catch")
             toast.error(err?.data?.message || 'Something went wrong, try again')
         }
     }
@@ -255,7 +287,6 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
             toast.error(err?.data?.message || 'Something went wrong, try again')
         }
     }
-
 
     return (
         <div>
@@ -757,9 +788,9 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
                 </div>
 
 
-                <button type='submit' disabled={isLoading || updateLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
-                    {(isLoading || updateLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
-                    <span>{(isLoading || updateLoading) ? 'Loading...' : "Submit"}</span>
+                <button type='submit' disabled={isLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
+                    {(isLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
+                    <span>{(isLoading) ? 'Loading...' : "Submit"}</span>
                 </button>
 
             </form>

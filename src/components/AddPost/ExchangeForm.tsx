@@ -4,34 +4,47 @@ import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { GoPlus } from 'react-icons/go';
-import { MdDeleteOutline } from 'react-icons/md';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
-import { Carbrands, ExchangeCategory } from '@/utils/config';
+import { ExchangeCategory } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
-import { toast } from 'sonner';
-import { useAddcarMutation, useAddExchangeMutation } from '@/redux/api/ads.api';
+import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
+import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
+import { tags } from '@/lib/Tags';
+import { useRouter } from '@/i18n/navigation';
+import { Add } from '@/redux/types';
+import { useDltAdImageMutation } from '@/redux/api/ads.api';
+import { Popconfirm } from 'antd';
+import { useDispatch } from 'react-redux';
+import baseApi from '@/redux/api/baseApi';
 
 type FieldType = {
     title: string,
-    "description": string,
+    "description": string | null,
     "divisionId": string | null,
     "districtId": string | null,
     "areaId": string | null,
     exchange_category: string
-    condition: string
+    condition: string | null
     wanted_category: string
     location: string | null
 }
 
-function ExchangeForm() {
+function ExchangeForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
+
+    const [dltImage] = useDltAdImageMutation();
+
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
 
     const { isLoading: divisionloading, data, isSuccess, } = useAllDivisionsQuery();
     const [division, setDivision] = useState<any>(null);
     const [district, setDistrict] = useState<any>(null);
+    const router = useRouter();
+
+    const dispatch = useDispatch();
+
 
     const { isLoading: districtLoad, isFetching: districtFetch, data: districts, isSuccess: districtSuccess } = useDistrictsByDivisionQuery({ divisionId: division ? division?.id : 1 });
 
@@ -46,7 +59,7 @@ function ExchangeForm() {
 
     const { isLoading: areatLoad, isFetching: areaFetch, data: areas, isSuccess: areaSuccess } = useAreasByDivDistrictQuery(query);
 
-    const [postAdd, { isLoading }] = useAddExchangeMutation();
+    // const [postAdd, { isLoading }] = useAddExchangeMutation();
 
     const [images, setImages] = useState<File[]>([]);
 
@@ -56,12 +69,22 @@ function ExchangeForm() {
         control,
         reset,
         resetField,
-        formState: { errors },
-    } = useForm<FieldType>({ defaultValues: {} });
+        formState: { errors, isSubmitting: isLoading },
+    } = useForm<FieldType>({
+        defaultValues: {
+            title: defaultData?.title,
+            description: defaultData?.description,
+            divisionId: defaultData?.divisionId?.toString(),
+            districtId: defaultData?.districtId?.toString(),
+            areaId: defaultData?.areaId?.toString(),
+
+            ...defaultData?.exchange,
+        }
+    });
 
     const handleFormSubmit: SubmitHandler<FieldType> = async (data) => {
         try {
-            if (images?.length <= 0) {
+            if (images?.length <= 0 && !defaultData) {
                 toast.error('Please, select minimum 1 image', { position: "top-center" });
                 return;
             }
@@ -73,11 +96,39 @@ function ExchangeForm() {
                 form.append('images', image);
             });
 
-            const res = await postAdd(form).unwrap();
+            if (defaultData) {
+                // await updateCar({ id: defaultData?.id, body: form }).unwrap();
+
+                const updatedRes = await updateAdd({ endPoint: `/ads/exchanges/${defaultData?.id}`, payload: form, tags: [tags?.cars] });
+
+                if (updatedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (updatedRes.error) {
+                    toast.error(updatedRes.error)
+                    return;
+                }
+
+            } else {
+                // const res = await postAdd(form).unwrap();
+                const postedRes = await postNewAdd({ endPoint: "/ads/exchanges", payload: form, tags: [tags?.exchanges] });
+
+                if (postedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (postedRes.error) {
+                    toast.error(postedRes.error)
+                    return;
+                }
+            }
+
+            dispatch(baseApi.util.invalidateTags(["ads"]))
 
             Swal.fire({
-                title: "Exchange Ad posted successfully!",
-                text: "Your exchange add posted successfully",
+                title: `Exchange Ad ${defaultData ? "updated" : "posted"} successfully!`,
+                text: `Your exchange add ${defaultData ? "updated" : "posted"} successfully`,
                 customClass: {
                     title: "text-2xl text-black font-figtree",
                     container: "text-sm font-medium font-figtree text-zinc-900",
@@ -91,6 +142,15 @@ function ExchangeForm() {
                 confirmButtonColor: "#38CB6E",
                 cancelButtonText: "Close",
             })
+
+            if (defaultData) {
+
+                if (setOpen) {
+                    setOpen(false)
+                }
+
+                return;
+            }
 
             reset({
                 title: "",
@@ -126,7 +186,11 @@ function ExchangeForm() {
     }, [images]);
 
     useEffect(() => {
-        if (profileSuccess) {
+        if (defaultData) {
+            setDivision({ id: defaultData?.divisionId })
+            setDistrict({ id: defaultData?.districtId })
+        }
+        else if (profileSuccess) {
             reset({
                 divisionId: profile?.data?.division?.id.toString(),
                 districtId: profile?.data?.district?.id.toString(),
@@ -136,7 +200,7 @@ function ExchangeForm() {
             setDivision({ id: profile?.data?.division?.id })
             setDistrict({ id: profile?.data?.district?.id })
         }
-    }, [profile, profileSuccess])
+    }, [profile, profileSuccess, defaultData])
 
     useEffect(() => {
         if (division && division?.label) {
@@ -157,6 +221,23 @@ function ExchangeForm() {
         }
     }, [district])
 
+    useEffect(() => {
+        if (district && district?.label) {
+            resetField("areaId", {
+                defaultValue: null
+            })
+        }
+    }, [district])
+
+    const handleDltUploadedImg = async (payload: { id: number, addId: number }) => {
+        try {
+            await dltImage(payload).unwrap();
+            toast.success("Image deleted successfully")
+        } catch (err: any) {
+            toast.error(err?.data?.message || 'Something went wrong, try again')
+        }
+    }
+
     return (
         <div>
 
@@ -166,6 +247,32 @@ function ExchangeForm() {
                     <span className="text-red-500 text-base ml-1">*</span>
                 </div>
                 <div className='flex flex-row flex-wrap gap-2 items-center'>
+
+                    {/* //uploaded images  */}
+                    {
+                        defaultData?.images?.map((img, indx) => {
+                            return <div key={img?.key} className='relative'>
+                                <div className=' w-24 h-24'>
+                                    <Image src={img?.url} fill className='h-full w-full object-cover rounded-md' alt='uploaded image' />
+                                </div>
+
+                                <Popconfirm
+                                    title="Are you sure ?"
+                                    description={`This image will be delete permanently`}
+                                    onConfirm={() => handleDltUploadedImg({ id: img?.id, addId: defaultData?.id })}
+                                    okText="Yes"
+                                    cancelText="No"
+                                    getPopupContainer={(node) => node.parentElement!}
+                                >
+                                    <button type='button' className='absolute top-0 right-0 p-1 bg-black/90 z-50 cursor-pointer'>
+                                        <Trash2 className='text-sm text-danger' size={16} />
+                                    </button>
+                                </Popconfirm>
+                            </div>
+                        })
+                    }
+
+                    {/* ---------local images------------- */}
                     {
                         images?.map((img, indx) => {
                             return <div key={indx} className='relative'>

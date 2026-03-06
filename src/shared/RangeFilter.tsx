@@ -1,9 +1,10 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import React, { useMemo, useState, useEffect } from 'react';
 import debounce from 'lodash.debounce';
 import { RangeSlider } from '@/components/ui/range-slider';
+import { useSearchParams } from 'next/navigation';
 
 interface RangeFilterProps {
   minQueryKey: string;        // e.g., 'min_price'

@@ -8,9 +8,11 @@ import {
 
 import { Checkbox } from "@/components/ui/checkbox"
 import { useAllDivisionsQuery } from "@/redux/api/locations.api";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { useCallback } from "react";
 import { Skeleton } from "../ui/skeleton";
+import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 
 
 function AccessoriesFilter() {
@@ -18,6 +20,8 @@ function AccessoriesFilter() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const pathname = usePathname();
+    const t = useTranslations("accessories.filter")
+
     const selecteddivisions = searchParams.get("division")?.split(",") || [];
 
     const updateQueryParam = useCallback(
@@ -57,7 +61,7 @@ function AccessoriesFilter() {
             {/* -----------------division------------- */}
             {isLoading ? <Skeleton className="h-60 w-full rounded-lg bg-zinc-200" /> : <Accordion type="single" collapsible className="bg-white px-4 rounded-lg border border-stroke" defaultValue="division">
                 <AccordionItem value="division">
-                    <AccordionTrigger className="text-lg font-popin font-medium hover:no-underline cursor-pointer">Location</AccordionTrigger>
+                    <AccordionTrigger className="text-lg font-popin font-medium hover:no-underline cursor-pointer">{t("location.title")}</AccordionTrigger>
                     <AccordionContent className="border-t border-stroke pt-4 space-y-3">
                         {
                             data?.data?.divisions?.map(i => {

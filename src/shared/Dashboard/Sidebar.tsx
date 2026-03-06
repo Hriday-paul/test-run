@@ -2,7 +2,7 @@
 import { removeUser } from '@/redux/slices/userSlice';
 import { AppDispatch } from '@/redux/store';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter } from '@/i18n/navigation';
 import React, { useCallback } from 'react';
 import { IoLogOutOutline } from 'react-icons/io5';
 import { useDispatch } from 'react-redux';
@@ -19,7 +19,7 @@ const Sidebar = ({ routs, title, logoutTxt }: { routs: { id: number, name: strin
     }, [dispatch, activeRout, navig])
 
     return (
-        <div className='w-full bg-white border border-stroke shadow-2'>
+        <div className='w-full bg-white border border-stroke shadow-2 sticky top-[85px]'>
             <p className='text-lg font-popin font-medium text-primary px-4 py-3'>{title}</p>
             <ul className='border-t border-t-stroke pb-2 space-y-1'>
                 {

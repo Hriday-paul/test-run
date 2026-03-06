@@ -11,6 +11,11 @@
   scroll-behavior: smooth;
 }
 
+.about-section-2::before{
+  background-image: url('../components/About//work-flow-arrow.png');
+}
+
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

@@ -17,6 +17,8 @@ import AccessoriesForm from '../AddPost/AccessoriesForm'
 import CarrentForm from '../AddPost/CarrentForm'
 import WorkshopForm from '../AddPost/WorkshopForm'
 import LawyerForm from '../AddPost/LawyerForm'
+import JobForm from '../AddPost/JobForm'
+import ExchangeForm from '../AddPost/ExchangeForm'
 
 function EditPost({ defaultData, clicker }: { defaultData: Add, clicker: React.ReactNode }) {
     const [open, setOpen] = useState(false);
@@ -46,7 +48,9 @@ function EditPost({ defaultData, clicker }: { defaultData: Add, clicker: React.R
                         <BikeSellForm defaultData={defaultData} setOpen={setOpen}/> : defaultData?.carRent ? 
                         <CarrentForm defaultData={defaultData} setOpen={setOpen}></CarrentForm> : defaultData?.workshop ? 
                         <WorkshopForm defaultData={defaultData} setOpen={setOpen}/> : defaultData?.lawyer ? 
-                        <LawyerForm defaultData={defaultData} setOpen={setOpen}/> :
+                        <LawyerForm defaultData={defaultData} setOpen={setOpen}/> : defaultData?.job ?
+                        <JobForm defaultData={defaultData} setOpen={setOpen}></JobForm> : defaultData?.exchange ?
+                        <ExchangeForm defaultData={defaultData} setOpen={setOpen}></ExchangeForm> :
                         <AccessoriesForm defaultData={defaultData} setOpen={setOpen}></AccessoriesForm>
                     }
 

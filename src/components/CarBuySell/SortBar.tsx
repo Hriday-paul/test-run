@@ -1,3 +1,4 @@
+"use client"
 import {
     Select,
     SelectContent,
@@ -5,23 +6,26 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { UseUpdateMultipleSearchParams } from "@/hooks/UseUpdateSearchPrams";
+import { useUpdateMultipleSearchParams } from "@/hooks/UseUpdateSearchPrams";
+import { useTranslations } from "next-intl";
 
 
-function SortBar({ limit, sort = "createdAt" }: { limit: string, sort ?: string }) {
+function SortBar({ limit = "21", sort = "createdAt" }: { limit?: string, sort?: string }) {
 
-    const updateMultipleSearchParam = UseUpdateMultipleSearchParams();
+    const t = useTranslations("category_page");
+    const updateMultipleSearchParam = useUpdateMultipleSearchParams();
+
 
     return (
 
         <div className="flex items-center gap-2">
 
             <div className="flex items-center border border-stroke md:px-2.5 px-1 rounded-md">
-                <span className="text-sm font-popin">Show:</span>
+                <span className="text-sm font-popin">{t("limit")}:</span>
                 <Select
                     // value={limit?.toString()}
-                    defaultValue="21"
-                    onValueChange={(value) => updateMultipleSearchParam({"limit" : value})}
+                    defaultValue={limit}
+                onValueChange={(value) => updateMultipleSearchParam({ "limit": value })}
                 >
                     <SelectTrigger className="border-none shadow-none focus-visible:ring-0 px-2 truncate font-popin cursor-pointer">
                         <SelectValue placeholder={limit?.toString()} />

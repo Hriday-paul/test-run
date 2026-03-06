@@ -32,19 +32,29 @@ import { Eye, SquarePen, Trash2 } from 'lucide-react';
 import { FaArrowDownLong } from 'react-icons/fa6';
 import { FaRegStar } from 'react-icons/fa';
 import { toast } from 'sonner';
+import { toast as toastify } from 'react-toastify';
 import EditPost from '@/components/EditPost/EditPost';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { categoryRouteMap } from '@/shared/FeatureAddCard';
 import { adFeature } from '@/lib/Actions/FeatureAd.action';
+import { useTranslations } from 'next-intl';
+import { DeleteAdd } from '@/lib/Actions/Post.action';
+import { useRouter } from '@/i18n/navigation';
+import { useDispatch } from 'react-redux';
+import baseApi from '@/redux/api/baseApi';
 
 function AdsTable() {
     const [page, setPage] = useState(1);
+    const t = useTranslations("vendor.ads")
     const { isLoading, isError, isSuccess, data } = useAllAdsQuery({ page });
     return (
         <div>
             <div className=''>
-                <h3 className='text-base lg:text-lg font-popin text-black py-3'>Posted Ads</h3>
+                <div className="flex flex-row justify-between items-center">
+                    <h3 className='text-base lg:text-lg font-popin text-black py-3'>{t("title")}</h3>
+                    <Link href={'/vendor/post-ad'} className='bg-primary text-white font-popin hover:bg-primary/60 duration-150 cursor-pointer rounded-2xl border-none text-sm px-4 py-1.5'>{t("btn.txt")}</Link>
+                </div>
                 {
                     isLoading ?
                         <div>
@@ -71,13 +81,28 @@ function AdsTable() {
     )
 }
 
-export default AdsTable
+export default AdsTable;
+
+const tagLookUpByCategory = {
+    Bike: "bikes",
+    Car: "cars",
+    Workshop: "workshops",
+    Accessories: "accessories",
+    CarRent: "rent-cars",
+    Job: "jobs",
+    Exchange: "exchanges",
+    Lawyer: "lawyers"
+
+}
 
 const AdTable = ({ ads }: { ads: Add[] }) => {
 
-    const [addFeature] = useFeatureAddMutation();
+    // const [addFeature] = useFeatureAddMutation();
     const [addBump] = useBumpAddMutation();
     const [addDlt] = useDltAddMutation();
+    const t = useTranslations("vendor.ads");
+    const router = useRouter();
+    const dispatch = useDispatch();
 
     const handleFeature = async (addId: number) => {
         const loading = toast.loading("Loading...")
@@ -86,7 +111,6 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
             await adFeature({ id: addId?.toString() });
             toast.success("Ad successfully featured");
         } catch (err: any) {
-            console.log(err);
             Swal.fire({
                 title: err?.message || "Something went wrong",
                 // text: "Job poster will review your quotes. You’ll be notified in you email when a quote arrives.",
@@ -131,7 +155,7 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
         }
     }
 
-    const handleDelete = async (addId: number) => {
+    const handleDelete = async (addId: number, category: string) => {
         let loadingId: string | number | undefined;
 
         const result = await Swal.fire({
@@ -153,7 +177,19 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
         try {
             loadingId = toast.loading("Loading...");
 
-            await addDlt({ addId }).unwrap();
+            const tag = tagLookUpByCategory[category as keyof typeof tagLookUpByCategory];
+
+            const postedRes = await DeleteAdd({ endPoint: `/ads/${addId}`, payload: JSON.stringify({}), tags: [tag] });
+            if (postedRes?.redirect) {
+                router.push("/auth/login");
+                toastify.error("Session expired. Please log in again.");
+                return;
+            } else if (postedRes.error) {
+                toastify.error(postedRes.error)
+                return;
+            }
+
+            dispatch(baseApi.util.invalidateTags(["ads"]));
 
             toast.success("Ad deleted successfully");
 
@@ -182,13 +218,13 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
             <Table className="font-figtree">
                 <TableHeader className="!bg-primary/10 font-figtree ">
                     <TableRow className="">
-                        <TableHead className="p-5 font-medium font-figtree">Image</TableHead>
-                        <TableHead className="font-medium font-figtree">Ad title</TableHead>
-                        <TableHead className="font-medium font-figtree">Category</TableHead>
-                        <TableHead className="font-medium font-figtree">Price</TableHead>
-                        <TableHead className="font-medium font-figtree">Status</TableHead>
-                        <TableHead className="font-medium font-figtree">Posted At</TableHead>
-                        <TableHead className="text-right font-figtree p-5">Action</TableHead>
+                        <TableHead className="p-5 font-medium font-figtree">{t("table.img")}</TableHead>
+                        <TableHead className="font-medium font-figtree">{t("table.title")}</TableHead>
+                        <TableHead className="font-medium font-figtree">{t("table.category")}</TableHead>
+                        <TableHead className="font-medium font-figtree">{t("table.price")}</TableHead>
+                        <TableHead className="font-medium font-figtree">{t("table.status")}</TableHead>
+                        <TableHead className="font-medium font-figtree">{t("table.postedAt")}</TableHead>
+                        <TableHead className="text-right font-figtree p-5">{t("table.action")}</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody className="border border-stroke">
@@ -197,12 +233,12 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                         <TableRow key={ad?.id}>
 
                             <TableCell>
-                                <div className='relative w-16'>
+                                {ad?.images?.length > 0 ? <div className='relative w-16'>
                                     <Image height={800} width={1000} src={ad?.images[0]?.url} alt='add images' className='object-cover h-auto w-full rounded' />
                                     <div className='bg-black/50 absolute top-0 left-0 h-full w-full flex justify-center items-center'>
                                         <p className='text-sm text-white font-popin'>{ad?.images?.length}</p>
                                     </div>
-                                </div>
+                                </div> : "N/A"}
                             </TableCell>
 
                             <TableCell className=''>{ad?.title}</TableCell>
@@ -231,21 +267,21 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
                                             <button onClick={() => handleFeature(ad?.id)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
                                                 <FaRegStar className='text-black' />
-                                                Feature
+                                                {t("action.feature")}
                                             </button>
                                         </DropdownMenuItem>
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150 w-full">
                                             <button onClick={() => handleBump(ad?.id)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
                                                 <FaArrowDownLong className='text-black rotate-180' />
-                                                Bump Up
+                                                {t("action.bump")}
                                             </button>
                                         </DropdownMenuItem>
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
                                             <Link href={`/${categoryRouteMap[ad?.category]}/${ad?.id}`} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
                                                 <Eye className='text-black size-4' />
-                                                View Post
+                                                {t("action.view")}
                                             </Link>
                                         </DropdownMenuItem>
 
@@ -254,16 +290,16 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                                                 <div className='w-full text-left hover:bg-zinc-100 duration-150 flex flex-row gap-x-2 items-center px-2 rounded-lg'>
 
                                                     <SquarePen className='text-black size-4' />
-                                                    Edit Post
+                                                    {t("action.edit")}
                                                 </div>
                                             }></EditPost>
                                         </DropdownMenuItem>
 
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
-                                            <button onClick={() => handleDelete(ad?.id)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
+                                            <button onClick={() => handleDelete(ad?.id, ad?.category)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
                                                 <Trash2 className='text-primary' />
-                                                Delete
+                                                {t("action.dlt")}
                                             </button>
                                         </DropdownMenuItem>
 
@@ -281,7 +317,7 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
             {
                 ads?.length <= 0 && <section className='min-h-[calc(25vh)] flex flex-col items-center justify-center'>
                     <Image src={emptyDataImg} className='h-28 w-auto mx-auto' alt='empty data' />
-                    <h5 className='text-base font-figtree text-center'>Data is empty</h5>
+                    <h5 className='text-base font-figtree text-center'>{t("table.empty")}</h5>
                 </section>
             }
 

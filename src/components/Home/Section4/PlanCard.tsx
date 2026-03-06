@@ -1,19 +1,24 @@
+"use client"
 import { Button } from '@/components/ui/button'
 import { usePurchasePackMutation } from '@/redux/api/subcription'
 import { IPackage } from '@/redux/types'
 import SignUpPopup from '@/shared/SignUpPopup'
-import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import { useLocale } from 'next-intl'
+import { useRouter } from '@/i18n/navigation'
+import { useState } from 'react'
 import { useCookies } from 'react-cookie'
 import { GoArrowUpRight } from 'react-icons/go'
 import { ImSpinner2 } from 'react-icons/im'
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io'
 import Swal from 'sweetalert2'
+import { useTranslations } from 'use-intl'
 
 function PlanCard({ plan, isMiddle }: { plan: IPackage, isMiddle: boolean }) {
+    const locale = useLocale();
     const [postSubscription, { isLoading }] = usePurchasePackMutation();
     const [open, setOpen] = useState<boolean>(false);
     const router = useRouter();
+    const t = useTranslations("Home.section4.package");
 
     const [cookie, _] = useCookies(['accessToken']);
 
@@ -68,7 +73,7 @@ function PlanCard({ plan, isMiddle }: { plan: IPackage, isMiddle: boolean }) {
                     }`}
             >
                 <h5 className="text-3xl font-semibold font-popin">{plan.name}</h5>
-                <p>{plan.duration} days</p>
+                <p>{(plan.duration).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")} {t("days")}</p>
             </div>
 
             <div
@@ -78,10 +83,10 @@ function PlanCard({ plan, isMiddle }: { plan: IPackage, isMiddle: boolean }) {
                 <div className="flex flex-col items-start">
                     <p className=" mb-6">
                         <span className="text-lg font-bold group-hover:text-white">
-                            {plan.price} TK 
+                            {(plan.price).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")} {t("currency")}
                         </span>
-                        /
-                        <span> {plan.duration} days</span>
+                         /
+                        <span> {(plan.duration).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")} {t("days")}</span>
                     </p>
 
                     <ul
@@ -91,19 +96,19 @@ function PlanCard({ plan, isMiddle }: { plan: IPackage, isMiddle: boolean }) {
 
                         <li className="flex items-center gap-2 font-popin">
                             <IoMdCheckmarkCircleOutline />
-                            {plan?.add_count} Regular Ads
+                            {plan?.add_count} {t("rg_ads")}
                         </li>
                         <li className="flex items-center gap-2 font-popin">
                             <IoMdCheckmarkCircleOutline />
-                            {plan?.feature_count} Featured Ads
+                            {plan?.feature_count} {t("ft_ads")}
                         </li>
                         <li className="flex items-center gap-2 font-popin">
                             <IoMdCheckmarkCircleOutline />
-                            {plan?.bumpup_count} Ads will be bumped up
+                            {plan?.bumpup_count} {t("bmp_ads")}
                         </li>
                         <li className="flex items-center gap-2 font-popin">
                             <IoMdCheckmarkCircleOutline />
-                            Basic Support
+                            {t("bs_support")}
                         </li>
 
                     </ul>
@@ -119,7 +124,7 @@ function PlanCard({ plan, isMiddle }: { plan: IPackage, isMiddle: boolean }) {
                   `}
                 onClick={() => handlePurchase(plan?.id)}
             >
-                <span>Choose {plan.name}</span>
+                <span>{t("choose")}</span>
                 <span
                     className={`p-2 border rounded-full ${isMiddle ? "border-white" : "border-primary "
                         }`}

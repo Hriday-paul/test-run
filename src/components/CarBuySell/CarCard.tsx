@@ -1,13 +1,18 @@
 import { Add } from "@/redux/types";
-import { Bike, Calendar, Component, Gauge, Users } from "lucide-react";
+import { Calendar, Component, Gauge, Users } from "lucide-react";
 import Link from "next/link";
 import { SlLocationPin } from "react-icons/sl";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { placeHolderBlurImg } from "@/utils/config";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
+import { getLocale, getTranslations } from "next-intl/server";
 
-function CarCard({ car }: { car: Add }) {
+async function CarCard({ car }: { car: Add }) {
+
+    const t = await getTranslations("category_page.adCard");
+    const locale = await getLocale();
+
     return (
         <div
             className="border border-stroke rounded-xl overflow-hidden hover:shadow-sm transition-all p-0 font-figtree bg-white">
@@ -51,7 +56,7 @@ function CarCard({ car }: { car: Add }) {
                     </div>
                     <div className="flex items-center justify-between">
                         <p className="font-semibold text-gray-900 flex items-center gap-1 text-base">
-                            {car?.price ? `Tk ${car?.price}` : "N/A"}
+                            {car?.price ? `${t("currency")} ${(car?.price).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")}` : "N/A"}
                         </p>
                         <Link href={`/carbuysell/${car?.id}`}>
                             <Button
@@ -59,7 +64,7 @@ function CarCard({ car }: { car: Add }) {
                                 size="sm"
                                 className="text-primary hover:text-white bg-primary/10 hover:bg-primary transition-all duration-300 cursor-pointer py-5 px-6 font-popin"
                             >
-                                View Details
+                                {t("details")}
                             </Button>
                         </Link>
                     </div>

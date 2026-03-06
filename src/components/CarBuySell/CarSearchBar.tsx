@@ -1,8 +1,7 @@
 "use client"
-import { UseUpdateMultipleSearchParams } from '@/hooks/UseUpdateSearchPrams';
-import { Car } from 'lucide-react';
+import { useUpdateMultipleSearchParams } from '@/hooks/UseUpdateSearchPrams';
+import { useTranslations } from 'next-intl';
 import { useSearchParams } from 'next/navigation';
-import React from 'react'
 import { MdOutlineDashboardCustomize } from 'react-icons/md'
 import { PiTruckLight } from 'react-icons/pi'
 import { TbBus, TbCar } from "react-icons/tb";
@@ -10,47 +9,46 @@ import { TbBus, TbCar } from "react-icons/tb";
 const carTypes = [
     {
         id: 0,
-        name: "All",
+        name: "car_type.all",
         value: null,
         icon: <MdOutlineDashboardCustomize className='text-base md:text-lg' />
     },
     {
         id: 1,
-        name: "Truck",
+        name: "car_type.truck",
         value: "Truck",
         icon: <PiTruckLight className='text-base md:text-lg' />
     },
     {
         id: 2,
-        name: "Bus",
+        name: "car_type.bus",
         value: "Bus",
         icon: <TbBus className='text-base md:text-lg' />
     },
     {
         id: 3,
-        name: "Mini Bus",
+        name: "car_type.mini_bus",
         value: "Mini Bus",
         icon: <TbCar className='text-base md:text-lg' />
     },
     {
         id: 4,
-        name: "Car",
+        name: "car_type.car",
         value: "Car",
-        icon: <Car className='text-base md:text-lg' />
     },
     {
         id: 5,
-        name: "Hiace",
+        name: "car_type.hiace",
         value: "Hiace",
         icon: <TbCar className='text-base md:text-lg' />
     },
 ]
 
-
 function CarSearchBar() {
-
-    const updateMultipleSearchParam = UseUpdateMultipleSearchParams();
     const car_type = useSearchParams().get("car_type");
+    const t = useTranslations("car_buy.filter")
+    const updateMultipleSearchParam = useUpdateMultipleSearchParams();
+
 
     return (
         <div className=''>
@@ -59,7 +57,7 @@ function CarSearchBar() {
                     carTypes?.map(i => {
                         return <button onClick={() => updateMultipleSearchParam({ car_type: i?.value })} key={i?.id} className={`flex flex-row items-center gap-x-1 border ${(car_type == i?.value || (i?.id == 0 && !car_type)) ? "bg-primary text-white" : "bg-white text-black"} border-stroke px-3 md:px-4 lg:px-5 py-1.5 md:py-2 rounded cursor-pointer`}>
                             {i?.icon}
-                            <p className='text-sm md:text-base font-popin'>{i?.name}</p>
+                            <p className='text-sm md:text-base font-popin'>{t(i?.name)}</p>
                         </button>
                     })
                 }

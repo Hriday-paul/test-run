@@ -1,12 +1,14 @@
 "use client"
 import { useAllServicesQuery } from '@/redux/api/services.api'
 import ErrorComponent from '@/shared/ErrorComponent';
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Skeleton } from '../ui/skeleton';
 import ServiceCard from './ServiceCard';
+import { useTranslations } from 'next-intl';
 
 function DocumentServices() {
     const [searchText, setSearchText] = useState("");
+    const t = useTranslations("vehicle_process.main");
     const { isLoading, isError, isSuccess, data } = useAllServicesQuery({searchTerm : searchText});
 
     if (isError) {
@@ -17,8 +19,8 @@ function DocumentServices() {
         <div>
             <div className='grid grid-cols-1 md:grid-cols-3 gap-5 justify-between items-center mb-8 lg:mb-12 md:pt-5'>
                 <div className='space-y-2 md:col-span-2'>
-                    <h4 className='text-lg md:text-xl lg:text-2xl xl:text-3xl font-popin font-semibold text-black'>All Document Process List</h4>
-                    <p className='tet-sm text-gray-800 font-popin'>The second view is that the house of the deceased also has a letter of demand for the house of the deceased and that demand is being paid by the government. The government of the deceased has been paying the illegal demand.</p>
+                    <h4 className='text-lg md:text-xl lg:text-2xl xl:text-3xl font-popin font-semibold text-black'>{t("title")}</h4>
+                    <p className='tet-sm text-gray-800 font-popin'>{t("subtitle")}</p>
                 </div>
                 <div className='md:col-span-1'>
                     <input

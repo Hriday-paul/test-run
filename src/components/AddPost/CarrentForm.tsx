@@ -7,13 +7,18 @@ import { GoPlus } from 'react-icons/go';
 import { SelectWithSearch } from '../ui/SelectWithSearch';
 import { Carbrands, carType } from '@/utils/config';
 import { ImSpinner2 } from 'react-icons/im';
-import { toast } from 'sonner';
+import { toast } from 'react-toastify';
 import { useAddcarMutation, useAddRentCarMutation, useDltAdImageMutation, useUpdateRentCarMutation } from '@/redux/api/ads.api';
 import Swal from 'sweetalert2';
 import { useAllDivisionsQuery, useAreasByDivDistrictQuery, useDistrictsByDivisionQuery } from '@/redux/api/locations.api';
 import { useMyProfileQuery } from '@/redux/api/user.api';
 import { Add } from '@/redux/types';
 import { Popconfirm } from 'antd';
+import { postNewAdd, updateAdd } from '@/lib/Actions/Post.action';
+import { tags } from '@/lib/Tags';
+import { useRouter } from '@/i18n/navigation';
+import { useDispatch } from 'react-redux';
+import baseApi from '@/redux/api/baseApi';
 
 type FieldType = {
     title: string,
@@ -31,9 +36,11 @@ type FieldType = {
 
 function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: React.Dispatch<React.SetStateAction<boolean>> }) {
 
-    const [updateAd, { isLoading: updateLoading }] = useUpdateRentCarMutation();
+    // const [updateAd, { isLoading: updateLoading }] = useUpdateRentCarMutation();
 
     const [dltImage] = useDltAdImageMutation();
+    const router = useRouter();
+    const dispatch = useDispatch();
 
     const { isLoading: profileLoading, isSuccess: profileSuccess, data: profile } = useMyProfileQuery();
 
@@ -54,7 +61,7 @@ function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
 
     const { isLoading: areatLoad, isFetching: areaFetch, data: areas, isSuccess: areaSuccess } = useAreasByDivDistrictQuery(query);
 
-    const [postAdd, { isLoading }] = useAddRentCarMutation();
+    // const [postAdd, { isLoading }] = useAddRentCarMutation();
 
     const [images, setImages] = useState<File[]>([]);
 
@@ -64,7 +71,7 @@ function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
         control,
         reset,
         resetField,
-        formState: { errors },
+        formState: { errors, isSubmitting: isLoading },
     } = useForm<FieldType>({
         defaultValues: {
             title: defaultData?.title,
@@ -94,10 +101,31 @@ function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
             });
 
             if (defaultData) {
-                await updateAd({ id: defaultData?.id, body: form }).unwrap();
+                // await updateAd({ id: defaultData?.id, body: form }).unwrap();
+                const updatedRes = await updateAdd({ endPoint: `/ads/rent-cars/${defaultData?.id}`, payload: form, tags: [tags?.rent_cars] });
+                if (updatedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (updatedRes.error) {
+                    toast.error(updatedRes.error)
+                    return;
+                }
+
             } else {
-                await postAdd(form).unwrap();
+                // await postAdd(form).unwrap();
+                const postedRes = await postNewAdd({ endPoint: "/ads/rent-cars", payload: form, tags: [tags?.rent_cars] });
+                if (postedRes?.redirect) {
+                    router.push("/auth/login");
+                    toast.error("Session expired. Please log in again.");
+                    return;
+                } else if (postedRes.error) {
+                    toast.error(postedRes.error)
+                    return;
+                }
             }
+
+            dispatch(baseApi.util.invalidateTags(["ads"]))
 
             Swal.fire({
                 title: `Car Rent Ad ${defaultData ? "updated" : "posted"} successfully!`,
@@ -425,9 +453,9 @@ function CarrentForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
                 </div>
 
 
-                <button type='submit' disabled={isLoading || updateLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
-                    {(isLoading || updateLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
-                    <span>{(isLoading || updateLoading) ? 'Loading...' : "Submit"}</span>
+                <button type='submit' disabled={isLoading} className='bg-primary py-3 font-popin rounded-md w-full mt-5 hover:bg-primary/70 duration-200 flex flex-row gap-x-2 items-center justify-center disabled:bg-opacity-60 text-white disabled:cursor-not-allowed cursor-pointer'>
+                    {(isLoading) && <ImSpinner2 className="text-lg text-white animate-spin" />}
+                    <span>{(isLoading) ? 'Loading...' : "Submit"}</span>
                 </button>
 
             </form>

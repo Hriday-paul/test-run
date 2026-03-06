@@ -8,7 +8,7 @@ import {
     CarouselNext
 } from "@/components/ui/carousel"
 
-import Autoplay from "embla-carousel-autoplay"
+// import Autoplay from "embla-carousel-autoplay"
 import FeatureAddCard from '@/shared/FeatureAddCard'
 import { Add } from "@/redux/types"
 
