@@ -8,7 +8,7 @@ export const serverQueryWithReauth = async ({ payload, endPoint, method }: { pay
     const refreshToken = cookieStore.get('refreshToken')?.value;
 
     const makeRequest = async (token?: string) => {
-        console.log(payload);
+        
         return fetch(
             config.serverBaseApi + endPoint,
             {
