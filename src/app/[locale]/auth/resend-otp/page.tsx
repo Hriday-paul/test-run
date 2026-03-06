@@ -1,7 +1,7 @@
 import ResendOtp from '@/components/Auth/ResendOtp'
+import { Link } from '@/i18n/navigation';
 import Pagetop from '@/shared/Pagetop'
 import { getTranslations } from 'next-intl/server'
-import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 
 async function ResedOtp() {

@@ -1,8 +1,8 @@
 import SignUpForm from '@/components/Auth/SignUpForm'
+import { Link } from '@/i18n/navigation'
 import Pagetop from '@/shared/Pagetop'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
-import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 
 export const metadata: Metadata = {

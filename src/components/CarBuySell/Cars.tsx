@@ -16,8 +16,6 @@ async function Cars({ adsPromise, page, limit, sort }: { adsPromise: Promise<{ d
 
     const t = await getTranslations("category_page");
 
-    console.log(data)
-
     return (
         <div>
 

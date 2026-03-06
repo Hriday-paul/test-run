@@ -5,13 +5,13 @@ import DetailsSkeleton from '@/shared/DetailsSkeleton';
 import { LoadingCard } from '@/shared/LoadingCard';
 import ShopBanner from '@/shared/ShopBanner';
 import SimilarAd from '@/shared/SimilarAd/SimilarAd';
-import Link from 'next/link';
 import { Suspense } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import bannerimg from "../../../../../public/bikestop_img.png"
 import { TextTruncate } from '@/utils/TextTruncate';
 import { Add } from '@/redux/types';
 import { getTranslations } from 'next-intl/server';
+import { Link } from '@/i18n/navigation';
 
 // ---------------dynamic metadata--------------
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {

@@ -1,5 +1,5 @@
 "use client"
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';;
 import { useRouter } from '@/i18n/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ImSpinner2 } from 'react-icons/im';

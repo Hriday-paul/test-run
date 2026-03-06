@@ -1,7 +1,7 @@
 import VerifyOtpForm from '@/components/Auth/VerifyOtpForm'
+import { Link } from '@/i18n/navigation'
 import Pagetop from '@/shared/Pagetop'
 import { getTranslations } from 'next-intl/server'
-import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 
 async function VerifyOtp() {

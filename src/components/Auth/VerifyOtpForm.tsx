@@ -1,7 +1,7 @@
 "use client"
 import { useVerifyOtpMutation } from '@/redux/api/authApi';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';;
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { ImSpinner2 } from 'react-icons/im';

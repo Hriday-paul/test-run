@@ -1,7 +1,7 @@
 import ForgotPassForm from '@/components/Auth/ForgotPassForm'
 import Pagetop from '@/shared/Pagetop'
 import { getTranslations } from 'next-intl/server';
-import Link from 'next/link'
+import {Link} from '@/i18n/navigation'
 
 import { IoIosArrowForward } from 'react-icons/io'
 

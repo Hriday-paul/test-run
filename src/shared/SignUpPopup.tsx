@@ -7,7 +7,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog"
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';;
 
 const SignUpPopup = ({ open, setOpen, isSpecifyRole = true }: { open: boolean, setOpen: React.Dispatch<React.SetStateAction<boolean>>, isSpecifyRole?: boolean }) => {
 

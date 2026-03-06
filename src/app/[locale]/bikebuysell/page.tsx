@@ -1,6 +1,5 @@
 import ShopBanner from '@/shared/ShopBanner'
 import bannerimg from "../../../../public/bikestop_img.png"
-import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import BikeFilter from '@/components/BikeBuySell/BikeFilter'
 import Bikes from '@/components/BikeBuySell/Bikes'
@@ -11,6 +10,7 @@ import Adsloading from '@/shared/Adsloading'
 import { GetAdsByCategory } from '@/lib/services/Quary.Ads'
 import { tags } from '@/lib/Tags'
 import { getTranslations } from 'next-intl/server'
+import { Link } from '@/i18n/navigation'
 
 export const metadata: Metadata = {
   title: "Bike Buy/Sell",

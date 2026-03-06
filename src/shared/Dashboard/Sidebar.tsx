@@ -1,7 +1,7 @@
 'use client'
 import { removeUser } from '@/redux/slices/userSlice';
 import { AppDispatch } from '@/redux/store';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';;
 import { usePathname, useRouter } from '@/i18n/navigation';
 import React, { useCallback } from 'react';
 import { IoLogOutOutline } from 'react-icons/io5';

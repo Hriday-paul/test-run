@@ -1,6 +1,6 @@
 import ShopBanner from '@/shared/ShopBanner'
 import bannerimg from "../../../../public/Job banner.png"
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation';
 import { IoIosArrowForward } from 'react-icons/io'
 import JobFilter from '@/components/Job/JobFilter'
 import Jobs from '@/components/Job/Jobs'

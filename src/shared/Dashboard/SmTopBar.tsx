@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/redux/store';
 import { removeUser } from '@/redux/slices/userSlice';
 import { usePathname, useRouter } from '@/i18n/navigation';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';;
 
 const SmTopBar = ({ routs, logoutTxt }: { routs: { id: number, name: string, rout: string, icon: React.ReactNode }[], logoutTxt : string }) => {
     const activeRout = usePathname();

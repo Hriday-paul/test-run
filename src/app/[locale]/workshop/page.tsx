@@ -1,6 +1,6 @@
 import ShopBanner from '@/shared/ShopBanner'
 import bannerimg from "../../../../public/workshop-banner.png"
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation';
 import { IoIosArrowForward } from 'react-icons/io'
 import WorkShopFilter from '@/components/WorkShop/WorkShopFilter'
 import WorkShops from '@/components/WorkShop/WorkShops'

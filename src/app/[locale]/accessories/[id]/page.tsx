@@ -7,7 +7,7 @@ import { LoadingCard } from '@/shared/LoadingCard';
 import ShopBanner from '@/shared/ShopBanner';
 import SimilarAd from '@/shared/SimilarAd/SimilarAd';
 import { TextTruncate } from '@/utils/TextTruncate';
-import Link from 'next/link';
+import {Link} from '@/i18n/navigation';
 import { Suspense } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import bannerimg from "../../../../../public/Accessories Image.png"

@@ -35,7 +35,7 @@ import { toast } from 'sonner';
 import { toast as toastify } from 'react-toastify';
 import EditPost from '@/components/EditPost/EditPost';
 import { Badge } from '@/components/ui/badge';
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';;
 import { categoryRouteMap } from '@/shared/FeatureAddCard';
 import { adBump, adFeature } from '@/lib/Actions/FeatureAd.action';
 import { useTranslations } from 'next-intl';
