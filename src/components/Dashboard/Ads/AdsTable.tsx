@@ -14,7 +14,7 @@ import {
 import { Add } from "@/redux/types"
 import Pagination from '@/components/ui/Pagination';
 import ErrorComponent from '@/shared/ErrorComponent';
-import { useAllAdsQuery, useBumpAddMutation, useDltAddMutation, useFeatureAddMutation } from '@/redux/api/ads.api';
+import { useAllAdsQuery } from '@/redux/api/ads.api';
 import { useState } from 'react';
 import Image from 'next/image';
 import moment from 'moment';
@@ -37,12 +37,13 @@ import EditPost from '@/components/EditPost/EditPost';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { categoryRouteMap } from '@/shared/FeatureAddCard';
-import { adFeature } from '@/lib/Actions/FeatureAd.action';
+import { adBump, adFeature } from '@/lib/Actions/FeatureAd.action';
 import { useTranslations } from 'next-intl';
 import { DeleteAdd } from '@/lib/Actions/Post.action';
 import { useRouter } from '@/i18n/navigation';
 import { useDispatch } from 'react-redux';
 import baseApi from '@/redux/api/baseApi';
+import { tags } from '@/lib/Tags';
 
 function AdsTable() {
     const [page, setPage] = useState(1);
@@ -92,14 +93,10 @@ const tagLookUpByCategory = {
     Job: "jobs",
     Exchange: "exchanges",
     Lawyer: "lawyers"
-
 }
 
 const AdTable = ({ ads }: { ads: Add[] }) => {
 
-    // const [addFeature] = useFeatureAddMutation();
-    const [addBump] = useBumpAddMutation();
-    const [addDlt] = useDltAddMutation();
     const t = useTranslations("vendor.ads");
     const router = useRouter();
     const dispatch = useDispatch();
@@ -108,8 +105,19 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
         const loading = toast.loading("Loading...")
         try {
             // await addFeature({ addId }).unwrap();
-            await adFeature({ id: addId?.toString() });
-            toast.success("Ad successfully featured");
+            const featuredRes = await adFeature({ endPoint: `/ads/feature/${addId}`, payload: JSON.stringify({}), tags: [tags.feature_add] });
+
+            if (featuredRes?.redirect) {
+                router.push("/auth/login");
+                toastify.error("Session expired. Please log in again.");
+                return;
+            } else if (featuredRes.error) {
+                toastify.error(featuredRes.error)
+                return;
+            }
+
+            toastify.success("Ad successfully featured");
+
         } catch (err: any) {
             Swal.fire({
                 title: err?.message || "Something went wrong",
@@ -130,11 +138,23 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
         }
     }
 
-    const handleBump = async (addId: number) => {
+    const handleBump = async (addId: number, category: string) => {
         const loading = toast.loading("Loading...")
         try {
-            await addBump({ addId }).unwrap();
-            toast.success("Add successfully bumped up");
+            const tag = tagLookUpByCategory[category as keyof typeof tagLookUpByCategory];
+
+            const bumpRes = await adBump({ endPoint: `/ads/bump/${addId}`, payload: JSON.stringify({}), tags: [tag] });
+
+            if (bumpRes?.redirect) {
+                router.push("/auth/login");
+                toastify.error("Session expired. Please log in again.");
+                return;
+            } else if (bumpRes.error) {
+                toastify.error(bumpRes.error)
+                return;
+            }
+
+            toastify.success("Add successfully bumped up");
         } catch (err: any) {
             Swal.fire({
                 title: err?.data?.message || "Something went wrong",
@@ -179,7 +199,8 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
 
             const tag = tagLookUpByCategory[category as keyof typeof tagLookUpByCategory];
 
-            const postedRes = await DeleteAdd({ endPoint: `/ads/${addId}`, payload: JSON.stringify({}), tags: [tag] });
+            const postedRes = await DeleteAdd({ endPoint: `/ads/${addId}`, payload: JSON.stringify({}), tags: [tag, tags.feature_add] });
+
             if (postedRes?.redirect) {
                 router.push("/auth/login");
                 toastify.error("Session expired. Please log in again.");
@@ -272,7 +293,7 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                                         </DropdownMenuItem>
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150 w-full">
-                                            <button onClick={() => handleBump(ad?.id)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
+                                            <button onClick={() => handleBump(ad?.id, ad?.category)} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
                                                 <FaArrowDownLong className='text-black rotate-180' />
                                                 {t("action.bump")}
                                             </button>

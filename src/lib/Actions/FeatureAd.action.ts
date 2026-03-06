@@ -1,13 +1,26 @@
 "use server"
 
 import { revalidateTag } from "next/cache"
-import { tags } from "../Tags"
-import { IncludeFeatureAds } from "../services/FeatureAdds"
+import { serverQueryWithReauth } from "../services/Mutation.Ad";
 
-export const adFeature = async ({ id }: { id: string }) => {
-    const res = await IncludeFeatureAds({ id });
+export const adFeature = async ({ payload, endPoint, tags }: { payload: FormData | string, endPoint: string, tags: string[] }) => {
 
-    revalidateTag(tags.feature_add, "max");
+    const res = await serverQueryWithReauth({ payload, endPoint, method : "POST" });
+
+    for (let tag of tags) {
+        revalidateTag(tag, "max");
+    }
+
+    return res;
+};
+
+export const adBump = async ({ payload, endPoint, tags }: { payload: FormData | string, endPoint: string, tags: string[] }) => {
+
+    const res = await serverQueryWithReauth({ payload, endPoint, method : "POST" });
+
+    for (let tag of tags) {
+        revalidateTag(tag, "max");
+    }
 
     return res;
 }
