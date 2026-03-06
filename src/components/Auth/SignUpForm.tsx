@@ -80,7 +80,7 @@ const SignUpForm = () => {
 
     return (
         <div>
-            <div className='bg-white border border-stroke max-w-xl rounded-xl shadow-md p-8 mx-auto mb-10'>
+            <div className='bg-white max-w-xl border border-stroke rounded shadow p-8 mx-auto mb-10'>
 
                 <form onSubmit={handleSubmit(handleFormSubmit)} className=''>
 

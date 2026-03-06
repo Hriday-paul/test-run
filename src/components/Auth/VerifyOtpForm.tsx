@@ -30,7 +30,7 @@ const VerifyOtpForm = () => {
     }
 
     return (
-        <div className='bg-white max-w-xl rounded-xl shadow-md p-8 mx-auto'>
+        <div className='bg-white max-w-xl border border-stroke rounded shadow p-8 mx-auto mb-10'>
             <div className="mx-auto flex w-full max-w-md flex-col">
                 <div className="mx-auto my-10">
                     <OTPInput

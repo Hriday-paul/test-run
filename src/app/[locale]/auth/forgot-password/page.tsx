@@ -10,7 +10,7 @@ async function Forgot() {
     return (
         <div>
             <Pagetop title={t("title")}>
-                <h3 className="text-xs md:text-sm font-figtree text-gray-500 flex flex-row gap-x-1.5 justify-center items-center">
+                <h3 className="text-xs md:text-sm font-figtree text-gray-100 flex flex-row gap-x-1.5 justify-center items-center">
                     <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link> <IoIosArrowForward className='' /> {t("bread_cump.forgot")}
                 </h3>
             </Pagetop>

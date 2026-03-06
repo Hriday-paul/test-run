@@ -91,10 +91,19 @@ async function Section2() {
                 <Title title={t("title")} subtitle={t("subtitle")} />
 
                 {/* service categories */}
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                <div className="flex flex-wrap justify-center items-center">
                     {
                         categories.map(category => {
-                            return <Link href={category?.rout} key={category?.id} scroll={true} className="bg-slate-50 p-8 rounded-lg border border-stroke hover:border-primary duration-200">
+                            return <Link href={category?.rout} key={category?.id} scroll={true} className="p-8 border-r border-b border-stroke duration-200 hover:shadow-[0_0_10px_0_rgba(0,0,0,0.12)]
+w-1/2 md:w-1/3 lg:w-1/4
+[&:nth-child(2n)]:border-r-0
+md:[&:nth-child(2n)]:border-r
+md:[&:nth-child(3n)]:border-r-0
+lg:[&:nth-child(3n)]:border-r
+lg:[&:nth-child(4n)]:border-r-0 last:border-r-0
+
+md:nth-10:border-b-0 nth-11:border-b-0 lg:nth-9:border-b-0
+">
                                 <Image src={category?.icon} alt="runbd category icon" className="h-16 w-auto mx-auto" />
                                 <h6 className="text-lg font-popin font-medium text-center pt-3">{t(category.name)}</h6>
                             </Link>

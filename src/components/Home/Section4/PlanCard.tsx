@@ -85,8 +85,8 @@ function PlanCard({ plan, isMiddle }: { plan: IPackage, isMiddle: boolean }) {
                         <span className="text-lg font-bold group-hover:text-white">
                             {(plan.price).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")} {t("currency")}
                         </span>
-                        /
-                        <span> {plan.duration} {t("days")}</span>
+                         /
+                        <span> {(plan.duration).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")} {t("days")}</span>
                     </p>
 
                     <ul
@@ -124,7 +124,7 @@ function PlanCard({ plan, isMiddle }: { plan: IPackage, isMiddle: boolean }) {
                   `}
                 onClick={() => handlePurchase(plan?.id)}
             >
-                <span>{t("choose")} {plan.name}</span>
+                <span>{t("choose")}</span>
                 <span
                     className={`p-2 border rounded-full ${isMiddle ? "border-white" : "border-primary "
                         }`}

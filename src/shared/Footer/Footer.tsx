@@ -1,12 +1,9 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-import { FaLocationDot, FaPhone } from "react-icons/fa6";
-import { IoIosMail } from "react-icons/io";
+import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import logo from "../../../public/logo.png"
 import payments from "../../../public/payments.jpeg"
-import qr_code from "../../../public/QR_CODE.svg"
 import google_play from "../../../public/google_play.png"
 import apple_store from "../../../public/Apple_Store.webp"
 

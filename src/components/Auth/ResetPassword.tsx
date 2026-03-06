@@ -51,7 +51,7 @@ const ResetPassword = () => {
 
     return (
         <div>
-            <div className='bg-white max-w-xl border border-stroke rounded-xl shadow-md p-8 mx-auto'>
+            <div className='bg-white max-w-xl border border-stroke rounded shadow p-8 mx-auto mb-10'>
 
                 <form onSubmit={handleSubmit(handleFormSubmit)}>
 

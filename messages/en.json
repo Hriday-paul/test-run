@@ -1,10 +1,41 @@
 {
   "navbar": {
+    "sec1": {
+      "hello": "Hello!!",
+      "wellcome": " Welcome to Runbd."
+    },
     "home": "Home",
     "pricing": "Pricing",
     "categories": "Categories",
     "about": "About Us",
     "btn": "Post Your Ad"
+  },
+  "about": {
+    "section1": {
+      "yearsInMarket": "10",
+      "yearsLabel1": "Years in",
+      "yearsLabel2": "Market",
+      "aboutUs": "About Us",
+      "heading": "Runbd is the best way to find & discover great local business",
+      "description": "Runbd is a top-rated classified ads theme, making it easy to find and connect with local businesses.",
+      "feature1Title": "Search On The Go",
+      "feature1Desc": "Find What You Need, Anytime, Anywhere! Easy Search, Instant Results.",
+      "feature2Title": "Real Time Classified Ads",
+      "feature2Desc": "Buy, Sell & Discover – Instantly, in Real Time! Fast, Easy, and Always Up-to-Date.",
+      "feature3Title": "Get Latest Info",
+      "feature3Desc": "Stay Informed, Stay Ahead! Get the Latest Info – Always Current, Always Reliable."
+    },
+    "section2": {
+      "subheading": "We Can Assist You Further",
+      "heading1": "How Runbd Works The Best",
+      "heading2": "Search Experience",
+      "step1Title": "Create Your Account",
+      "step1Desc": "Quick, Easy, and Start Exploring!",
+      "step2Title": "Post Your Ad",
+      "step2Desc": "Reach Local Buyers in Minutes!",
+      "step3Title": "Sell Your Item",
+      "step3Desc": "Turn Your Listings into Quick Sales!"
+    }
   },
   "sidebar": {
     "title": "Dashboard",

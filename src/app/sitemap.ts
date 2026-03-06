@@ -27,6 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 0.90,
         },
         {
+            url: 'https://runbd.com/about',
+            lastModified: new Date(),
+            changeFrequency: 'yearly',
+            priority: 0.85,
+        },
+        {
             url: 'https://runbd.com/vehicle-process',
             lastModified: new Date(),
             changeFrequency: 'yearly',

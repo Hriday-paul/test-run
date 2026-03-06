@@ -71,7 +71,7 @@ const LoginForm = () => {
     }
 
     return (
-        <div className='bg-white max-w-xl border border-gray-200 rounded-xl shadow-md p-8 mx-auto mb-10'>
+        <div className='bg-white max-w-xl border border-stroke rounded shadow p-8 mx-auto mb-10'>
             <form onSubmit={handleSubmit(handleFormSubmit)} className="px-5 md:px-7 lg:px-10 mt-5 md:mt-8 lg:mt-10">
 
                 {/* Phone */}
