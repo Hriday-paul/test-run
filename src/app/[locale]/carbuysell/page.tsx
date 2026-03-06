@@ -115,6 +115,8 @@ async function CarBuySell({
 
   const adsPromise = GetAdsByCategory({ endPoint: "/ads/cars", query, tags: [tags?.cars] });
 
+  console.log(adsPromise);
+
   return (
     <div>
       <ShopBanner
