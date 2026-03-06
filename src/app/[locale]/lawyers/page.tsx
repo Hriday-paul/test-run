@@ -1,6 +1,6 @@
 import ShopBanner from '@/shared/ShopBanner'
 import bannerimg from "../../../../public/lawyer_banner.png"
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation';
 import { IoIosArrowForward } from 'react-icons/io'
 import LawyerFilter from '@/components/Lawyers/LawyerFilter'
 import Lawyers from '@/components/Lawyers/Lawyers'

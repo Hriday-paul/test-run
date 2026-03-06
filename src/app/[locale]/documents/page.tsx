@@ -1,6 +1,6 @@
 import ShopBanner from "@/shared/ShopBanner"
 import bannerimg from "../../../../public/document-service-banner.png"
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation';
 import { IoIosArrowForward } from "react-icons/io"
 import DocumentCard from "./_components/DocumentCard"
 import { Metadata } from "next"

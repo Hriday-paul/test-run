@@ -1,6 +1,5 @@
 import ShopBanner from '@/shared/ShopBanner'
 import bannerimg from "../../../../public/Accessories Image.png"
-import Link from 'next/link'
 import { IoIosArrowForward } from 'react-icons/io'
 import AccessoriesFilter from '@/components/Accessories/AccessoriesFilter'
 import Accessories from '@/components/Accessories/Accessories'
@@ -11,6 +10,7 @@ import Searchbar from '@/components/BikeBuySell/Searchbar'
 import { Suspense } from 'react'
 import Adsloading from '@/shared/Adsloading'
 import { getTranslations } from 'next-intl/server'
+import { Link } from '@/i18n/navigation'
 
 export const metadata: Metadata = {
   title: "Accessories",

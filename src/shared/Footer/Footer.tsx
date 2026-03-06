@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
 import { FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import logo from "../../../public/logo.png"
 import payments from "../../../public/payments.jpeg"
 import google_play from "../../../public/google_play.png"
 import apple_store from "../../../public/Apple_Store.webp"
+import { Link } from "@/i18n/navigation";
 
 export default function Footer() {
     return (

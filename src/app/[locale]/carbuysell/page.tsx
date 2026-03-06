@@ -1,6 +1,6 @@
 import ShopBanner from '@/shared/ShopBanner'
 import bannerimg from "../../../../public/post-top-bg.jpg"
-import Link from 'next/link'
+import { Link } from '@/i18n/navigation';
 import { IoIosArrowForward } from 'react-icons/io'
 import Cars from '@/components/CarBuySell/Cars'
 import CarFilter from '@/components/CarBuySell/CarFilter'

@@ -1,5 +1,5 @@
 "use client"
-// import Link from 'next/link'
+// import { Link } from '@/i18n/navigation';
 import { FaFacebookF, FaInstagram, FaRegUser, FaTwitter } from "react-icons/fa"
 import SmNavSheet from "./SmNavsheet"
 import logo from "../../../public/logo.png"

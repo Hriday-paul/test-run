@@ -2,7 +2,7 @@ import CarDetails from '@/components/CarBuySell/CarDetails';
 import ShopBanner from '@/shared/ShopBanner';
 import React, { Suspense } from 'react'
 import bannerimg from "../../../../../public/post-top-bg.jpg"
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';;
 import { IoIosArrowForward } from 'react-icons/io';
 import GetAdDetails from '@/lib/services/AdDetails';
 import DetailsSkeleton from '@/shared/DetailsSkeleton';

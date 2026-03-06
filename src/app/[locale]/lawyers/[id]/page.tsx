@@ -6,7 +6,7 @@ import { Add } from '@/redux/types';
 import ShopBanner from '@/shared/ShopBanner';
 import { TextTruncate } from '@/utils/TextTruncate';
 import bannerimg from "../../../../../public/lawyer_banner.png"
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';;
 import { IoIosArrowForward } from 'react-icons/io';
 import { Suspense } from 'react';
 import DetailsSkeleton from '@/shared/DetailsSkeleton';

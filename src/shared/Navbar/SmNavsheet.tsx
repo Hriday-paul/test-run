@@ -8,7 +8,7 @@ import {
     SheetTrigger,
 } from "@/components/ui/sheet"
 
-import Link from 'next/link';
+import { Link } from '@/i18n/navigation';;
 import { RiMenu3Fill } from 'react-icons/ri';
 import { FaArrowLeftLong } from 'react-icons/fa6';
 import { motion } from "motion/react"
