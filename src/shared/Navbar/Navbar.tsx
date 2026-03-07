@@ -60,12 +60,12 @@ function Navbar() {
         <>
             {/* --------------section 1-------------- */}
             <div className='bg-primary/5'>
-                <div className='container flex gap-y-2 md:gap-y-0 flex-row justify-between items-center py-1 md:py-2 font-popin text-xs md:text-sm'>
+                <div className='container flex gap-y-2 md:gap-y-0 flex-row justify-between items-center py-1 md:py-2 font-popin text-[10px] sm:text-xs md:text-sm'>
                     <div>
                         <p className='text-black'><span className='text-neutral-500'>{t("sec1.hello")}</span> {t("sec1.wellcome")}</p>
                     </div>
 
-                    <div className="flex flex-row justify-between items-center gap-x-2 sm:gap-x-3 md:gap-x-5">
+                    <div className="flex flex-row justify-between items-center gap-x-1.5 sm:gap-x-2 md:gap-x-5">
                         <div className="flex gap-x-1 sm:gap-x-2 md:gap-4 items-center">
 
                             <Link className="hover:bg-slate-50 duration-150 bg-white p-1.5 rounded-full border border-stroke" target="_blank"

@@ -42,7 +42,7 @@ async function BikeDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ d
                                 <pre className='text-sm font-medium font-figtree'>{data?.data?.description}</pre>
                             </div>
 
-                            {data?.data?.price && <div className='bg-white p-5 rounded-lg'>
+                            {!!data?.data?.price && <div className='bg-white p-5 rounded-lg'>
                                 <h3 className='text-xl font-popin font-semibold mb-2 flex flex-row gap-x-1.5 items-center'>
                                     <IoPricetagOutline />
                                     {t("price.title")}</h3>
