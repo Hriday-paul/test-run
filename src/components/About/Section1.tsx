@@ -20,7 +20,7 @@ async function Section1() {
                                 alt="Car on highway"
                                 className="object-cover absolute top-0 right-0 w-full md:w-3/4 h-auto"
                             />
-                            <div className="absolute top-12 left-0 md:left-12 top-0 md:top-8 z-20 transform -skew-y-4 bg-black text-white px-8 py-8 rounded-lg w-40 font-popin">
+                            <div className="absolute left-0 md:left-12 top-3 md:top-8 z-20 transform -skew-y-4 bg-black text-white px-8 py-8 rounded-lg w-40 font-popin">
                                 <div className="text-5xl font-bold">{t('yearsInMarket')}</div>
                                 <div className="text-sm font-semibold mt-2">{t('yearsLabel1')}</div>
                                 <div className="text-sm font-semibold">{t('yearsLabel2')}</div>
