@@ -2,35 +2,24 @@ import { PiSlidersHorizontalDuotone } from "react-icons/pi";
 import Image from "next/image";
 import SortBar from "../CarBuySell/SortBar";
 import LawyerCard from "./LawyerCard";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { AiOutlineFilter } from "react-icons/ai";
 import LawyerFilter from "./LawyerFilter";
 import { Add, IMeta } from "@/redux/types";
 import SearchParamsPagination from "@/shared/SearchParamsPagination";
 import { getTranslations } from "next-intl/server";
+import SmFilter from "../ads/SmFilter";
 
 
 async function Lawyers({ adsPromise, page, limit, sort }: { adsPromise: Promise<{ data: { data: Add[], meta: IMeta } }>, page: number, limit?: string, sort?: string }) {
 
     const data = await adsPromise;
-     const t = await getTranslations("category_page");
+    const t = await getTranslations("category_page");
 
     return (
         <div>
 
             <div className="flex flex-row justify-between items-center py-2.5">
                 <div className='lg:hidden'>
-                    <Popover >
-                        <PopoverTrigger asChild>
-                            <button className='bg-primary/10 rounded text-primary px-3 py-2 text-sm font-figtree font-medium cursor-default flex flex-row gap-x-3 items-center justify-between'>
-                                <p>Filter</p>
-                                <AiOutlineFilter className=' text-base' />
-                            </button>
-                        </PopoverTrigger>
-                        <PopoverContent side='bottom' align='start'>
-                            <LawyerFilter />
-                        </PopoverContent>
-                    </Popover>
+                    <SmFilter filterComponent={<LawyerFilter />} />
                 </div>
                 <p className="text-gray-500 text-sm font-popin font-medium flex flex-row gap-x-1.5 items-center">
                     <PiSlidersHorizontalDuotone className="text-xl" />

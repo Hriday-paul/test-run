@@ -2,12 +2,11 @@ import { PiSlidersHorizontalDuotone } from "react-icons/pi";
 import Image from "next/image";
 import SortBar from "../CarBuySell/SortBar";
 import ExchangeCard from "./ExchangeCard";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import { AiOutlineFilter } from "react-icons/ai";
 import ExchangeFilter from "./ExchangeFilter";
 import { Add, IMeta } from "@/redux/types";
 import SearchParamsPagination from "@/shared/SearchParamsPagination";
 import { getTranslations } from "next-intl/server";
+import SmFilter from "../ads/SmFilter";
 
 
 async function Exchanges({ adsPromise, page, limit, sort }: { adsPromise: Promise<{ data: { data: Add[], meta: IMeta } }>, page: number, limit?: string, sort?: string }) {
@@ -20,17 +19,7 @@ async function Exchanges({ adsPromise, page, limit, sort }: { adsPromise: Promis
 
             <div className="flex flex-row justify-between items-center py-2.5">
                 <div className='lg:hidden'>
-                    <Popover >
-                        <PopoverTrigger asChild>
-                            <button className='bg-primary/10 rounded text-primary px-3 py-2 text-sm font-figtree font-medium cursor-default flex flex-row gap-x-3 items-center justify-between'>
-                                <p>Filter</p>
-                                <AiOutlineFilter className=' text-base' />
-                            </button>
-                        </PopoverTrigger>
-                        <PopoverContent side='bottom' align='start'>
-                            <ExchangeFilter />
-                        </PopoverContent>
-                    </Popover>
+                    <SmFilter filterComponent={<ExchangeFilter />} />
                 </div>
                 <p className="text-gray-500 text-sm font-popin font-medium flex flex-row gap-x-1.5 items-center">
                     <PiSlidersHorizontalDuotone className="text-xl" />
