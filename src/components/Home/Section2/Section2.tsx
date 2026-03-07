@@ -104,8 +104,8 @@ lg:[&:nth-child(4n)]:border-r-0 last:border-r-0
 
 md:nth-10:border-b-0 nth-11:border-b-0 lg:nth-9:border-b-0
 ">
-                                <Image src={category?.icon} alt="runbd category icon" className="h-16 w-auto mx-auto" />
-                                <h6 className="text-lg font-popin font-medium text-center pt-3">{t(category.name)}</h6>
+                                <Image src={category?.icon} alt="runbd category icon" className="h-10 md:h-14 lg:h-16 w-auto mx-auto" />
+                                <h6 className="text-base md:text-lg font-popin font-medium text-center pt-3">{t(category.name)}</h6>
                             </Link>
                         })
                     }
