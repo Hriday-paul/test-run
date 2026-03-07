@@ -65,8 +65,8 @@ function Navbar() {
                         <p className='text-black'><span className='text-neutral-500'>{t("sec1.hello")}</span> {t("sec1.wellcome")}</p>
                     </div>
 
-                    <div className="flex flex-row justify-between items-center gap-x-3 md:gap-x-5">
-                        <div className="flex gap-x-2 md:gap-4 items-center">
+                    <div className="flex flex-row justify-between items-center gap-x-2 sm:gap-x-3 md:gap-x-5">
+                        <div className="flex gap-x-1 sm:gap-x-2 md:gap-4 items-center">
 
                             <Link className="hover:bg-slate-50 duration-150 bg-white p-1.5 rounded-full border border-stroke" target="_blank"
                                 href="#">
@@ -124,34 +124,36 @@ function Navbar() {
                                 </Link>
                             </li>
 
-                            <Menubar className="border-none shadow-none bg-transparent">
-                                <MenubarMenu>
-                                    <MenubarTrigger className="font-popin text-base text-gray-800 font-normal">
-                                        {t("categories")}
-                                        <ChevronDown className="ml-2" size={20} />
-                                    </MenubarTrigger>
-                                    <MenubarContent className='p-0 rounded'>
-                                        {categories?.map(
-                                            (category, idx: number) => (
-                                                <div key={idx}>
-                                                    <Link
-                                                        href={category?.rout}
-                                                        className='cursor-pointer'
-                                                    >
-                                                        <MenubarItem className="cursor-pointer rounded-none py-3 px-4 w-60">
-                                                            <div className='flex flex-row gap-x-2 items-center'>
-                                                                <Image src={category?.icon} alt="runbd category icon" className="h-3 w-auto mx-auto" />
-                                                                <p className='font-popin'>{tc(category.name)}</p>
-                                                            </div>
-                                                        </MenubarItem>
-                                                    </Link>
-                                                    <hr />
-                                                </div>
-                                            ),
-                                        )}
-                                    </MenubarContent>
-                                </MenubarMenu>
-                            </Menubar>
+                            <li>
+                                <Menubar className="border-none shadow-none bg-transparent">
+                                    <MenubarMenu>
+                                        <MenubarTrigger className="font-popin text-base text-gray-800 font-normal">
+                                            {t("categories")}
+                                            <ChevronDown className="ml-2" size={20} />
+                                        </MenubarTrigger>
+                                        <MenubarContent className='p-0 rounded'>
+                                            {categories?.map(
+                                                (category, idx: number) => (
+                                                    <div key={idx}>
+                                                        <Link
+                                                            href={category?.rout}
+                                                            className='cursor-pointer'
+                                                        >
+                                                            <MenubarItem className="cursor-pointer rounded-none py-3 px-4 w-60">
+                                                                <div className='flex flex-row gap-x-2 items-center'>
+                                                                    <Image src={category?.icon} alt="runbd category icon" className="h-3 w-auto mx-auto" />
+                                                                    <p className='font-popin'>{tc(category.name)}</p>
+                                                                </div>
+                                                            </MenubarItem>
+                                                        </Link>
+                                                        <hr />
+                                                    </div>
+                                                ),
+                                            )}
+                                        </MenubarContent>
+                                    </MenubarMenu>
+                                </Menubar>
+                            </li>
 
                             {navitems?.map(i => {
                                 return <li key={i?.id} className='font-popin text-base text-gray-800 font-normal hover:text-primary duration-200'>
