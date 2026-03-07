@@ -427,7 +427,7 @@ function CarSellForm({ defaultData, setOpen }: { defaultData?: Add, setOpen?: Re
 
                         <SelectWithSearch
                             name='condition'
-                            items={["New", "Used"].map(type => {
+                            items={["New", "Used", "Recondition"].map(type => {
                                 return { label: type, value: type }
                             })}
                             control={control}

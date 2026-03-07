@@ -70,6 +70,11 @@ function CarFilter() {
             label: "condition.used",
             value: "Used"
         },
+        {
+            id: 3,
+            label: "condition.recondition",
+            value: "Recondition"
+        },
     ]
 
     return (
