@@ -58,21 +58,8 @@ const SmNavSheet = () => {
                                     </Link>
                                 </li>
 
-                                {
-                                    routes?.map(item => {
-                                        return <li
-                                            key={item?.id} className='text-base relative group my-2'>
-                                            <Link href={item?.rout} className="border-b border-b-stroke py-4 font-figtree text-sm text-black flex flex-row gap-x-1 items-center group duration-300 cursor-pointer">
-                                                <SheetTrigger className="w-full flex flex-row gap-x-1 items-center cursor-pointer">
-                                                    <p className="text-black text-xl font-figtree">{t(item?.label)}</p>
-                                                    <FaArrowLeftLong className="text-black block rotate-180 ml-1 group-hover:ml-2.5 duration-200" />
-                                                </SheetTrigger>
-                                            </Link>
-                                        </li>
-                                    })
-                                }
 
-                                <li className="pt-2">
+                                <li className="py-4 border-b border-b-stroke ">
                                     <Menubar className="border-none shadow-none bg-transparent">
                                         <MenubarMenu>
                                             <MenubarTrigger className="font-normal text-black text-xl font-figtree">
@@ -104,6 +91,20 @@ const SmNavSheet = () => {
                                         </MenubarMenu>
                                     </Menubar>
                                 </li>
+
+                                {
+                                    routes?.map(item => {
+                                        return <li
+                                            key={item?.id} className='text-base relative group my-2'>
+                                            <Link href={item?.rout} className="border-b border-b-stroke py-4 font-figtree text-sm text-black flex flex-row gap-x-1 items-center group duration-300 cursor-pointer">
+                                                <SheetTrigger className="w-full flex flex-row gap-x-1 items-center cursor-pointer">
+                                                    <p className="text-black text-xl font-figtree">{t(item?.label)}</p>
+                                                    <FaArrowLeftLong className="text-black block rotate-180 ml-1 group-hover:ml-2.5 duration-200" />
+                                                </SheetTrigger>
+                                            </Link>
+                                        </li>
+                                    })
+                                }
 
                             </ul>
 
