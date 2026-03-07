@@ -32,7 +32,10 @@ const SmNavSheet = () => {
                 <SheetTrigger className='border border-zinc-200 p-1 md:p-1.5 rounded cursor-pointer hover:bg-zinc-100 duration-150'>
                     <RiMenu3Fill className="text-xl md:text-2xl text-black" />
                 </SheetTrigger>
-                <SheetContent side={'right'}>
+                <SheetContent side={'right'} className="overflow-y-auto [&::-webkit-scrollbar]:w-1.5
+[&::-webkit-scrollbar-track]:bg-white
+[&::-webkit-scrollbar-thumb]:bg-gray-300
+[&::-webkit-scrollbar-thumb]:rounded-full">
                     <SheetHeader>
                         <SheetTitle></SheetTitle>
                         <SheetDescription />

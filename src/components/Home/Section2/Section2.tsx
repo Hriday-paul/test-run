@@ -94,7 +94,7 @@ async function Section2() {
                 <div className="flex flex-wrap justify-center items-center">
                     {
                         categories.map(category => {
-                            return <Link href={category?.rout} key={category?.id} scroll={true} className="p-8 border-r border-b border-stroke duration-200 hover:shadow-[0_0_10px_0_rgba(0,0,0,0.12)]
+                            return <Link href={category?.rout} key={category?.id} scroll={true} className="p-5 md:p-8 border-r border-b border-stroke duration-200 hover:shadow-[0_0_10px_0_rgba(0,0,0,0.12)]
 w-1/2 md:w-1/3 lg:w-1/4
 [&:nth-child(2n)]:border-r-0
 md:[&:nth-child(2n)]:border-r
