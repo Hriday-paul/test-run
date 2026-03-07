@@ -404,7 +404,8 @@
       "condition": {
         "title": "Condition",
         "new": "New",
-        "used": "Used"
+        "used": "Used",
+        "recondition" : "Recondition"
       },
       "km": {
         "title": "Kilometers run"
