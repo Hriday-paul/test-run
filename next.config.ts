@@ -15,7 +15,12 @@ const nextConfig: NextConfig = {
         hostname: '**', // allow all hosts over http
       },
     ],
-  }
+  },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: "50mb",
+    },
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();
