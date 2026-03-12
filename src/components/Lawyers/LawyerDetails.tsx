@@ -2,13 +2,28 @@ import { BookOpen, Clock, DollarSign, Globe, MapPin, Phone, VenusAndMars } from 
 import Image from "next/image"
 import { placeHolderBlurImg } from "@/utils/config";
 import { Add } from "@/redux/types";
-import ErrorComponent from "@/shared/ErrorComponent";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { notFound, RedirectType } from 'next/navigation';
+import { redirect } from '@/i18n/navigation';
+import { categoryRouteMap } from "@/shared/FeatureAddCard";
 
 async function LawyerDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
     const data = await promiseAdDetails;
     const t = await getTranslations("lawyer.details");
+
+    const locale = await getLocale();
+
+    if (!data?.data) {
+        return notFound()
+    }
+
+    if (data?.data?.category !== "Lawyer") {
+        redirect({
+            href: `/${categoryRouteMap[data?.data?.category]}/${data?.data?.id}`,
+            locale: locale,
+        }, RedirectType.replace)
+    }
 
     return (
         <div>
@@ -17,7 +32,7 @@ async function LawyerDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{
 
                 <div className="container">
 
-                    {(data) ? data?.data?.category !== "Lawyer" ? <ErrorComponent /> : <div>
+                    <div>
 
                         {/* Hero Section */}
                         <section className="border-b border-border">
@@ -181,7 +196,7 @@ async function LawyerDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{
                             </div>
                         </section>
 
-                    </div> : <></>}
+                    </div>
 
                 </div>
 

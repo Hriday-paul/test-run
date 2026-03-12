@@ -8,7 +8,17 @@ import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
     title: "Vehicle Process",
-    description: "Process vehicle documents with Runbd, the largest marketplace in Bangladesh!",
+    description: "Process car and vehicle documents easily in Bangladesh on Runbd. Upload, manage, and handle all vehicle-related files quickly on the largest marketplace!",
+
+    metadataBase: new URL('https://runbd.org'),
+    alternates: {
+        canonical: `/vehicle-process`,
+        languages: {
+            en: `/vehicle-process`,
+            bn: `/bn/vehicle-process`,
+            'x-default': `/vehicle-process`
+        }
+    },
 
     openGraph: {
         title: 'Vehicle Process in Bangladesh | Runbd',

@@ -1,8 +1,23 @@
 import VerifyOtpForm from '@/components/Auth/VerifyOtpForm'
 import { Link } from '@/i18n/navigation'
 import Pagetop from '@/shared/Pagetop'
+import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { IoIosArrowForward } from 'react-icons/io'
+
+export const metadata: Metadata = {
+    title: "Verify Otp",
+    description: "Runbd Verify Otp Page",
+    metadataBase: new URL('https://runbd.org'),
+    alternates: {
+        canonical: '/auth/verify-otp',
+        languages: {
+            en: `/auth/verify-otp`,
+            bn: `/bn/auth/verify-otp`,
+            'x-default': `/auth/verify-otp`
+        }
+    },
+}
 
 async function VerifyOtp() {
     const t = await getTranslations("verify_otp")

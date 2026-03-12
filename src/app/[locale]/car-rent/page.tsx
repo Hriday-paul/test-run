@@ -14,11 +14,21 @@ import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
   title: "Car Rent",
-  description: "Find car rent in Bangladesh on Runbd, the largest marketplace in Bangladesh!",
+  description: "Rent cars in Bangladesh easily on Runbd, the largest online marketplace. Find affordable car rentals, compare options, and book your ride hassle-free!",
+
+  metadataBase: new URL('https://runbd.org'),
+  alternates: {
+    canonical: `/car-rent`,
+    languages: {
+      en: `/car-rent`,
+      bn: `/bn/car-rent`,
+      'x-default': `/car-rent`
+    }
+  },
 
   openGraph: {
     title: 'Car Rent in Bangladesh | Runbd',
-    description: 'Find car rent in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+    description: 'Rent cars in Bangladesh easily on Runbd, the largest online marketplace.',
     url: '/car-rent',
     siteName: 'Runbd',
     images: ['/og-image.png'],
@@ -27,7 +37,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     title: 'Car Rent in Bangladesh | Runbd',
-    description: 'Find car rent in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
+    description: 'Rent cars in Bangladesh easily on Runbd, the largest online marketplace.',
     card: 'summary_large_image',
     creator: '@runbd',
     images: ['/og-image.png'],

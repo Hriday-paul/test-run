@@ -16,6 +16,16 @@ export const metadata: Metadata = {
   title: "Workshop",
   description: "Find workshop in Bangladesh on Runbd, the largest marketplace in Bangladesh! ",
 
+  metadataBase: new URL('https://runbd.org'),
+  alternates: {
+    canonical: `/workshop`,
+    languages: {
+      en: `/workshop`,
+      bn: `/bn/workshop`,
+      'x-default': `/workshop`
+    }
+  },
+
   openGraph: {
     title: 'Workshops in Bangladesh | Runbd',
     description: 'Find workshop in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
@@ -80,7 +90,7 @@ async function Workshop({
 
   const adsPromise = GetAdsByCategory({ endPoint: "/ads/work-shops", query, tags: [tags?.work_shops] });
 
-   const t = await getTranslations('workshop');
+  const t = await getTranslations('workshop');
 
   return (
     <div>

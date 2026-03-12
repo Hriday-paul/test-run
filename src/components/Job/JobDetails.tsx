@@ -1,19 +1,33 @@
-import ErrorComponent from '@/shared/ErrorComponent';
 import { Building, Calendar } from 'lucide-react';
 import moment from "moment";
 import { Add } from '@/redux/types';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { notFound, RedirectType } from 'next/navigation';
+import { redirect } from '@/i18n/navigation';
+import { categoryRouteMap } from '@/shared/FeatureAddCard';
 
 async function JobDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
-    
+
     const data = await promiseAdDetails;
+    const locale = await getLocale();
 
     const t = await getTranslations("job.details")
+
+    if (!data?.data) {
+        return notFound()
+    }
+
+    if (data?.data?.category !== "Job") {
+        redirect({
+            href: `/${categoryRouteMap[data?.data?.category]}/${data?.data?.id}`,
+            locale: locale,
+        }, RedirectType.replace)
+    }
 
     return (
         <>
 
-            {(data) ? data?.data?.category !== "Job" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
+            <div className='bg-[#F2F4F8] py-8'>
                 <div className='container space-y-5 lg:space-y-6'>
 
                     <div className='p-5 lg:p-8 bg-white space-y-2 rounded-lg'>
@@ -65,7 +79,7 @@ async function JobDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ da
                     </div>
 
                 </div>
-            </div> : <></>}
+            </div>
 
         </>
     )

@@ -8,6 +8,15 @@ import { IoIosArrowForward } from 'react-icons/io'
 export const metadata: Metadata = {
     title: "Signup",
     description: "Runbd signup Page",
+    metadataBase: new URL('https://runbd.org'),
+    alternates: {
+        canonical: '/auth/signup',
+        languages: {
+            en: `/auth/signup`,
+            bn: `/bn/auth/signup`,
+            'x-default': `/auth/signup`
+        }
+    },
 }
 
 async function SignUp() {

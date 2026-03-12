@@ -14,7 +14,17 @@ import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
   title: "Exchange",
-  description: "Find exchange in Bangladesh on Runbd, the largest marketplace in Bangladesh! ",
+  description: "Exchange items easily in Bangladesh on Runbd. Trade your goods with others safely and find the perfect swap on the largest marketplace in Bangladesh!",
+
+  metadataBase: new URL('https://runbd.org'),
+  alternates: {
+    canonical: `/exchange`,
+    languages: {
+      en: `/exchange`,
+      bn: `/bn/exchange`,
+      'x-default': `/exchange`
+    }
+  },
 
   openGraph: {
     title: 'Exchange in Bangladesh | Runbd',

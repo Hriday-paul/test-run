@@ -6,6 +6,16 @@ export const metadata: Metadata = {
   title: "About Us",
   description: "Learn about Runbd – Bangladesh's top-rated classified ads platform connecting buyers, sellers, and local businesses across the country.",
 
+  metadataBase: new URL('https://runbd.org'),
+  alternates: {
+    canonical: '/about',
+    languages: {
+      en: '/about',
+      bn: '/bn/about',
+      'x-default': '/about'
+    }
+  },
+
   openGraph: {
     title: 'About Us | Runbd',
     description: "Learn about Runbd – Bangladesh's top-rated classified ads platform connecting buyers, sellers, and local businesses across the country.",
@@ -27,8 +37,8 @@ export const metadata: Metadata = {
 function AboutPage() {
   return (
     <div className="">
-        <Section1 />
-        <Section2 />
+      <Section1 />
+      <Section2 />
     </div>
   )
 }

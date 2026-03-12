@@ -22,6 +22,16 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     title: `${data?.title}`,
     description: TextTruncate(data?.description, 155),
 
+    metadataBase: new URL('https://runbd.org'),
+    alternates: {
+      canonical: `/carbuysell/${id}`,
+      languages: {
+        en: `/carbuysell/${id}`,
+        bn: `/bn/carbuysell/${id}`,
+        'x-default': `/carbuysell/${id}`
+      }
+    },
+
     openGraph: {
       title: TextTruncate(data?.title, 60),
       description: TextTruncate(data?.description, 155),

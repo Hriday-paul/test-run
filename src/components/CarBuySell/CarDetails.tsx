@@ -1,12 +1,13 @@
 import DetailsCarousel from '@/shared/DetailsCarousel'
-import ErrorComponent from '@/shared/ErrorComponent';
 import { IoPricetagOutline } from 'react-icons/io5';
 import { Add } from '@/redux/types';
 import AdDetailsOwner from '@/shared/AdDetailsOwner';
-
 import { Calendar, Eye, Timer } from 'lucide-react'
 import moment from 'moment'
 import { getLocale, getTranslations } from 'next-intl/server';
+import { notFound, RedirectType } from 'next/navigation';
+import { redirect } from '@/i18n/navigation';
+import { categoryRouteMap } from '@/shared/FeatureAddCard';
 
 
 async function CarDetails({ promiseCarDetails }: { promiseCarDetails: Promise<{ data: Add }> }) {
@@ -35,10 +36,20 @@ async function CarDetails({ promiseCarDetails }: { promiseCarDetails: Promise<{ 
         { label: t("feature.seat"), value: (car: any) => car?.seat },
     ];
 
-    return (
-        <div >
+    if (!data?.data) {
+        return notFound()
+    }
 
-            {data?.data?.category !== "Car" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
+    if (data?.data?.category !== "Car") {
+        redirect({
+            href: `/${categoryRouteMap[data?.data?.category]}/${data?.data?.id}`,
+            locale: locale,
+        }, RedirectType.replace)
+    }
+
+    return (
+        <div>
+            <div className='bg-[#F2F4F8] py-8'>
                 <div className='container'>
                     <div className='grid grid-cols-5 gap-8'>
 
@@ -130,8 +141,7 @@ async function CarDetails({ promiseCarDetails }: { promiseCarDetails: Promise<{ 
 
                     </div>
                 </div>
-            </div>}
-
+            </div>
         </div>
     )
 }

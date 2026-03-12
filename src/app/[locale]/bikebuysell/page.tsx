@@ -14,11 +14,21 @@ import { Link } from '@/i18n/navigation'
 
 export const metadata: Metadata = {
   title: "Bike Buy/Sell",
-  description: "Looking to buy a Bike? Find bargain deals on new and used bikes for sale in Bangladesh or sell bikes online at the best price only on Runbd,The largest marketplace in Bangladesh!",
+  description: "Buy and sell new or used bikes in Bangladesh on Runbd, the largest online marketplace. Discover great deals, compare prices, and get the best value for your bike today!",
+
+  metadataBase: new URL('https://runbd.org'),
+  alternates: {
+    canonical: `/bikebuysell`,
+    languages: {
+      en: `/bikebuysell`,
+      bn: `/bn/bikebuysell`,
+      'x-default': `/bikebuysell`
+    }
+  },
 
   openGraph: {
     title: 'Buy & Sell Bike in Bangladesh | Runbd',
-    description: 'Looking to buy a Bike? Find bargain deals on new and used bikes for sale in Bangladesh or sell bikes online at the best price only on Runbd,The largest marketplace in Bangladesh!',
+    description: 'Buy and sell new or used bikes in Bangladesh on Runbd, the largest online marketplace. Discover great deals, compare prices, and get the best value for your bike today!',
     url: '/bikebuysell',
     siteName: 'Runbd',
     images: ['/og-image.png'],
@@ -27,7 +37,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     title: 'Buy & Sell Bike in Bangladesh | Runbd',
-    description: 'Looking to buy a Bike? Find bargain deals on new and used bikes for sale in Bangladesh or sell bikes online at the best price only on Runbd,The largest marketplace in Bangladesh!',
+    description: 'Buy and sell new or used bikes in Bangladesh on Runbd, the largest online marketplace. Discover great deals, compare prices, and get the best value for your bike today!',
     card: 'summary_large_image',
     creator: '@runbd',
     images: ['/og-image.png'],

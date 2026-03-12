@@ -1,17 +1,20 @@
 import DetailsCarousel from '@/shared/DetailsCarousel'
-import ErrorComponent from '@/shared/ErrorComponent';
 import { Calendar, Eye, Timer } from 'lucide-react';
 import moment from "moment";
 import { Add, IWorkshop } from '@/redux/types';
 import AdDetailsOwner from '@/shared/AdDetailsOwner';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { notFound, RedirectType } from 'next/navigation';
+import { redirect } from '@/i18n/navigation';
+import { categoryRouteMap } from '@/shared/FeatureAddCard';
 
 async function WorkshopDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
     const data = await promiseAdDetails;
 
     const t = await getTranslations("workshop.details");
-    const tp = await getTranslations("category_page.details")
+    const tp = await getTranslations("category_page.details");
+    const locale = await getLocale();
 
     const workshopRows = [
         { label: t("feature.type"), value: (work_shop: IWorkshop) => work_shop?.workshop_type },
@@ -20,11 +23,22 @@ async function WorkshopDetails({ promiseAdDetails }: { promiseAdDetails: Promise
         { label: t("feature.close_time"), value: (work_shop: IWorkshop) => work_shop?.close_time },
     ];
 
+    if (!data?.data) {
+        return notFound()
+    }
+
+    if (data?.data?.category !== "Workshop") {
+        redirect({
+            href: `/${categoryRouteMap[data?.data?.category]}/${data?.data?.id}`,
+            locale: locale,
+        }, RedirectType.replace)
+    }
+
     return (
         <div >
 
 
-            {(data) ? data?.data?.category !== "Workshop" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
+            <div className='bg-[#F2F4F8] py-8'>
                 <div className='container'>
                     <div className='grid grid-cols-5 gap-8'>
 
@@ -106,7 +120,7 @@ async function WorkshopDetails({ promiseAdDetails }: { promiseAdDetails: Promise
 
                     </div>
                 </div>
-            </div> : <></>}
+            </div>
 
         </div>
     )

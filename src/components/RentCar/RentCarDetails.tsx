@@ -1,9 +1,11 @@
 import DetailsCarousel from '@/shared/DetailsCarousel'
-import ErrorComponent from '@/shared/ErrorComponent';
 import { Eye, Tag } from 'lucide-react';
 import { Add, IRentCar } from '@/redux/types';
 import AdDetailsOwner from '@/shared/AdDetailsOwner';
 import { getLocale, getTranslations } from 'next-intl/server';
+import { notFound, RedirectType } from 'next/navigation';
+import { redirect } from '@/i18n/navigation';
+import { categoryRouteMap } from '@/shared/FeatureAddCard';
 
 async function RentCarDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
@@ -17,10 +19,20 @@ async function RentCarDetails({ promiseAdDetails }: { promiseAdDetails: Promise<
         { label: t("feature.address"), value: (rent: IRentCar) => rent?.location },
     ];
 
+    if (!data?.data) {
+        return notFound()
+    }
+
+    if (data?.data?.category !== "CarRent") {
+        redirect({
+            href: `/${categoryRouteMap[data?.data?.category]}/${data?.data?.id}`,
+            locale: locale,
+        }, RedirectType.replace)
+    }
+
     return (
         <div >
-
-            {(data) ? data?.data?.category !== "CarRent" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
+            <div className='bg-[#F2F4F8] py-8'>
                 <div className='container'>
                     <div className='grid grid-cols-5 gap-8'>
 
@@ -96,7 +108,7 @@ async function RentCarDetails({ promiseAdDetails }: { promiseAdDetails: Promise<
 
                     </div>
                 </div>
-            </div> : <></>}
+            </div>
 
         </div>
     )
