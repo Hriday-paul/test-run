@@ -4,6 +4,21 @@ import { getTranslations } from 'next-intl/server';
 import {Link} from '@/i18n/navigation'
 
 import { IoIosArrowForward } from 'react-icons/io'
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: "Forgot Password",
+    description: "Runbd forgot password Page",
+    metadataBase: new URL('https://runbd.org'),
+    alternates: {
+        canonical: '/auth/forgot-password',
+        languages: {
+            en: `/auth/forgot-password`,
+            bn: `/bn/auth/forgot-password`,
+            'x-default': `/auth/forgot-password`
+        }
+    },
+}
 
 async function Forgot() {
      const t = await getTranslations("forgot_pass");

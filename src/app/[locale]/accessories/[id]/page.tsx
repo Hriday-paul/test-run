@@ -7,7 +7,7 @@ import { LoadingCard } from '@/shared/LoadingCard';
 import ShopBanner from '@/shared/ShopBanner';
 import SimilarAd from '@/shared/SimilarAd/SimilarAd';
 import { TextTruncate } from '@/utils/TextTruncate';
-import {Link} from '@/i18n/navigation';
+import { Link } from '@/i18n/navigation';
 import { Suspense } from 'react';
 import { IoIosArrowForward } from 'react-icons/io';
 import bannerimg from "../../../../../public/Accessories Image.png"
@@ -21,6 +21,16 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return {
     title: `${data?.title}`,
     description: TextTruncate(data?.description, 155),
+
+    metadataBase: new URL('https://runbd.org'),
+    alternates: {
+      canonical: `/accessories/${id}`,
+      languages: {
+        en: `/accessories/${id}`,
+        bn: `/bn/accessories/${id}`,
+        'x-default': `/accessories/${id}`
+      }
+    },
 
     openGraph: {
       title: TextTruncate(data?.title, 60),

@@ -15,11 +15,21 @@ import { getTranslations } from 'next-intl/server'
 
 export const metadata: Metadata = {
   title: "Car Buy/Sell",
-  description: "Looking to buy a Car? Find bargain deals on new and used cars for sale in Bangladesh or sell cars online at the best price only on Runbd,The largest marketplace in Bangladesh!",
+  description: "Buy or sell new and used cars in Bangladesh on Runbd, the largest online marketplace. Find great deals, compare prices, and get the best value for your car today!",
+
+  metadataBase: new URL('https://runbd.org'),
+  alternates: {
+    canonical: `/carbuysell`,
+    languages: {
+      en: `/carbuysell`,
+      bn: `/bn/carbuysell`,
+      'x-default': `/carbuysell`
+    }
+  },
 
   openGraph: {
     title: 'Buy & Sell Cars in Bangladesh | Runbd',
-    description: 'Looking to buy a Car? Find bargain deals on new and used cars for sale in Bangladesh or sell cars online at the best price only on Runbd,The largest marketplace in Bangladesh!',
+    description: 'Buy or sell new and used cars in Bangladesh on Runbd, the largest online marketplace. Find great deals, compare prices, and get the best value for your car today!',
     url: '/carbuysell',
     siteName: 'Runbd',
     images: ['/og-image.png'],
@@ -28,7 +38,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     title: 'Buy & Sell Cars in Bangladesh | Runbd',
-    description: 'Looking to buy a Car? Find bargain deals on new and used cars for sale in Bangladesh or sell cars online at the best price only on Runbd,The largest marketplace in Bangladesh!',
+    description: 'Buy or sell new and used cars in Bangladesh on Runbd, the largest online marketplace. Find great deals, compare prices, and get the best value for your car today!',
     card: 'summary_large_image',
     creator: '@runbd',
     images: ['/og-image.png'],

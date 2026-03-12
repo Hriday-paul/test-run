@@ -1,15 +1,17 @@
 import DetailsCarousel from '@/shared/DetailsCarousel'
-import ErrorComponent from '@/shared/ErrorComponent';
 import { Eye } from 'lucide-react';
 import { Add, IExchange } from '@/redux/types';
 import AdDetailsOwner from '@/shared/AdDetailsOwner';
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { notFound, RedirectType } from 'next/navigation';
+import { redirect } from '@/i18n/navigation';
+import { categoryRouteMap } from '@/shared/FeatureAddCard';
 
 async function ExchangeDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
     const data = await promiseAdDetails;
-
     const t = await getTranslations("exchange.details");
+    const locale = await getLocale()
 
     const exchangeRows = [
         { label: t("feature.add_type"), value: (exchange: IExchange) => exchange?.exchange_category },
@@ -18,9 +20,20 @@ async function ExchangeDetails({ promiseAdDetails }: { promiseAdDetails: Promise
         { label: t("feature.address"), value: (exchange: IExchange) => exchange?.location },
     ];
 
+    if (!data?.data) {
+        return notFound()
+    }
+
+    if (data?.data?.category !== "Exchange") {
+        redirect({
+            href: `/${categoryRouteMap[data?.data?.category]}/${data?.data?.id}`,
+            locale: locale,
+        }, RedirectType.replace)
+    }
+
     return (
         < >
-            {data ? data?.data?.category !== "Exchange" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
+            <div className='bg-[#F2F4F8] py-8'>
                 <div className='container'>
                     <div className='grid grid-cols-5 gap-8'>
 
@@ -101,7 +114,7 @@ async function ExchangeDetails({ promiseAdDetails }: { promiseAdDetails: Promise
 
                     </div>
                 </div>
-            </div> : <></>}
+            </div>
 
         </>
     )

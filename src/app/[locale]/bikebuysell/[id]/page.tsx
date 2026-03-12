@@ -22,6 +22,16 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     title: `${data?.title}`,
     description: TextTruncate(data?.description, 155),
 
+    metadataBase: new URL('https://runbd.org'),
+    alternates: {
+      canonical: `/bikebuysell/${id}`,
+      languages: {
+        en: `/bikebuysell/${id}`,
+        bn: `/bn/bikebuysell/${id}`,
+        'x-default': `/bikebuysell/${id}`
+      }
+    },
+
     openGraph: {
       title: TextTruncate(data?.title, 60),
       description: TextTruncate(data?.description, 155),
@@ -50,13 +60,13 @@ async function BikeDetils({ params }: { params: Promise<{ id: string }> }) {
   const promiseAdDetails = GetAdDetails({ id });
   const promiseSimilarAd = GetSimilarAd({ id });
 
-  const t = await getTranslations("bike_buy")
+  const t = await getTranslations("bike_buy");
 
   return (
     <div>
       <ShopBanner
         image={bannerimg}
-         title={t("details.title")}
+        title={t("details.title")}
         desc={t("details.subtitle")}
       >
         <Link href='/' className='text-primary'>{t("bread_cump.home")}</Link>

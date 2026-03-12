@@ -16,6 +16,16 @@ export const metadata: Metadata = {
     title: "Lawyer",
     description: "Find lawyer in Bangladesh on Runbd, the largest marketplace in Bangladesh! ",
 
+    metadataBase: new URL('https://runbd.org'),
+    alternates: {
+        canonical: `/lawyers`,
+        languages: {
+            en: `/lawyers`,
+            bn: `/bn/lawyers`,
+            'x-default': `/lawyers`
+        }
+    },
+
     openGraph: {
         title: 'Lawyer in Bangladesh | Runbd',
         description: 'Find lawyer in Bangladesh on Runbd, the largest marketplace in Bangladesh!',

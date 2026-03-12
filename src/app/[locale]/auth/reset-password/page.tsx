@@ -1,8 +1,23 @@
 import ResetPassword from '@/components/Auth/ResetPassword'
 import { Link } from '@/i18n/navigation'
 import Pagetop from '@/shared/Pagetop'
+import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { IoIosArrowForward } from 'react-icons/io'
+
+export const metadata: Metadata = {
+    title: "Reset Password",
+    description: "Runbd Reset Password Page",
+    metadataBase: new URL('https://runbd.org'),
+    alternates: {
+        canonical: '/auth/reset-password',
+        languages: {
+            en: `/auth/reset-password`,
+            bn: `/bn/auth/reset-password`,
+            'x-default': `/auth/reset-password`
+        }
+    },
+}
 
 async function Resetpass() {
     const t = await getTranslations("reset_pass")

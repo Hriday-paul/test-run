@@ -14,11 +14,21 @@ import { Link } from '@/i18n/navigation'
 
 export const metadata: Metadata = {
   title: "Accessories",
-  description: "Find accessories in Bangladesh on Runbd, the largest marketplace in Bangladesh! ",
+  description: "Runbd Accessories helps you find the best car and bike accessories in Bangladesh — including spare parts, helmets, seat covers, lights, audio systems, and more. Easily explore, buy, or sell vehicle accessories from trusted sellers on one reliable platform.",
+
+  metadataBase: new URL('https://runbd.org'),
+  alternates: {
+    canonical: `/accessories`,
+    languages: {
+      en: '/accessories',
+      bn: '/bn/accessories',
+      'x-default': '/accessories'
+    }
+  },
 
   openGraph: {
     title: 'Accessories in Bangladesh | Runbd',
-    description: 'Find accessories in Bangladesh on Bikroy, the largest marketplace in Bangladesh!',
+    description: 'Find accessories in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
     url: '/accessories',
     siteName: 'Runbd',
     images: ['/og-image.png'],
@@ -27,7 +37,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     title: 'Accessories in Bangladesh | Runbd',
-    description: 'Find accessories in Bangladesh on Bikroy, the largest marketplace in Bangladesh!',
+    description: 'Find accessories in Bangladesh on Runbd, the largest marketplace in Bangladesh!',
     card: 'summary_large_image',
     creator: '@runbd',
     images: ['/og-image.png'],
@@ -76,7 +86,7 @@ async function Accesories({
 
   const adsPromise = GetAdsByCategory({ endPoint: "/ads/accessories", query, tags: [tags?.accessories] });
 
-   const t = await getTranslations('accessories');
+  const t = await getTranslations('accessories');
 
   return (
     <div>

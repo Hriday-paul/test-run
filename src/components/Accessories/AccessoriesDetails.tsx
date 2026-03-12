@@ -1,9 +1,11 @@
 import DetailsCarousel from '@/shared/DetailsCarousel'
-import ErrorComponent from '@/shared/ErrorComponent';
 import { Eye, Tag } from 'lucide-react';
 import { Add } from '@/redux/types';
 import AdDetailsOwner from '@/shared/AdDetailsOwner';
 import { getLocale, getTranslations } from 'next-intl/server';
+import { notFound, RedirectType } from 'next/navigation';
+import { redirect } from '@/i18n/navigation';
+import { categoryRouteMap } from '@/shared/FeatureAddCard';
 
 async function AccessoriesDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
@@ -11,9 +13,20 @@ async function AccessoriesDetails({ promiseAdDetails }: { promiseAdDetails: Prom
     const t = await getTranslations("accessories.details");
     const locale = await getLocale();
 
+    if (!data?.data) {
+        return notFound()
+    }
+
+    if (data?.data?.category !== "Accessories") {
+        redirect({
+            href: `/${categoryRouteMap[data?.data?.category]}/${data?.data?.id}`,
+            locale: locale,
+        }, RedirectType.replace)
+    }
+
     return (
         <>
-            {(data) ? data?.data?.category !== "Accessories" ? <ErrorComponent /> : <div className='bg-[#F2F4F8] py-8'>
+            <div className='bg-[#F2F4F8] py-8'>
                 <div className='container'>
                     <div className='grid grid-cols-5 gap-8'>
 
@@ -66,7 +79,7 @@ async function AccessoriesDetails({ promiseAdDetails }: { promiseAdDetails: Prom
 
                     </div>
                 </div>
-            </div> : <></>}
+            </div>
 
         </>
     )

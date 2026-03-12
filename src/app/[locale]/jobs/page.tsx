@@ -16,6 +16,16 @@ export const metadata: Metadata = {
   title: "Jobs",
   description: "Find jobs in Bangladesh on Runbd, the largest marketplace in Bangladesh! ",
 
+  metadataBase: new URL('https://runbd.org'),
+  alternates: {
+    canonical: `/jobs`,
+    languages: {
+      en: `/jobs`,
+      bn: `/bn/jobs`,
+      'x-default': `/jobs`
+    }
+  },
+
   openGraph: {
     title: 'Jobs in Bangladesh | Runbd',
     description: 'Find jobs in Bangladesh on Runbd, the largest marketplace in Bangladesh!',

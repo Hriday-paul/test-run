@@ -102,11 +102,21 @@ const documents = [
 
 export const metadata: Metadata = {
     title: "Documents",
-    description: "You can download any file from Runbd according to your needs.",
+    description: "Download any vehicle-related files on Runbd in Bangladesh. Access manuals, documents, and guides for cars, bikes, and more—conveniently and quickly!",
+
+    metadataBase: new URL('https://runbd.org'),
+    alternates: {
+        canonical: `/documents`,
+        languages: {
+            en: `/documents`,
+            bn: `/bn/documents`,
+            'x-default': `/documents`
+        }
+    },
 
     openGraph: {
         title: 'Documents in Runbd',
-        description: 'You can download any file from Runbd according to your needs.',
+        description: 'Download any vehicle-related files on Runbd in Bangladesh. Access manuals, documents, and guides for cars, bikes, and more—conveniently and quickly!',
         url: '/documents',
         siteName: 'Runbd',
         images: ['/og-image.png'],
@@ -115,7 +125,7 @@ export const metadata: Metadata = {
     },
     twitter: {
         title: 'Documents in Runbd',
-        description: 'You can download any file from Runbd according to your needs.',
+        description: 'Download any vehicle-related files on Runbd in Bangladesh. Access manuals, documents, and guides for cars, bikes, and more—conveniently and quickly!',
         card: 'summary_large_image',
         creator: '@runbd',
         images: ['/og-image.png'],
