@@ -145,3 +145,14 @@ export const Carbrands = [
     "Ram",
     "Chrysler"
 ]
+
+export const categoryRouteMap: Record<string, string> = {
+  Bike: "bikebuysell",
+  Car: "carbuysell",
+  Workshop: "workshop",
+  Accessories: "accessories",
+  Job: "jobs",
+  Exchange: "exchange",
+  Lawyer: "lawyers",
+  CarRent: "car-rent",
+};

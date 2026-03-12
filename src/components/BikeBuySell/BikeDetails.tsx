@@ -7,7 +7,7 @@ import AdDetailsOwner from '@/shared/AdDetailsOwner';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound, RedirectType } from 'next/navigation';
 import { redirect } from '@/i18n/navigation';
-import { categoryRouteMap } from '@/shared/FeatureAddCard';
+import { categoryRouteMap } from '@/utils/config';
 
 async function BikeDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
