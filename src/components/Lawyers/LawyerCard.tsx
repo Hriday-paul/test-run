@@ -23,7 +23,7 @@ async function LawyerCard({ lawyer }: { lawyer: Add }) {
                 placeholder="blur"
                 blurDataURL={placeHolderBlurImg}
             />
-            <Link href={`/lawyers/${lawyer?.id}`}>
+            <Link href={`/lawyers/${lawyer?.slug}`}>
                 <div className="p-5 space-y-2 bg-white rounded-t-2xl border-t border-stroke -mt-3 relative z-40">
                     <div className="border-b border-stroke py-4 space-y-2.5">
                         <h3 className="font-semibold text-gray-900 text-lg line-clamp-2">
@@ -38,7 +38,7 @@ async function LawyerCard({ lawyer }: { lawyer: Add }) {
 
                     </div>
                     <div className="w-full">
-                        <Link href={`/lawyers/${lawyer?.id}`}>
+                        <Link href={`/lawyers/${lawyer?.slug}`}>
                             <Button
                                 variant="outline"
                                 size="sm"

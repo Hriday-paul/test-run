@@ -13,7 +13,7 @@ async function JobCard({ job }: { job: Add }) {
     return (
         <div
             className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree bg-white">
-            <Link href={`/jobs/${job?.id}`}>
+            <Link href={`/jobs/${job?.slug}`}>
                 <div className="p-5 space-y-2 bg-white rounded-t-2xl border-t border-stroke -mt-3 relative z-40">
                     <div className="border-b border-stroke py-4 space-y-1.5">
                         <h3 className="font-semibold text-gray-900 text-lg line-clamp-2">
@@ -43,7 +43,7 @@ async function JobCard({ job }: { job: Add }) {
                         </div>
                     </div>
                     <div className="w-full pt-2">
-                        <Link href={`/jobs/${job?.id}`}>
+                        <Link href={`/jobs/${job?.slug}`}>
                             <Button
                                 variant="outline"
                                 size="sm"

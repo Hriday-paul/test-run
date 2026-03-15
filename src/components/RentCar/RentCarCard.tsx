@@ -21,7 +21,7 @@ async function RentCarCard({ rent }: { rent: Add }) {
                 placeholder="blur"
                 blurDataURL={placeHolderBlurImg}
             />
-            <Link href={`/car-rent/${rent?.id}`}>
+            <Link href={`/car-rent/${rent?.slug}`}>
                 <div className="p-5 space-y-2 bg-white rounded-t-2xl border-t border-stroke -mt-3 relative z-40">
                     <div className="border-b border-stroke py-4 space-y-2.5">
                         <h3 className="font-semibold text-gray-900 text-lg line-clamp-2">
@@ -32,7 +32,7 @@ async function RentCarCard({ rent }: { rent: Add }) {
                         </p>
                     </div>
                     <div className="w-full">
-                        <Link href={`/car-rent/${rent?.id}`}>
+                        <Link href={`/car-rent/${rent?.slug}`}>
                             <Button
                                 variant="outline"
                                 size="sm"

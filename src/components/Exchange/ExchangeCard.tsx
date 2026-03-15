@@ -23,7 +23,7 @@ async function ExchangeCard({ exchange }: { exchange: Add }) {
                 placeholder="blur"
                 blurDataURL={placeHolderBlurImg}
             />
-            <Link href={`/exchange/${exchange?.id}`}>
+            <Link href={`/exchange/${exchange?.slug}`}>
                 <div className="p-5 space-y-2 bg-white rounded-t-2xl border-t border-stroke -mt-3 relative z-40">
                     <div className="border-b border-stroke py-4 space-y-2.5">
                         <h3 className="font-semibold text-gray-900 text-lg line-clamp-2">
@@ -34,7 +34,7 @@ async function ExchangeCard({ exchange }: { exchange: Add }) {
                         </p>
                     </div>
                     <div className="w-full pt-2">
-                        <Link href={`/exchange/${exchange?.id}`}>
+                        <Link href={`/exchange/${exchange?.slug}`}>
                             <Button
                                 variant="outline"
                                 size="sm"
