@@ -300,7 +300,7 @@ const AdTable = ({ ads }: { ads: Add[] }) => {
                                         </DropdownMenuItem>
 
                                         <DropdownMenuItem asChild className="hover:bg-zinc-100 duration-150">
-                                            <Link href={`/${categoryRouteMap[ad?.category]}/${ad?.id}`} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
+                                            <Link href={`/${categoryRouteMap[ad?.category]}/${ad?.slug}`} className='w-full font-popin flex flex-row gap-x-2 items-center cursor-pointer'>
                                                 <Eye className='text-black size-4' />
                                                 {t("action.view")}
                                             </Link>
