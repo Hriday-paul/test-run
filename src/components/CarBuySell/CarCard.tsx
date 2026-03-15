@@ -25,14 +25,15 @@ async function CarCard({ car }: { car: Add }) {
                 placeholder="blur"
                 blurDataURL={placeHolderBlurImg}
             />
-            <Link href={`/carbuysell/${car?.id}`}>
+            <Link href={`/carbuysell/${car?.slug}`}>
                 <div className="p-5 space-y-2 bg-white rounded-t-2xl border-t border-stroke -mt-3 relative z-40">
                     <div className="border-b border-stroke pb-2 space-y-0.5">
                         <h3 className="font-semibold text-gray-900 text-lg line-clamp-2">
                             {car?.title}
                         </h3>
                         <div className="flex items-center text-sm text-gray-600 gap-1">
-                            <SlLocationPin size={16} /> {car?.division?.name || "N/A"}
+                            <SlLocationPin size={16} />
+                            {`${car?.division?.name || ''}${car?.division ? ', ' : ''}${car?.district?.name || ''}${car?.district ? ', ' : ''}${car?.area?.name || ''}`.trim() || 'N/A'}
                         </div>
                     </div>
 
@@ -58,7 +59,7 @@ async function CarCard({ car }: { car: Add }) {
                         <p className="font-semibold text-gray-900 flex items-center gap-1 text-base">
                             {car?.price ? `${t("currency")} ${(car?.price).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")}` : "N/A"}
                         </p>
-                        <Link href={`/carbuysell/${car?.id}`}>
+                        <Link href={`/carbuysell/${car?.slug}`}>
                             <Button
                                 variant="outline"
                                 size="sm"

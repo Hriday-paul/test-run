@@ -8,27 +8,27 @@ import { Button } from "@/components/ui/button";
 import { useLocale, useTranslations } from "next-intl";
 
 export const categoryRouteMap: Record<string, string> = {
-  Bike: "bikebuysell",
-  Car: "carbuysell",
-  Workshop: "workshop",
-  Accessories: "accessories",
-  Job: "jobs",
-  Exchange: "exchange",
-  Lawyer: "lawyers",
-  CarRent: "car-rent",
+    Bike: "bikebuysell",
+    Car: "carbuysell",
+    Workshop: "workshop",
+    Accessories: "accessories",
+    Job: "jobs",
+    Exchange: "exchange",
+    Lawyer: "lawyers",
+    CarRent: "car-rent",
 };
 
 
 async function FeatureAddCard({ add }: { add: Add }) {
 
-     const t = useTranslations("category_page.adCard");
+    const t = useTranslations("category_page.adCard");
     const locale = useLocale();
-    
+
     return (
         <div
             className="border border-stroke rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all p-0 font-figtree bg-white">
             <Image
-                src={add?.images[0]?.url}
+                src={add?.images[0]?.url || "/placeholder.jpg"}
                 alt={"runbd car ad image"}
                 className="w-full h-56 object-cover z-0"
                 height={500}
@@ -36,14 +36,14 @@ async function FeatureAddCard({ add }: { add: Add }) {
                 placeholder="blur"
                 blurDataURL={placeHolderBlurImg}
             />
-            <Link href={`/${categoryRouteMap[add?.category]}/${add?.id}`}>
+            <Link href={`/${categoryRouteMap[add?.category]}/${add?.slug}`}>
                 <div className="p-5 space-y-2 bg-white rounded-t-2xl border-t border-stroke -mt-3 relative z-40">
                     <div className="border-b border-stroke pb-2 space-y-0.5">
                         <h3 className="font-semibold text-gray-900 text-lg line-clamp-2">
                             {add?.title}
                         </h3>
                         <div className="flex items-center text-sm text-gray-600 gap-1">
-                            <SlLocationPin size={16} /> {add?.division?.name || "N/A"}
+                            <SlLocationPin size={16} /> {`${add?.division?.name || ''}${add?.division ? ', ' : ''}${add?.district?.name || ''}${add?.district ? ', ' : ''}${add?.area?.name || ''}`.trim() || 'N/A'}
                         </div>
                     </div>
 
@@ -54,15 +54,15 @@ async function FeatureAddCard({ add }: { add: Add }) {
                         <p className="font-semibold text-gray-900 flex items-center gap-1 text-base">
                             {add?.price ? `${t("currency")} ${(add?.price).toLocaleString(locale === "bn" ? "bn-BD" : "en-US")}` : "N/A"}
                         </p>
-                        
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                className="text-primary hover:text-white bg-primary/10 hover:bg-primary transition-all duration-300 cursor-pointer py-5 px-6 font-popin"
-                            >
-                                {t("details")}
-                            </Button>
-                        
+
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-primary hover:text-white bg-primary/10 hover:bg-primary transition-all duration-300 cursor-pointer py-5 px-6 font-popin"
+                        >
+                            {t("details")}
+                        </Button>
+
                     </div>
                 </div>
             </Link>

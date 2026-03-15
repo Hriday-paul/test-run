@@ -31,6 +31,7 @@ export type IUser = {
 
 export type Add = {
     id: number
+    slug : string
     title: string
     price: number
     description: string | null

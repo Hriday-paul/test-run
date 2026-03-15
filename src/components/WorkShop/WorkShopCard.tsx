@@ -24,20 +24,20 @@ async function WorkShopCard({ workShop }: { workShop: Add }) {
             />
 
             <div className="p-5 space-y-2 bg-white rounded-t-2xl border-t border-stroke -mt-3 relative z-40">
-                <Link href={`/workshop/${workShop?.id}`}>
+                <Link href={`/workshop/${workShop?.slug}`}>
                     <div className="">
                         <div className="border-b border-stroke pb-2">
                             <h3 className="font-semibold text-gray-900 text-lg line-clamp-2">
                                 {workShop?.title}
                             </h3>
                             <div className="flex items-center text-sm text-gray-600 gap-1">
-                                <SlLocationPin size={16} /> {workShop?.division?.name || "N/A"}
+                                <SlLocationPin size={16} /> {`${workShop?.division?.name || ''}${workShop?.division ? ', ' : ''}${workShop?.district?.name || ''}${workShop?.district ? ', ' : ''}${workShop?.area?.name || ''}`.trim() || 'N/A'}
                             </div>
                         </div>
                     </div>
                 </Link>
 
-                <Link href={`/workshop/${workShop?.id}`} className="w-full">
+                <Link href={`/workshop/${workShop?.slug}`} className="w-full">
                     <Button
                         variant="outline"
                         size="sm"
