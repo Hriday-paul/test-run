@@ -5,6 +5,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound, RedirectType } from 'next/navigation';
 import { redirect } from '@/i18n/navigation';
 import { categoryRouteMap } from '@/utils/config';
+import { gen_JsonLdJobDetails } from '../JSON_LD/JobDetailsJsonLd';
 
 async function JobDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
@@ -24,8 +25,16 @@ async function JobDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ da
         }, RedirectType.replace)
     }
 
+    const jsonLd = gen_JsonLdJobDetails(data?.data, "jobs");
+
     return (
         <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+                }}
+            />
 
             <div className='bg-[#F2F4F8] py-8'>
                 <div className='container space-y-5 lg:space-y-6'>

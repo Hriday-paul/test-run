@@ -7,6 +7,7 @@ import { Add, IMeta } from "@/redux/types";
 import SearchParamsPagination from "@/shared/SearchParamsPagination";
 import { getTranslations } from "next-intl/server";
 import SmFilter from "../ads/SmFilter";
+import { gen_JsonLdAd } from "../JSON_LD/AdsLd";
 
 
 async function Accessories({ adsPromise, page, limit, sort }: { adsPromise: Promise<{ data: { data: Add[], meta: IMeta } }>, page: number, limit?: string, sort?: string }) {
@@ -14,8 +15,17 @@ async function Accessories({ adsPromise, page, limit, sort }: { adsPromise: Prom
     const data = await adsPromise;
     const t = await getTranslations("category_page");
 
+    const jsonLd = gen_JsonLdAd(data?.data?.data, "Accessories in Bangladesh | Runbd", "accessories");
+
     return (
         <div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+                }}
+            />
 
             <div className="flex flex-row justify-between items-center py-2.5">
                 <div className='lg:hidden'>

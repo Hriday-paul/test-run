@@ -8,6 +8,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound, RedirectType } from 'next/navigation';
 import { redirect } from '@/i18n/navigation';
 import { categoryRouteMap } from '@/utils/config';
+import { gen_JsonLdBikeSellDetails } from '../JSON_LD/BikeDetailsJsonLd';
 
 async function BikeDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
@@ -40,8 +41,17 @@ async function BikeDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ d
         }, RedirectType.replace)
     }
 
+    const jsonLd = gen_JsonLdBikeSellDetails(data?.data, "bikebuysell");
+
     return (
         <div>
+
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+                }}
+            />
 
             <div className='bg-[#F2F4F8] py-8'>
                 <div className='container'>
