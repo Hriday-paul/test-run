@@ -17,11 +17,11 @@ export default function Footer() {
                             <Link href={"/"}>
                                 <Image src={logo} alt='logo' className='h-12 w-auto object-cover mb-10' />
                             </Link>
-                            <p className="mt-[18px] text-[15px] font-normal text-white/[80%]">Skip the hassle and delays — easily buy, sell, or access essential services anytime from one reliable and secure platform.</p>
+                            <p className="mt-[18px] text-[15px] font-normal text-white/80">Skip the hassle and delays — easily buy, sell, or access essential services anytime from one reliable and secure platform.</p>
                             <div className="mt-[18px] flex gap-4">
 
                                 <Link className="hover:bg-slate-50 duration-150 bg-white p-2 rounded-full" target="_blank"
-                                    href="#">
+                                    href="https://www.facebook.com/runbd24">
                                     <FaFacebookF size={15} />
                                 </Link>
                                 <Link
@@ -47,8 +47,8 @@ export default function Footer() {
                                     </svg>
                                 </div>
                                 <div className="ml-3">
-                                    <a href="tel:+8801336832636" className="font-Inter text-[14px] font-medium text-white">01336-832636</a>
-                                    <p className="font-Inter text-[12px] font-medium text-gray-300">Support Number</p>
+                                    <a href="tel:+8801336832636" className="font-popin text-[14px] font-medium text-white">01336-832636</a>
+                                    <p className="font-popin text-[12px] font-medium text-gray-300">Support Number</p>
                                 </div>
                             </div>
                             <div className="mt-[23px] flex">
@@ -60,8 +60,8 @@ export default function Footer() {
                                     </svg>
                                 </div>
                                 <div className="ml-3">
-                                    <Link href="mailto:runbdorg24@gmail.com" className="font-Inter text-[14px] font-medium text-[#fff]">runbdorg24@gmail.com</Link>
-                                    <p className="font-Inter text-[12px] font-medium text-gray-300">Support Email</p>
+                                    <Link href="mailto:runbdorg24@gmail.com" className="font-popin text-[14px] font-medium text-white">runbdorg24@gmail.com</Link>
+                                    <p className="font-popin text-[12px] font-medium text-gray-300">Support Email</p>
                                 </div>
                             </div>
                             <div className="mt-[23px] flex">
@@ -73,49 +73,49 @@ export default function Footer() {
                                     </svg>
                                 </div>
                                 <div className="ml-3">
-                                    <p className="font-Inter text-[14px] font-medium text-[#fff]">Nikunja-2, Dhaka-1229</p>
-                                    <p className="font-Inter text-[12px] font-medium text-gray-300">Address</p>
+                                    <p className="font-popin text-[14px] font-medium text-white">Nikunja-2, Dhaka-1229</p>
+                                    <p className="font-popin text-[12px] font-medium text-gray-300">Address</p>
                                 </div>
                             </div>
                         </div>
                         <div className="mt-6 flex w-full flex-col justify-between text-white sm:flex-row md:mt-0 md:max-w-[341px]">
                             <div className="">
-                                <p className="text-deutziawhite font-inter text-[18px] font-medium leading-normal">Pages</p>
+                                <p className="text-white font-popin text-[18px] font-medium leading-normal">Pages</p>
                                 <ul>
                                     <li className="mt-[15px]">
                                         <Link
-                                            className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold duration-150"
+                                            className="text-white font-popin text-[15px] font-normal hover:font-semibold duration-150"
                                             href="/">Home</Link>
                                     </li>
 
                                     <li className="mt-[15px]">
                                         <Link
-                                            className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold duration-150"
+                                            className="text-white font-popin text-[15px] font-normal hover:font-semibold duration-150"
                                             href="/carbuysell">Cars Buy/sell</Link>
                                     </li>
 
                                     <li className="mt-[15px]">
                                         <Link
-                                            className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
+                                            className="text-white font-popin text-[15px] font-normal hover:font-semibold"
                                             href="/bikebuysell">Bikes Buy/sell</Link>
                                     </li>
 
                                     <li className="mt-[15px]">
                                         <Link
-                                            className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
+                                            className="text-white font-popin text-[15px] font-normal hover:font-semibold"
                                             href="/car-rent">Car Rent</Link>
                                     </li>
 
                                     <li className="mt-[15px]">
                                         <Link
-                                            className="text-deutziawhite hover:text-deutziawhite/80 font-inter text-[15px] font-normal hover:font-semibold"
+                                            className="text-white font-popin text-[15px] font-normal hover:font-semibold"
                                             href="/Vehicle Process">Vehicle Process</Link>
                                     </li>
 
                                 </ul>
                             </div>
                             <div className="mt-6 flex flex-col gap-4 sm:mt-0">
-                                <p className="text-deutziawhite font-inter text-[18px] font-medium">Download the app</p>
+                                <p className="text-white font-popin text-[18px] font-medium">Download the app</p>
                                 <div className="flex gap-4 sm:flex-col">
                                     <Link href="#">
                                         <Image src={google_play} alt="Google Play" width={500} height={200} className="object-contain h-10 w-auto" />

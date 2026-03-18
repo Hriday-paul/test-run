@@ -69,7 +69,7 @@ function Navbar() {
                         <div className="flex gap-x-1 sm:gap-x-2 md:gap-4 items-center">
 
                             <Link className="hover:bg-slate-50 duration-150 bg-white p-1.5 rounded-full border border-stroke" target="_blank"
-                                href="#">
+                                href="https://www.facebook.com/runbd24">
                                 <FaFacebookF size={10} />
                             </Link>
                             <Link

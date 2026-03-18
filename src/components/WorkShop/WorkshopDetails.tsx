@@ -7,6 +7,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound, RedirectType } from 'next/navigation';
 import { redirect } from '@/i18n/navigation';
 import { categoryRouteMap } from '@/utils/config';
+import { gen_JsonLdWorkshopDetails } from '../JSON_LD/WorkshopDetailsJsonLd';
 
 async function WorkshopDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
@@ -34,9 +35,16 @@ async function WorkshopDetails({ promiseAdDetails }: { promiseAdDetails: Promise
         }, RedirectType.replace)
     }
 
+    const jsonLd = gen_JsonLdWorkshopDetails(data?.data, "workshop");
+
     return (
         <div >
-
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+                }}
+            />
 
             <div className='bg-[#F2F4F8] py-8'>
                 <div className='container'>

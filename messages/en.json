@@ -405,7 +405,7 @@
         "title": "Condition",
         "new": "New",
         "used": "Used",
-        "recondition" : "Recondition"
+        "recondition": "Recondition"
       },
       "km": {
         "title": "Kilometers run"
@@ -687,7 +687,7 @@
       "details": "Details"
     },
     "filter": {
-      "specilazation": {
+      "specialization": {
         "title": "Specilazation"
       },
       "gender": {

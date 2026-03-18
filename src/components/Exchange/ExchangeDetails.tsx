@@ -6,6 +6,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound, RedirectType } from 'next/navigation';
 import { redirect } from '@/i18n/navigation';
 import { categoryRouteMap } from '@/utils/config';
+import { gen_JsonLdExchangeDetails } from '../JSON_LD/ExchangeDetailsJsonLd';
 
 async function ExchangeDetails({ promiseAdDetails }: { promiseAdDetails: Promise<{ data: Add }> }) {
 
@@ -31,8 +32,16 @@ async function ExchangeDetails({ promiseAdDetails }: { promiseAdDetails: Promise
         }, RedirectType.replace)
     }
 
+    const jsonLd = gen_JsonLdExchangeDetails(data?.data, "exchange");
+
     return (
         < >
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
+                }}
+            />
             <div className='bg-[#F2F4F8] py-8'>
                 <div className='container'>
                     <div className='grid grid-cols-5 gap-8'>
