@@ -32,9 +32,7 @@ export default function RootLayout({
             <NextJsTopLoader />
             <NextIntlClientProvider>
                 <Navbar />
-                <div className="">
-                    {children}
-                </div>
+                {children}
                 <Footer />
             </NextIntlClientProvider>
         </ReduxProvider>
