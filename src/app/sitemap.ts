@@ -21,7 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
             priority: 0.95,
         },
         {
-            url: 'https://runbd.org/login',
+            url: 'https://runbd.org/auth/login',
             lastModified: new Date(),
             changeFrequency: 'yearly',
             priority: 0.90,

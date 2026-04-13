@@ -15,42 +15,55 @@ import { getTranslations } from 'next-intl/server';
 
 // ---------------dynamic metadata--------------
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const { data } = await GetAdDetails({ id }) as { data: Add };
-
-  return {
-    title: `${data?.title}`,
-    description: TextTruncate(data?.description, 155),
-
+  const fallback = {
+    title: "Not Found | Runbd",
+    description: "Listing you are looking for is not available.",
     metadataBase: new URL('https://runbd.org'),
-    alternates: {
-      canonical: `/accessories/${id}`,
-      languages: {
-        en: `/accessories/${id}`,
-        bn: `/bn/accessories/${id}`,
-        'x-default': `/accessories/${id}`
-      }
-    },
+  };
+  try {
+    const { id } = await params;
+    const { data } = await GetAdDetails({ id }) as { data: Add };
 
-    openGraph: {
-      title: TextTruncate(data?.title, 60),
-      description: TextTruncate(data?.description, 155),
-      url: `/accessories/${data?.id}`,
-      siteName: 'Runbd',
-      images: [data?.images[0]],
-      locale: 'bn_BD',
-      type: 'website',
-      creator: "Runbd",
-      publisher: "Runbd"
-    },
-    twitter: {
-      title: TextTruncate(data?.title, 60),
-      description: TextTruncate(data?.description, 155),
-      card: 'summary_large_image',
-      creator: '@runbd',
-      images: [data?.images[0]],
-    },
+    if(!data){
+      return fallback
+    }
 
+    return {
+      title: `${data?.title}`,
+      description: TextTruncate(data?.description, 155),
+
+      metadataBase: new URL('https://runbd.org'),
+      alternates: {
+        canonical: `/accessories/${id}`,
+        languages: {
+          en: `/accessories/${id}`,
+          bn: `/bn/accessories/${id}`,
+          'x-default': `/accessories/${id}`
+        }
+      },
+
+      openGraph: {
+        title: TextTruncate(data?.title, 60),
+        description: TextTruncate(data?.description, 155),
+        url: `/accessories/${data?.id}`,
+        siteName: 'Runbd',
+        images: [data?.images[0]],
+        locale: 'bn_BD',
+        type: 'website',
+        creator: "Runbd",
+        publisher: "Runbd"
+      },
+      twitter: {
+        title: TextTruncate(data?.title, 60),
+        description: TextTruncate(data?.description, 155),
+        card: 'summary_large_image',
+        creator: '@runbd',
+        images: [data?.images[0]],
+      },
+
+    }
+  } catch {
+    return fallback;
   }
 }
 
