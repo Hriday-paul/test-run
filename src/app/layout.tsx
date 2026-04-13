@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins, Figtree } from "next/font/google";
 import "./globals.css";
 import { gen_JsonLdGlobal, gen_JsonLdHomePage } from "@/components/JSON_LD/HomeJsonLd";
+import { NextIntlClientProvider } from 'next-intl';
 
 const poppins = Poppins({
   variable: "--font-poppin",
@@ -94,7 +95,10 @@ export default function RootLayout({
       </head>
 
       <body className={`${poppins.variable} ${figtree.variable} antialiased`}>
+
+        <NextIntlClientProvider>
         {children}
+        </NextIntlClientProvider>
 
         {/* ✅ Multiple JSON-LD inject */}
         {jsonLd.map((item, index) => (

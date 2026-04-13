@@ -4,7 +4,6 @@ import ReduxProvider from "@/shared/ReduxProvider";
 import { Toaster } from 'sonner';
 import NextJsTopLoader from "@/shared/NextJsTopLoader";
 import TawkTo from "@/utils/TawkTo";
-import { NextIntlClientProvider } from 'next-intl';
 
 import { ToastContainer } from 'react-toastify';
 
@@ -30,11 +29,11 @@ export default function RootLayout({
                 theme="colored"
             />
             <NextJsTopLoader />
-            <NextIntlClientProvider>
+            
                 <Navbar />
                 {children}
                 <Footer />
-            </NextIntlClientProvider>
+            
         </ReduxProvider>
     );
 }
