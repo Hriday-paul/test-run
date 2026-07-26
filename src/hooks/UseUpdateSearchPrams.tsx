@@ -3,7 +3,7 @@
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { useSearchParams } from "next/navigation";
 
-export function UseUpdateSearchParams(targetId?: string) {
+export function UseUpdateSearchParams() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
