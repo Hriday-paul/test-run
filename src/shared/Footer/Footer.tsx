@@ -9,7 +9,7 @@ import { Link } from "@/i18n/navigation";
 
 export default function Footer() {
     return (
-        <footer className="pt-8">
+        <footer className="">
             <div className="bg-gray-900 pt-16 font-popin">
                 <div className="mx-auto w-full max-w-[1166px] px-4 xl:px-0">
                     <div className="flex flex-col justify-between sm:px-[18px] md:flex-row md:px-10">
