@@ -7,12 +7,6 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet"
-
-import { Link } from '@/i18n/navigation';;
-import { RiMenu3Fill } from 'react-icons/ri';
-
-import Image from 'next/image';
-import logo from "../../../public/logo.png"
 import { AiOutlineFilter } from "react-icons/ai";
 
 

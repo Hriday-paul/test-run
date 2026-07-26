@@ -17,14 +17,7 @@ export function UseUpdateSearchParams(targetId?: string) {
     }
 
     const url = `?${params.toString()}`;
-    router.push(url, { scroll: false }); // Prevent auto-scroll
-
-    // Manually scroll to the section (after the push)
-    setTimeout(() => {
-      if (targetId) {
-        document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
-      }
-    }, 50); // Delay to ensure layout is updated
+    router.push(url, { scroll: true }); // Prevent auto-scroll
   };
 
 }
