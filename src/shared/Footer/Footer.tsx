@@ -15,10 +15,16 @@ export default function Footer() {
                     <div className="flex flex-col justify-between sm:px-[18px] md:flex-row md:px-10">
                         <div className="md:w-[316px]">
                             <Link href={"/"}>
-                                <Image src={logo} alt='logo' className='h-12 w-auto object-cover mb-10' />
+                                <Image src={logo} alt='logo' className='h-12 w-auto object-cover mb-8' />
                             </Link>
-                            <p className="mt-[18px] text-[15px] font-normal text-white/80">Skip the hassle and delays — easily buy, sell, or access essential services anytime from one reliable and secure platform.</p>
-                            <div className="mt-[18px] flex gap-4">
+                            <p className="mt-4 text-[15px] font-normal text-white/80">Skip the hassle and delays — easily buy, sell, or access essential services anytime from one reliable and secure platform.</p>
+
+                            <span className="mt-2 text-[15px] font-normal text-white/80">Developed by <Link className="underline hover:text-blue-500 underline-offset-2" target="_blank"
+                                href="https://hriday-paul.github.io">
+                                Hridoy Paul
+                            </Link></span>
+
+                            <div className="mt-4 flex gap-4">
 
                                 <Link className="hover:bg-slate-50 duration-150 bg-white p-2 rounded-full" target="_blank"
                                     href="https://www.facebook.com/runbd24">
