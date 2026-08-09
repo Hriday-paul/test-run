@@ -1,37 +1,39 @@
-RUNBD WEBSITE
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Runbd
 
-## Getting Started
+**Runbd** is an all-in-one online marketplace and services platform for Bangladesh — buy or sell cars and bikes, rent vehicles, book workshops, order accessories, connect with lawyers, find jobs, and access other everyday services from a single, reliable platform.
 
-First, run the development server:
+🔗 Live: [https://runbd.org](https://runbd.org)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Tech Stack
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Next.js**
+- **TypeScript**
+- **Tailwind CSS**
+- **Redux**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Highlights
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- ⚡ **Server-Side Rendering (SSR)** implemented for all pages and API queries, ensuring fast load times, fresh data, and better crawlability.
+- 🔍 **Server-side filtering via URL query parameters** — filters are driven directly by the URL, making results shareable, bookmarkable, and SEO-friendly.
+- 🚀 **SEO-optimized meta handling** — dynamic and best-practice meta tags (title, description, Open Graph, Twitter cards, canonical URLs) implemented across pages for improved search visibility.
+- 💳 **Integrated payment system** for secure transactions within the platform.
+- 🧩 **Dynamic service forms** — services support dynamically generated form fields, allowing each service type to define and render its own custom fields on the fly.
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+- 🛒 **Buy/Sell Marketplace** — Cars, bikes, and accessories
+- 🚗 **Car & Bike Rent**
+- 🔧 **Workshops & Accessories**
+- 🔁 **Exchange**
+- ⚖️ **Lawyer Services**
+- 💼 **Jobs**
+- 🔐 **Secure Payments**
+- 🧩 **Dynamic, Configurable Service Listings**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Backend
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The complete backend for this application was also built in-house, powering all APIs, data, authentication, payments, and dynamic service configurations consumed by the frontend.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Made for a faster, simpler way to buy, sell, and access services — all in one click.
