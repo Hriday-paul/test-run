@@ -22,7 +22,7 @@
 - 🧩 **Dynamic service forms** — services support dynamically generated form fields, allowing each service type to define and render its own custom fields on the fly.
 
 ## Features
-
+ 
 - 🛒 **Buy/Sell Marketplace** — Cars, bikes, and accessories
 - 🚗 **Car & Bike Rent**
 - 🔧 **Workshops & Accessories**
@@ -31,6 +31,19 @@
 - 💼 **Jobs**
 - 🔐 **Secure Payments**
 - 🧩 **Dynamic, Configurable Service Listings**
+- ➕ **Add Listing**
+- 🔍 **Filter Listing**
+- 🗂️ **Browse Listing**
+- 📄 **Listing Details**
+- ⭐ **Featured Listing**
+- 🔗 **Similar Listing**
+- 🔑 **Authentication**
+- 👥 **Multi-User Roles** — User & Seller
+- 📢 **Ad Management**
+- 💳 **Subscription Management**
+- 👤 **Profile Management**
+- 📝 **Apply for Services** — e.g. car license, TIN certificate, and other government/administrative services
+- ➕ **...more**
 
 ## Backend
 
