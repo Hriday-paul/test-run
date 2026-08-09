@@ -21,6 +21,8 @@ function SearchParamsPagination({ totalData = 1, activePage = 1 }: { totalData: 
         router.push(url, { scroll: true }); // Prevent auto-scroll
     }
 
+    console.log(activePage);
+
     return (
         <Pagination
             totalPages={totalData}

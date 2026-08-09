@@ -12,7 +12,10 @@ export function useUpdateMultipleSearchParams(targetId?: string) {
 
     Object.entries(updates).forEach(([key, value]) => {
       if (value === null) currentParams.delete(key);
-      else currentParams.set(key, value);
+      else {
+        currentParams.set(key, value);
+        currentParams.set("page", "1"); // Reset page to 1 when a filter is applied
+      }
     });
 
     router.push(`${pathname}?${currentParams.toString()}`, { scroll: false });
