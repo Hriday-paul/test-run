@@ -15,7 +15,8 @@ const Sidebar = ({ routs, title, logoutTxt }: { routs: { id: number, name: strin
     const dispatch = useDispatch<AppDispatch>()
     const handleLogout = useCallback(() => {
         dispatch(removeUser())
-        navig.push(`/auth/login?next=${activeRout}`)
+        navig.replace(`/auth/login?next=${activeRout}`)
+        navig.refresh();
     }, [dispatch, activeRout, navig])
 
     return (
