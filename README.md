@@ -10,12 +10,14 @@
 - **TypeScript**
 - **Tailwind CSS**
 - **Redux**
+- **Next-intl**
 
 ## Highlights
 
 - ⚡ **Server-Side Rendering (SSR)** implemented for all pages and API queries, ensuring fast load times, fresh data, and better crawlability.
 - 🔍 **Server-side filtering via URL query parameters** — filters are driven directly by the URL, making results shareable, bookmarkable, and SEO-friendly.
 - 🚀 **SEO-optimized meta handling** — dynamic and best-practice meta tags (title, description, Open Graph, Twitter cards, canonical URLs) implemented across pages for improved search visibility.
+- 🌐 **Multi-language support** — implemented language translation using **next-intl**, allowing users to browse the platform in multiple languages.
 - 💳 **Integrated payment system** for secure transactions within the platform.
 - 🧩 **Dynamic service forms** — services support dynamically generated form fields, allowing each service type to define and render its own custom fields on the fly.
 
