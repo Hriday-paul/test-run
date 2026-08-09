@@ -10,6 +10,8 @@ export function UseUpdateSearchParams() {
   return (key: string, value: string | null) => {
     const params = new URLSearchParams(searchParams.toString());
 
+    console.log("=============current searchparams=============", searchParams);
+
     if (value === null) {
       params.delete(key);
     } else {

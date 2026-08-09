@@ -52,7 +52,7 @@ function Navbar() {
     const handleSwitchLocal = (changeLocal: string) => {
         if (locale == changeLocal) return;
         router.push(pathname, { locale: changeLocal });
-        // router.refresh();
+        router.refresh();
     }
 
     return (
