@@ -10,7 +10,7 @@ export function UseUpdatePaginationSearchParams() {
   return (key: string, value: string | null) => {
     const params = new URLSearchParams(searchParams.toString());
 
-    console.log("=============current searchparams=============", params);
+    console.log("=============current searchparams=============", params.toString());
 
     if (value === null) {
       params.delete(key);
