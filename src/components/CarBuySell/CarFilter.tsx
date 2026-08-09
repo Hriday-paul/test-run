@@ -42,6 +42,7 @@ function CarFilter() {
             const params = new URLSearchParams(searchParams.toString());
             if (newValues.length > 0) {
                 params.set(key, newValues.join(","));
+                params.set("page", "1"); // Reset page to 1 when a filter is applied
             } else {
                 params.delete(key);
             }

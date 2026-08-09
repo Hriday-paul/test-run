@@ -1,10 +1,10 @@
 "use client"
 import Pagination from '@/components/ui/Pagination'
-import { UseUpdateSearchParams } from '@/hooks/UseUpdateSearchPrams';
+import { UseUpdatePaginationSearchParams } from '@/hooks/UseUpdatePaginationSerchparams';
 
 function SearchParamsPagination({ totalData = 1, activePage = 1 }: { totalData: number, activePage : number }) {
 
-    const updateParams = UseUpdateSearchParams();
+    const updateParams = UseUpdatePaginationSearchParams();
 
     return (
         <Pagination
