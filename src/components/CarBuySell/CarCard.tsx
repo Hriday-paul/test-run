@@ -1,3 +1,4 @@
+"use client"
 import { Add } from "@/redux/types";
 import { Calendar, Component, Gauge, Users } from "lucide-react";
 import Link from "next/link";
@@ -6,12 +7,12 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { placeHolderBlurImg } from "@/utils/config";
 import { MdAirlineSeatReclineNormal } from "react-icons/md";
-import { getLocale, getTranslations } from "next-intl/server";
+import { useLocale, useTranslations } from "next-intl";
 
-async function CarCard({ car }: { car: Add }) {
+function CarCard({ car }: { car: Add }) {
 
-    const t = await getTranslations("category_page.adCard");
-    const locale = await getLocale();
+    const t = useTranslations("category_page.adCard");
+    const locale = useLocale();
 
     return (
         <div
