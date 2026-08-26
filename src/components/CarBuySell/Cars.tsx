@@ -1,9 +1,6 @@
-import CarCard from "./CarCard";
 import { PiSlidersHorizontalDuotone } from "react-icons/pi";
 import SortBar from "./SortBar";
-import Image from "next/image";
 import CarFilter from "./CarFilter";
-import SearchParamsPagination from "@/shared/SearchParamsPagination";
 import { Add, IMeta } from "@/redux/types";
 import { getTranslations } from "next-intl/server";
 import SmFilter from "../ads/SmFilter";
