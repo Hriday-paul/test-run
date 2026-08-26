@@ -39,7 +39,7 @@ async function Cars({ adsPromise, page, limit, sort, query }: { adsPromise: Prom
                 <SortBar limit={limit} />
             </div>
 
-            <CarItems query={query} initialData={data?.data?.data || []} initialMeta={data?.data?.meta} key={JSON.stringify(query)} />
+            <CarItems query={query} initialData={data?.data?.data || []} initialMeta={data?.data?.meta} key={JSON.stringify(query)} notFoundMsg={t("not_found")}/>
         </div>
     )
 }
