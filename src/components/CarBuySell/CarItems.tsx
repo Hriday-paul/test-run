@@ -2,16 +2,14 @@
 import { useAllCarsMutation } from '@/redux/api/ads.api';
 import { Add, IMeta } from '@/redux/types'
 import useLazyLoad from '@/shared/LazyLoadAd';
-import React, { useRef } from 'react'
+import { useRef } from 'react'
 import CarCard from './CarCard';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
 
-function CarItems({ query, initialData, initialMeta }: { query: { [key: string]: string | undefined }, initialData: Add[], initialMeta: IMeta }) {
+function CarItems({ query, initialData, initialMeta, notFoundMsg }: { query: { [key: string]: string | undefined }, initialData: Add[], initialMeta: IMeta, notFoundMsg?: string }) {
 
     const [loadCars, { isLoading }] = useAllCarsMutation();
     const triggerRef = useRef(null);
-    const t = useTranslations("category_page");
 
     const loadNextPage = async (page: number) => {
         try {
@@ -45,7 +43,7 @@ function CarItems({ query, initialData, initialMeta }: { query: { [key: string]:
             {
                 (data?.length === 0 && !isLoading) && <section className='min-h-[calc(25vh)] flex flex-col items-center justify-center'>
                     <Image src={"/empty_data.jpg"} height={1000} width={1000} className='h-28 w-auto mx-auto' alt='empty data' />
-                    <h5 className='text-base font-figtree text-center'>{t("not_found")}</h5>
+                    <p className='text-sm text-gray-500 text-center'>{notFoundMsg || "No data found"}</p>
                 </section>
             }
 
