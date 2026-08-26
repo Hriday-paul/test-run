@@ -54,6 +54,13 @@ const AddApi = baseApi.injectEndpoints({
             }),
             providesTags: ['ads', "cars"]
         }),
+        allCars: builder.mutation<{ message: string, data: { data: Add[], meta: IMeta } }, {}>({
+            query: (query) => ({
+                url: '/ads/cars',
+                params: query,
+                method: "GET"
+            }),
+        }),
         addcar: builder.mutation<{ message: string }, any>({
             query: (body) => ({
                 url: '/ads/cars',
@@ -251,7 +258,7 @@ const AddApi = baseApi.injectEndpoints({
     })
 })
 
-export const { useAllcarsQuery, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, 
+export const { useAllcarsQuery, useAllCarsMutation, useMaxcarsCountQuery, useAllBikesQuery, useMaxBikesCountQuery, 
 
     useAllWorkshopsQuery, useUpdateWorkshopMutation,
 

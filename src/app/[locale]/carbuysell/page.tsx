@@ -149,7 +149,7 @@ async function CarBuySell({
                 <Searchbar />
 
                 <Suspense fallback={<Adsloading />}>
-                  <Cars adsPromise={adsPromise} limit={limit} page={Number(page)} sort={sort} />
+                  <Cars adsPromise={adsPromise} limit={limit} page={Number(page)} sort={sort} query={query} />
                 </Suspense>
 
               </div>
