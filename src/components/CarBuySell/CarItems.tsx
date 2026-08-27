@@ -55,8 +55,8 @@ function CarItems({ query, initialData, initialMeta, notFoundMsg }: { query: { [
                 {hasMore && <div ref={triggerRef} style={{ height: 1 }} />}
             </div>
             {
-                isLoading && hasMore && <div className="flex-center h-16 md:h-20 lg:h-24">
-                    <ImSpinner8 className="text-2xl lg:text-3xl text-primary animate-spin" />
+                isLoading && hasMore && <div className="flex h-16 md:h-20 lg:h-24 justify-center items-center">
+                    <ImSpinner8 className="text-2xl lg:text-3xl text-primary animate-spin text-center" />
                 </div>
             }
         </div>
