@@ -5,6 +5,7 @@ import useLazyLoad from '@/shared/LazyLoadAd';
 import { useRef } from 'react'
 import CarCard from './CarCard';
 import Image from 'next/image';
+import { ImSpinner8 } from 'react-icons/im';
 
 function CarItems({ query, initialData, initialMeta, notFoundMsg }: { query: { [key: string]: string | undefined }, initialData: Add[], initialMeta: IMeta, notFoundMsg?: string }) {
 
@@ -16,7 +17,7 @@ function CarItems({ query, initialData, initialMeta, notFoundMsg }: { query: { [
 
             query.page = page.toString();
 
-            const res = await loadCars({ params: query }).unwrap();
+            const res = await loadCars(query).unwrap();
             const data = res?.data?.data || [];
             const meta = res?.data?.meta;
 
@@ -54,8 +55,8 @@ function CarItems({ query, initialData, initialMeta, notFoundMsg }: { query: { [
                 {hasMore && <div ref={triggerRef} style={{ height: 1 }} />}
             </div>
             {
-                isLoading && hasMore && <div className="flex-center h-12 lg:h-16">
-                    <span className="loader !w-10"> </span>
+                isLoading && hasMore && <div className="flex-center h-16 md:h-20 lg:h-24">
+                    <ImSpinner8 className="text-2xl lg:text-3xl text-primary animate-spin" />
                 </div>
             }
         </div>
